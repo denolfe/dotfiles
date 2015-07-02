@@ -1,4 +1,6 @@
-alias reload="source .bashrc;echo Bash Reloaded."
+#!/usr/bin/env bash
+
+alias reload="source ~/.bashrc;echo Bash Reloaded."
 alias rl=reload
 alias aliases="sed -n '/^alias /p' ~/.bash_aliases"
 
