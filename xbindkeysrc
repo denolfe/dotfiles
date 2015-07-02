@@ -70,6 +70,10 @@
 "xset r off; xdotool keyup --window 0 Escape key --window 0 --clearmodifiers U007E; xset r on"
    Shift + Escape
 
+#Activate Terminal
+"xdotool windowactivate 54525963"
+   Mod4 + semicolon
+
 #Brightness Up
 "sudo /usr/local/bin/change-brightness.sh 50"
    Mod4 + F7
