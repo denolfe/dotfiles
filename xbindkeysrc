@@ -39,32 +39,36 @@
    control+shift + q
 
 #Nav Down
-"xvkbd -xsendevent -text "\[Down]""
+"xset r off; xdotool keyup --window 0 j key --window 0 --clearmodifiers Down; xset r on"
    Mod4 + j
 
 #Nav Up
-"xvkbd -xsendevent -text "\[Up]""
+"xset r off; xdotool keyup --window 0 k key --window 0 --clearmodifiers Up; xset r on"
    Mod4 + k
 
 #Nav Left
-"xvkbd -xsendevent -text "\[Left]""
+"xset r off; xdotool keyup --window 0 h key --window 0 --clearmodifiers Left; xset r on"
    Mod4 + h
 
 #Nav Right
-"xvkbd -xsendevent -text "\[Right]""
+"xset r off; xdotool keyup --window 0 l key --window 0 --clearmodifiers Right; xset r on"
    Mod4 + l
 
 #Nav Home
-"xvkbd -xsendevent -text "\[Home]""
+"xset r off; xdotool keyup --window 0 n key --window 0 --clearmodifiers Home; xset r on"
    Mod4 + n
 
 #Nav End
-"xvkbd -xsendevent -text "\[End]""
+"xset r off; xdotool keyup --window 0 p key --window 0 --clearmodifiers End; xset r on"
    Mod4 + p
 
 #Delete
-"xvkbd -xsendevent -text '\[Delete]'"
+"xset r off; xdotool keyup --window 0 BackSpace key --window 0 --clearmodifiers Delete; xset r on"
    Mod4 + BackSpace
+
+#Tilde
+"xset r off; xdotool keyup --window 0 Escape key --window 0 --clearmodifiers U007E; xset r on"
+   Shift + Escape
 
 #Brightness Up
 "sudo /usr/local/bin/change-brightness.sh 50"
@@ -74,9 +78,6 @@
 "sudo /usr/local/bin/change-brightness.sh -50"
    Mod4 + F6
 
-#Terminal
-""
-   Mod4 + grave
 
 #
 # End of xbindkeys configuration
