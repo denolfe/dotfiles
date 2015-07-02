@@ -1,0 +1,82 @@
+###########################
+# xbindkeys configuration #
+###########################
+#
+# Version: 0.1.3
+#
+# If you edit this, do not forget to uncomment any lines that you change.
+# The pound(#) symbol may be used anywhere for comments.
+#
+# A list of keys is in /usr/include/X11/keysym.h and in
+# /usr/include/X11/keysymdef.h 
+# The XK_ is not needed. 
+#
+# List of modifier (on my keyboard): 
+#   Control, Shift, Mod1 (Alt), Mod2 (NumLock), 
+#   Mod3 (CapsLock), Mod4, Mod5 (Scroll). 
+#
+# Another way to specifie a key is to use 'xev' and set the 
+# keycode with c:nnn or the modifier with m:nnn where nnn is 
+# the keycode or the state returned by xev 
+#
+# This file is created by xbindkey_config 
+# The structure is : 
+# # Remark 
+# "command" 
+# m:xxx + c:xxx 
+# Shift+... 
+
+
+
+
+#keystate_numlock = enable
+#keystate_scrolllock = enable
+#keystate_capslock = enable
+
+
+
+"xbindkeys-config"
+   control+shift + q
+
+#Nav Down
+"xvkbd -xsendevent -text "\[Down]""
+   Mod4 + j
+
+#Nav Up
+"xvkbd -xsendevent -text "\[Up]""
+   Mod4 + k
+
+#Nav Left
+"xvkbd -xsendevent -text "\[Left]""
+   Mod4 + h
+
+#Nav Right
+"xvkbd -xsendevent -text "\[Right]""
+   Mod4 + l
+
+#Nav Home
+"xvkbd -xsendevent -text "\[Home]""
+   Mod4 + n
+
+#Nav End
+"xvkbd -xsendevent -text "\[End]""
+   Mod4 + p
+
+#Delete
+"xvkbd -xsendevent -text '\[Delete]'"
+   Mod4 + BackSpace
+
+#Brightness Up
+"sudo /usr/local/bin/change-brightness.sh 50"
+   Mod4 + F7
+
+#Brightness Down
+"sudo /usr/local/bin/change-brightness.sh -50"
+   Mod4 + F6
+
+#Terminal
+""
+   Mod4 + grave
+
+#
+# End of xbindkeys configuration
