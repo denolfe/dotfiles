@@ -71,7 +71,7 @@
    Shift + Escape
 
 #Activate Terminal
-"wmctrl -i -a 0x0180000c"
+"wmctrl -x -a pantheon-terminal"
    Mod4 + semicolon
 
 #Brightness Up
