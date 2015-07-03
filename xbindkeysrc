@@ -43,45 +43,44 @@
    Mod4 + j
 
 #Nav Up
-"xset r off; xdotool keyup --window 0 k key --window 0 --clearmodifiers Up; xset r on"
+"xset r off; xdotool keyup --delay 0 --window 0 k key --delay 0 --window 0 --clearmodifiers Up; xset r on"
    Mod4 + k
 
 #Nav Left
-"xset r off; xdotool keyup --window 0 h key --window 0 --clearmodifiers Left; xset r on"
+"xset r off; xdotool keyup --delay 0 --window 0 h key --delay 0 --window 0 --clearmodifiers Left; xset r on"
    Mod4 + h
 
 #Nav Right
-"xset r off; xdotool keyup --window 0 l key --window 0 --clearmodifiers Right; xset r on"
+"xset r off; xdotool keyup --delay 0 --window 0 l key --delay 0 --window 0 --clearmodifiers Right; xset r on"
    Mod4 + l
 
 #Nav Home
-"xset r off; xdotool keyup --window 0 n key --window 0 --clearmodifiers Home; xset r on"
+"xset r off; xdotool keyup --delay 0 --window 0 n key --delay 0 --window 0 --clearmodifiers Home; xset r on"
    Mod4 + n
 
 #Nav End
-"xset r off; xdotool keyup --window 0 p key --window 0 --clearmodifiers End; xset r on"
+"xset r off; xdotool keyup --delay 0 --window 0 p key --delay 0 --window 0 --clearmodifiers End; xset r on"
    Mod4 + p
 
 #Delete
-"xset r off; xdotool keyup --window 0 BackSpace key --window 0 --clearmodifiers Delete; xset r on"
+"xset r off; xdotool keyup --delay 0 --window 0 BackSpace key --delay 0 --window 0 --clearmodifiers Delete; xset r on"
    Mod4 + BackSpace
 
 #Tilde
-"xset r off; xdotool keyup --window 0 Escape key --window 0 --clearmodifiers U007E; xset r on"
+"xset r off; xdotool keyup --delay 0 --window 0 Escape key --delay 0 --window 0 --clearmodifiers U007E; xset r on"
    Shift + Escape
 
 #Activate Terminal
-"xdotool windowactivate 54525963"
+"wmctrl -i -a 0x0180000c"
    Mod4 + semicolon
 
 #Brightness Up
 "sudo /usr/local/bin/change-brightness.sh 50"
    Mod4 + F7
 
-#Brightness Down
+#Brightness Down 
 "sudo /usr/local/bin/change-brightness.sh -50"
    Mod4 + F6
-
 
 #
 # End of xbindkeys configuration
