@@ -43,6 +43,7 @@ alias serve="nserver"
 alias djs="dashing-js start"
 alias subla="subl . -a"
 alias sublo="create_open_sublime"
+alias rsx='sudo killall xbindkeys && sudo xbindkeys && echo "xbindkeys restarted"'
 
 # Git
 
