@@ -51,7 +51,7 @@ alias guns="git reset HEAD --"
 alias gstu="git status -uno"
 alias gst="git status"
 alias gpo="git push origin"
-alias gpom="git push origin master"
+alias gpo="git push origin HEAD"
 alias gundo="git reset HEAD~1"
 alias gc="git clone"
 
