@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # credit: http://nparikh.org/notes/zshrc.txt
 # Usage: extract <file>
 # Description: extracts archived files / mounts disk images

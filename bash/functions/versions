@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 versions () {
 	if [ -x "$(command -v git)" ]; then
 		echo $(git config user.name)
