@@ -19,17 +19,12 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias ~='cd ~/'
 
-# Common Operations
-alias mkcd="mkdir_cd"
-alias cpd="pwd | clip"
-
 alias sagi='sudo apt-get install'
 alias sagu='sudo apt-get update'
 alias saar='sudo add-apt-repository'
 alias e='pantheon-files'
 alias e.='pantheon-files .'
 alias hs='history | grep -i $1'
-alias hstpct='history_percent'
 alias untar='tar -xzf'
 
 # Apps
@@ -50,20 +45,6 @@ alias rsx='sudo killall xbindkeys && sudo xbindkeys && echo "xbindkeys restarted
 git config --global user.name "Elliot DeNolf"
 git config --global user.email "denolfe@gmail.com"
 
-git config --global alias.l 'log --oneline --graph --decorate --all'
-git config --global alias.l1 "log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
-git config --global alias.l2 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
-git config --global alias.l3 "log --format='%C(bold cyan)%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset'"
-
-git config --global alias.last 'log -1 HEAD'
-git config --global alias.unstage 'reset HEAD --'
-git config --global alias.hist 'log --oneline --graph --decorate --all'
-git config --global alias.stu 'status -uno'
-git config --global alias.st 'status'
-git config --global alias.unp 'log origin/master..HEAD'
-git config --global alias.pom 'push origin master'
-git config --global alias.undolast 'reset HEAD~1'
-
 alias gl="git l1"
 alias glast="git log -1 HEAD"
 alias guns="git reset HEAD --"
@@ -73,10 +54,6 @@ alias gpo="git push origin"
 alias gpom="git push origin master"
 alias gundo="git reset HEAD~1"
 alias gc="git clone"
-
-history_percent() {
-	history | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n10
-}
 
 create_open_sublime() {
 	if [ -z "$1" ]
@@ -89,34 +66,16 @@ create_open_sublime() {
 	fi
 }
 
-mkdir_cd() {
-	if [ -z "$1" ]
-	then
-		echo "Missing folder parameter"
-	else
-		mkdir "$1"
-		cd "$1"
-	fi
-}
-
-diag () {
-	echo $(git config user.name)
-	echo $(git config user.email)
-	echo ""	
-	echo $(git --version)
-	echo node:  $(node -v)
-	echo npm:   v$(npm -v)
-	echo bower: v$(bower -v)
-	echo $(ruby -v)
-}
-
-if [ -e $CMDER_ROOT/config/.bash_priv ]; then
-	. $CMDER_ROOT/config/.bash_priv
-fi
-
-find_git_dirty () {
-  if [[ ! -z $(__git_ps1) && -n $(git status --porcelain) ]]; then echo "*"; fi
-}
+# diag () {
+# 	echo $(git config user.name)
+# 	echo $(git config user.email)
+# 	echo ""	
+# 	echo $(git --version)
+# 	echo node:  $(node -v)
+# 	echo npm:   v$(npm -v)
+# 	echo bower: v$(bower -v)
+# 	echo $(ruby -v)
+# }
 
 # PS1
 ORANGE="\[\033[32m\]"
