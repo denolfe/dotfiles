@@ -86,5 +86,9 @@
 "wmctrl -x -a spotify.Spotify"
    Mod4 + Return
 
+#Activate Sublime Text
+"wmctrl -x -a sublime_text.Sublime_text"
+   Mod4 + apostrophe
+
 #
 # End of xbindkeys configuration
