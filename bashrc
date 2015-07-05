@@ -166,3 +166,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+export NVM_DIR="/home/elliot/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
