@@ -78,9 +78,13 @@
 "sudo /usr/local/bin/change-brightness.sh 50"
    Mod4 + F7
 
-#Brightness Down 
+#Brightness Down
 "sudo /usr/local/bin/change-brightness.sh -50"
    Mod4 + F6
+
+#Activate Spotify
+"wmctrl -x -a spotify.Spotify"
+   Mod4 + Return
 
 #
 # End of xbindkeys configuration
