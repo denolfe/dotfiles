@@ -90,5 +90,13 @@
 "wmctrl -x -a sublime_text.Sublime_text"
    Mod4 + apostrophe
 
+#Spotify Play/Pause
+"xdotool key XF86AudioPlay"
+   Mod4 + bracketright
+
+#Spotify Next
+"xdotool key XF86AudioNext"
+   Mod4 + backslash
+
 #
 # End of xbindkeys configuration
