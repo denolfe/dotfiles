@@ -98,5 +98,9 @@
 "xdotool key XF86AudioNext"
    Mod4 + backslash
 
+#Activate Chrome
+"wmctrl -x -a Google-chrome-stable.Google-chrome-stable"
+   Mod4 + slash
+
 #
 # End of xbindkeys configuration
