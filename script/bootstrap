@@ -153,4 +153,4 @@ then
 fi
 
 echo ''
-echo '  All installed!'
+echo '  Dotfiles installed!'

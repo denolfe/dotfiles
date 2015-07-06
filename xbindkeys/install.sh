@@ -22,10 +22,11 @@ do
 		installed "$dep"
 	else
 		missing "$dep"
-		# echo "Installing $dep..."
 		installing "$dep"
 		sudo apt-get -qq install $dep > /dev/null
 		installing_done
-		# echo 'done'
 	fi
 done
+
+echo ''
+echo '  Dependencies installed!'
