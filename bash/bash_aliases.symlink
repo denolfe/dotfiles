@@ -26,7 +26,6 @@ alias sagr='sudo apt-get remove'
 alias e='pantheon-files'
 alias e.='pantheon-files .'
 alias hs='history | grep -i $1'
-alias untar='tar -xzf'
 
 # Apps
 alias t="touch"
@@ -38,7 +37,6 @@ alias mm="middleman"
 alias serve="nserver"
 alias djs="dashing-js start"
 alias subla="subl . -a"
-alias sublo="create_open_sublime"
 alias rsx='sudo killall xbindkeys && sudo xbindkeys && echo "xbindkeys restarted"'
 
 # Git
@@ -55,28 +53,6 @@ alias gpo="git push origin"
 alias gpo="git push origin HEAD"
 alias gundo="git reset HEAD~1"
 alias gc="git clone"
-
-create_open_sublime() {
-	if [ -z "$1" ]
-	then
-		echo "Missing file parameter"
-	else
-		touch "$1"
-		subl "$1"
-		echo "$1 created"
-	fi
-}
-
-# diag () {
-# 	echo $(git config user.name)
-# 	echo $(git config user.email)
-# 	echo ""	
-# 	echo $(git --version)
-# 	echo node:  $(node -v)
-# 	echo npm:   v$(npm -v)
-# 	echo bower: v$(bower -v)
-# 	echo $(ruby -v)
-# }
 
 # PS1
 ORANGE="\[\033[32m\]"
