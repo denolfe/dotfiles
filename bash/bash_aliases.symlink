@@ -26,6 +26,7 @@ alias sagr='sudo apt-get remove'
 alias e='pantheon-files'
 alias e.='pantheon-files .'
 alias hs='history | grep -i $1'
+alias .f='cd ~/.dotfiles'
 
 # Apps
 alias t="touch"
