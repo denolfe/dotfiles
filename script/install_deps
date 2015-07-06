@@ -1,5 +1,3 @@
-DEPS="xbindkeys xbindkeys-config xdotool wmctrl"
-
 installed () {
   printf "\r\033[0m  [ \033[00;32mINSTALLED\033[0m ] $1\n"
 }
@@ -16,16 +14,27 @@ installing_done () {
 	printf "\033[0m [\033[00;32mDONE\033[0m]\n"
 }
 
-for dep in $DEPS
-do
-	if [ -x "$(command -v $dep)" ]; then
-		installed "$dep"
+check_or_install_dep () {
+	if [ -x "$(command -v $1)" ]; then
+		installed $1
 	else
-		missing "$dep"
-		installing "$dep"
+		missing $1
+		installing $1
 		sudo apt-get -qq install $dep > /dev/null
 		installing_done
 	fi
+}
+
+cd "$(dirname $0)"/..
+
+dep_files=$(find . -name dependencies_apt)
+
+for dep_list in $dep_files
+do
+	for dep in $(cat $dep_list)
+	do
+		check_or_install_dep $dep
+	done
 done
 
 echo ''
