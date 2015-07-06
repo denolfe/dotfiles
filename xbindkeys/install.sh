@@ -1,20 +1,31 @@
 DEPS="xbindkeys xbindkeys-config xdotool wmctrl"
 
-success () {
-  printf "\r\033[2K  [ \033[00;32mINSTALLED\033[0m ] $1\n"
+installed () {
+  printf "\r\033[0m  [ \033[00;32mINSTALLED\033[0m ] $1\n"
 }
 
-fail () {
+missing () {
   printf "\r\033[2K  [  \033[0;31mMISSING\033[0m  ] $1\n"
+}
+
+installing () {
+  printf "\033[00;37m  Installing $1... "
+}
+
+installing_done () {
+	printf "\033[0m [\033[00;32mDONE\033[0m]\n"
 }
 
 for dep in $DEPS
 do
 	if [ -x "$(command -v $dep)" ]; then
-		success "$dep"
+		installed "$dep"
 	else
-		fail "$dep"
-		echo "Installing $dep..."
-		sudo apt-get -qq install $dep
+		missing "$dep"
+		# echo "Installing $dep..."
+		installing "$dep"
+		sudo apt-get -qq install $dep > /dev/null
+		installing_done
+		# echo 'done'
 	fi
 done
