@@ -17,20 +17,21 @@ user () {
   printf "\r  [ \033[0;33m?\033[0m ] $1 "
 }
 
-success () {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
-}
+header()   { printf "\n\033[1;37m$@\033[0m\n"; }
+footer()   { printf "\n  \033[1;37m  $@\033[0m\n"; }
+success()  { printf " \033[1;32m  ✔ \033[0m  $@\n"; }
 
-fail () {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+fail() { 
+  printf " \033[1;31m  ✖ \033[0m  $@\n"
   echo ''
   exit
 }
+# e_arrow()    { printf " \033[1;34m  ➜ \033[0m  $@\n"; }
 
 setup_gitconfig () {
   if ! [ -f git/gitconfig.symlink ]
   then
-    info 'setup gitconfig'
+    header 'setup gitconfig'
 
     git_credential='cache'
     if [ "$(uname -s)" == "Darwin" ]
@@ -126,7 +127,7 @@ link_file () {
 }
 
 install_dotfiles () {
-  info 'installing dotfiles'
+  header 'Installing Dotfiles'
 
   local overwrite_all=false backup_all=false skip_all=false
 
@@ -139,6 +140,7 @@ install_dotfiles () {
 
 setup_gitconfig
 install_dotfiles
+footer "Dotfiles Installed!"
 
 # If we're on a Mac, let's install and setup homebrew.
 if [ "$(uname -s)" == "Darwin" ]
@@ -152,5 +154,4 @@ then
   fi
 fi
 
-echo ''
-echo '  Dotfiles installed!'
+

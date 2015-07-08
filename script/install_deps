@@ -1,38 +1,22 @@
-# installed () {
-#   printf "\r\033[0m  [ \033[00;32mINSTALLED\033[0m ] $1\n"
-# }
-
-# missing () {
-#   printf "\r\033[2K  [  \033[0;31mMISSING\033[0m  ] $1\n"
-# }
-
-# installing () {
-#   printf "\033[00;37m  Installing $1... "
-# }
-
-# installing_done () {
-# 	printf "\033[0m [\033[00;32mDONE\033[0m]\n"
-# }
-
-get_dir() { echo $(basename $(dirname $1));}
- 
-e_header()   { printf "\n\033[1;37m$@\033[0m\n"; }
-e_footer()   { printf "\n  \033[1;37m  $@\033[0m\n"; }
-e_success()  { printf " \033[1;32m  ✔ \033[0m  $@\n"; }
-e_error()    { printf " \033[1;31m  ✖ \033[0m  $@\n"; }
+header()   { printf "\n\033[1;37m$@\033[0m\n"; }
+footer()   { printf "\n  \033[1;37m  $@\033[0m\n"; }
+success()  { printf " \033[1;32m  ✔ \033[0m  $@\n"; }
+error()    { printf " \033[1;31m  ✖ \033[0m  $@\n"; }
 e_arrow()    { printf " \033[1;34m  ➜ \033[0m  $@\n"; }
  
-e_installing()    { printf " \033[1;37m  Installing $@... \033[0m"; }
-e_installing_done() { printf " \033[1;32m✔  done.\033[0m\n"; }
+installing()    { printf " \033[1;37m  Installing $@... \033[0m"; }
+installing_done() { printf " \033[1;32m✔  done.\033[0m\n"; }
+
+get_dir() { echo $(basename $(dirname $1));}
 
 check_or_install_dep () {
 	if [ -x "$(command -v $1)" ]; then
-		e_success $1
+		success $1
 	else
-		e_error $1
-		e_installing $1
+		error $1
+		installing $1
 		sudo apt-get -qq install $dep > /dev/null
-		e_installing_done
+		installing_done
 	fi
 }
 
@@ -41,11 +25,11 @@ cd "$(dirname $0)"/..
 dep_files=$(find . -name dependencies_apt)
 for dep_list in $dep_files
 do
-	e_header "$(get_dir $dep_list) Dependencies"
+	header "$(get_dir $dep_list) Dependencies"
 	for dep in $(cat $dep_list)
 	do
 		check_or_install_dep $dep
 	done
 done
 
-e_header "Dependencies Installed!"
+footer "Dependencies Installed!"
