@@ -42,8 +42,6 @@ alias rsx='sudo killall xbindkeys && sudo xbindkeys && echo "xbindkeys restarted
 
 # Git
 alias git=hub
-git config --global user.name "Elliot DeNolf"
-git config --global user.email "denolfe@gmail.com"
 
 alias gl="git l1"
 alias glast="git log -1 HEAD"
