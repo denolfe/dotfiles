@@ -39,6 +39,7 @@ alias serve="nserver"
 alias djs="dashing-js start"
 alias subla="subl . -a"
 alias rsx='sudo killall xbindkeys && sudo xbindkeys && echo "xbindkeys restarted"'
+alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 
 # Git
 alias git=hub
