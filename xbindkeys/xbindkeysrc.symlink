@@ -87,7 +87,7 @@
    Mod4 + Return
 
 #Activate Sublime Text
-"wmctrl -x -a sublime_text.Sublime_text"
+"wmctrl -x -a jetbrains-webstorm"
    Mod4 + apostrophe
 
 #Spotify Play/Pause
