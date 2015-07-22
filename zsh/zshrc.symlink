@@ -1,31 +1,20 @@
-# start zgen
-# if [ -f ~/.zgen-setup ]; then
-#   source ~/.zgen-setup
-# fi
-# end zgen
-
-# Clone zgen if you haven't already
-if [ ! -f ~/.zgen/zgen.zsh ]; then
-  pushd ~
-  git clone git@github.com:tarjoilija/zgen.git
-  popd
-fi
+# Get zgen
 source ~/.zgen/zgen.zsh
 
+# Generate zgen init.sh if it doesn't exist
 if ! zgen saved; then
     echo "Regenerating zgen init.sh"
 
     zgen oh-my-zsh
 
-    # plugins
+    # Plugins
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/github
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/command-not-found
     zgen load zsh-users/zsh-syntax-highlighting
 
-	# If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
-	# they break, so get the order right.
+    # These 2 must be in this order
 	zgen load zsh-users/zsh-syntax-highlighting
 	zgen load zsh-users/zsh-history-substring-search
 		
@@ -37,19 +26,18 @@ if ! zgen saved; then
 	# Warn you when you run a command that you've got an alias for
     zgen load djui/alias-tips
 
-    # completion-only repositories. Add optional path argument to specify
-    # what subdirectory of the repository to add to your fpath.
+    # Completion-only repos
     zgen load zsh-users/zsh-completions src
 
-    # theme
+    # Theme
     zgen oh-my-zsh themes/agnoster
     # zgen load ~/zsh/custom-theme.zsh-theme
 
-    # save all to init script
+    # Generate init.sh
     zgen save
 fi
 
-# set some history options
+# History Options
 setopt append_history
 setopt extended_history
 setopt hist_expire_dups_first
@@ -60,7 +48,7 @@ setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_verify
 
-# Share your history across all your terminal windows
+# Share history across all your terminal windows
 setopt share_history
 #setopt noclobber
 
@@ -68,20 +56,17 @@ setopt share_history
 setopt pushd_ignore_dups
 #setopt pushd_silent
 
-# Keep a ton of history.
+# Increase history size
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
-# Long running processes should return time after they complete. Specified
-# in seconds.
+# Return time on long running processes
 REPORTTIME=2
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
-# Stash your environment variables in ~/.localrc. This means they'll stay out
-# of your main dotfiles repository (which may be public, like this one), but
-# you'll have access to them in your scripts.
+# Place to stash environment variables
 if [[ -a ~/.localrc ]]
 then
   source ~/.localrc
