@@ -26,6 +26,9 @@ if ! zgen saved; then
 	# Warn you when you run a command that you've got an alias for
     zgen load djui/alias-tips
 
+    # Adds aliases to open your current repo & branch on github.
+  	zgen load peterhurford/git-it-on.zsh
+
     # Completion-only repos
     zgen load zsh-users/zsh-completions src
 
