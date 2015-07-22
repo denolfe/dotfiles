@@ -1,0 +1,98 @@
+# start zgen
+# if [ -f ~/.zgen-setup ]; then
+#   source ~/.zgen-setup
+# fi
+# end zgen
+
+# Clone zgen if you haven't already
+if [ ! -f ~/.zgen/zgen.zsh ]; then
+  pushd ~
+  git clone git@github.com:tarjoilija/zgen.git
+  popd
+fi
+source ~/.zgen/zgen.zsh
+
+if ! zgen saved; then
+    echo "Regenerating zgen init.sh"
+
+    zgen oh-my-zsh
+
+    # plugins
+    zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/github
+    zgen oh-my-zsh plugins/sudo
+    zgen oh-my-zsh plugins/command-not-found
+    zgen load zsh-users/zsh-syntax-highlighting
+
+	# If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
+	# they break, so get the order right.
+	zgen load zsh-users/zsh-syntax-highlighting
+	zgen load zsh-users/zsh-history-substring-search
+		
+    # Set keystrokes for substring searching
+	zmodload zsh/terminfo
+	bindkey "$terminfo[kcuu1]" history-substring-search-up
+	bindkey "$terminfo[kcud1]" history-substring-search-down
+
+	# Warn you when you run a command that you've got an alias for
+    zgen load djui/alias-tips
+
+    # completion-only repositories. Add optional path argument to specify
+    # what subdirectory of the repository to add to your fpath.
+    zgen load zsh-users/zsh-completions src
+
+    # theme
+    zgen oh-my-zsh themes/agnoster
+    # zgen load ~/zsh/custom-theme.zsh-theme
+
+    # save all to init script
+    zgen save
+fi
+
+# set some history options
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt hist_verify
+
+# Share your history across all your terminal windows
+setopt share_history
+#setopt noclobber
+
+# set some more options
+setopt pushd_ignore_dups
+#setopt pushd_silent
+
+# Keep a ton of history.
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+
+# Long running processes should return time after they complete. Specified
+# in seconds.
+REPORTTIME=2
+TIMEFMT="%U user %S system %P cpu %*Es total"
+
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
+
+# Load aliases
+if [ -f ~/.dotfiles/zsh/aliases.zsh ]; then
+    . ~/.dotfiles/zsh/aliases.zsh
+fi
+
+# Load functions
+if [ -f ~/.dotfiles/zsh/functions.zsh ]; then
+    . ~/.dotfiles/zsh/functions.zsh
+fi
