@@ -76,11 +76,11 @@
 
 #Brightness Up
 "sudo /usr/local/bin/change-brightness.sh 50"
-   Mod4 + F7
+   F7
 
 #Brightness Down
 "sudo /usr/local/bin/change-brightness.sh -50"
-   Mod4 + F6
+   F6
 
 #Activate Spotify
 "wmctrl -x -a spotify.Spotify"
