@@ -84,3 +84,10 @@ fi
 if [ -f ~/.dotfiles/zsh/functions.zsh ]; then
     . ~/.dotfiles/zsh/functions.zsh
 fi
+
+# Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+# NVM
+export NVM_DIR="/home/elliot/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
