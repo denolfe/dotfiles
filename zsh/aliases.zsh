@@ -29,6 +29,7 @@ alias .f='cd ~/.dotfiles'
 # Other bash stuff
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 alias please='sudo $(fc -ln -1)'
+alias pnotify="notify-send -i utilities-terminal"
 
 # Apps
 alias t="touch"
