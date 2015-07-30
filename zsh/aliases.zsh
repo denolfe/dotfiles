@@ -3,8 +3,9 @@ alias regen='zgen reset;source ~/.zshrc'
 
 alias ls='ls --color=auto -p'
 alias ll='ls -la'
-alias tr='tree -L 1'
-alias tr2='tree -L 2'
+alias tr='tree -L 1 -C'
+alias tr2='tree -L 2 -C'
+alias tr3='tree -L 3 -C'
 
 # Easier navigation
 alias ..='cd ..'
