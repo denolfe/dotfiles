@@ -43,3 +43,10 @@ alias serve="nserver"
 alias djs="dashing-js start"
 alias subla="subl . -a"
 alias rsx='sudo killall xbindkeys && sudo xbindkeys && echo "xbindkeys restarted"'
+
+# Zshmarks ==> Bashmarks
+alias g="jump"
+alias s="bookmark"
+alias d="deletemark"
+alias p="showmarks"
+alias l="showmarks"
