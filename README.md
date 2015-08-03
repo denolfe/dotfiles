@@ -8,7 +8,7 @@ My dotfiles for Elementary OS
 
 - Makefile
   - `bootstrap` - links all `*.symlink` files as `.filename` in `~` directory
-  - `install` - Runs all `install.sh` files and installs all dependencies listed in `dependencies_apt` files
+  - `install` - Runs all `install.sh` files
   - `check` - Checks for dependencies listed in `dependencies` file project root
 - Zsh Configuration
   - [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
