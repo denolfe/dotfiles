@@ -1,5 +1,6 @@
 # Solarized Themes
 set_dark () {
+	gsettings set org.pantheon.terminal.settings font 'Droid Sans Mono for Powerline 10'
 	gsettings set org.pantheon.terminal.settings background '#00002B2B3636'
 	gsettings set org.pantheon.terminal.settings foreground '#838394949696'
 	gsettings set org.pantheon.terminal.settings cursor-color '#838394949696'
@@ -9,6 +10,7 @@ set_dark () {
 }
 
 set_light() {
+	gsettings set org.pantheon.terminal.settings font 'Droid Sans Mono for Powerline 10'
 	gsettings set org.pantheon.terminal.settings background '#fdfdf6f6e3e3'
 	gsettings set org.pantheon.terminal.settings foreground '#65657b7b8383'
 	gsettings set org.pantheon.terminal.settings cursor-color '#65657b7b8383'
