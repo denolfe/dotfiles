@@ -102,5 +102,8 @@
 "wmctrl -x -a Google-chrome-stable.Google-chrome-stable"
    Mod4 + slash
 
+"wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz"
+   F4
+
 #
 # End of xbindkeys configuration
