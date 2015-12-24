@@ -39,7 +39,6 @@ alias djs="dashing-js start"
 alias ns="npm start"
 alias be="bundle exec"
 alias mm="middleman"
-alias serve="nserver"
 alias djs="dashing-js start"
 alias subla="subl . -a"
 alias rsx='sudo killall xbindkeys && sudo xbindkeys && echo "xbindkeys restarted"'
