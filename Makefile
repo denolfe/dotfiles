@@ -6,3 +6,6 @@ install:
 
 check:
 	@script/check
+
+update:
+	@script/update

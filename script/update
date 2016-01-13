@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+#
+# Update components
+
+source ~/.dotfiles/script/logging
+
+header "Updating Components\n"
+
+arrow "Git Submodules\n"
+git submodule foreach git pull origin master
+echo ''
+
+source ~/.zgen/zgen.zsh
+arrow "zgen modules\n"
+zgen-update
+echo ''
