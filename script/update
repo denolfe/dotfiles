@@ -13,4 +13,7 @@ echo ''
 source ~/.zgen/zgen.zsh
 arrow "zgen modules\n"
 zgen-update
+zgen-reset
+source ~/.zshrc
+
 echo ''
