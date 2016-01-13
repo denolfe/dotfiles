@@ -1,6 +1,8 @@
 # Get zgen
 source ~/.zgen/zgen.zsh
 
+export DF="$HOME/.dotfiles"
+
 # Generate zgen init.sh if it doesn't exist
 if ! zgen saved; then
     echo "Regenerating zgen init.sh"
@@ -36,7 +38,7 @@ if ! zgen saved; then
 
     # Theme
     # zgen oh-my-zsh themes/agnoster
-    zgen load ~/.dotfiles/zsh/agnoster-mod.zsh-theme
+    zgen load $DF/zsh/agnoster-mod.zsh-theme
 
     # Generate init.sh
     zgen save
@@ -78,18 +80,19 @@ then
 fi
 
 # Load aliases
-if [ -f ~/.dotfiles/zsh/aliases.zsh ]; then
-    . ~/.dotfiles/zsh/aliases.zsh
+if [ -f $DF/zsh/aliases.zsh ]; then
+    . $DF/zsh/aliases.zsh
 fi
 
 # Load functions
-if [ -f ~/.dotfiles/zsh/functions.zsh ]; then
-    . ~/.dotfiles/zsh/functions.zsh
+if [ -f $DF/zsh/functions.zsh ]; then
+    . $DF/zsh/functions.zsh
 fi
+
+# Load all path files
+for file in $DF/*/path.zsh; do
+  source "$file"
+done
 
 # Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-
-# NVM
-export NVM_DIR="~/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
