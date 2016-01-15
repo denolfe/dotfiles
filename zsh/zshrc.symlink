@@ -81,9 +81,9 @@ then
 fi
 
 # Load aliases
-if [ -f $DF/zsh/aliases.zsh ]; then
-    . $DF/zsh/aliases.zsh
-fi
+for file in $DF/*/aliases.zsh; do
+  . "$file"
+done
 
 # Load functions
 if [ -f $DF/zsh/functions.zsh ]; then
@@ -92,7 +92,7 @@ fi
 
 # Load all path files
 for file in $DF/*/path.zsh; do
-  source "$file"
+  . "$file"
 done
 
 # Heroku Toolbelt
