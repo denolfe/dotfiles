@@ -9,3 +9,6 @@ check:
 
 update:
 	@script/update
+
+list:
+	@script/list
