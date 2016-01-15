@@ -50,6 +50,3 @@ alias s="bookmark"
 alias d="deletemark"
 alias p="showmarks"
 alias l="showmarks"
-
-# Git
-alias gbv='git branch -v'
