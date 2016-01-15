@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 source ~/.dotfiles/script/logging
 
+if [ "$(uname -s)" != "Linux" ];then
+  exit 0
+fi
+
 header "xbindkeys Dependencies"
 
 check_or_install_dep "xbindkeys"
