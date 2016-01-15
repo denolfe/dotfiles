@@ -22,7 +22,8 @@ if [ ! -d ~/.nvm ]; then
 	installing_done
 fi
 source ~/.nvm/nvm.sh
-nvm use system
+nvm use system >/dev/null 2>&1
+success "node $(node -v)"
 
 npm_installed() {
 	if npm list -g $1 | grep $1 --quiet; then
