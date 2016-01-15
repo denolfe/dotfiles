@@ -18,6 +18,7 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias ~='cd ~/'
 
+alias sudo='sudo '
 alias sagi='sudo apt-get install'
 alias sagu='sudo apt-get update'
 alias saar='sudo add-apt-repository'
