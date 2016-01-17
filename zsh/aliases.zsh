@@ -18,6 +18,12 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias ~='cd ~/'
 
+# Global Aliases
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g NUL='&> /dev/null'
+
 alias sudo='sudo '
 alias sagi='sudo apt-get install'
 alias sagu='sudo apt-get update'
