@@ -36,7 +36,7 @@ npm_installed() {
 	fi
 }
 
-for pkg in bower grunt gulp express
+for pkg in bower grunt gulp express serve
 do
 	npm_installed $pkg
 done
