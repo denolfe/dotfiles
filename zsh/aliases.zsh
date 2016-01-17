@@ -24,6 +24,11 @@ alias -g T='| tail'
 alias -g G='| grep'
 alias -g NUL='&> /dev/null'
 
+# Prompt if overwriting
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
 alias sudo='sudo '
 alias sagi='sudo apt-get install'
 alias sagu='sudo apt-get update'
