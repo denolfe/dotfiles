@@ -38,6 +38,8 @@ alias e='pantheon-files'
 alias e.='pantheon-files .'
 alias hs='history | grep -i $1'
 alias .f='cd ~/.dotfiles'
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
 
 # Other bash stuff
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
