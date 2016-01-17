@@ -7,9 +7,11 @@ My dotfiles for Elementary OS
 ## Components
 
 - Makefile
-  - `bootstrap` - links all `*.symlink` files as `.filename` in `~` directory
+  - `sync` - links all `*.symlink` files as `.filename` in `~` directory
   - `install` - Runs all `install.sh` files
   - `check` - Checks for dependencies listed in `dependencies` file project root
+  - `update` - Updates git submodules and zgen
+  - `list` - Quick list of installers, aliases, and path additions
 - Zsh Configuration
   - [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
   - [Zgen](https://github.com/tarjoilija/zgen)
