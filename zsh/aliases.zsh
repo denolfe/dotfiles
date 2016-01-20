@@ -20,6 +20,7 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g G='| grep'
 alias -g NUL='&> /dev/null'
+alias -g C='| xclip -selection c'
 
 # Prompt if overwriting
 alias cp='cp -i'
@@ -36,6 +37,8 @@ alias hs='history | grep -i $1'
 alias .f='cd ~/.dotfiles'
 alias fd='find . -type d -name'
 alias ff='find . -type f -name'
+alias pbcopy='xclip -selection c'
+alias pbpaste='xclip -selection clipboard -o'
 
 # Other bash stuff
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
