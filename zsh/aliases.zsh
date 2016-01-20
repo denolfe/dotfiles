@@ -21,6 +21,7 @@ alias -g T='| tail'
 alias -g G='| grep'
 alias -g NUL='&> /dev/null'
 alias -g C='| xclip -selection c'
+alias -g J='| python -m json.tool'
 
 # Prompt if overwriting
 alias cp='cp -i'
