@@ -1,14 +1,14 @@
 sync:
-	@script/bootstrap
+	@_script/bootstrap
 
 install:
-	@script/install
+	@_script/install
 
 check:
-	@script/check
+	@_script/check
 
 update:
-	@script/update
+	@_script/update
 
 list:
-	@script/list
+	@_script/list

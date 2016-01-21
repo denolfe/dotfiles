@@ -2,7 +2,7 @@
 # 
 # Install pip
 
-source ~/.dotfiles/script/logging
+source ~/.dotfiles/_script/logging
 if [ "$(uname -s)" != "Linux" ];then
   exit 0
 fi

@@ -2,7 +2,7 @@
 #
 # Check for npm packages
 
-source ~/.dotfiles/script/logging
+source ~/.dotfiles/_script/logging
 
 header "Node"
 

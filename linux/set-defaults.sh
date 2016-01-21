@@ -2,7 +2,7 @@
 #
 # Set Linux Defaults
 
-source ~/.dotfiles/script/logging
+source ~/.dotfiles/_script/logging
 
 if test ! "$(which gsettings)"; then
   exit 0

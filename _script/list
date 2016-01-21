@@ -2,7 +2,7 @@
 #
 # List all dotfiles installers
 
-source ~/.dotfiles/script/logging
+source ~/.dotfiles/_script/logging
 set -e
 cd "$(dirname $0)"/..
 
