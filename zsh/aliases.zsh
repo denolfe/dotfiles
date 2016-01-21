@@ -42,9 +42,9 @@ alias pbcopy='xclip -selection c'
 alias pbpaste='xclip -selection clipboard -o'
 
 # Other bash stuff
-alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
-alias please='sudo $(fc -ln -1)'
-alias pnotify="notify-send -i utilities-terminal"
+alias mkcd='mkc'
+alias sta='st . -a'
+alias sto='sublo'
 
 # Apps
 alias t="touch"
