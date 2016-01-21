@@ -14,3 +14,5 @@
 	unp = log origin/master..HEAD
 	pom = push origin master
 	undolast = reset HEAD~1
+	sync = !zsh -ic git-sync
+	add-upstream = !zsh -ic add-upstream
