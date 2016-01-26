@@ -1,4 +1,7 @@
+#!/usr/bin/env bash
+#
 # Solarized Themes
+
 set_dark () {
 	gsettings set org.pantheon.terminal.settings font 'Droid Sans Mono for Powerline 10'
 	gsettings set org.pantheon.terminal.settings background '#00002B2B3636'

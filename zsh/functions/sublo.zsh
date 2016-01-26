@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#
 # Create file then open in Sublime
 sublo() {
 	if [ -z "$1" ]

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 alias ns='npm start'
 alias npis='npm install --save'

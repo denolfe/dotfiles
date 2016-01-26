@@ -5,7 +5,7 @@ install:
 	@_script/install
 
 lint:
-	@_script/lint
+	@./build.sh
 
 check:
 	@_script/check

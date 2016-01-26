@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 alias rl='source ~/.zshrc; echo ".zshrc reloaded"'
 alias regen='zgen reset;source ~/.zshrc'
 
