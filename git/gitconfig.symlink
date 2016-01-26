@@ -16,3 +16,4 @@
 	undolast = reset HEAD~1
 	sync = !zsh -ic git-sync
 	add-upstream = !zsh -ic add-upstream
+	editlast = commit --amend -m
