@@ -12,7 +12,7 @@ header "Python"
 if [ -x "$(command -v pip)" ]; then
 	success pip
 else
-	error npm
+	error pip
 	installing pip
 	sudo curl https://bootstrap.pypa.io/get-pip.py --output /tmp/get-pip.py
 	sudo -H python /tmp/get-pip.py
@@ -20,13 +20,13 @@ else
 fi
 
 pip_installed() {
-	if pip list | grep $1 &> /dev/null; then
-		success $1
+	if pip list | grep "$1" &> /dev/null; then
+		success "$1"
 	else
-		error $1
-		installing $1
-		sudo -H pip install $1
-		success $1
+		error "$1"
+		installing "$1"
+		sudo -H pip install "$1"
+		success "$1"
 	fi
 }
 
