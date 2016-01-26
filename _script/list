@@ -4,25 +4,25 @@
 
 source ~/.dotfiles/_script/logging
 set -e
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 
 header "List of Installers"
 
 # Get all installers
 for file in $DF/*/install.sh; do
-  arrow $(basename $(dirname $file))
+  arrow "$(basename "$(dirname "$file")")"
 done
 
 header "List of Aliases"
 # Get all aliases
 for file in $DF/*/aliases.zsh; do
-  arrow $(basename $(dirname $file))
+  arrow "$(basename "$(dirname "$file")")"
 done
 
 header "List of Path Additions"
-# Get all aliases
+# Get all path additions
 for file in $DF/*/path.zsh; do
-  arrow $(basename $(dirname $file))
+  arrow "$(basename "$(dirname "$file")")"
 done
 
 echo ''

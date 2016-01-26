@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+# 
+# Slim down elementary install on chromebook
+
 sudo -v
 
 sudo apt-get remove --purge -y kodi kodi-bin

@@ -4,7 +4,10 @@
 
 set -e
 
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 
 # find the installers and run them iteratively
-find . -maxdepth 2 -name install.sh | sort -n | while read installer ; do sh -c "${installer}" ; done
+find . -maxdepth 2 -name install.sh | egrep -v "_build" | sort -n | while read installer
+do 
+  sh -c "${installer}"
+done

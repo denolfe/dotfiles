@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 source ~/.dotfiles/_script/logging
 
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 
 header "Main Dependency Check"
 deps=$(cat ./dependencies)
 
 for dep in $deps
 do
-	check_for_dep $dep
+	check_for_dep "$dep"
 done
 
 echo ''

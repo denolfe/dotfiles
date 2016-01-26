@@ -18,7 +18,7 @@ fi
 if [ ! -d ~/.nvm ]; then
 	error nvm
 	installing nvm
-	git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
+	git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout "$(git describe --abbrev=0 --tags)"
 	installing_done
 fi
 source ~/.nvm/nvm.sh
@@ -26,13 +26,13 @@ nvm use system >/dev/null 2>&1
 success "node $(node -v)"
 
 npm_installed() {
-	if npm list -g $1 | grep $1 --quiet; then
-		success $1
+	if npm list -g "$1" | grep "$1" --quiet; then
+		success "$1"
 	else
-		error $1
-		installing $1
-		sudo npm install $1 -g
-		success $1
+		error "$1"
+		installing "$1"
+		sudo npm install "$1" -g
+		success "$1"
 	fi
 }
 

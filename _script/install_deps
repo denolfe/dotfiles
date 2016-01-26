@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 source ~/.dotfiles/_script/logging
 
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 
 dep_files=$(find . -name dependencies_apt)
 for dep_list in $dep_files
 do
-	header "$(get_dir $dep_list) Dependencies"
-	for dep in $(cat $dep_list)
+	header "$(get_dir "$dep_list") Dependencies"
+	$dep_list | while read dep
 	do
-		check_or_install_dep $dep
+		check_or_install_dep "$dep"
 	done
 done
 
