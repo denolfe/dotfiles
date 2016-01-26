@@ -2,7 +2,7 @@ language: bash
 install:
   - ./_build/install.sh
 script:
-  - ./_build/build.sh
+  - ./build.sh
 notifications:
   email: false
 sudo: required
