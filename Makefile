@@ -4,6 +4,9 @@ sync:
 install:
 	@_script/install
 
+lint:
+	@_script/lint
+
 check:
 	@_script/check
 

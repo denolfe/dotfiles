@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# 
+# Lint files using ShellCheck
+
+source ~/.dotfiles/_script/logging
+
+header "Linting files with ShellCheck\n"
+
+./_build/build.sh
