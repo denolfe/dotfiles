@@ -1,8 +1,13 @@
-# Dotfiles
+# Dotfiles [![Build Status][tshield]][tlink] [![Powered by zgen][zshield]][zlink]
 
-My dotfiles for Elementary OS
+My personal dotfiles
 
 ![Image](preview.png)
+
+[tshield]: https://img.shields.io/travis/denolfe/dotfiles.svg?style=flat-square
+[tlink]: https://travis-ci.org/denolfe/dotfiles
+[zlink]: https://github.com/tarjoilija/zgen
+[zshield]: https://img.shields.io/badge/powered%20by-zgen-blue.svg?style=flat-square
 
 ## Components
 
@@ -12,9 +17,10 @@ My dotfiles for Elementary OS
   - `check` - Checks for dependencies listed in `dependencies` file project root
   - `update` - Updates git submodules and zgen
   - `list` - Quick list of installers, aliases, and path additions
+- [Travis CI builds](https://travis-ci.org/denolfe/dotfiles) with [Shellcheck](http://www.shellcheck.net) linting
 - Zsh Configuration
-  - [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
-  - [Zgen](https://github.com/tarjoilija/zgen)
+  - [Zgen](https://github.com/tarjoilija/zgen) - Plugin Manager
+  - [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) - Zsh config framework
   - Agnoster theme (modified)
   - Functions and Aliases
 - xbindkeys configuration
