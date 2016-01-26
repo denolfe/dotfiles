@@ -32,7 +32,7 @@ alias sagi='sudo apt-get install'
 alias sagu='sudo apt-get update'
 alias saar='sudo add-apt-repository'
 alias sagr='sudo apt-get remove'
-alias hs='history | grep -i $1'
+hs(){ history | grep -i "$1" ;}
 alias .f='cd ~/.dotfiles'
 alias fd='find . -type d -name'
 alias ff='find . -type f -name'
