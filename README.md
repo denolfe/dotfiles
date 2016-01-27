@@ -1,6 +1,8 @@
-# Dotfiles [![Build Status][tshield]][tlink] [![Powered by zgen][zshield]][zlink]
+# Dotfiles 
 
-My personal dotfiles
+[![Build Status][tshield]][tlink] [![Powered by zgen][zshield]][zlink]
+
+> Personal dotfiles for Zsh, Git, Node, and more to allow bootstrapping a new system.
 
 ![Image](preview.png)
 
