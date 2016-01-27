@@ -20,6 +20,7 @@ if ! zgen saved; then
     zgen load caarlos0/zsh-mkc
     zgen load caarlos0/zsh-git-sync
     zgen load caarlos0/zsh-add-upstream
+    zgen load denolfe/zsh-travis
 
     # These 2 must be in this order
 	zgen load zsh-users/zsh-syntax-highlighting

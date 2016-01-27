@@ -17,3 +17,4 @@
 	sync = !zsh -ic git-sync
 	add-upstream = !zsh -ic add-upstream
 	editlast = commit --amend -m
+	trav = !zsh -ic git-trav
