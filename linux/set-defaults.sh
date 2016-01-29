@@ -13,6 +13,11 @@ header "Linux Defaults"
 gsettings set com.canonical.indicator.bluetooth visible false
 gsettings set org.pantheon.files.preferences single-click false
 
+success "Configure Pantheon Button Layout"
+gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gtk/DecorationLayout': <'close,minimize,maximize'>}"
+gsettings set org.pantheon.desktop.gala.appearance button-layout "'close,minimize,maximize'"
+gsettings set org.gnome.desktop.wm.preferences button-layout "'close,minimize,maximize'"
+
 success "Configure Workspaces"
 gsettings set org.pantheon.desktop.gala.behavior dynamic-workspaces false
 gsettings set org.gnome.desktop.wm.preferences num-workspaces 4
