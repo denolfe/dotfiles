@@ -11,6 +11,7 @@ fi
 header "Linux Defaults"
 
 gsettings set com.canonical.indicator.bluetooth visible false
+gsettings set org.pantheon.files.preferences single-click false
 
 success "Configure Workspaces"
 gsettings set org.pantheon.desktop.gala.behavior dynamic-workspaces false
