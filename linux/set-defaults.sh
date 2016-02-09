@@ -32,7 +32,9 @@ gsettings set org.pantheon.terminal.settings palette '#070736364242:#DCDC32322F2
 gsettings set org.pantheon.terminal.settings opacity 98	
 gsettings set org.pantheon.terminal.settings follow-last-tab true
 
-success "Configure Plank"
-sed -i "s/^HideMode=.$/HideMode=1/" ~/.config/plank/dock1/settings
+if test "$(which plank)"; then
+	success "Configure Plank"
+	sed -i "s/^HideMode=.$/HideMode=1/" ~/.config/plank/dock1/settings
+fi
 
 footer "Defaults configured"
