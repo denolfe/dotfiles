@@ -10,6 +10,7 @@
 
 // ==/UserScript==
 window.addEventListener('load', function() {
-  if ($(".live-count").length > 0)
+  // if stream is live or it is a VOD
+  if ($(".live-count").length > 0 || $(location).attr('href').match(/\/v\//g).length)
     $("button.player-button--theatre").trigger("click");
 }, false);
