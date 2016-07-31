@@ -5,8 +5,6 @@
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd)
 
-set -e
-
 echo ''
 
 info () {
