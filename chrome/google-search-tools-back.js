@@ -6,6 +6,7 @@
 // @homepage      https://userstyles.org/styles/95110
 // @run-at        document-start
 // @version       0.20150627081730
+// @match         https://www.google.com/search*
 // ==/UserScript==
 (function() {var css = "";
 css += [
