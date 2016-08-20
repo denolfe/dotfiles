@@ -90,6 +90,10 @@
 "wmctrl -x -a jetbrains-webstorm"
    Mod4 + apostrophe
 
+#Maximize Chrome
+"xset r off; xdotool keyup --delay 0 --window 0 F5 key --delay 0 --window 0 --clearmodifiers F11; xset r on"
+   Mod4 + F5
+
 #Spotify Play/Pause
 "xdotool key XF86AudioPlay"
    Mod4 + bracketright
