@@ -11,14 +11,14 @@
 // ==/UserScript==
 window.addEventListener('load', function() {
   // if stream is live or it is a VOD
-  if ($(".live-count").length > 0 || $(location).attr('href').match(/\/v\//g).length) {
+  if ($('.cn-metabar__livecount > div').text().trim().split(' ')[0].length > 0 || $(location).attr('href').match(/\/v\//g).length) {
     $("button.player-button--theatre").trigger("click");
     getViewers();
   }
 }, false);
 
 function getViewers() {
-  var viewers = $('span.live-count').text().trim();
+  var viewers = $('.cn-metabar__livecount > div').text().trim().split(' ')[0];
   if ($('.new-viewers').length === 0)
     $('.chat-buttons-container').append("<p class='new-viewers'></p>");
   $('p.new-viewers').text(viewers + ' viewers');
