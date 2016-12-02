@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source ~/.dotfiles/_script/logging
+. ~/.dotfiles/_script/logging
 
 if [ "$(uname -s)" != "Linux" ];then
   exit 0
