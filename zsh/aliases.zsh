@@ -33,10 +33,9 @@ alias sudo='sudo '
 
 hs(){ history | grep -i "$1" ;}
 alias .f='cd ~/.dotfiles'
-alias fd='find . -type d -name'
-alias ff='find . -type f -name'
 
-
+ff(){ find . -type f -name "$1" ;}
+fd(){ find . -type d -name "$1" ;}
 
 if [ "$(uname -s)" = "Linux" ];then
 	alias ls='ls --color=auto -p'
