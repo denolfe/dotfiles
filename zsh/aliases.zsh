@@ -3,7 +3,7 @@
 alias rl='source ~/.zshrc; echo ".zshrc reloaded"'
 alias regen='zgen reset;source ~/.zshrc'
 
-alias ls='ls --color=auto -p'
+alias ls='ls -p'
 alias ll='ls -la'
 
 # Easier navigation

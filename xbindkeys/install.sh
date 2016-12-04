@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 . ~/.dotfiles/_script/logging
 
-if [ "$(uname -s)" != "Linux" ];then
-  exit 0
-fi
+[ "$(uname -s)" != "Linux" ] && exit 0
 
 header "xbindkeys Dependencies"
 
