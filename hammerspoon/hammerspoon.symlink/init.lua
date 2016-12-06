@@ -20,7 +20,7 @@ hs.fnutils.each({
   { key='w', positions = { grid.fullScreen, grid.centeredBig }},
   { key='e', positions = { grid.rightHalf, grid.topRight, grid.bottomRight }},
 }, function(entry)
-  hs.hotkey.bind(hyper, entry.key, hyperKey.chain(entry.positions))
+  hyperKey.chain(entry)
 end)
 
 -----------------------------------------------

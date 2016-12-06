@@ -21,7 +21,7 @@ end
 local lastSeenChain = nil
 local lastSeenWindow = nil
 
-module.chain = function(movements)
+local chain = function(movements)
   local chainResetInterval = 2 -- seconds
   local cycleLength = #movements
   local sequenceNumber = 1
@@ -50,5 +50,10 @@ module.chain = function(movements)
     sequenceNumber = sequenceNumber % cycleLength + 1
   end
 end 
+
+module.chain = function(entry)
+  hs.hotkey.bind(hyper, entry.key, chain(entry.positions))
+end
+
 
 return module
