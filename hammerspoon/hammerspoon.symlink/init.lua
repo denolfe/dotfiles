@@ -78,11 +78,10 @@ local chain = (function(movements)
   end
 end)
 
-
 hs.fnutils.each({
-  { key='q', positions = { grid.leftHalf, grid.leftTwoThirds, grid.topLeft, grid.bottomLeft, grid.leftThird }},
+  { key='q', positions = { grid.leftHalf, grid.leftTwoThirds, grid.topLeft, grid.bottomLeft }},
   { key='w', positions = { grid.fullScreen, grid.centeredBig }},
-  { key='e', positions = { grid.rightHalf, grid.rightTwoThirds, grid.topRight, grid.bottomRight, grid.rightThird }},
+  { key='e', positions = { grid.rightHalf, grid.rightTwoThirds, grid.topRight, grid.bottomRight }},
 }, function(entry)
   hs.hotkey.bind(hyper, entry.key, chain(entry.positions))
 end)
@@ -91,25 +90,24 @@ end)
 -- Hotkeys
 -----------------------------------------------
 
-local hotkeys = {
+hs.fnutils.each({
   -- Movement
-  { 'h', {}, 'left'},
-  { 'j', {}, 'down'},
-  { 'k', {}, 'up'},
-  { 'l', {}, 'right'},
-  { 'n', {'cmd'}, 'left'},  -- beginning of line
-  { 'p', {'cmd'}, 'right'}, -- end of line
-  { 'm', {'alt'}, 'left'},  -- back word
-  { '.', {'alt'}, 'right'}, -- forward word
+  { key='h', mod={}, direction='left'},
+  { key='j', mod={}, direction='down'},
+  { key='k', mod={}, direction='up'},
+  { key='l', mod={}, direction='right'},
+  { key='n', mod={'cmd'}, direction='left'},  -- beginning of line
+  { key='p', mod={'cmd'}, direction='right'}, -- end of line
+  { key='m', mod={'alt'}, direction='left'},  -- back word
+  { key='.', mod={'alt'}, direction='right'}, -- forward word
 
   -- Rebinds
-  { 'delete', {}, 'forwarddelete'} -- forward delete
-}
-for i,bnd in ipairs(hotkeys) do
-  hs.hotkey.bind(hyper, bnd[1], function()
-    hs.eventtap.keyStroke(bnd[2],bnd[3])
+  { key='delete', mod={}, direction='forwarddelete'} -- forward delete
+}, function(hotkey)
+  hs.hotkey.bind(hyper, hotkey.key, function()
+    hs.eventtap.keyStroke(hotkey.mod, hotkey.direction)
   end)
-end
+end)
 
 -----------------------------------------------
 -- App shortcuts
