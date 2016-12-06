@@ -26,6 +26,11 @@ end)
 -----------------------------------------------
 -- Hotkeys
 -----------------------------------------------
+local fastKeyStroke = function(modifiers, character)
+  local event = require("hs.eventtap").event
+  event.newKeyEvent(modifiers, string.lower(character), true):post()
+  event.newKeyEvent(modifiers, string.lower(character), false):post()
+end
 
 hs.fnutils.each({
   -- Movement
@@ -41,9 +46,11 @@ hs.fnutils.each({
   -- Rebinds
   { key='delete', mod={}, direction='forwarddelete'} -- forward delete
 }, function(hotkey)
-  hs.hotkey.bind(hyper, hotkey.key, function()
-    hs.eventtap.keyStroke(hotkey.mod, hotkey.direction)
-  end)
+    hs.hotkey.bind(hyper, hotkey.key, 
+      function() fastKeyStroke(hotkey.mod, hotkey.direction) end,
+      nil,
+      function() fastKeyStroke(hotkey.mod, hotkey.direction) end
+    )
 end)
 
 hs.hotkey.bind(hyper, 'escape', function() 
