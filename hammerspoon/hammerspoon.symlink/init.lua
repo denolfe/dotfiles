@@ -7,6 +7,7 @@ hs.grid.setGrid('12x12')
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 
+local reloader = require('ext.reloader')
 local chain = require('ext.application').chain
 local grid = require('ext.grid')
 
@@ -45,6 +46,10 @@ hs.fnutils.each({
   end)
 end)
 
+hs.hotkey.bind(hyper, 'escape', function() 
+  reloader.reload(true)
+end)
+
 -----------------------------------------------
 -- App shortcuts
 -----------------------------------------------
@@ -58,20 +63,5 @@ hs.fnutils.each({
   end)
 end)
 
------------------------------------------------
--- Reload config on write
------------------------------------------------
-
-function reload_config(files)
-    hs.reload()
-end
-hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reload_config):start()
-hs.alert.show("Config loaded")
-
------------------------------------------------
--- Hyper i to show window hints
------------------------------------------------
-
-hs.hotkey.bind(hyper, '/', function()
-    hs.hints.windowHints()
-end)
+-- Start Reloader
+reloader.init()
