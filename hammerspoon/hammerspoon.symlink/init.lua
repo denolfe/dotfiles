@@ -7,9 +7,6 @@ hs.grid.setGrid('12x12')
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 
-require("hs.application")
-require("hs.window")
-
 -----------------------------------------------
 -- Window Grid
 -----------------------------------------------
