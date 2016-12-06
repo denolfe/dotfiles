@@ -16,9 +16,9 @@ local grid = require('grid')
 -----------------------------------------------
 
 hs.fnutils.each({
-  { key='q', positions = { grid.leftHalf, grid.leftTwoThirds, grid.topLeft, grid.bottomLeft }},
+  { key='q', positions = { grid.leftHalf, grid.topLeft, grid.bottomLeft }},
   { key='w', positions = { grid.fullScreen, grid.centeredBig }},
-  { key='e', positions = { grid.rightHalf, grid.rightTwoThirds, grid.topRight, grid.bottomRight }},
+  { key='e', positions = { grid.rightHalf, grid.topRight, grid.bottomRight }},
 }, function(entry)
   hs.hotkey.bind(hyper, entry.key, chain(entry.positions))
 end)
