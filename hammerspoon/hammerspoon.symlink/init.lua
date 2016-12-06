@@ -7,9 +7,9 @@ hs.grid.setGrid('12x12')
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 
-local reloader = require('ext.reloader')
-local chain = require('ext.application').chain
-local grid = require('ext.grid')
+local reloader = require('reloader')
+local chain = require('application').chain
+local grid = require('grid')
 
 -----------------------------------------------
 -- Window Grid Binds
