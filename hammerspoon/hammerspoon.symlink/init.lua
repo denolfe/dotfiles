@@ -112,14 +112,15 @@ end)
 -----------------------------------------------
 -- App shortcuts
 -----------------------------------------------
-local apps = {
-  { ';', 'iTerm'}
-}
-for i,app in ipairs(apps) do
-  hs.hotkey.bind(hyper, app[1], function()
-    hs.application.launchOrFocus(app[2])
+
+hs.fnutils.each({
+  { key = ';', app = 'iTerm' },
+  { key = "'", app = 'Google Chrome' }
+}, function(appBind)
+  hs.hotkey.bind(hyper, appBind.key, function() 
+    hs.application.launchOrFocus(appBind.app) 
   end)
-end
+end)
 
 -----------------------------------------------
 -- Reload config on write
