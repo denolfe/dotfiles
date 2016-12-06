@@ -11,7 +11,7 @@ require("hs.window")
 -- Window Grid
 -----------------------------------------------
 
-positions = {
+local positions = {
   maximized = hs.layout.maximized,
   centered = {x=0.025, y=0.025, w=0.95, h=0.95},
 
@@ -38,7 +38,7 @@ positions = {
   chat = {x=0.5, y=0, w=0.35, h=0.5}
 }
 
-grid = {
+local grid = {
   {key='q', units={positions.upper50Left50}},
   {key='w', units={positions.maximized}},
   {key='e', units={positions.upper50Right50}},
@@ -76,7 +76,7 @@ end)
 -- Hotkeys
 -----------------------------------------------
 
-hotkeys = {
+local hotkeys = {
   -- Movement
   { 'h', {}, 'left'},
   { 'j', {}, 'down'},
@@ -99,7 +99,7 @@ end
 -----------------------------------------------
 -- App shortcuts
 -----------------------------------------------
-apps = {
+local apps = {
   { ';', 'iTerm'}
 }
 for i,app in ipairs(apps) do
