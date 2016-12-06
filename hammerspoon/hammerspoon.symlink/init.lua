@@ -8,7 +8,6 @@ hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 
 local reloader = require('reloader')
-local chain = require('application').chain
 local grid = require('grid')
 local hyperKey = require('hyper')
 
@@ -21,7 +20,7 @@ hs.fnutils.each({
   { key='w', positions = { grid.fullScreen, grid.centeredBig }},
   { key='e', positions = { grid.rightHalf, grid.topRight, grid.bottomRight }},
 }, function(entry)
-  hs.hotkey.bind(hyper, entry.key, chain(entry.positions))
+  hs.hotkey.bind(hyper, entry.key, hyperKey.chain(entry.positions))
 end)
 
 -----------------------------------------------
