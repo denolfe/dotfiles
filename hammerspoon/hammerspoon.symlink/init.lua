@@ -10,6 +10,7 @@ hs.grid.MARGINY = 0
 local reloader = require('reloader')
 local chain = require('application').chain
 local grid = require('grid')
+local hyperKey = require('hyper')
 
 -----------------------------------------------
 -- Window Grid Binds
@@ -26,31 +27,22 @@ end)
 -----------------------------------------------
 -- Hotkeys
 -----------------------------------------------
-local fastKeyStroke = function(modifiers, character)
-  local event = require("hs.eventtap").event
-  event.newKeyEvent(modifiers, string.lower(character), true):post()
-  event.newKeyEvent(modifiers, string.lower(character), false):post()
-end
 
 hs.fnutils.each({
   -- Movement
-  { key='h', mod={}, direction='left'},
-  { key='j', mod={}, direction='down'},
-  { key='k', mod={}, direction='up'},
-  { key='l', mod={}, direction='right'},
-  { key='n', mod={'cmd'}, direction='left'},  -- beginning of line
-  { key='p', mod={'cmd'}, direction='right'}, -- end of line
-  { key='m', mod={'alt'}, direction='left'},  -- back word
-  { key='.', mod={'alt'}, direction='right'}, -- forward word
+  { key='h', mod={}, direction='left', shouldRepeat=true },
+  { key='j', mod={}, direction='down', shouldRepeat=true },
+  { key='k', mod={}, direction='up', shouldRepeat=true },
+  { key='l', mod={}, direction='right', shouldRepeat=true },
+  { key='n', mod={'cmd'}, direction='left' },  -- beginning of line
+  { key='p', mod={'cmd'}, direction='right' }, -- end of line
+  { key='m', mod={'alt'}, direction='left' },  -- back word
+  { key='.', mod={'alt'}, direction='right' }, -- forward word
 
   -- Rebinds
-  { key='delete', mod={}, direction='forwarddelete'} -- forward delete
+  { key='delete', mod={}, direction='forwarddelete', shouldRepeat=true } -- forward delete
 }, function(hotkey)
-    hs.hotkey.bind(hyper, hotkey.key, 
-      function() fastKeyStroke(hotkey.mod, hotkey.direction) end,
-      nil,
-      function() fastKeyStroke(hotkey.mod, hotkey.direction) end
-    )
+    hyperKey.bind(hotkey)
 end)
 
 hs.hotkey.bind(hyper, 'escape', function() 
