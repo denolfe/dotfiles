@@ -2,26 +2,15 @@
 -----------------------------------------------
 
 local hyper = {"shift", "cmd", "alt", "ctrl"}
-hs.window.animationDuration = 0
-hs.grid.setGrid('12x12')
-hs.grid.MARGINX = 0
-hs.grid.MARGINY = 0
-
 local reloader = require('reloader')
-local grid = require('grid')
+local windowgrid = require('windowgrid')
 local hyperKey = require('hyper')
 
 -----------------------------------------------
 -- Window Grid Binds
 -----------------------------------------------
 
-hs.fnutils.each({
-  { key='q', positions = { grid.leftHalf, grid.topLeft, grid.bottomLeft }},
-  { key='w', positions = { grid.fullScreen, grid.centeredBig }},
-  { key='e', positions = { grid.rightHalf, grid.topRight, grid.bottomRight }},
-}, function(entry)
-  hyperKey.chain(entry)
-end)
+windowgrid.new(hyper)
 
 -----------------------------------------------
 -- Hotkeys
