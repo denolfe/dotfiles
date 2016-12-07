@@ -4,7 +4,7 @@
 local hyper = {"shift", "cmd", "alt", "ctrl"}
 local reloader = require('reloader')
 local windowgrid = require('windowgrid')
-local hyperKey = require('hyper')
+local hotkey = require('hotkey')
 
 -----------------------------------------------
 -- Window Grid Binds
@@ -16,22 +16,7 @@ windowgrid.new(hyper)
 -- Hotkeys
 -----------------------------------------------
 
-hs.fnutils.each({
-  -- Movement
-  { key='h', mod={}, direction='left', shouldRepeat=true },
-  { key='j', mod={}, direction='down', shouldRepeat=true },
-  { key='k', mod={}, direction='up', shouldRepeat=true },
-  { key='l', mod={}, direction='right', shouldRepeat=true },
-  { key='n', mod={'cmd'}, direction='left' },  -- beginning of line
-  { key='p', mod={'cmd'}, direction='right' }, -- end of line
-  { key='m', mod={'alt'}, direction='left' },  -- back word
-  { key='.', mod={'alt'}, direction='right' }, -- forward word
-
-  -- Rebinds
-  { key='delete', mod={}, direction='forwarddelete', shouldRepeat=true } -- forward delete
-}, function(hotkey)
-    hyperKey.bind(hotkey)
-end)
+hotkey.new(hyper)
 
 hs.hotkey.bind(hyper, 'escape', function() 
   reloader.reload(true)
