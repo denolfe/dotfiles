@@ -5,6 +5,7 @@ local hyper = {"shift", "cmd", "alt", "ctrl"}
 local reloader = require('reloader')
 local windowgrid = require('windowgrid')
 local hotkey = require('hotkey')
+local appfocus = require('appfocus')
 
 -----------------------------------------------
 -- Window Grid Binds
@@ -46,14 +47,12 @@ end)
 -- App shortcuts
 -----------------------------------------------
 
-hs.fnutils.each({
-  { key = ';', app = 'iTerm' },
-  { key = "'", app = 'Google Chrome' }
-}, function(appBind)
-  hs.hotkey.bind(hyper, appBind.key, function() 
-    hs.application.launchOrFocus(appBind.app) 
-  end)
-end)
+appfocus.new(hyper,
+  {
+    { key = ';', app = 'iTerm' },
+    { key = "'", app = 'Google Chrome' }
+  }
+)
 
 -- Start Reloader
 reloader.init()
