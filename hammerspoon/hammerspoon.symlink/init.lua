@@ -11,7 +11,7 @@ local appfocus = require('appfocus')
 -- Window Grid Binds
 -----------------------------------------------
 
-windowgrid.new(hyper,
+windowgrid.mapbinds(hyper,
   {
     { key='q', positions = { windowgrid.grid.leftHalf, windowgrid.grid.topLeft, windowgrid.grid.bottomLeft }},
     { key='w', positions = { windowgrid.grid.fullScreen, windowgrid.grid.centeredBig }},
@@ -23,7 +23,7 @@ windowgrid.new(hyper,
 -- Hotkeys
 -----------------------------------------------
 
-hotkey.new(hyper,
+hotkey.mapbinds(hyper,
   {
     -- Movement
     { key='h', mod={}, direction='left', shouldRepeat=true },
@@ -47,7 +47,7 @@ end)
 -- App shortcuts
 -----------------------------------------------
 
-appfocus.new(hyper,
+appfocus.mapbinds(hyper,
   {
     { key = ';', app = 'iTerm' },
     { key = "'", app = 'Google Chrome' }

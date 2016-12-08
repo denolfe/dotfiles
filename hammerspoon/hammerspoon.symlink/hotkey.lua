@@ -16,7 +16,7 @@ local bindKey = function(modifier, hotkey)
    end
 end
 
-module.new = function(modifier, binds)
+module.mapbinds = function(modifier, binds)
 	hs.fnutils.each(binds, function(hotkey)
     bindKey(modifier, hotkey)
 	end)

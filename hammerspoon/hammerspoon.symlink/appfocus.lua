@@ -1,6 +1,6 @@
 local module = {}
 
-module.new = function(hotkey, binds)
+module.mapbinds = function(hotkey, binds)
   hs.fnutils.each(binds, function(appBind)
     hs.hotkey.bind(hotkey, appBind.key, function() 
       hs.application.launchOrFocus(appBind.app) 

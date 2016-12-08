@@ -59,7 +59,7 @@ module.grid = {
   centeredSmall = '4,4 4x4',
 }
 
-module.new = function(modifier, binds)
+module.mapbinds = function(modifier, binds)
   hs.fnutils.each(binds, function(entry)
     hs.hotkey.bind(modifier, entry.key, chain(entry.positions))
   end)
