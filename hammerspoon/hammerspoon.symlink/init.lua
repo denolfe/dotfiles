@@ -10,7 +10,13 @@ local hotkey = require('hotkey')
 -- Window Grid Binds
 -----------------------------------------------
 
-windowgrid.new(hyper)
+windowgrid.new(hyper,
+  {
+    { key='q', positions = { windowgrid.grid.leftHalf, windowgrid.grid.topLeft, windowgrid.grid.bottomLeft }},
+    { key='w', positions = { windowgrid.grid.fullScreen, windowgrid.grid.centeredBig }},
+    { key='e', positions = { windowgrid.grid.rightHalf, windowgrid.grid.topRight, windowgrid.grid.bottomRight }},
+  }
+)
 
 -----------------------------------------------
 -- Hotkeys

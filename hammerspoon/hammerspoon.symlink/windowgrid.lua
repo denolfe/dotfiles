@@ -37,7 +37,7 @@ local chain = function(movements)
   end
 end 
 
-local grid = {
+module.grid = {
   topHalf = '0,0 12x6',
   topThird = '0,0 12x4',
   topTwoThirds = '0,0 12x8',
@@ -59,21 +59,10 @@ local grid = {
   centeredSmall = '4,4 4x4',
 }
 
-module.new = function(modifier)
-  -- local self = setmetatable({}, module)
-  -- self.modifier = modifier
-
-  hs.fnutils.each({
-    { key='q', positions = { grid.leftHalf, grid.topLeft, grid.bottomLeft }},
-    { key='w', positions = { grid.fullScreen, grid.centeredBig }},
-    { key='e', positions = { grid.rightHalf, grid.topRight, grid.bottomRight }},
-  }, function(entry)
-    -- hyperKey.chain(entry)
+module.new = function(modifier, binds)
+  hs.fnutils.each(binds, function(entry)
     hs.hotkey.bind(modifier, entry.key, chain(entry.positions))
   end)
-
-  -- return self
 end
-
 
 return module
