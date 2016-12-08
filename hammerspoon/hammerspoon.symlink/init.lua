@@ -22,7 +22,21 @@ windowgrid.new(hyper,
 -- Hotkeys
 -----------------------------------------------
 
-hotkey.new(hyper)
+hotkey.new(hyper,
+  {
+    -- Movement
+    { key='h', mod={}, direction='left', shouldRepeat=true },
+    { key='j', mod={}, direction='down', shouldRepeat=true },
+    { key='k', mod={}, direction='up', shouldRepeat=true },
+    { key='l', mod={}, direction='right', shouldRepeat=true },
+    { key='n', mod={'cmd'}, direction='left' },  -- beginning of line
+    { key='p', mod={'cmd'}, direction='right' }, -- end of line
+    { key='m', mod={'alt'}, direction='left' },  -- back word
+    { key='.', mod={'alt'}, direction='right' }, -- forward word
+    -- Rebinds
+    { key='delete', mod={}, direction='forwarddelete', shouldRepeat=true } -- forward delete
+  }
+)
 
 hs.hotkey.bind(hyper, 'escape', function() 
   reloader.reload(true)
