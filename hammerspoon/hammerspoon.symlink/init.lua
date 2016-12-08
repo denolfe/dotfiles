@@ -1,7 +1,8 @@
 -- Set up
 -----------------------------------------------
 
-local hyper = {"shift", "cmd", "alt", "ctrl"}
+local hyper = {'shift', 'cmd', 'alt', 'ctrl'}
+local ultra = {'ctrl','alt','shift'}
 local reloader = require('reloader')
 local windowgrid = require('windowgrid')
 local hotkey = require('hotkey')
@@ -11,7 +12,7 @@ local appfocus = require('appfocus')
 -- Window Grid Binds
 -----------------------------------------------
 
-windowgrid.mapbinds(hyper,
+windowgrid.mapbinds(ultra,
   {
     { key='q', positions = { windowgrid.grid.leftHalf, windowgrid.grid.topLeft, windowgrid.grid.bottomLeft }},
     { key='w', positions = { windowgrid.grid.fullScreen, windowgrid.grid.centeredBig }},
@@ -23,7 +24,7 @@ windowgrid.mapbinds(hyper,
 -- Hotkeys
 -----------------------------------------------
 
-hotkey.mapbinds(hyper,
+hotkey.mapbinds(ultra,
   {
     -- Movement
     { key='h', mod={}, direction='left', shouldRepeat=true },
@@ -39,7 +40,7 @@ hotkey.mapbinds(hyper,
   }
 )
 
-hs.hotkey.bind(hyper, 'escape', function() 
+hs.hotkey.bind(ultra, 'escape', function() 
   reloader.reload(true)
 end)
 
@@ -47,7 +48,7 @@ end)
 -- App shortcuts
 -----------------------------------------------
 
-appfocus.mapbinds(hyper,
+appfocus.mapbinds(ultra,
   {
     { key = ';', app = 'iTerm' },
     { key = "'", app = 'Google Chrome' }
