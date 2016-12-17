@@ -31,6 +31,9 @@ if ! zgen saved; then
 	zmodload zsh/terminfo
 	bindkey "$terminfo[kcuu1]" history-substring-search-up
 	bindkey "$terminfo[kcud1]" history-substring-search-down
+    # Remember to bind escape sequences for iterm:
+    # Home = [1~
+    # End  = [4~
 
 	# Warn you when you run a command that you've got an alias for
     zgen load djui/alias-tips
