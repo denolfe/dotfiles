@@ -2,7 +2,7 @@
 
 [![Powered by zgen][zshield]][zlink]
 
-> Personal dotfiles for Zsh, Git, Node, and more to allow bootstrapping a new system.
+> Personal dotfiles configuration for Zsh, Git, Hammerspoon, and more to allow bootstrapping a new system.
 
 ![Image](preview.png)
 
@@ -23,8 +23,8 @@
   - [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) - Zsh config framework
   - Agnoster theme (modified)
   - Functions and Aliases
-- xbindkeys configuration
-	- Super	+ HJKL movement
-  - Window activation hotkeys
-  - Acer C720 brightness keys
+- Hammerspoon configuration
+	- Caps+HJKL movement
+  - Window splitting via Caps+QWE
+  - Application launch/focus via Caps+keys
 - Git config and aliases (be sure to change user.name and user.email if using mine)
