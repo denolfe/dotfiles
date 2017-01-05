@@ -3,6 +3,7 @@
 # Some additional git aliases
 
 alias gbv='git branch -v'
+alias gau='git add -u'
 alias gh='git hist'
 
 git config --global alias.editlast 'commit --amend -m' # Make sure to unstage all first!
