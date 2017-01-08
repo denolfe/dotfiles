@@ -46,8 +46,7 @@ if ! zgen saved; then
 
     # Theme
     # zgen oh-my-zsh themes/agnoster
-    # zgen load $DF/zsh/agnoster-mod.zsh-theme
-    zgen load $DF/zsh/agnoster-test.zsh-theme
+    zgen load $DF/zsh/agnoster-mod.zsh-theme
 
     # Generate init.sh
     zgen save
