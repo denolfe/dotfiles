@@ -2,7 +2,7 @@
 #
 # Install Go
 
-source ../_script/logging
+source "$(dirname "$0")"/../_script/logging
 
 if [ "$(uname -s)" != "Darwin" ]; then
   exit 0
