@@ -2,7 +2,7 @@
 #
 # Update components
 
-source ~/.dotfiles/_script/logging
+source "$(dirname "$0")"/../_script/logging
 
 header "Updating Components\n"
 
