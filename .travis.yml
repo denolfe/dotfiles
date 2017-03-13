@@ -1,0 +1,10 @@
+language: bash
+sudo: required
+os:
+  - osx
+install:
+  - ./_build/install.sh
+script:
+  - ./_build/setup.sh
+notifications:
+  email: false

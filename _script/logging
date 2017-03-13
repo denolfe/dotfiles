@@ -1,9 +1,11 @@
+#!/usr/bin/env bash
+
 header()   { printf "\n\033[1;37m$@\033[0m\n"; }
 footer()   { printf "\n  \033[1;37m  $@\033[0m\n"; }
 success()  { printf " \033[1;32m  ✔ \033[0m  $@\n"; }
 error()    { printf " \033[1;31m  ✖ \033[0m  $@\n"; }
 arrow()    { printf " \033[1;34m  ➜ \033[0m  $@\n"; }
- 
+
 installing()    { printf " \033[1;37m  Installing $@... \033[0m"; }
 installing_done() { printf " \033[1;32m  ✔  done.\033[0m\n"; }
 
@@ -18,7 +20,7 @@ is_installed() {
 }
 
 check_for_dep () {
-	if [ -x "$(command -v $1)" ]; then 
+	if [ -x "$(command -v $1)" ]; then
 		success $1
 	else
 		error $1

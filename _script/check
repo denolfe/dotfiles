@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source ~/.dotfiles/_script/logging
+source "$(dirname "$0")"/../_script/logging
 
 cd "$(dirname "$0")"/..
 
