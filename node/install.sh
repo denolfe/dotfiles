@@ -22,18 +22,3 @@ fi
 source ~/.nvm/nvm.sh
 nvm use system >/dev/null 2>&1
 success "node $(node -v)"
-
-npm_installed() {
-	if npm list -g "$1" | grep "$1" --quiet; then
-		success "$1"
-	else
-		installing "$1"
-		sudo npm install "$1" -g --silent
-		success "$1"
-	fi
-}
-
-for pkg in bower grunt gulp express serve
-do
-	npm_installed $pkg
-done
