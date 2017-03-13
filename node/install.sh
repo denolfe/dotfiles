@@ -11,14 +11,14 @@ if [ -x "$(command -v npm)" ]; then
 else
 	error npm
 	installing npm
-	sudo apt-get -qq install npm > /dev/null
+	brew install npm
 	installing_done
 fi
 
 if [ ! -d ~/.nvm ]; then
 	error nvm
 	installing nvm
-	git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout "$(git describe --abbrev=0 --tags)"
+	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
 	installing_done
 fi
 source ~/.nvm/nvm.sh
@@ -29,9 +29,8 @@ npm_installed() {
 	if npm list -g "$1" | grep "$1" --quiet; then
 		success "$1"
 	else
-		error "$1"
 		installing "$1"
-		sudo npm install "$1" -g
+		sudo npm install "$1" -g --silent
 		success "$1"
 	fi
 }
