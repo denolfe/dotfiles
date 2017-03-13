@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source ../_script/logging
+source "$(dirname "$0")"/../_script/logging
 
 [ "$(uname -s)" != "Linux" ] && exit 0
 

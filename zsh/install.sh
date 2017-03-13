@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source ../_script/logging
+source "$(dirname "$0")"/../_script/logging
 
 header "Zsh Dependencies"
 

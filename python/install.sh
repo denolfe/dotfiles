@@ -2,7 +2,7 @@
 #
 # Install pip
 
-source ../_script/logging
+source "$(dirname "$0")"/../_script/logging
 
 if [ "$(uname -s)" != "Linux" ];then
   exit 0

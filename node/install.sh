@@ -2,7 +2,7 @@
 #
 # Check for npm packages
 
-source ../_script/logging
+source "$(dirname "$0")"/../_script/logging
 
 header "Node"
 
