@@ -23,7 +23,7 @@ header()   { printf "\n\033[1;37m%s\033[0m\n" "$@"; }
 footer()   { printf "\n  \033[1;37m  %s\033[0m\n" "$@"; }
 success()  { printf " \033[1;32m  ✔ \033[0m  %s\n" "$@"; }
 
-fail() { 
+fail() {
   printf " \033[1;31m  ✖ \033[0m  %s\n" "$@"
   echo ''
   exit
@@ -146,17 +146,3 @@ install_dotfiles () {
 setup_gitconfig
 install_dotfiles
 footer "Dotfiles Installed!"
-
-# If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]
-then
-  info "installing dependencies"
-  if source bin/dot > /tmp/dotfiles-dot 2>&1
-  then
-    success "dependencies installed"
-  else
-    fail "error installing dependencies"
-  fi
-fi
-
-
