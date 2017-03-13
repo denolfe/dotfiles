@@ -9,14 +9,12 @@ header "Node"
 if [ -x "$(command -v npm)" ]; then
 	success npm
 else
-	error npm
 	installing npm
 	brew install npm
 	installing_done
 fi
 
 if [ ! -d ~/.nvm ]; then
-	error nvm
 	installing nvm
 	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
 	installing_done
