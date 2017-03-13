@@ -1,11 +1,13 @@
-# Dotfiles 
+# Dotfiles
 
+[![Build Status][travis]](https://travis-ci.org/denolfe/dotfiles)
 [![Powered by zgen][zshield]][zlink]
 
 > Personal dotfiles configuration for Zsh, Git, Hammerspoon, and more to allow bootstrapping a new system.
 
 ![Image](preview.png)
 
+[travis]: https://travis-ci.org/denolfe/dotfiles.svg?branch=master
 [tshield]: https://img.shields.io/travis/denolfe/dotfiles.svg?style=flat-square
 [zlink]: https://github.com/tarjoilija/zgen
 [zshield]: https://img.shields.io/badge/powered%20by-zgen-blue.svg?style=flat-square
