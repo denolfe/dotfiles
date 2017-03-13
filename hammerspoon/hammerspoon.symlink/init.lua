@@ -68,7 +68,7 @@ appfocus.mapbinds(ultra,
   {
     { key = ';', app = 'iTerm' },
     { key = "'", app = 'Google Chrome' },
-    { key = "/", app = 'Sublime Text' }
+    { key = "/", app = 'Visual Studio Code' }
   }
 )
 
