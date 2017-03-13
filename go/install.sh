@@ -6,4 +6,6 @@ if [ "$(uname -s)" != "Darwin" ]; then
   exit 0
 fi
 
-brew install go
+if ! test "$(which go)"; then
+  brew install go
+fi
