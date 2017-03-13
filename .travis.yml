@@ -3,8 +3,8 @@ sudo: required
 os:
   - osx
 install:
-  - ./build/install.sh
+  - ./_build/install.sh
 script:
-  - ./build/setup.sh
+  - ./_build/setup.sh
 notifications:
   email: false
