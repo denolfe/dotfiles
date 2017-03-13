@@ -6,6 +6,3 @@
 	path = zsh/oh-my-zsh.symlink
 	url = https://github.com/robbyrussell/oh-my-zsh.git
 	ignore = dirty
-[submodule "_build"]
-	path = _build
-	url = https://github.com/caarlos0/shell-ci-build.git
