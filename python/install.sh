@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# 
+#
 # Install pip
 
-source ~/.dotfiles/_script/logging
+source ../_script/logging
+
 if [ "$(uname -s)" != "Linux" ];then
   exit 0
 fi

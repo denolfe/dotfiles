@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-. ~/.dotfiles/_script/logging
+source ../_script/logging
 
 [ "$(uname -s)" != "Linux" ] && exit 0
 
