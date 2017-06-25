@@ -6,6 +6,7 @@ alias gbv='git branch -v'
 alias gau='git add -u'
 alias gh='git hist'
 alias gcof='git checkout -f'
+alias groot='cd $(git rev-parse --show-toplevel)'
 
 git config --global alias.editlast 'commit --amend -m' # Make sure to unstage all first!
 git config --global alias.sync '!zsh -ic git-sync'
