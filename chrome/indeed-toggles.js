@@ -9,7 +9,7 @@
 
 (function() {
     'use strict';
-    var listingsRoot = document.getElementById("jobPostingsAnchor");
+    var listingsRoot = document.getElementById("recentsearches");
     
     // Create Toggle Sponsored Button
     var sponsoredButton = document.createElement("button");
@@ -46,6 +46,7 @@
     
     // Add buttons to page
     listingsRoot.append(sponsoredButton);
-    sponsoredButton.style.marginRight = "8px";
+    sponsoredButton.style.marginTop = "8px";
+    sponsoredButton.style.marginBottom = "8px";
     listingsRoot.append(visitedButton);
 })();
