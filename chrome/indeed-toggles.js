@@ -17,11 +17,11 @@
         var sponsoredLines = document.getElementsByClassName("sponsoredGray");
         Array.prototype.forEach.call(sponsoredLines, function(el) {
             var post = el.parentNode.parentNode.parentNode.parentNode;
-            if (post.style.display === 'none') {
-                post.style.display = 'block';
+            if (post !== undefined && post.style.display !== 'none') {
+                post.style.display = 'none';
             }
             else {
-                post.style.display = 'none';
+                post.style.display = 'block';
             }
         });
     };
@@ -31,14 +31,13 @@
     var visitedButton = document.createElement("button");
     visitedButton.onclick = function() {
       var visitedLines = document.getElementsByClassName("myjobs-serp-link");
-      if (visitedLines === undefined) return;
         Array.prototype.forEach.call(visitedLines, function(el) {
           var post = el.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-            if (post.style.display === 'none') {
-                post.style.display = 'block';
+            if (post !== undefined && post.style.display !== 'none') {
+                post.style.display = 'none';
             }
             else {
-                post.style.display = 'none';
+                post.style.display = 'block';
             }
         });
     };
