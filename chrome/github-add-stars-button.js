@@ -9,7 +9,7 @@
 
 (function() {
   'use strict';
-  var menuRoot = document.getElementsByClassName("header-nav")[0];
+  var menuRoot = document.getElementsByClassName("pl-2")[0];
   var newMenuRoot = document.getElementsByClassName("site-header-nav")[0];
     
   if (menuRoot !== undefined)
@@ -18,7 +18,8 @@
     var link = document.createElement("a");
     link.setAttribute('href','/stars');
     link.innerText = "Stars";
-    link.className += " header-nav-link";
+    link.className += " HeaderNavlink";
+    link.className += " px-2";
     li.appendChild(link);
     li.className += " header-nav-item";
     menuRoot.append(li);
