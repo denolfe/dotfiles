@@ -3,7 +3,6 @@ sudo: required
 os:
   - osx
 script:
-  - make install
   - make sync
 notifications:
   email: false
