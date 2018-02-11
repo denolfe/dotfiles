@@ -3,4 +3,5 @@ node
 npm
 ruby
 python
-bower
+go
+dotnet
