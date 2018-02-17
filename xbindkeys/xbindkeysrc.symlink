@@ -26,14 +26,9 @@
 # m:xxx + c:xxx 
 # Shift+... 
 
-
-
-
 #keystate_numlock = enable
 #keystate_scrolllock = enable
 #keystate_capslock = enable
-
-
 
 "xbindkeys-config"
    control+shift + q
@@ -74,20 +69,12 @@
 "wmctrl -x -a pantheon-terminal"
    Mod4 + semicolon
 
-#Brightness Up
-"sudo /usr/local/bin/change-brightness.sh 50"
-   F7
-
-#Brightness Down
-"sudo /usr/local/bin/change-brightness.sh -50"
-   F6
-
 #Activate Spotify
 "wmctrl -x -a spotify.Spotify"
    Mod4 + Return
 
-#Activate Sublime Text
-"wmctrl -x -a jetbrains-webstorm"
+#Activate VS Code
+"wmctrl -x -a code.Code"
    Mod4 + apostrophe
 
 #Maximize Chrome
@@ -103,7 +90,7 @@
    Mod4 + backslash
 
 #Activate Chrome
-"wmctrl -x -a Google-chrome-stable.Google-chrome-stable"
+"wmctrl -x -a google-chrome.Google-chrome"
    Mod4 + slash
 
 "wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz"
