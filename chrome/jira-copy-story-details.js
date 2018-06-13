@@ -4,7 +4,7 @@
 // @description Add options to the Export dropdown to copy story details as text or markdown
 // @namespace   Violentmonkey Scripts
 // @author      Elliot DeNolf
-// @match       *://jira.nordstrom.net/browse/*
+// @include     *://jira.*/browse/*
 // @grant       GM_setClipboard
 // @grant       GM_notification
 // ==/UserScript==
