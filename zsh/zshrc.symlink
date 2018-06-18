@@ -28,7 +28,7 @@ if ! zgen saved; then
     # These 2 must be in this order
 	zgen load zsh-users/zsh-syntax-highlighting
 	zgen load zsh-users/zsh-history-substring-search
-		
+
     # Set keystrokes for substring searching
 	zmodload zsh/terminfo
 	bindkey "$terminfo[kcuu1]" history-substring-search-up
@@ -48,7 +48,8 @@ if ! zgen saved; then
 
     # Theme
     # zgen oh-my-zsh themes/agnoster
-    zgen load $DF/zsh/agnoster-mod.zsh-theme
+    # zgen load $DF/zsh/agnoster-mod.zsh-theme
+    zgen load denysdovhan/spaceship-prompt spaceship
 
     # Generate init.sh
     zgen save
