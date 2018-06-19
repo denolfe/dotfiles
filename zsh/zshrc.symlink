@@ -55,6 +55,8 @@ if ! zgen saved; then
     zgen save
 fi
 
+export SPACESHIP_CHAR_SYMBOL="› "
+
 # History Options
 setopt append_history
 setopt extended_history
