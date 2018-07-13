@@ -107,5 +107,7 @@ for file in $DF/*/path.zsh; do
   . "$file"
 done
 
+source ~/.fzf.zsh
+
 # Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
