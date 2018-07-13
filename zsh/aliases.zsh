@@ -22,6 +22,7 @@ alias -g T='| tail'
 alias -g G='| grep'
 alias -g NUL='&> /dev/null'
 alias -g J='| python -m json.tool'
+alias -g CD='&& $_'
 
 # Prompt if overwriting
 alias cp='cp -i'
