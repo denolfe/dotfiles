@@ -4,6 +4,7 @@ alias rl='source ~/.zshrc; echo ".zshrc reloaded"'
 alias regen='zgen reset;source ~/.zshrc'
 
 alias ll='ls -la'
+alias llt='ls -lat'
 
 # Easier navigation
 alias ..='cd ..'
