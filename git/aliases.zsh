@@ -14,7 +14,7 @@ alias gdlast="git diff HEAD~1..HEAD"
 alias gh="git hist"
 alias glast="git log -1 HEAD"
 alias gpdel="git push --delete"
-alias groot="cd $(git rev-parse --show-toplevel)"
+alias groot='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --show-cdup`; fi'
 alias gstu="git status -uno"
 alias gundo="git reset HEAD~1"
 alias guns="git reset HEAD --"
