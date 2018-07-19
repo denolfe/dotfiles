@@ -127,5 +127,8 @@ for file in $DF/*/path.zsh; do
   . "$file"
 done
 
-source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS='--reverse'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export NVM_DIR="/home/denolfe/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
