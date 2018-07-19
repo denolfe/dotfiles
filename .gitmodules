@@ -6,3 +6,6 @@
 	path = zsh/oh-my-zsh.symlink
 	url = https://github.com/robbyrussell/oh-my-zsh.git
 	ignore = dirty
+[submodule "zsh/fzf.symlink"]
+	path = zsh/fzf.symlink
+	url = git@github.com:denolfe/fzf.git
