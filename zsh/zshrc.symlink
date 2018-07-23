@@ -47,14 +47,14 @@ if ! zgen saved; then
     zgen load zsh-users/zsh-completions src
 
     # Theme
-    POWERLEVEL9K_MODE='awesome-fontconfig'
+    POWERLEVEL9K_MODE='nerdfont-complete'
     zgen load bhilburn/powerlevel9k powerlevel9k
 
     # Generate init.sh
     zgen save
 fi
 
-POWERLEVEL9K_MODE='awesome-fontconfig'
+POWERLEVEL9K_MODE='nerdfont-complete'
 zgen load bhilburn/powerlevel9k powerlevel9k
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status dir dir_writable vcs)
@@ -66,6 +66,7 @@ POWERLEVEL9K_STATUS_ERROR_BACKGROUND="234"
 POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND="234"
 POWERLEVEL9K_VCS_GIT_ICON=""
 POWERLEVEL9K_VCS_GIT_GITHUB_ICON=""
+POWERLEVEL9K_VCS_GIT_GITLAB_ICON=""
 POWERLEVEL9K_HOME_ICON=""
 POWERLEVEL9K_HOME_SUB_ICON=""
 POWERLEVEL9K_FOLDER_ICON=""
