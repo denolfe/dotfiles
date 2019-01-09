@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Set git global settings
 git config --global push.default current
 git config --global core.autocrlf false
