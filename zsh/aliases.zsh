@@ -6,6 +6,12 @@ alias regen='zgen reset;source ~/.zshrc'
 alias ll='ls -la'
 alias llt='ls -lat'
 
+alias senable='sudo systemctl enable'
+alias srestart='sudo systemctl restart'
+alias sstatus='sudo systemctl status'
+alias sstop='sudo systemctl stop'
+alias sstart='sudo systemctl start'
+
 # Easier navigation
 alias ..='cd ..'
 alias ...='cd ../..'
