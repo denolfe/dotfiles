@@ -79,15 +79,6 @@ POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="white"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=2
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1
 
-# Fixes cutoff in Konsole: https://github.com/bhilburn/powerlevel9k/issues/231#issuecomment-349022409
-for key in ${(k)icons[@]}
-do
-    if [[ ! $key =~ 'SEPARATOR' ]]
-    then
-        icons[$key]="${icons[$key]} "
-    fi
-done
-
 # History Options
 setopt append_history
 setopt extended_history
@@ -118,9 +109,9 @@ REPORTTIME=2
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
 # Place to stash environment variables
-if [[ -a ~/.localrc ]]
+if [[ -a ~/.secrets ]]
 then
-  source ~/.localrc
+  source ~/.secrets
 fi
 
 # Load aliases
