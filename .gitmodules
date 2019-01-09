@@ -8,4 +8,4 @@
 	ignore = dirty
 [submodule "zsh/fzf.symlink"]
 	path = zsh/fzf.symlink
-	url = git@github.com:denolfe/fzf.git
+	url = https://github.com/denolfe/fzf.git
