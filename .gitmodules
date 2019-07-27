@@ -9,3 +9,6 @@
 [submodule "zsh/fzf.symlink"]
 	path = zsh/fzf.symlink
 	url = https://github.com/denolfe/fzf.git
+[submodule "zsh/asdf.symlink"]
+	path = zsh/asdf.symlink
+	url = https://github.com/asdf-vm/asdf.git

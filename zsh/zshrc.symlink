@@ -26,22 +26,21 @@ if ! zgen saved; then
     zgen load denolfe/zsh-travis
     zgen load denolfe/zsh-prepend
 
+    zgen oh-my-zsh plugins/asdf
+    zgen load kiurchv/asdf.plugin.zsh
+
     # These 2 must be in this order
-	zgen load zsh-users/zsh-syntax-highlighting
-	zgen load zsh-users/zsh-history-substring-search
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load zsh-users/zsh-history-substring-search
 
     # Set keystrokes for substring searching
-	zmodload zsh/terminfo
-	bindkey "$terminfo[kcuu1]" history-substring-search-up
-	bindkey "$terminfo[kcud1]" history-substring-search-down
-    # Remember to bind escape sequences for iterm:
-    # Home = [1~
-    # End  = [4~
+    zmodload zsh/terminfo
+    bindkey "$terminfo[kcuu1]" history-substring-search-up
+    bindkey "$terminfo[kcud1]" history-substring-search-down
+    bindkey "^k" history-substring-search-up
+    bindkey "^j" history-substring-search-down
 
-	bindkey "^k" history-substring-search-up
-	bindkey "^j" history-substring-search-down
-
-	# Warn you when you run a command that you've got an alias for
+  	# Warn you when you run a command that you've got an alias for
     zgen load djui/alias-tips
 
     # Adds aliases to open your current repo & branch on github.
@@ -135,5 +134,5 @@ done
 export FZF_DEFAULT_OPTS='--reverse'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export NVM_DIR="/home/denolfe/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+source ~/.asdf/asdf.sh
+source ~/.asdf/completions/asdf.bash
