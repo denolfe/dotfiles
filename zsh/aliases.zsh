@@ -49,6 +49,7 @@ case $OS in
   'Linux')
 		alias ls='ls --color=auto -p'
 		alias sagi='sudo apt-get install'
+                alias sai='sudo apt install'
 		alias sagu='sudo apt-get update'
 		alias saar='sudo add-apt-repository'
 		alias sagr='sudo apt-get remove'
