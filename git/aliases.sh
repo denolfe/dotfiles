@@ -2,6 +2,7 @@
 #
 # Some additional git aliases
 
+alias gst="git status"
 alias gau="git add -u"
 alias gbd="git branch -D"
 alias gbm="git branch --merged"
