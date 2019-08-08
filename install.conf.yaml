@@ -1,7 +1,7 @@
 - defaults:
     link:
       relink: true
-      craete: true
+      create: true
 
 - clean: ['~']
 
