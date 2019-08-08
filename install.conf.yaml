@@ -11,7 +11,7 @@
 - link:
     # ~/.dotfiles: ''
     ~/.gitconfig: 
-      path: gitconfig
+      path: git/gitconfig
       force: true
 
     ~/.vimrc: vim/vimrc
