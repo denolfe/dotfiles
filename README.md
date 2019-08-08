@@ -1,32 +1,27 @@
 # Dotfiles
 
-[![Build Status][travis]](https://travis-ci.org/denolfe/dotfiles)
-[![Powered by zgen][zshield]][zlink]
-
-> Personal dotfiles configuration for Zsh, Git, Hammerspoon, and more to allow bootstrapping a new system.
+> Personal dotfiles configuration for Zsh, Git, Vim, and more to rapidly bootstrap a new system.
 
 ![Image](preview.png)
 
-[travis]: https://travis-ci.org/denolfe/dotfiles.svg?branch=master
-[tshield]: https://img.shields.io/travis/denolfe/dotfiles.svg?style=flat-square
-[zlink]: https://github.com/tarjoilija/zgen
-[zshield]: https://img.shields.io/badge/powered%20by-zgen-blue.svg?style=flat-square
+## Installation
+
+```sh
+git clone git@github.com:denolfe/dotfiles.git .dotfiles 
+cd .dotfiles
+./install
+```
 
 ## Components
 
-- Makefile
-  - `sync` - links all `*.symlink` files as `.filename` in `~` directory
-  - `install` - Runs all `install.sh` files
-  - `check` - Checks for dependencies listed in `dependencies` file project root
-  - `update` - Updates git submodules and zgen
-  - `list` - Quick list of installers, aliases, and path additions
+- Installation performed using [dotbot](https://github.com/anishathalye/dotbot)
+
 - Zsh Configuration
   - [Zgen](https://github.com/tarjoilija/zgen) - Plugin Manager
   - [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) - Zsh config framework
-  - Agnoster theme (modified)
-  - Functions and Aliases
-- Hammerspoon configuration
-	- Caps+HJKL movement
-  - Window splitting via Caps+QWE
-  - Application launch/focus via Caps+keys
+  - [Powerlevel9k](https://github.com/Powerlevel9k/powerlevel9k) - Theme
+  - [asdf](https://github.com/asdf-vm/asdf) - Multi-language version manager
+  - [fzf](https://github.com/junegunn/fzf) - Fuzzy finder
+  - Functions and aliases from each topic area are sourced
+- Nvim + Vimplug
 - Git config and aliases (be sure to change user.name and user.email if using mine)
