@@ -1,8 +1,0 @@
-language: bash
-sudo: required
-os:
-  - osx
-script:
-  - make sync
-notifications:
-  email: false
