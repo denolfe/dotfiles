@@ -84,7 +84,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 # alias l='ls -CF'
 
-# Add an "alert" alias for long running commands.  Use like so:
+# Add an "alert" alias for long running commandss.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
@@ -93,17 +93,36 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+export DF="$HOME/.dotfiles"
+
+alias reload="source ~/.bashrc;echo Bash Reloaded."
+alias rl=reload
+
+# Place to stash environment variables
+if [[ -a ~/.secrets ]]
+then
+  source ~/.secrets
 fi
+
+# Load aliases
+for file in $DF/*/*aliases.sh; do
+  . "$file"
+done
 
 # Load functions
-if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
+if [ -f $DF/zsh/functions.sh ]; then
+    . $DF/zsh/functions.sh
 fi
+# Load bash only functions
+for f in $DF/bash/functions/*; do source $f; done
 
-# Add ~/.dotfiles/bin to PATH
-pathadd ~/.dotfiles/bin
+# Load all path files
+for file in $DF/*/path.sh; do
+  . "$file"
+done
+
+# Add ~/$DF/bin to PATH
+pathadd ~/$DF/bin
 
 # inputrc preferences
 bind "set completion-ignore-case on"
@@ -191,3 +210,11 @@ export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
 export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
 # if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
 if [[ $- =~ .*i.* ]]; then bind '"\C-h": "\C-a hh \C-j"'; fi
+
+# PS1
+ORANGE="\[\033[32m\]"
+RED="\[\033[31m\]"
+GREEN="\[\033[33m\]"
+BLUE="\[\033[36m\]"
+WHITE="\[\033[0m\]"
+export PS1="${ORANGE}\u ${GREEN}\w${BLUE}\n$ "

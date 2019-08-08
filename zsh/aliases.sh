@@ -23,14 +23,6 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias ~='cd ~/'
 
-# Global Aliases
-alias -g H='| head'
-alias -g T='| tail'
-alias -g G='| grep'
-alias -g NUL='&> /dev/null'
-alias -g J='| python -m json.tool'
-alias -g CD='&& $_'
-
 # Prompt if overwriting
 alias cp='cp -i'
 alias mv='mv -i'
@@ -49,16 +41,14 @@ case $OS in
   'Linux')
 		alias ls='ls --color=auto -p'
 		alias sagi='sudo apt-get install'
-                alias sai='sudo apt install'
+		alias sai='sudo apt install'
 		alias sagu='sudo apt-get update'
 		alias saar='sudo add-apt-repository'
 		alias sagr='sudo apt-get remove'
-		alias -g C='| xclip -selection c'
 		alias pbcopy='xclip -selection c'
 		alias pbpaste='xclip -selection clipboard -o'
     ;;
   'Darwin')
-		alias -g C='| pbcopy'
     ;;
   *) ;;
 esac

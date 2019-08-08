@@ -26,3 +26,7 @@
     ~/.asdf: zsh/asdf
     ~/.fzf: zsh/fzf
 
+    ~/.bashrc: 
+      path: bash/bashrc
+      force: true
+

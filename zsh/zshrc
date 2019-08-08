@@ -117,17 +117,17 @@ then
 fi
 
 # Load aliases
-for file in $DF/*/aliases.zsh; do
+for file in $DF/*/*aliases.*sh; do
   . "$file"
 done
 
 # Load functions
-if [ -f $DF/zsh/functions.zsh ]; then
-    . $DF/zsh/functions.zsh
+if [ -f $DF/zsh/functions.sh ]; then
+    . $DF/zsh/functions.sh
 fi
 
 # Load all path files
-for file in $DF/*/path.zsh; do
+for file in $DF/*/path.sh; do
   . "$file"
 done
 
