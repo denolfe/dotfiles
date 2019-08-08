@@ -1,14 +1,17 @@
 [submodule "zsh/zgen.symlink"]
-	path = zsh/zgen.symlink
+	path = zsh/zgen
 	url = https://github.com/tarjoilija/zgen.git
 	ignore = dirty
 [submodule "zsh/oh-my-zsh.symlink"]
-	path = zsh/oh-my-zsh.symlink
+	path = zsh/oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
 	ignore = dirty
 [submodule "zsh/fzf.symlink"]
-	path = zsh/fzf.symlink
+	path = zsh/fzf
 	url = https://github.com/denolfe/fzf.git
 [submodule "zsh/asdf.symlink"]
-	path = zsh/asdf.symlink
+	path = zsh/asdf
 	url = https://github.com/asdf-vm/asdf.git
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot

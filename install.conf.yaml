@@ -1,0 +1,28 @@
+- defaults:
+    link:
+      relink: true
+      craete: true
+
+- clean: ['~']
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+
+- link:
+    # ~/.dotfiles: ''
+    ~/.gitconfig: 
+      path: gitconfig
+      force: true
+
+    ~/.vimrc: vim/vimrc
+    ~/.vim/autoload/plug.vim: vim/plug.vim
+    ~/.config/nvim/init.vim: vim/init.vim
+
+    ~/.zshrc: 
+      path: zsh/zshrc
+      force: true
+    ~/.oh-my-zsh: zsh/oh-my-zsh
+    ~/.zgen: zsh/zgen
+    ~/.asdf: zsh/asdf
+    ~/.fzf: zsh/fzf
+
