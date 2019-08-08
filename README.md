@@ -1,5 +1,10 @@
 # Dotfiles
 
+[![Powered by dotbot][dbshield]][dblink]
+
+[dblink]: https://github.com/anishathalye/dotbot
+[dbshield]: https://img.shields.io/badge/powered%20by-dotbot-blue
+
 > Personal dotfiles configuration for Zsh, Git, Vim, and more to rapidly bootstrap a new system.
 
 ![Image](preview.png)
@@ -23,5 +28,5 @@ cd .dotfiles
   - [asdf](https://github.com/asdf-vm/asdf) - Multi-language version manager
   - [fzf](https://github.com/junegunn/fzf) - Fuzzy finder
   - Functions and aliases from each topic area are sourced
-- Nvim + Vimplug
+- [neovim](https://github.com/neovim/neovim) and [vim-plug](https://github.com/junegunn/vim-plug)
 - Git config and aliases (be sure to change user.name and user.email if using mine)
