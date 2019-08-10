@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Global aliases that will only work in zsh
+# Zsh only aliases
 
 alias -g H='| head'
 alias -g T='| tail'
@@ -20,3 +20,10 @@ case $OS in
     ;;
   *) ;;
 esac
+
+# Zshmarks ==> Bashmarks
+alias g="jump"
+alias s="bookmark"
+alias d="deletemark"
+alias p="showmarks"
+alias l="showmarks"
