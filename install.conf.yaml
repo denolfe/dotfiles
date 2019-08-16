@@ -16,7 +16,9 @@
 
     ~/.vimrc: vim/vimrc
     ~/.vim/autoload/plug.vim: vim/plug.vim
-    ~/.config/nvim/init.vim: vim/init.vim
+    ~/.config/nvim:
+      path: nvim
+      force: true
 
     ~/.zshrc: 
       path: zsh/zshrc

@@ -11,7 +11,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'Yggdroot/indentLine'
 
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'jeffkreeftmeijer/neovim-sensible'
