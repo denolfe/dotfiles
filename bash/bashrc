@@ -108,19 +108,13 @@ fi
 for f in $DF/aliases/*.aliases.sh; do source $f; done
 
 # Load functions
-if [ -f $DF/zsh/functions.sh ]; then
-    . $DF/zsh/functions.sh
-fi
+for f in $DF/zsh/functions/*.sh; do source $f; done
+
 # Load bash only functions
 for f in $DF/bash/functions/*; do source $f; done
 
 # Load all path files
-for file in $DF/*/path.sh; do
-  . "$file"
-done
-
-# Add ~/$DF/bin to PATH
-pathadd ~/$DF/bin
+for f in $DF/*/path.sh; do source $f; done
 
 # inputrc preferences
 bind "set completion-ignore-case on"
