@@ -105,9 +105,7 @@ then
 fi
 
 # Load aliases
-for file in $DF/*/*aliases.sh; do
-  . "$file"
-done
+for f in $DF/aliases/*.aliases.sh; do source $f; done
 
 # Load functions
 if [ -f $DF/zsh/functions.sh ]; then
