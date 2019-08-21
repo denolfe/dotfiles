@@ -114,7 +114,7 @@ for f in $DF/zsh/functions/*.sh; do source $f; done
 for f in $DF/bash/functions/*; do source $f; done
 
 # Load all path files
-for f in $DF/*/path.sh; do source $f; done
+for f in $DF/path/*.path.sh; do source $f; done
 
 # inputrc preferences
 bind "set completion-ignore-case on"
