@@ -190,9 +190,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-export NVM_DIR="/home/elliot/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
 # hstr configuration
 export HH_CONFIG=hicolor         # get more colors
 shopt -s histappend              # append new history items to .bash_history
