@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-alias vim='nvim'
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi

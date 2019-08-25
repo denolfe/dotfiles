@@ -55,7 +55,10 @@ esac
 
 # Other bash stuff
 alias t="touch"
-alias cat="bat"
 alias tr1='tree -L 1 -C'
 alias tr2='tree -L 2 -C'
 alias tr3='tree -L 3 -C'
+
+if type bat > /dev/null 2>&1; then
+	alias cat="bat"
+fi
