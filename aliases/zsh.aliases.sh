@@ -32,9 +32,6 @@ alias sudo='sudo '
 hs(){ history | grep -i "$1" ;}
 alias .f='cd ~/.dotfiles'
 
-ff(){ find . -type f -name "$1" ;}
-fd(){ find . -type d -name "$1" ;}
-
 # Detect the platform (similar to $OSTYPE)
 OS="`uname`"
 case $OS in
