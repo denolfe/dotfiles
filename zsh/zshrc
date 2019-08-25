@@ -6,8 +6,6 @@ export DF="$HOME/.dotfiles"
 
 # Generate zgen init.sh if it doesn't exist
 if ! zgen saved; then
-    echo "Regenerating zgen init.sh"
-
     zgen oh-my-zsh
 
     # Plugins
@@ -118,9 +116,6 @@ fi
 
 # Load aliases
 for f in $DF/aliases/*.aliases.*sh; do source $f; done
-
-# Load functions
-for f in $DF/zsh/functions/*.sh; do source $f; done
 
 # Load all path files
 for f in $DF/path/*.path.sh; do source $f; done
