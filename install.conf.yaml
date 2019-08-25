@@ -32,3 +32,8 @@
       path: bash/bashrc
       force: true
 
+    ~/bin:
+      glob: true
+      path: scripts/*
+      relink: true
+
