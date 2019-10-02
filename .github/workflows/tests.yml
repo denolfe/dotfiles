@@ -1,0 +1,14 @@
+name: Test Dotfiles
+on: [push]
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-16.04]
+    steps:
+    - uses: actions/checkout@master
+    - name: Install dotfiles
+      run: ./install
+    - name: Test for .zshrc
+      run: if [ ! -f ~/.zshrc ]; then return 1; else return 0; fi
