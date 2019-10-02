@@ -37,3 +37,7 @@
       path: scripts/*
       relink: true
 
+    ~/.config/Code/User:
+      glob: true
+      path: vscode/*.json
+      force: true
