@@ -13,4 +13,4 @@ jobs:
     - name: Test for .zshrc
       uses: JJ/files-present-action@releases/v1
       with:
-        files: "~/.zshrcr"
+        files: "~/.zshrc"
