@@ -11,4 +11,4 @@ jobs:
     - name: Install dotfiles
       run: ./install
     - name: Test for .zshrc
-      run: if [ ! -f ~/.zshrc ]; then return 1; else return 0; fi
+      run: [ -f ~/.zshrc ]
