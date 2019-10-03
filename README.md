@@ -1,5 +1,6 @@
 # Dotfiles
 
+[![Actions Status](https://github.com/denolfe/dotfiles/workflows/Dotfiles%20Install/badge.svg)](https://github.com/denolfe/dotfiles/actions)
 [![Powered by dotbot][dbshield]][dblink]
 
 [dblink]: https://github.com/anishathalye/dotbot
@@ -12,7 +13,7 @@
 ## Installation
 
 ```sh
-git clone git@github.com:denolfe/dotfiles.git .dotfiles 
+git clone git@github.com:denolfe/dotfiles.git .dotfiles
 cd .dotfiles
 ./install
 ```
