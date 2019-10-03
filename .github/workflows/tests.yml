@@ -10,7 +10,3 @@ jobs:
     - uses: actions/checkout@master
     - name: Install dotfiles
       run: ./install
-    - name: Test for .zshrc
-      uses: JJ/files-present-action@releases/v1
-      with:
-        files: "~/.zshrc"
