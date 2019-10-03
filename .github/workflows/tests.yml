@@ -11,4 +11,6 @@ jobs:
     - name: Install dotfiles
       run: ./install
     - name: Test for .zshrc
-      run: [ -f ~/.zshrc ]
+      uses: JJ/files-present-action@releases/v1
+      with:
+        files: "~/.zshrcr"
