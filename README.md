@@ -10,10 +10,16 @@
 
 ![Image](preview.png)
 
+## Prerequisites
+
+- python
+- git
+- zsh
+
 ## Installation
 
 ```sh
-git clone git@github.com:denolfe/dotfiles.git .dotfiles
+git clone git@github.com:denolfe/dotfiles.git .dotfiles --recursive
 cd .dotfiles
 ./install
 ```
