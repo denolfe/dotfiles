@@ -11,7 +11,6 @@
 	unp = log origin/master..HEAD
 	subup = submodule update --remote --merge
 	aliases = config --get-regexp '^alias\\.'
-	ignore = "!gi() { wget -O .gitignore https://www.gitignore.io/api/$@ --no-check-certificate ;}; gi"
 	pom = push origin master
 	undolast = reset HEAD~1
 	revertlast = revert HEAD

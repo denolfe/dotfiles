@@ -17,8 +17,6 @@ git config --global alias.unp 'log origin/master..HEAD'
 git config --global alias.subup 'submodule update --remote --merge'
 git config --global alias.aliases "config --get-regexp '^alias\.'"
 
-git config --global alias.ignore '!gi() { wget -O .gitignore https://www.gitignore.io/api/$@ --no-check-certificate ;}; gi'
-
 git config --global alias.pom 'push origin master'
 git config --global alias.undolast 'reset HEAD~1'
 git config --global alias.revertlast 'revert HEAD'
