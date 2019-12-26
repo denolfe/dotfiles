@@ -123,7 +123,7 @@ for f in $DF/aliases/*.aliases.*sh; do source $f; done
 # Load all path files
 for f in $DF/path/*.path.sh; do source $f; done
 
-export FZF_DEFAULT_OPTS='--reverse'
+export FZF_DEFAULT_OPTS='--reverse --bind 'ctrl-l:cancel''
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source ~/.asdf/asdf.sh
