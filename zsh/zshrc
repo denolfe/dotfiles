@@ -115,6 +115,9 @@ then
   source ~/.secrets
 fi
 
+# Load functions
+for f in $DF/zsh/functions/*; do source $f; done
+
 # Load aliases
 for f in $DF/aliases/*.aliases.*sh; do source $f; done
 
