@@ -13,6 +13,7 @@ alias gbv="git for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) 
 alias gbvv="git branch -vv"
 alias gcane="git commit --amend --no-edit"
 alias gcof="git checkout -f"
+alias gdc="git diff --cached"
 alias gdlast="git diff HEAD~1..HEAD"
 alias gh="git hist"
 alias gl="git l1"
