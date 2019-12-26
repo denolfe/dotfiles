@@ -24,6 +24,9 @@ if ! zgen saved; then
     zgen load denolfe/zsh-travis
     zgen load denolfe/zsh-prepend
 
+    zgen load agkozak/zsh-z
+    zgen load andrewferrier/fzf-z
+
     zgen oh-my-zsh plugins/asdf
     zgen load kiurchv/asdf.plugin.zsh
 
