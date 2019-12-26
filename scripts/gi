@@ -13,7 +13,7 @@ if  [ "$#" -eq 0 ]; then
   IFS+=","
   for item in $(__gi list); do
     echo $item
-  done | fzf --multi --ansi | paste -s -d "," - |
+  done | fzf --multi --ansi --bind 'ctrl-l:cancel' | paste -s -d "," - |
   { read result && __gi "$result" > .gitignore; }
 else
   __gi "$@" > .gitignore
