@@ -3,14 +3,14 @@
       relink: true
       create: true
 
-- clean: ['~']
+- clean: ['~', '~/bin']
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
 
 - link:
     # ~/.dotfiles: ''
-    ~/.gitconfig: 
+    ~/.gitconfig:
       path: git/gitconfig
       force: true
 
@@ -20,7 +20,7 @@
       path: nvim
       force: true
 
-    ~/.zshrc: 
+    ~/.zshrc:
       path: zsh/zshrc
       force: true
     ~/.oh-my-zsh: zsh/oh-my-zsh
@@ -28,7 +28,7 @@
     ~/.asdf: zsh/asdf
     ~/.fzf: zsh/fzf
 
-    ~/.bashrc: 
+    ~/.bashrc:
       path: bash/bashrc
       force: true
 
