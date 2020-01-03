@@ -5,7 +5,7 @@
 fcom() {
   local commits commit out key
   commits=$(git log --pretty=format:"%h %s (%cr) <%an>" --abbrev-commit --reverse) &&
-  out=$(echo "$commits" | fzf --tac +s +m -e --expect=ctrl-o)
+  out=$(echo "$commits" | fzf --tac +s +m -e --header "Ctrl-o to checkout commit" --expect=ctrl-o)
   key=$(head -1 <<< "$out")
   commit=$(sed 1d <<< "$out")
   if [ "$key" = ctrl-o ]; then
