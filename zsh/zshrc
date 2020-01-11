@@ -129,5 +129,7 @@ for f in $DF/path/*.path.sh; do source $f; done
 export FZF_DEFAULT_OPTS='--reverse --bind 'ctrl-l:cancel''
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+export BAT_THEME='Monokai Extended Bright'
+
 source ~/.asdf/asdf.sh
 source ~/.asdf/completions/asdf.bash
