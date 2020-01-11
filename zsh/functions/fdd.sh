@@ -2,7 +2,7 @@
 
 # Interactive cd
 # https://github.com/junegunn/fzf/wiki/examples#interactive-cd
-function fd() {
+function fdd() {
     if [[ "$#" != 0 ]]; then
         builtin cd "$@";
         return
