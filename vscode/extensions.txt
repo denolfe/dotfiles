@@ -1,0 +1,10 @@
+bierner.markdown-preview-github-styles
+dbaeumer.vscode-eslint
+donjayamanne.githistory
+eamodio.gitlens
+faustinoaq.crystal-lang
+g3ortega.crystal
+kofno.crystal-ide
+ms-azuretools.vscode-docker
+ms-vscode.csharp
+yzhang.markdown-all-in-one
