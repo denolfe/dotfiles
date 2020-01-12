@@ -93,7 +93,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-export DF="$HOME/.dotfiles"
+export DOTFILES="$HOME/.dotfiles"
 
 alias reload="source ~/.bashrc;echo Bash Reloaded."
 alias rl=reload
@@ -105,13 +105,13 @@ then
 fi
 
 # Load aliases
-for f in $DF/aliases/*.aliases.sh; do source $f; done
+for f in $DOTFILES/aliases/*.aliases.sh; do source $f; done
 
 # Load bash only functions
-for f in $DF/bash/functions/*; do source $f; done
+for f in $DOTFILES/bash/functions/*; do source $f; done
 
 # Load all path files
-for f in $DF/path/*.path.sh; do source $f; done
+for f in $DOTFILES/path/*.path.sh; do source $f; done
 
 # inputrc preferences
 bind "set completion-ignore-case on"

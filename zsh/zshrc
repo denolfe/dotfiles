@@ -2,7 +2,7 @@
 # Get zgen
 source ~/.zgen/zgen.zsh
 
-export DF="$HOME/.dotfiles"
+export DOTFILES="$HOME/.dotfiles"
 
 # Generate zgen init.sh if it doesn't exist
 if ! zgen saved; then
@@ -118,13 +118,13 @@ then
 fi
 
 # Load functions
-for f in $DF/zsh/functions/*; do source $f; done
+for f in $DOTFILES/zsh/functions/*; do source $f; done
 
 # Load aliases
-for f in $DF/aliases/*.aliases.*sh; do source $f; done
+for f in $DOTFILES/aliases/*.aliases.*sh; do source $f; done
 
 # Load all path files
-for f in $DF/path/*.path.sh; do source $f; done
+for f in $DOTFILES/path/*.path.sh; do source $f; done
 
 export FZF_DEFAULT_OPTS='--reverse --bind 'ctrl-l:cancel''
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
