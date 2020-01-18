@@ -8,7 +8,7 @@
 	ignore = dirty
 [submodule "zsh/fzf"]
 	path = zsh/fzf
-	url = https://github.com/denolfe/fzf.git
+	url = https://github.com/junegunn/fzf.git
 	branch = master
 [submodule "zsh/asdf"]
 	path = zsh/asdf
@@ -16,3 +16,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "vim/vim-plug"]
+	path = vim/vim-plug
+	url = git@github.com:junegunn/vim-plug.git

@@ -15,7 +15,7 @@
       force: true
 
     ~/.vimrc: vim/vimrc
-    ~/.vim/autoload/plug.vim: vim/plug.vim
+    ~/.vim/autoload/plug.vim: vim/vim-plug/plug.vim
     ~/.config/nvim:
       path: nvim
       force: true
@@ -41,3 +41,6 @@
       glob: true
       path: vscode/*.json
       force: true
+
+- shell:
+  - [cat $DOTFILES/vscode/extensions.txt | xargs -L 1 code --install-extension, Installing VS Code extensions]
