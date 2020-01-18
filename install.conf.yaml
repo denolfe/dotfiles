@@ -43,4 +43,10 @@
       force: true
 
 - shell:
-  - [cat $DOTFILES/vscode/extensions.txt | xargs -L 1 code --install-extension, Installing VS Code extensions]
+  -
+    command: |
+      if [ -z $GITHUB_ACTIONS ];then
+        cat $DOTFILES/vscode/extensions.txt | xargs -L 1 code --install-extension
+      fi
+    description: Installing VS Code extensions
+    quiet: true
