@@ -6,10 +6,6 @@
 	path = zsh/oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
 	ignore = dirty
-[submodule "zsh/fzf"]
-	path = zsh/fzf
-	url = https://github.com/junegunn/fzf.git
-	branch = master
 [submodule "zsh/asdf"]
 	path = zsh/asdf
 	url = https://github.com/asdf-vm/asdf.git
