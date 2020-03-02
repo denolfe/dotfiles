@@ -41,8 +41,13 @@
       path: vscode/*.json
       force: true
 
+    ~/.config/karabiner/karabiner.json:
+      path: macos/karabiner.json
+      force: true
+
     ~/.hammerspoon:
       path: macos/hammerspoon
+      force: true
 
 - shell:
   -
