@@ -56,7 +56,7 @@ hotkey.mapbinds(hyper,
   }
 )
 
-hs.hotkey.bind(ultra, 'escape', function() 
+hs.hotkey.bind(ultra, 'r', function() 
   reloader.reload(true)
 end)
 

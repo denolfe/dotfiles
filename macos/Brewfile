@@ -53,8 +53,10 @@ brew 'zsh'
 
 # Cask Apps
 cask 'font-robotomono-nerd-font'
+cask 'hammerspoon'
 cask 'iterm2'
 cask 'jetbrains-toolbox'
+cask 'karabiner-elements'
 cask 'slack'
 cask 'spotify'
 cask 'visual-studio-code'

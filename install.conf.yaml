@@ -41,6 +41,9 @@
       path: vscode/*.json
       force: true
 
+    ~/.hammerspoon:
+      path: macos/hammerspoon
+
 - shell:
   -
     command: |

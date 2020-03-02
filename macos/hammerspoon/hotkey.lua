@@ -1,9 +1,12 @@
 local module = {}
 
-module.fastKeyStroke = function(modifiers, character)
+module.fastKeyStroke = function(modifiers, direction)
   local event = require("hs.eventtap").event
-  event.newKeyEvent(modifiers, string.lower(character), true):post()
-  event.newKeyEvent(modifiers, string.lower(character), false):post()
+  event.newKeyEvent(modifiers, string.lower(direction), true):post()
+  
+  event.newKeyEvent(modifiers, string.lower(direction), false):post()
+  event.newKeyEvent({}, direction, true):post()
+  event.newKeyEvent({}, direction, false):post()
 end
 
 local bindKey = function(modifier, hotkey)

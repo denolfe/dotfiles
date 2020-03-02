@@ -7,7 +7,7 @@ hs.grid.MARGINY = 0
 
 local lastSeenChain = nil
 local lastSeenWindow = nil
-local chain = function(movements)
+local chain = (function(key, movements)
   local chainResetInterval = 2 -- seconds
   local cycleLength = #movements
   local sequenceNumber = 1
@@ -35,7 +35,7 @@ local chain = function(movements)
     hs.grid.set(win, movements[sequenceNumber], screen)
     sequenceNumber = sequenceNumber % cycleLength + 1
   end
-end 
+end)
 
 module.grid = {
   topHalf = '0,0 12x6',
@@ -61,7 +61,7 @@ module.grid = {
 
 module.mapbinds = function(modifier, binds)
   hs.fnutils.each(binds, function(entry)
-    hs.hotkey.bind(modifier, entry.key, chain(entry.positions))
+    hs.hotkey.bind(modifier, entry.key, chain(entry.key, entry.positions))
   end)
 end
 
