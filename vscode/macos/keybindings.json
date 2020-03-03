@@ -1,0 +1,70 @@
+// Place your key bindings in this file to override the defaults
+[
+    // {
+    //   "key": "alt+enter",
+    //   "command": "editor.action.quickFix",
+    //   "when": "editorTextFocus"
+    // },
+    {
+      "key": "cmd+shift+l",
+      "command": "editor.action.deleteLines",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "cmd+l",
+      "command": "expandLineSelection",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "cmd+shift+down",
+      "command": "editor.action.moveLinesDownAction",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "cmd+shift+up",
+      "command": "editor.action.moveLinesUpAction",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "cmd+shift+d",
+      "command": "editor.action.copyLinesDownAction",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "cmd+shift+j",
+      "command": "editor.action.formatDocument",
+      "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "cmd+i",
+      "command": "expandLineSelection",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "cmd+shift+k",
+      "command": "editor.action.insertCursorAtEndOfEachLineSelected",
+      "when": "editorTextFocus"
+    },
+    {
+      "key": "alt+;",
+      "command": "workbench.action.terminal.focus",
+      "when": "!terminalFocus"
+    },
+    {
+      "key": "alt+;",
+      "command": "workbench.action.focusActiveEditorGroup",
+      "when": "terminalFocus"
+    },
+    {
+      "key": "cmd+\\",
+      "command": "-workbench.action.splitEditor"
+    },
+    {
+      "key": "cmd+\\",
+      "command": "workbench.action.moveEditorToNextGroup"
+    },
+    {
+      "key": "cmd+shift+\\",
+      "command": "workbench.action.moveEditorToPreviousGroup"
+    }
+  ]

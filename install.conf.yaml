@@ -36,16 +36,27 @@
       path: scripts/*
       relink: true
 
+    # VS Code Linux
     ~/.config/Code/User:
+      if: '[[ `uname` -ne Darwin ]]'
       glob: true
-      path: vscode/*.json
+      path: vscode/linux/*.json
+      force: true
+
+    # VS Code MacOS
+    ~/Library/Application Support/Code/User:
+      if: '[ `uname` = Darwin ]'
+      glob: true
+      path: vscode/macos/*.json
       force: true
 
     ~/.config/karabiner/karabiner.json:
+      if: '[ `uname` = Darwin ]'
       path: macos/karabiner.json
       force: true
 
     ~/.hammerspoon:
+      if: '[ `uname` = Darwin ]'
       path: macos/hammerspoon
       force: true
 
