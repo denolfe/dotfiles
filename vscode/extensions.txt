@@ -4,7 +4,11 @@ donjayamanne.githistory
 eamodio.gitlens
 faustinoaq.crystal-lang
 g3ortega.crystal
+heptio.jsonnet
+kddejong.vscode-cfn-lint
 kofno.crystal-ide
 ms-azuretools.vscode-docker
 ms-vscode.csharp
+pajoma.vscode-journal
+redhat.vscode-yaml
 yzhang.markdown-all-in-one
