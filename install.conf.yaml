@@ -52,7 +52,7 @@
 
     ~/.config/karabiner/karabiner.json:
       if: '[ `uname` = Darwin ]'
-      path: macos/karabiner.json
+      path: macos/karabiner/karabiner.json
       force: true
 
     ~/.hammerspoon:
