@@ -1,8 +1,6 @@
 -- Set up
------------------------------------------------
-
 local reloader = require('reloader')
-local windowgrid = require('windowgrid')
+local wm = require('windowmanager')
 local hotkey = require('hotkey')
 local appfocus = require('appfocus')
 
@@ -10,26 +8,22 @@ local appfocus = require('appfocus')
 local ultra = {'ctrl','alt','shift'} -- Bound to CapsLock in Karabiner-Elements
 local hyper = {'shift', 'cmd', 'alt', 'ctrl'} -- CapsLock + cmd
 
------------------------------------------------
--- Window Grid Binds
------------------------------------------------
-
-windowgrid.mapbinds(ultra,
+-- Window Manager
+wm.mapbinds(ultra,
   {
-    { key='q', positions = { windowgrid.grid.left50, windowgrid.grid.left66, windowgrid.grid.topLeft, windowgrid.grid.bottomLeft }},
-    { key='w', positions = { windowgrid.grid.full, windowgrid.grid.centeredBig }},
-    { key='e', positions = { windowgrid.grid.right50, windowgrid.grid.right33, windowgrid.grid.topRight, windowgrid.grid.bottomRight }},
+    { key='q', positions = { wm.grid.left50, wm.grid.left66, wm.grid.topLeft, wm.grid.bottomLeft }},
+    { key='w', positions = { wm.grid.full, wm.grid.centeredBig }},
+    { key='e', positions = { wm.grid.right50, wm.grid.right33, wm.grid.topRight, wm.grid.bottomRight }},
   }
 )
+
+hs.hotkey.bind(ultra, 'tab', wm.moveToNextScreen)
 
 hs.hotkey.bind(ultra, 'r', function()
   reloader.reload(true)
 end)
 
------------------------------------------------
 -- App shortcuts
------------------------------------------------
-
 appfocus.mapbinds(ultra,
   {
     { key = ';', app = 'iTerm' },

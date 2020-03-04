@@ -65,4 +65,12 @@ module.mapbinds = function(modifier, binds)
   end)
 end
 
+-- Source: https://stackoverflow.com/a/58662204/1717697
+module.moveToNextScreen = function()
+  local win = hs.window.focusedWindow()
+  local currentScreen = win:screen()
+  -- Compute current window size then move to new screen with same relative dimensions
+  win:move(win:frame():toUnitRect(currentScreen:frame()), currentScreen:next(), true, 0)
+end
+
 return module
