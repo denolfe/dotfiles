@@ -16,9 +16,9 @@ local hyper = {'shift', 'cmd', 'alt', 'ctrl'} -- CapsLock + cmd
 
 windowgrid.mapbinds(ultra,
   {
-    { key='q', positions = { windowgrid.grid.leftHalf, windowgrid.grid.topLeft, windowgrid.grid.bottomLeft }},
-    { key='w', positions = { windowgrid.grid.fullScreen, windowgrid.grid.centeredBig }},
-    { key='e', positions = { windowgrid.grid.rightHalf, windowgrid.grid.topRight, windowgrid.grid.bottomRight }},
+    { key='q', positions = { windowgrid.grid.left50, windowgrid.grid.left66, windowgrid.grid.topLeft, windowgrid.grid.bottomLeft }},
+    { key='w', positions = { windowgrid.grid.full, windowgrid.grid.centeredBig }},
+    { key='e', positions = { windowgrid.grid.right50, windowgrid.grid.right33, windowgrid.grid.topRight, windowgrid.grid.bottomRight }},
   }
 )
 
