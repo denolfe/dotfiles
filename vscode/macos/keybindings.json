@@ -46,12 +46,12 @@
       "when": "editorTextFocus"
     },
     {
-      "key": "alt+;",
+      "key": "cmd+;",
       "command": "workbench.action.terminal.focus",
       "when": "!terminalFocus"
     },
     {
-      "key": "alt+;",
+      "key": "cmd+;",
       "command": "workbench.action.focusActiveEditorGroup",
       "when": "terminalFocus"
     },

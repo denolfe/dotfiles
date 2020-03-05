@@ -3,7 +3,6 @@
     "editor.fontFamily": "'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "editor.codeLens": true,
     "editor.cursorBlinking": "smooth",
-    "editor.fontSize": 13,
     "editor.formatOnPaste": true,
     "editor.minimap.enabled": true,
     "editor.tabSize": 2,
@@ -124,5 +123,6 @@
                 }
             }
         ]
-    }
+    },
+    "workbench.iconTheme": "vscode-icons"
 }
