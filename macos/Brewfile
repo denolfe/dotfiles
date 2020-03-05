@@ -58,6 +58,7 @@ brew 'xz'
 brew 'zsh'
 
 # Cask Apps
+cask 'adoptopenjdk11'
 cask 'alfred'
 cask 'amethyst'
 cask 'bloomrpc'
