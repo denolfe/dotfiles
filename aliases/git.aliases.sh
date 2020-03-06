@@ -25,6 +25,22 @@ alias gstu="git status -uno"
 alias gundo="git reset HEAD~1"
 alias guns="git reset HEAD --"
 
+grau() {
+  git remote add upstream "$1" || return 1
+  git fetch upstream || return 1
+  git branch -u upstream/master
+}
+
+getlatest() {
+  local stash_string=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+  git stash push -m $stash_string
+  git checkout master
+  git pull
+  if [[ $(git stash list | head -n1) == *$stash_string* ]]; then
+    git stash apply
+  fi
+}
+
 git config --global alias.editlast "commit --amend -m" # Make sure to unstage all first!
 git config --global alias.sync "!zsh -ic git-sync"
 git config --global alias.add-upstream "!zsh -ic add-upstream"
