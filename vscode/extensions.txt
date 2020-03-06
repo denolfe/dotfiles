@@ -9,7 +9,7 @@ johnpapa.vscode-peacock
 kddejong.vscode-cfn-lint
 kofno.crystal-ide
 ms-azuretools.vscode-docker
-ms-vscode.csharp
+ms-dotnettools.csharp
 pajoma.vscode-journal
 redhat.vscode-yaml
 vscode-icons-team.vscode-icons
