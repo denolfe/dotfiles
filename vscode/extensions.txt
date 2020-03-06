@@ -1,4 +1,5 @@
 bierner.markdown-preview-github-styles
+DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
 donjayamanne.githistory
 eamodio.gitlens
