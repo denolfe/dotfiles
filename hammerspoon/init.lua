@@ -19,10 +19,6 @@ wm.mapbinds(ultra,
 
 hs.hotkey.bind(ultra, 'tab', wm.moveToNextScreen)
 
-hs.hotkey.bind(ultra, 'r', function()
-  reloader.reload(true)
-end)
-
 -- App shortcuts
 appfocus.mapbinds(ultra,
   {
@@ -32,6 +28,9 @@ appfocus.mapbinds(ultra,
     { key = "f", app = 'Slack' }
   }
 )
+
+-- Reload shortcut
+hs.hotkey.bind(ultra, 'r', hs.reload)
 
 -- Start Reloader
 reloader.init()

@@ -14,17 +14,6 @@ local reloadFiles = function(files)
   end
 end
 
-local reload = function(notify)
-  if notify then
-    hs.notify.show(
-      'Hammerspoon',
-      'Reloaded in the background',
-      ''
-    )
-  end
-  hs.reload()
-end
-
 local init = function()
   local watcher = hs.pathwatcher.new(
     os.getenv('HOME') .. '/.hammerspoon/',
@@ -35,6 +24,5 @@ local init = function()
 end
 
 return {
-  init = init,
-  reload  = reload
+  init = init
 }
