@@ -25,7 +25,9 @@ appfocus.mapbinds(ultra,
     { key = ';', app = 'iTerm' },
     { key = "'", app = 'Google Chrome' },
     { key = "/", app = 'Visual Studio Code' },
-    { key = "f", app = 'Slack' }
+    { key = "f", app = 'Slack' },
+    { key = "g", app = 'Spotify' },
+    { key = "t", app = 'Microsoft Outlook' }
   }
 )
 
