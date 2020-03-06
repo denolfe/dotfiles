@@ -1,4 +1,4 @@
-.PHONY: karabiner
+.PHONY: karabiner macos
 
 default:
 	@echo "Please choose one of the following targets: karabiner, vscode-install, vscode-save"
@@ -19,3 +19,7 @@ vscode-save:
 # Save snapshot of all brew packages to macos/Brewfile
 brew:
 	brewfile > macos/Brewfile
+
+# Set MacOS defaults
+macos:
+	./macos/set-defaults.sh

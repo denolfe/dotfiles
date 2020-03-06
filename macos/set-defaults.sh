@@ -31,9 +31,6 @@ echo "› System:"
 echo "  › Disable press-and-hold for keys in favor of key repeat"
 defaults write -g ApplePressAndHoldEnabled -bool false
 
-echo "  › Use AirDrop over every interface"
-defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
-
 echo "  › Show the ~/Library folder"
 chflags nohidden ~/Library
 
@@ -44,12 +41,8 @@ echo "  › Set a really fast key repeat"
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
-echo "  › Run the screensaver if we're in the bottom-left hot corner"
-defaults write com.apple.dock wvous-bl-corner -int 5
-defaults write com.apple.dock wvous-bl-modifier -int 0
-
-echo "  › Disable transparency"
-defaults write com.apple.universalaccess reduceTransparency -bool true
+# echo "  › Disable transparency"
+# defaults write com.apple.universalaccess reduceTransparency -bool true
 
 echo "  › Enable text replacement almost everywhere"
 defaults write -g WebAutomaticTextReplacementEnabled -bool true
@@ -66,7 +59,7 @@ defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 # Possible values: `WhenScrolling`, `Automatic` and `Always`
 
 echo "  › Disable Dashboard"
-# defaults write com.apple.dashboard mcx-disabled -bool true
+defaults write com.apple.dashboard mcx-disabled -bool true
 
 echo "  › Don't automatically rearrange Spaces based on most recent use"
 defaults write com.apple.dock mru-spaces -bool false
@@ -82,8 +75,8 @@ echo "  › Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 echo "  › Set up trackpad & mouse speed to a reasonable number"
-defaults write -g com.apple.trackpad.scaling 2
-defaults write -g com.apple.mouse.scaling 2.5
+defaults write -g com.apple.trackpad.scaling 3
+defaults write -g com.apple.mouse.scaling 3
 
 echo "  › Avoid the creation of .DS_Store files on network volumes"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
@@ -91,23 +84,14 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 echo "  › Disable the 'Are you sure you want to open this application?' dialog"
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
-echo "  › Set dark interface style"
-defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
-
-echo "  › Set graphite appearance"
-defaults write NSGlobalDomain AppleAquaColorVariant -int 6
-
-echo "  › Set graphite highlight color"
-defaults write NSGlobalDomain AppleHighlightColor -string "0.847059 0.847059 0.862745"
-
 echo "  › Show battery percent"
 defaults write com.apple.menuextra.battery ShowPercent -bool true
 
-if [ ! -z "$TRAVIS_JOB_ID" ]; then
-  echo "  › Speed up wake from sleep to 24 hours from an hour"
-  # http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
-  sudo pmset -a standbydelay 86400
-fi
+# if [ ! -z "$TRAVIS_JOB_ID" ]; then
+#   echo "  › Speed up wake from sleep to 24 hours from an hour"
+#   # http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
+#   sudo pmset -a standbydelay 86400
+# fi
 
 echo "  › Removing duplicates in the 'Open With' menu"
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
@@ -155,29 +139,10 @@ echo "› Photos:"
 echo "  › Disable it from starting everytime a device is plugged in"
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
-#############################
-
-# echo ""
-# echo "› Browsers:"
-# echo "  › Hide Safari's bookmark bar"
-# defaults write com.apple.Safari ShowFavoritesBar -bool false
-
-# echo "  › Set up Safari for development"
-# defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
-# defaults write com.apple.Safari IncludeDevelopMenu -bool true
-# defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-# defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
-# defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
-# echo "  › Disable the annoying backswipe in Chrome"
-# defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
-
-#############################
-
 echo ""
 echo "› Dock"
-echo "  › Setting the icon size of Dock items to 42 pixels for optimal size/screen-realestate"
-defaults write com.apple.dock tilesize -int 42
+echo "  › Setting the icon size of Dock items to 48 pixels for optimal size/screen-realestate"
+defaults write com.apple.dock tilesize -int 48
 
 echo "  › Speeding up Mission Control animations and grouping windows by application"
 defaults write com.apple.dock expose-animation-duration -float 0.1
@@ -193,178 +158,6 @@ defaults write com.apple.dock autohide -bool true
 
 echo "  › Don't animate opening applications from the Dock"
 defaults write com.apple.dock launchanim -bool false
-
-#############################
-
-# echo ""
-# echo "› Transmission:"
-# echo "  › Use ~/Downloads/Incomplete to store incomplete downloads"
-# defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
-# defaults write org.m0k.transmission IncompleteDownloadFolder -string "$HOME/Downloads/Incomplete"
-
-# echo "  › Don't prompt for confirmation before downloading"
-# defaults write org.m0k.transmission DownloadAsk -bool false
-
-# echo "  › Trash original torrent files"
-# defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
-
-# echo "  › Hide the donate message"
-# defaults write org.m0k.transmission WarningDonate -bool false
-
-# echo "  › Hide the legal disclaimer"
-# defaults write org.m0k.transmission WarningLegal -bool false
-
-# echo "  › Auto-add .torrent files in ~/Downloads"
-# defaults write org.m0k.transmission AutoImportDirectory -string "$HOME/Downloads"
-
-# echo "  › Auto-resize the window to fit transfers"
-# defaults write org.m0k.transmission AutoSize -bool true
-
-# echo "  › Auto update to betas"
-# defaults write org.m0k.transmission AutoUpdateBeta -bool true
-
-# echo "  › Set up the best block list"
-# defaults write org.m0k.transmission EncryptionRequire -bool true
-# defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
-# defaults write org.m0k.transmission BlocklistNew -bool true
-# defaults write org.m0k.transmission BlocklistURL -string "http://john.bitsurge.net/public/biglist.p2p.gz"
-
-#############################
-
-# echo ""
-# echo "› Mail:"
-# echo "  › Add the keyboard shortcut CMD + Enter to send an email"
-# defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
-
-# echo "  › Disable smart quotes as it's annoying for messages that contain code"
-# defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
-
-# echo "  › Set email addresses to copy as 'foo@example.com' instead of 'Foo Bar <foo@example.com>'"
-# defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
-
-# echo "  › Display emails in threaded mode, sorted by date (oldest at the top)"
-# defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
-# defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
-# defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
-
-# echo "  › Disable inline attachments (just show the icons)"
-# defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
-
-# echo "  › Disable automatic spell checking"
-# defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled"
-
-# echo "  ›  Disable send and reply animations in Mail.app"
-# defaults write com.apple.mail DisableReplyAnimations -bool true
-# defaults write com.apple.mail DisableSendAnimations -bool true
-
-#############################
-
-# echo ""
-# echo "› Time Machine:"
-# echo "  › Prevent Time Machine from prompting to use new hard drives as backup volume"
-# defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
-
-###############################################################################
-# SSD-specific tweaks                                                         #
-###############################################################################
-# if [ ! -z "$TRAVIS_JOB_ID" ] && diskutil info disk0 | grep SSD > /dev/null 2>&1
-# then
-#   echo "  › Disable local backups"
-#   # https://classicyuppie.com/what-crap-is-this-os-xs-mobilebackups/
-#   sudo tmutil disablelocal
-
-#   echo "  › Disable hibernation (speeds up entering sleep mode)"
-#   sudo pmset -a hibernatemode 0
-
-#   echo "  › Remove the sleep image file to save disk space"
-#   sudo rm /private/var/vm/sleepimage
-#   echo "  › Create a zero-byte file instead..."
-#   sudo touch /private/var/vm/sleepimage
-#   echo "  › ...and make sure it can’t be rewritten"
-#   sudo chflags uchg /private/var/vm/sleepimage
-
-#   echo "  ›  Disable the sudden motion sensor as it’s not useful for SSDs"
-#   sudo pmset -a sms 0
-# fi
-
-#############################
-
-# echo ""
-# echo "› Media:"
-# if [ -z "$KEEP_ITUNES" ]; then
-#   echo "  › Disable iTunes helper"
-#   disable_agent /Applications/iTunes.app/Contents/MacOS/iTunesHelper.app
-#   echo "  › Prevent play button from launching iTunes"
-#   unload_agent /System/Library/LaunchAgents/com.apple.rcd.plist
-# fi
-
-# echo "  › Disable Spotify web helper"
-# disable_agent ~/Applications/Spotify.app/Contents/MacOS/SpotifyWebHelper
-
-# echo "  › Prevent Android-File-Transfer to open when a device connects"
-# disable_agent "/Applications/Android File Transfer.app/Contents/Resources/Android File Transfer Agent.app"
-# disable_agent "$HOME/Library/Application Support/Google/Android File Transfer/Android File Transfer Agent.app"
-
-#############################
-
-# echo ""
-# echo "› Twitter.app:"
-# echo "  › Disable smart quotes as it’s annoying for code tweets"
-# defaults write com.twitter.twitter-mac AutomaticQuoteSubstitutionEnabled -bool false
-
-# echo "  › Show the app window when clicking the menu bar icon"
-# defaults write com.twitter.twitter-mac MenuItemBehavior -int 1
-
-# echo "  › Enable the hidden ‘Develop’ menu"
-# defaults write com.twitter.twitter-mac ShowDevelopMenu -bool true
-
-# echo "  › Open links in the background"
-# defaults write com.twitter.twitter-mac openLinksInBackground -bool true
-
-# echo "  › Allow closing the new tweet window by pressing Esc"
-# defaults write com.twitter.twitter-mac ESCClosesComposeWindow -bool true
-
-# echo "  › Show full names rather than Twitter handles"
-# defaults write com.twitter.twitter-mac ShowFullNames -bool true
-
-# echo "  › Hide the app in the background if it’s not the front-most window"
-# defaults write com.twitter.twitter-mac HideInBackground -bool true
-
-#############################
-
-# echo ""
-# echo "› Text replacements:"
-# echo "  ›  rsrs"
-# defaults write -g NSUserDictionaryReplacementItems -array-add \
-#   '{
-#     on = 1;
-#     replace = rsrs;
-#     with = "( \\U0361\\U00b0 \\U035c\\U0296 \\U0361\\U00b0)";
-#   }'
-
-# echo "  ›  fuckthat"
-# defaults write -g NSUserDictionaryReplacementItems -array-add \
-#   '{
-#       on = 1;
-#       replace = fuckthat;
-#       with = "\\U2768\\U256f\\U00b0\\U25a1\\U00b0\\U2769\\U256f\\Ufe35\\U253b\\U2501\\U253b";
-#   }'
-
-# echo "  ›  dontcare"
-# defaults write -g NSUserDictionaryReplacementItems -array-add \
-#   '{
-#       on = 1;
-#       replace = dontcare;
-#       with = "\\U00af\\\\_(\\U30c4)_/\\U00af";
-#   }'
-
-# echo "  ›  dafuq"
-# defaults write -g NSUserDictionaryReplacementItems -array-add \
-#   '{
-#       on = 1;
-#       replace = dafuq;
-#       with = "\\U0ca0_\\U0ca0";
-#   }'
 
 echo ""
 echo "› Kill related apps"
