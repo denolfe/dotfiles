@@ -15,3 +15,7 @@ vscode-install:
 # Save all current extensions to vscode/extensions.txt
 vscode-save:
 	code --list-extensions > ${DOTFILES}/vscode/extensions.txt
+
+# Save snapshot of all brew packages to macos/Brewfile
+brew:
+	brewfile > macos/Brewfile
