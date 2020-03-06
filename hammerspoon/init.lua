@@ -29,6 +29,12 @@ appfocus.mapbinds(ultra,
   }
 )
 
+-- Spotify shortcuts
+hs.hotkey.bind(ultra, '\\', hs.spotify.playpause)
+hs.hotkey.bind(ultra, ']',  hs.spotify.next)
+hs.hotkey.bind(ultra, '[',  hs.spotify.previous)
+hs.hotkey.bind(hyper, '\\', hs.spotify.displayCurrentTrack)
+
 -- Reload shortcut
 hs.hotkey.bind(ultra, 'r', hs.reload)
 
