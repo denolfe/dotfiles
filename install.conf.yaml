@@ -21,7 +21,7 @@
       force: true
 
     ~/.zshrc:
-      path: zsh/zshrc
+      path: zsh/zshrc.zsh
       force: true
     ~/.oh-my-zsh: zsh/oh-my-zsh
     ~/.zgen: zsh/zgen
