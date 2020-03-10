@@ -226,6 +226,42 @@
                            }
                         ],
                         "type": "basic"
+                     },
+                     {
+                        "from": {
+                           "key_code": "u",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift",
+                                 "left_option"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "page_down"
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "from": {
+                           "key_code": "i",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift",
+                                 "left_option"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "page_up"
+                           }
+                        ],
+                        "type": "basic"
                      }
                   ]
                }

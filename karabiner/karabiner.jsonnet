@@ -124,7 +124,9 @@ local fnKey(from_key_code, to_key_code, is_consumer_key_code=true) = {
                             ultraMove("n", "left_arrow", "left_command"), // Home
                             ultraMove("p", "right_arrow", "left_command"), // End
                             ultraMove("m", "left_arrow", "left_option"), // Left one word
-                            ultraMove("period", "right_arrow", "left_option"), // Right one word
+                            ultraMove("period", "right_arrow", "left_option"), // Right one word,
+                            ultraMove("u", "page_down"),
+                            ultraMove("i", "page_up")
                         ]
                     }
                 ]
