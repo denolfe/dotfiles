@@ -4,27 +4,24 @@
 *
 */
 
+local ultraMods = {
+    "mandatory": [
+        "left_control",
+        "left_shift",
+        "left_option"
+    ]
+};
+
 local ultraMove(from_key_code, to_key_code, to_key_mod=null) = {
     from: {
         key_code: from_key_code,
-        modifiers: {
-            mandatory: [
-                "left_control",
-                "left_shift",
-                "left_option"
-            ]
-        }
+        modifiers: ultraMods
     },
     to: [
-            if to_key_mod != null then
-            {
-                key_code: to_key_code,
-                modifiers: [to_key_mod],
-            }
-            else
-            {
-                key_code: to_key_code
-            }
+        {
+            key_code: to_key_code,
+            [if to_key_mod != null then "modifiers"]: [to_key_mod]
+        },
     ],
     type: "basic"
 };
@@ -33,15 +30,9 @@ local fnKey(from_key_code, to_key_code, is_consumer_key_code=true) = {
     from: {
         "key_code": from_key_code
     },
-    to:
-        if is_consumer_key_code then
-        {
-            "consumer_key_code": to_key_code
-        }
-        else
-        {
-            "key_code": to_key_code
-        },
+    to: {
+        [if is_consumer_key_code then "consumer_key_code" else "key_code"]: to_key_code
+    },
 };
 
 {
@@ -97,13 +88,7 @@ local fnKey(from_key_code, to_key_code, is_consumer_key_code=true) = {
                                 "description": "Ultra + Delete for Forward Delete",
                                 "from": {
                                     "key_code": "delete_or_backspace",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_control",
-                                            "left_shift",
-                                            "left_option"
-                                        ]
-                                    }
+                                    "modifiers": ultraMods
                                 },
                                 "to": [
                                     {
