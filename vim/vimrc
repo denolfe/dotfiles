@@ -5,9 +5,29 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.config/nvim/plugged')
-	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'scrooloose/nerdtree'
+Plug 'Raimondi/delimitMate'
+Plug 'Yggdroot/indentLine'
 
-	Plug 'airblade/vim-gitgutter'
-	Plug 'jeffkreeftmeijer/neovim-sensible'
+Plug 'ekalinin/Dockerfile.vim'
+
+Plug 'airblade/vim-gitgutter'
+Plug 'jeffkreeftmeijer/neovim-sensible'
+
+Plug 'rhysd/vim-crystal'
 
 call plug#end()
+
+
+set noerrorbells                " No beeps
+set number                      " Show line numbers
+set backspace=indent,eol,start  " Makes backspace key more powerful.
+set showcmd                     " Show me what I'm typing
+set showmode                    " Show current mode.
+
+set autoread
+set ignorecase
+
+let g:indentLine_leadingSpacChar='·'
+let g:indentLine_leadingSpaceEnabled='1'
