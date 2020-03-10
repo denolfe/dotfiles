@@ -1,8 +1,12 @@
-.PHONY: karabiner macos
+.PHONY: install karabiner macos
 
 default:
 	@echo "Please choose one of the following targets: karabiner, vscode-install, vscode-save"
 	@exit 2
+
+# Run dotbot install script
+install:
+	./install
 
 # Generate karabiner.json from jsonnet
 karabiner:
