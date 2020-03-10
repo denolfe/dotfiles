@@ -122,9 +122,7 @@ local fnKey(from_key_code, to_key_code, is_consumer_key_code=true) = {
                             ultraMove("k", "up_arrow"),
                             ultraMove("l", "right_arrow"),
                             ultraMove("n", "left_arrow", "left_command"), // Home
-                            ultraMove("left_arrow", "left_arrow", "left_command"), // Cmd + Left -> Home
                             ultraMove("p", "right_arrow", "left_command"), // End
-                            ultraMove("right_arrow", "right_arrow", "left_command"), // Cmd + Right -> End
                             ultraMove("m", "left_arrow", "left_option"), // Left one word
                             ultraMove("period", "right_arrow", "left_option"), // Right one word
                         ]
