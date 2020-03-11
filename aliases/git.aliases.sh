@@ -41,6 +41,11 @@ getlatest() {
   fi
 }
 
+gscopes() {
+  echo "Available commit scopes:\n"
+  git log --pretty=oneline --abbrev-commit --no-merges | grep "):" | cut -d "(" -f2 | cut -d ")" -f1 | sort | uniq
+}
+
 git config --global alias.editlast "commit --amend -m" # Make sure to unstage all first!
 git config --global alias.sync "!zsh -ic git-sync"
 git config --global alias.add-upstream "!zsh -ic add-upstream"
