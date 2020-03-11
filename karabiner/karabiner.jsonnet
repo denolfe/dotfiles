@@ -12,7 +12,7 @@ local ultraMods = {
     ]
 };
 
-local ultraMove(from_key_code, to_key_code, to_key_mod=null) = {
+local ultraBind(from_key_code, to_key_code, to_key_mod=null) = {
     from: {
         key_code: from_key_code,
         modifiers: ultraMods
@@ -26,15 +26,7 @@ local ultraMove(from_key_code, to_key_code, to_key_mod=null) = {
     type: "basic"
 };
 
-local fnKey(from_key_code, to_key_code, is_consumer_key_code=true) = {
-    from: {
-        "key_code": from_key_code
-    },
-    to: {
-        [if is_consumer_key_code then "consumer_key_code" else "key_code"]: to_key_code
-    },
-};
-
+# Main config
 {
     "global": {
         "check_for_updates_on_startup": true,
@@ -83,40 +75,39 @@ local fnKey(from_key_code, to_key_code, is_consumer_key_code=true) = {
                         ]
                     },
                     {
+                        "description": "Ultra Directional Bindings + Forward",
                         "manipulators": [
-                            {
-                                "description": "Ultra + Delete for Forward Delete",
-                                "from": {
-                                    "key_code": "delete_or_backspace",
-                                    "modifiers": ultraMods
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "delete_forward"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Ultra Cursor navigation",
-                        "manipulators": [
-                            ultraMove("h", "left_arrow"),
-                            ultraMove("j", "down_arrow"),
-                            ultraMove("k", "up_arrow"),
-                            ultraMove("l", "right_arrow"),
-                            ultraMove("n", "left_arrow", "left_command"), // Home
-                            ultraMove("p", "right_arrow", "left_command"), // End
-                            ultraMove("m", "left_arrow", "left_option"), // Left one word
-                            ultraMove("period", "right_arrow", "left_option"), // Right one word,
-                            ultraMove("u", "page_down"),
-                            ultraMove("i", "page_up")
+                            // Arrows
+                            ultraBind("h", "left_arrow"),
+                            ultraBind("j", "down_arrow"),
+                            ultraBind("k", "up_arrow"),
+                            ultraBind("l", "right_arrow"),
+
+                            ultraBind("n", "left_arrow", "left_command"), // Home
+                            ultraBind("p", "right_arrow", "left_command"), // End
+                            ultraBind("m", "left_arrow", "left_option"), // Left one word
+                            ultraBind("period", "right_arrow", "left_option"), // Right one word
+                            ultraBind("u", "page_down"),
+                            ultraBind("i", "page_up"),
+
+                            // Forward delete
+                            ultraBind("delete_or_backspace", "delete_forward")
                         ]
                     }
                 ]
             },
             "devices": [],
+
+            # Mapping of function keys
+            local fnKey(from_key_code, to_key_code, is_consumer_key_code=true) = {
+                from: {
+                    "key_code": from_key_code
+                },
+                to: {
+                    [if is_consumer_key_code then "consumer_key_code" else "key_code"]: to_key_code
+                },
+            },
+
             "fn_function_keys": [
                 fnKey("f1", "display_brightness_decrement"),
                 fnKey("f2", "display_brightness_increment"),
