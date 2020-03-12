@@ -32,7 +32,7 @@ grau() {
 }
 
 getlatest() {
-  local stash_string=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+  local stash_string=$(LC_CTYPE=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32 | xargs)
   git stash push -m $stash_string
   git checkout master
   git pull
