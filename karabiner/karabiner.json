@@ -46,7 +46,7 @@
                   ]
                },
                {
-                  "description": "Ultra Directional Bindings + Forward",
+                  "description": "Ultra Directional Bindings",
                   "manipulators": [
                      {
                         "from": {
@@ -239,7 +239,12 @@
                            }
                         ],
                         "type": "basic"
-                     },
+                     }
+                  ]
+               },
+               {
+                  "description": "Ultra Remaps (forward delete, spaces)",
+                  "manipulators": [
                      {
                         "from": {
                            "key_code": "delete_or_backspace",
@@ -254,6 +259,48 @@
                         "to": [
                            {
                               "key_code": "delete_forward"
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "from": {
+                           "key_code": "s",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift",
+                                 "left_option"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "left_arrow",
+                              "modifiers": [
+                                 "left_control"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "from": {
+                           "key_code": "d",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift",
+                                 "left_option"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "right_arrow",
+                              "modifiers": [
+                                 "left_control"
+                              ]
                            }
                         ],
                         "type": "basic"

@@ -75,7 +75,7 @@ local ultraBind(from_key_code, to_key_code, to_key_mod=null) = {
                         ]
                     },
                     {
-                        "description": "Ultra Directional Bindings + Forward",
+                        "description": "Ultra Directional Bindings",
                         "manipulators": [
                             // Arrows
                             ultraBind("h", "left_arrow"),
@@ -89,9 +89,14 @@ local ultraBind(from_key_code, to_key_code, to_key_mod=null) = {
                             ultraBind("period", "right_arrow", "left_option"), // Right one word
                             ultraBind("u", "page_down"),
                             ultraBind("i", "page_up"),
-
-                            // Forward delete
-                            ultraBind("delete_or_backspace", "delete_forward")
+                        ]
+                    },
+                    {
+                        "description": "Ultra Remaps (forward delete, spaces)",
+                        "manipulators": [
+                            ultraBind("delete_or_backspace", "delete_forward"), // Forward delete
+                            ultraBind("s", "left_arrow", "left_control"),  // Spaces left
+                            ultraBind("d", "right_arrow", "left_control")  // Spaces right
                         ]
                     }
                 ]
