@@ -43,7 +43,8 @@ getlatest() {
 
 gscopes() {
   echo -e "\033[96m\033[1mAvailable commit scopes:\033[0m\n"
-  git log --pretty=oneline --abbrev-commit --no-merges | grep "):" | cut -d "(" -f2 | cut -d ")" -f1 | sort | uniq
+  git log --pretty=oneline --abbrev-commit --no-merges | grep "):" | cut -d "(" -f2 | cut -d ")" -f1 | sort | uniq | sed "s/^/  /"
+  echo
 }
 
 git config --global alias.editlast "commit --amend -m" # Make sure to unstage all first!
