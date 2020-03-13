@@ -42,7 +42,7 @@ getlatest() {
 }
 
 gscopes() {
-  echo "Available commit scopes:\n"
+  echo -e "\033[96m\033[1mAvailable commit scopes:\033[0m\n"
   git log --pretty=oneline --abbrev-commit --no-merges | grep "):" | cut -d "(" -f2 | cut -d ")" -f1 | sort | uniq
 }
 
