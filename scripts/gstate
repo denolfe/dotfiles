@@ -27,7 +27,7 @@ echo
 # 3) stashed changes
 if [[ -n $(git stash list) ]]; then
   heading Stash
-  git stash list | sed "s/^/  /"
+  git stash list --date=relative | sed "s/^/  /"
   echo
 fi
 
@@ -39,4 +39,4 @@ if [[ -n "${UPSTREAM}" ]]; then
 else
   heading "WARNING- no upstream configured"
 fi
-echo  
+echo
