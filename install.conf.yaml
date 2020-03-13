@@ -38,7 +38,7 @@
 
     # VS Code Linux
     ~/.config/Code/User:
-      if: '[[ `uname` -ne Darwin ]]'
+      if: '[[ `uname` = Linux ]]'
       glob: true
       path: vscode/linux/*.json
       force: true
