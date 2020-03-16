@@ -1,10 +1,9 @@
-local module = {}
-
 hs.window.animationDuration = 0
 hs.grid.setGrid('12x12')
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 
+-- Cycle through positions on multiple presses
 local lastSeenChain = nil
 local lastSeenWindow = nil
 local chain = (function(key, movements)
@@ -37,7 +36,7 @@ local chain = (function(key, movements)
   end
 end)
 
-module.grid = {
+local grid = {
   top50 = '0,0 12x6',
   top33 = '0,0 12x4',
   top66 = '0,0 12x8',
@@ -61,18 +60,16 @@ module.grid = {
   centeredSmall = '4,4 4x4',
 }
 
-module.mapbinds = function(modifier, binds)
-  hs.fnutils.each(binds, function(entry)
-    hs.hotkey.bind(modifier, entry.key, chain(entry.key, entry.positions))
-  end)
-end
-
 -- Source: https://stackoverflow.com/a/58662204/1717697
-module.moveToNextScreen = function()
+function moveToNextScreen()
   local win = hs.window.focusedWindow()
   local currentScreen = win:screen()
   -- Compute current window size then move to new screen with same relative dimensions
   win:move(win:frame():toUnitRect(currentScreen:frame()), currentScreen:next(), true, 0)
 end
 
-return module
+-- Binds
+hs.hotkey.bind(ultra, 'q', chain('q', { grid.left50, grid.left60, grid.topLeft, grid.bottomLeft }))
+hs.hotkey.bind(ultra, 'w', chain('w', { grid.full, grid.centeredBig }))
+hs.hotkey.bind(ultra, 'e', chain('e', { grid.right50, grid.right40, grid.topRight, grid.bottomRight }))
+hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
