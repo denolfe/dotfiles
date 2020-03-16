@@ -1,4 +1,4 @@
-.PHONY: install karabiner macos brew
+.PHONY: install karabiner macos brew brew-restore
 
 default:
 	@echo "Please choose one of the following targets: karabiner, vscode-install, vscode-save"
@@ -22,9 +22,12 @@ vscode-save:
 
 # Save snapshot of all brew packages to macos/Brewfile
 brew:
-	brew bundle dump -f
+	brew bundle dump -f --file=macos/Brewfile
 	brew bundle --force cleanup
-	brewfile > macos/Brewfile
+
+brew-restore:
+	brew bundle install --file=macos/Brewfile
+	brew cleanup
 
 # Set MacOS defaults
 macos:
