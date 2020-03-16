@@ -11,6 +11,9 @@ install:
 # Generate karabiner.json from jsonnet
 karabiner:
 	jsonnet karabiner/karabiner.jsonnet -o karabiner/karabiner.json
+	launchctl stop org.pqrs.karabiner.karabiner_console_user_server
+	sleep 0.2
+	launchctl start org.pqrs.karabiner.karabiner_console_user_server
 
 # Install extensions from vscode/extensions.txt
 vscode-install:
