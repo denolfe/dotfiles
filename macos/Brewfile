@@ -18,6 +18,7 @@ brew "gradle"
 brew "jq"
 brew "jsonnet"
 brew "kubernetes-cli"
+brew "mas"
 brew "neovim"
 brew "postgresql"
 brew "python"
@@ -44,3 +45,5 @@ cask "scroll-reverser"
 cask "slack"
 cask "spotify"
 cask "visual-studio-code"
+mas "Microsoft Remote Desktop", id: 1295203466
+mas "Unsplash Wallpapers", id: 1284863847

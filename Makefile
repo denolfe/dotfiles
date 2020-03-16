@@ -23,9 +23,12 @@ vscode-save:
 # Save snapshot of all brew packages to macos/Brewfile
 brew:
 	brew bundle dump -f --file=macos/Brewfile
-	brew bundle --force cleanup
+	brew bundle --force cleanup --file=macos/Brewfile
 
 brew-restore:
+	brew update
+	brew upgrade
+	brew install mas
 	brew bundle install --file=macos/Brewfile
 	brew cleanup
 
