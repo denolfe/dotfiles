@@ -12,19 +12,31 @@ local ultraMods = {
     ]
 };
 
-local ultraBind(from_key_code, to_key_code, to_key_mod=null) = {
+local hyperMods = {
+    "mandatory": [
+        "left_control",
+        "left_shift",
+        "left_option",
+        "left_command"
+    ]
+};
+
+local bind(modifier, from_key_code, to_key_code, to_key_mods=null) = {
     from: {
         key_code: from_key_code,
-        modifiers: ultraMods
+        modifiers: modifier
     },
     to: [
         {
             key_code: to_key_code,
-            [if to_key_mod != null then "modifiers"]: [to_key_mod]
+            [if to_key_mods != null then "modifiers"]: to_key_mods
         },
     ],
     type: "basic"
 };
+
+local ultraBind(from_key_code, to_key_code, to_key_mods=null) = bind(ultraMods, from_key_code, to_key_code, to_key_mods);
+local hyperBind(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from_key_code, to_key_code, to_key_mods);
 
 # Main config
 {
@@ -83,10 +95,22 @@ local ultraBind(from_key_code, to_key_code, to_key_mod=null) = {
                             ultraBind("k", "up_arrow"),
                             ultraBind("l", "right_arrow"),
 
-                            ultraBind("n", "left_arrow", "left_command"), // Home
-                            ultraBind("p", "right_arrow", "left_command"), // End
-                            ultraBind("m", "left_arrow", "left_option"), // Left one word
-                            ultraBind("period", "right_arrow", "left_option"), // Right one word
+                            // Arrows + Shift
+                            hyperBind("h", "left_arrow", ["left_shift"]),
+                            hyperBind("j", "down_arrow", ["left_shift"]),
+                            hyperBind("k", "up_arrow", ["left_shift"]),
+                            hyperBind("l", "right_arrow", ["left_shift"]),
+
+                            ultraBind("n", "left_arrow", ["left_command"]), // Home
+                            ultraBind("p", "right_arrow", ["left_command"]), // End
+                            ultraBind("m", "left_arrow", ["left_option"]), // Left one word
+                            ultraBind("period", "right_arrow", ["left_option"]), // Right one word
+
+                            hyperBind("n", "left_arrow", ["left_command", "left_shift"]), // Home + Shift
+                            hyperBind("p", "right_arrow", ["left_command", "left_shift"]), // End + Shift
+                            hyperBind("m", "left_arrow", ["left_option", "left_shift"]), // Left one word + Shift
+                            hyperBind("period", "right_arrow", ["left_option", "left_shift"]), // Right one word + Shift
+
                             ultraBind("u", "page_down"),
                             ultraBind("i", "page_up"),
                         ]
