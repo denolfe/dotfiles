@@ -113,6 +113,8 @@ local hyperBind(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, 
 
                             ultraBind("u", "page_down"),
                             ultraBind("i", "page_up"),
+                            hyperBind("u", "down_arrow", ["left_command"]), // End of page
+                            hyperBind("i", "up_arrow", ["left_command"]), // Top of page
                         ]
                     },
                     {
