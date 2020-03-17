@@ -10,9 +10,6 @@
 
 - link:
     # ~/.dotfiles: ''
-    ~/.gitconfig:
-      path: git/gitconfig
-      force: true
 
     ~/.vimrc: vim/vimrc
     ~/.vim/autoload/plug.vim: vim/vim-plug/plug.vim
@@ -59,3 +56,10 @@
       if: '[ `uname` = Darwin ]'
       path: hammerspoon
       force: true
+
+- shell:
+  -
+    command: ./git/set-gitconfig.sh
+    description: Configuring Git
+    stdout: true
+    quiet: false

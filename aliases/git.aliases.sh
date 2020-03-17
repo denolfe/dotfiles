@@ -51,8 +51,3 @@ gscopes() {
   echo -e "\033[96m\033[1mPrevious commit scopes:\033[0m\n"
   echo $output
 }
-
-git config --global alias.editlast "commit --amend -m" # Make sure to unstage all first!
-git config --global alias.sync "!zsh -ic git-sync"
-git config --global alias.add-upstream "!zsh -ic add-upstream"
-git config --global alias.trav "!zsh -ic git-trav"
