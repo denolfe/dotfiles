@@ -1,14 +1,10 @@
 .PHONY: install karabiner macos brew brew-restore
 
-default:
-	@echo "Please choose one of the following targets: karabiner, vscode-install, vscode-save"
-	@exit 2
-
 # Run dotbot install script
 install:
 	./install
 
-# Generate karabiner.json from jsonnet
+# Generate karabiner.json and bounce karabiner
 karabiner:
 	jsonnet karabiner/karabiner.jsonnet -o karabiner/karabiner.json
 	launchctl stop org.pqrs.karabiner.karabiner_console_user_server
@@ -23,11 +19,12 @@ vscode-install:
 vscode-save:
 	code --list-extensions > ${DOTFILES}/vscode/extensions.txt
 
-# Save snapshot of all brew packages to macos/Brewfile
+# Save snapshot of all Homebrew packages to macos/Brewfile
 brew:
 	brew bundle dump -f --file=macos/Brewfile
 	brew bundle --force cleanup --file=macos/Brewfile
 
+# Restore Homebrew packages
 brew-restore:
 	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	brew update

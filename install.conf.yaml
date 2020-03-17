@@ -59,4 +59,3 @@
       if: '[ `uname` = Darwin ]'
       path: hammerspoon
       force: true
-

@@ -10,30 +10,36 @@
 
 ![Image](preview.png)
 
-## Prerequisites
-
-- python
-- git
-- zsh
-
-## Installation
-
-```sh
-git clone git@github.com:denolfe/dotfiles.git .dotfiles --recursive
-cd .dotfiles
-./install
-```
-
 ## Components
 
-- Installation performed using [dotbot](https://github.com/anishathalye/dotbot)
-
+- [Dotbot](https://github.com/anishathalye/dotbot) - Installation
 - Zsh Configuration
   - [Zgen](https://github.com/tarjoilija/zgen) - Plugin Manager
   - [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) - Zsh config framework
   - [Powerlevel9k](https://github.com/Powerlevel9k/powerlevel9k) - Theme
   - [asdf](https://github.com/asdf-vm/asdf) - Multi-language version manager
   - [fzf](https://github.com/junegunn/fzf) - Fuzzy finder
-  - Functions and aliases from each topic area are sourced
+- [Karabiner](https://karabiner-elements.pqrs.org/) - Hyper key + global Vim-like binds
+- [Hammerspoon](https://www.hammerspoon.org/) - global application focus binds and window management
 - [neovim](https://github.com/neovim/neovim) and [vim-plug](https://github.com/junegunn/vim-plug)
-- Git config and aliases (be sure to change user.name and user.email if using mine)
+- [Makefile](./Makefile)
+  - Homebrew save/restore
+  - VS Code extension save/restore
+  - Karabiner config compilation (Jsonnet)
+  - Install MacOS defaults
+
+## Usage
+
+*Prerequisites: python, git, zsh*
+
+### Installation
+
+```sh
+git clone git@github.com:denolfe/dotfiles.git .dotfiles --recursive
+cd .dotfiles
+make install
+```
+
+### Other Tasks
+
+*[See Makefile](./Makefile)*
