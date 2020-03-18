@@ -4,27 +4,27 @@
 *
 */
 
-local ultraMods = {
-    "mandatory": [
-        "left_control",
-        "left_shift",
-        "left_option"
-    ]
-};
+# Mapped to CapsLock below
+local ultraMods = [
+    "left_control",
+    "left_shift",
+    "left_option"
+];
 
-local hyperMods = {
-    "mandatory": [
-        "left_control",
-        "left_shift",
-        "left_option",
-        "left_command"
-    ]
-};
+# CapsLock + Cmd
+local hyperMods = [
+    "left_control",
+    "left_shift",
+    "left_option",
+    "left_command"
+];
 
 local bind(modifier, from_key_code, to_key_code, to_key_mods=null) = {
     from: {
         key_code: from_key_code,
-        modifiers: modifier
+        modifiers: {
+            mandatory: modifier
+        }
     },
     to: [
         {
@@ -35,8 +35,8 @@ local bind(modifier, from_key_code, to_key_code, to_key_mods=null) = {
     type: "basic"
 };
 
-local ultraBind(from_key_code, to_key_code, to_key_mods=null) = bind(ultraMods, from_key_code, to_key_code, to_key_mods);
-local hyperBind(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from_key_code, to_key_code, to_key_mods);
+local ultra(from_key_code, to_key_code, to_key_mods=null) = bind(ultraMods, from_key_code, to_key_code, to_key_mods);
+local hyper(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from_key_code, to_key_code, to_key_mods);
 
 # Main config
 {
@@ -59,7 +59,7 @@ local hyperBind(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, 
                     {
                         "manipulators": [
                             {
-                                "description": "Change caps_lock to command+control+option+shift.",
+                                "description": "Change caps_lock to command+control+option+shift",
                                 "from": {
                                     "key_code": "caps_lock",
                                     "modifiers": {
@@ -90,43 +90,43 @@ local hyperBind(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, 
                         "description": "Ultra Directional Bindings",
                         "manipulators": [
                             // Arrows
-                            ultraBind("h", "left_arrow"),
-                            ultraBind("j", "down_arrow"),
-                            ultraBind("k", "up_arrow"),
-                            ultraBind("l", "right_arrow"),
+                            ultra("h", "left_arrow"),
+                            ultra("j", "down_arrow"),
+                            ultra("k", "up_arrow"),
+                            ultra("l", "right_arrow"),
 
                             // Arrows + Shift
-                            hyperBind("h", "left_arrow", ["left_shift"]),
-                            hyperBind("j", "down_arrow", ["left_shift"]),
-                            hyperBind("k", "up_arrow", ["left_shift"]),
-                            hyperBind("l", "right_arrow", ["left_shift"]),
+                            hyper("h", "left_arrow", ["left_shift"]),
+                            hyper("j", "down_arrow", ["left_shift"]),
+                            hyper("k", "up_arrow", ["left_shift"]),
+                            hyper("l", "right_arrow", ["left_shift"]),
 
-                            ultraBind("n", "left_arrow", ["left_command"]), // Home
-                            ultraBind("p", "right_arrow", ["left_command"]), // End
-                            ultraBind("m", "left_arrow", ["left_option"]), // Left one word
-                            ultraBind("period", "right_arrow", ["left_option"]), // Right one word
+                            ultra("n", "left_arrow", ["left_command"]), // Home
+                            ultra("p", "right_arrow", ["left_command"]), // End
+                            ultra("m", "left_arrow", ["left_option"]), // Left one word
+                            ultra("period", "right_arrow", ["left_option"]), // Right one word
 
-                            hyperBind("n", "left_arrow", ["left_command", "left_shift"]), // Home + Shift
-                            hyperBind("p", "right_arrow", ["left_command", "left_shift"]), // End + Shift
-                            hyperBind("m", "left_arrow", ["left_option", "left_shift"]), // Left one word + Shift
-                            hyperBind("period", "right_arrow", ["left_option", "left_shift"]), // Right one word + Shift
+                            hyper("n", "left_arrow", ["left_command", "left_shift"]), // Home + Shift
+                            hyper("p", "right_arrow", ["left_command", "left_shift"]), // End + Shift
+                            hyper("m", "left_arrow", ["left_option", "left_shift"]), // Left one word + Shift
+                            hyper("period", "right_arrow", ["left_option", "left_shift"]), // Right one word + Shift
 
-                            ultraBind("u", "page_down"),
-                            ultraBind("i", "page_up"),
-                            hyperBind("u", "down_arrow", ["left_command"]), // End of page
-                            hyperBind("i", "up_arrow", ["left_command"]), // Top of page
+                            ultra("u", "page_down"),
+                            ultra("i", "page_up"),
+                            hyper("u", "down_arrow", ["left_command"]), // End of page
+                            hyper("i", "up_arrow", ["left_command"]), // Top of page
                         ]
                     },
                     {
                         "description": "Ultra Remaps (forward delete, spaces, mission control)",
                         "manipulators": [
-                            ultraBind("delete_or_backspace", "delete_forward"), // Forward delete
-                            hyperBind("delete_or_backspace", "delete_forward", ["fn", "left_option"]), // Forward delete word
-                            ultraBind("a", "left_arrow", ["left_control"]),  // Spaces left
-                            ultraBind("d", "right_arrow", ["left_control"]), // Spaces right
+                            ultra("delete_or_backspace", "delete_forward"), // Forward delete
+                            hyper("delete_or_backspace", "delete_forward", ["fn", "left_option"]), // Forward delete word
+                            ultra("a", "left_arrow", ["left_control"]),  // Spaces left
+                            ultra("d", "right_arrow", ["left_control"]), // Spaces right
 
-                            ultraBind("s", "mission_control"), // Mission Control
-                            hyperBind("s", "down_arrow", ["left_control"]) // App windows
+                            ultra("s", "mission_control"), // Mission Control
+                            hyper("s", "down_arrow", ["left_control"]) // App windows
                         ]
                     }
                 ]
