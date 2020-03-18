@@ -25,12 +25,14 @@ alias gstu="git status -uno"
 alias gundo="git reset HEAD~1"
 alias guns="git reset HEAD --"
 
+# Add upstream remote and set tracking of master
 grau() {
   git remote add upstream "$1" || return 1
   git fetch upstream || return 1
   git branch -u upstream/master
 }
 
+# Stash changes, get latest master, re-apply
 getlatest() {
   local stash_string=$(LC_CTYPE=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32 | xargs)
   git stash push -m $stash_string
@@ -41,6 +43,7 @@ getlatest() {
   fi
 }
 
+# Show previously used conventional commit scopes
 gscopes() {
   local output=$(git log --pretty=oneline --abbrev-commit --no-merges | grep "):" | cut -d "(" -f2 | cut -d ")" -f1)
   if [[ "$1" == "-c" ]];then
