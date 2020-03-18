@@ -68,8 +68,13 @@ function moveToNextScreen()
   win:move(win:frame():toUnitRect(currentScreen:frame()), currentScreen:next(), true, 0)
 end
 
+-- Chain Bind Helper
+function bindChain(modifier, key, positions)
+  hs.hotkey.bind(modifier, key, chain(key, positions))
+end
+
 -- Binds
-hs.hotkey.bind(ultra, 'q', chain('q', { grid.left50, grid.left60, grid.topLeft, grid.bottomLeft }))
-hs.hotkey.bind(ultra, 'w', chain('w', { grid.full, grid.centeredBig }))
-hs.hotkey.bind(ultra, 'e', chain('e', { grid.right50, grid.right40, grid.topRight, grid.bottomRight }))
+bindChain(ultra, 'q', { grid.left50, grid.left60, grid.topLeft, grid.bottomLeft })
+bindChain(ultra, 'w', { grid.full, grid.centeredBig, grid.centeredSmall })
+bindChain(ultra, 'e', { grid.right50, grid.right40, grid.topRight, grid.bottomRight })
 hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
