@@ -51,3 +51,9 @@ gscopes() {
   echo -e "\033[96m\033[1mPrevious commit scopes:\033[0m\n"
   echo $output
 }
+
+# Diff commits with tracked remote branch
+gdremote() {
+  remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)
+  git log $remote_branch..HEAD --format='%C(bold cyan)%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset'
+}
