@@ -121,6 +121,7 @@ local hyperBind(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, 
                         "description": "Ultra Remaps (forward delete, spaces, mission control)",
                         "manipulators": [
                             ultraBind("delete_or_backspace", "delete_forward"), // Forward delete
+                            hyperBind("delete_or_backspace", "delete_forward", ["fn", "left_option"]), // Forward delete word
                             ultraBind("a", "left_arrow", ["left_control"]),  // Spaces left
                             ultraBind("d", "right_arrow", ["left_control"]), // Spaces right
 

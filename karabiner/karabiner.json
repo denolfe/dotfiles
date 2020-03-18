@@ -489,6 +489,29 @@
                      },
                      {
                         "from": {
+                           "key_code": "delete_or_backspace",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift",
+                                 "left_option",
+                                 "left_command"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "delete_forward",
+                              "modifiers": [
+                                 "fn",
+                                 "left_option"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "from": {
                            "key_code": "a",
                            "modifiers": {
                               "mandatory": [
