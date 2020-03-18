@@ -57,7 +57,8 @@ local grid = {
   bottomLeft = '0,6 6x6',
   full = '0,0 12x12',
   centeredBig = '0.5,0.5 11x11',
-  centeredSmall = '4,4 4x4',
+  centeredMedium = '2,1 8x10',
+  centeredSmall = '3,1.5 6x9'
 }
 
 -- Source: https://stackoverflow.com/a/58662204/1717697
@@ -75,6 +76,6 @@ end
 
 -- Binds
 bindChain(ultra, 'q', { grid.left50, grid.left60, grid.topLeft, grid.bottomLeft })
-bindChain(ultra, 'w', { grid.full, grid.centeredBig, grid.centeredSmall })
+bindChain(ultra, 'w', { grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall })
 bindChain(ultra, 'e', { grid.right50, grid.right40, grid.topRight, grid.bottomRight })
 hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
