@@ -7,7 +7,7 @@ hs.grid.MARGINY = 0
 local lastSeenChain = nil
 local lastSeenWindow = nil
 local chain = (function(key, movements)
-  local chainResetInterval = 2 -- seconds
+  local chainResetInterval = 1.5 -- seconds
   local cycleLength = #movements
   local sequenceNumber = 1
 
