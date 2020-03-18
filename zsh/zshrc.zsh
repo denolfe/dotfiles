@@ -119,7 +119,7 @@ then
 fi
 
 # Load functions
-for f in $DOTFILES/zsh/functions/*; do source $f; done
+for f in $DOTFILES/functions/*; do source $f; done
 
 # Load aliases
 for f in $DOTFILES/aliases/*.aliases.*sh; do source $f; done
