@@ -467,7 +467,7 @@
                   ]
                },
                {
-                  "description": "Ultra Remaps (forward delete, spaces)",
+                  "description": "Ultra Remaps (forward delete, spaces, mission control)",
                   "manipulators": [
                      {
                         "from": {
@@ -489,7 +489,7 @@
                      },
                      {
                         "from": {
-                           "key_code": "s",
+                           "key_code": "a",
                            "modifiers": {
                               "mandatory": [
                                  "left_control",
@@ -501,7 +501,9 @@
                         "to": [
                            {
                               "key_code": "left_arrow",
-                              "modifiers": "left_control"
+                              "modifiers": [
+                                 "left_control"
+                              ]
                            }
                         ],
                         "type": "basic"
@@ -520,7 +522,49 @@
                         "to": [
                            {
                               "key_code": "right_arrow",
-                              "modifiers": "left_control"
+                              "modifiers": [
+                                 "left_control"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "from": {
+                           "key_code": "s",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift",
+                                 "left_option"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "mission_control"
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "from": {
+                           "key_code": "s",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift",
+                                 "left_option",
+                                 "left_command"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "down_arrow",
+                              "modifiers": [
+                                 "left_control"
+                              ]
                            }
                         ],
                         "type": "basic"
