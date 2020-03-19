@@ -51,15 +51,15 @@ local hyper(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from
                 "parameters": {
                     "basic.simultaneous_threshold_milliseconds": 50,
                     "basic.to_delayed_action_delay_milliseconds": 500,
-                    "basic.to_if_alone_timeout_milliseconds": 100,
+                    "basic.to_if_alone_timeout_milliseconds": 100,  // Default 1000
                     "basic.to_if_held_down_threshold_milliseconds": 500,
                     "mouse_motion_to_scroll.speed": 100
                 },
                 "rules": [
                     {
+                        "description": "Change caps_lock to command+control+option+shift",
                         "manipulators": [
                             {
-                                "description": "Change caps_lock to command+control+option+shift",
                                 "from": {
                                     "key_code": "caps_lock",
                                     "modifiers": {
