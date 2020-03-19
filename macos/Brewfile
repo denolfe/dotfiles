@@ -15,6 +15,7 @@ brew "docker-compose", link: false
 brew "fzf"
 brew "gnupg"
 brew "gradle"
+brew "htop"
 brew "jq"
 brew "jsonnet"
 brew "kubernetes-cli"
