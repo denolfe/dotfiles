@@ -33,12 +33,16 @@ gscopes() {
 }
 
 # Diff commits with tracked remote branch
-gdremote() {
+glremote() {
   remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)
   if [[ -z $remote_branch ]]; then
-    echo 'No tracked remote branch'
-    return 1
+    echo 'No tracked remote branch, using origin/master'
+    remote_branch="origin/master"
   fi
   git log $remote_branch..HEAD --format='%C(bold cyan)%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset'
 }
 
+# Diff commits with master
+glmaster() {
+  git log master..HEAD --format='%C(bold cyan)%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset'
+}
