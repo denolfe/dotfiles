@@ -2,6 +2,9 @@
 ultra = {'ctrl','alt','shift'} -- Bound to CapsLock in Karabiner-Elements
 hyper = {'shift', 'cmd', 'alt', 'ctrl'} -- CapsLock + cmd
 
+-- Chained binds for window resizing and movement
+require('windowmanager')
+
 -- App shortcuts
 local bindApp = function(appName)
   return function()
@@ -21,9 +24,6 @@ hs.hotkey.bind(ultra, '\\', hs.spotify.playpause)
 hs.hotkey.bind(ultra, ']',  hs.spotify.next)
 hs.hotkey.bind(ultra, '[',  hs.spotify.previous)
 hs.hotkey.bind(hyper, '\\', hs.spotify.displayCurrentTrack)
-
--- Chained binds for window resizing and movement
-require('windowmanager')
 
 -- Reload shortcut
 hs.hotkey.bind(ultra, 'r', hs.reload)
