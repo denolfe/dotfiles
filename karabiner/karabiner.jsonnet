@@ -128,7 +128,21 @@ local hyper(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from
                             ultra("s", "mission_control"), // Mission Control
                             hyper("s", "down_arrow", ["left_control"]) // App windows
                         ]
-                    }
+                    },
+                    {
+                        "description": "Chrome-specific Ctrl-Tab Remap",
+                        local chromeOnly = { "conditions": [{
+                                "type": "frontmost_application_if",
+                                "bundle_identifiers": [
+                                    "^com\\.google\\.Chrome$"
+                                ]
+                            }]
+                        },
+                        "manipulators": [
+                            hyper("a", "tab", ["left_control", "left_shift"]) + chromeOnly,
+                            hyper("d", "tab", ["left_control"]) + chromeOnly,
+                        ],
+                    },
                 ]
             },
             "devices": [],
