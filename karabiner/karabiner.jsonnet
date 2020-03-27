@@ -122,8 +122,8 @@ local hyper(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from
                         "manipulators": [
                             ultra("delete_or_backspace", "delete_forward"), // Forward delete
                             hyper("delete_or_backspace", "delete_forward", ["fn", "left_option"]), // Forward delete word
-                            ultra("a", "left_arrow", ["left_control"]),  // Spaces left
-                            ultra("d", "right_arrow", ["left_control"]), // Spaces right
+                            hyper("q", "left_arrow", ["left_control"]),  // Spaces left
+                            hyper("e", "right_arrow", ["left_control"]), // Spaces right
 
                             ultra("s", "mission_control"), // Mission Control
                             hyper("s", "down_arrow", ["left_control"]) // App windows
