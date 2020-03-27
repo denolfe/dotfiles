@@ -6,7 +6,7 @@ hs.grid.MARGINY = 0
 -- Cycle through positions on multiple presses
 local lastSeenChain = nil
 local lastSeenWindow = nil
-local chain = (function(key, movements)
+local chain = (function(movements)
   local chainResetInterval = 1.5 -- seconds
   local cycleLength = #movements
   local sequenceNumber = 1
@@ -69,13 +69,8 @@ function moveToNextScreen()
   win:move(win:frame():toUnitRect(currentScreen:frame()), currentScreen:next(), true, 0)
 end
 
--- Chain Bind Helper
-function bindChain(modifier, key, positions)
-  hs.hotkey.bind(modifier, key, chain(key, positions))
-end
-
 -- Binds
-bindChain(ultra, 'q', { grid.left60, grid.left50, grid.topLeft, grid.bottomLeft })
-bindChain(ultra, 'w', { grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall })
-bindChain(ultra, 'e', { grid.right40, grid.right50, grid.topRight, grid.bottomRight })
+hs.hotkey.bind(ultra, 'q', chain({ grid.left60, grid.left50, grid.topLeft, grid.bottomLeft }))
+hs.hotkey.bind(ultra, 'w', chain({ grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall }))
+hs.hotkey.bind(ultra, 'e', chain({ grid.right40, grid.right50, grid.topRight, grid.bottomRight }))
 hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
