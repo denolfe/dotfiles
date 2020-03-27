@@ -75,7 +75,7 @@ function bindChain(modifier, key, positions)
 end
 
 -- Binds
-bindChain(ultra, 'q', { grid.left50, grid.left60, grid.topLeft, grid.bottomLeft })
+bindChain(ultra, 'q', { grid.left60, grid.left50, grid.topLeft, grid.bottomLeft })
 bindChain(ultra, 'w', { grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall })
-bindChain(ultra, 'e', { grid.right50, grid.right40, grid.topRight, grid.bottomRight })
+bindChain(ultra, 'e', { grid.right40, grid.right50, grid.topRight, grid.bottomRight })
 hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
