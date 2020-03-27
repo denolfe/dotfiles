@@ -124,5 +124,6 @@
             }
         ]
     },
-    "workbench.iconTheme": "vscode-icons"
+    "workbench.iconTheme": "vscode-icons",
+    "editor.minimap.showSlider": "always"
 }
