@@ -512,13 +512,12 @@
                      },
                      {
                         "from": {
-                           "key_code": "q",
+                           "key_code": "a",
                            "modifiers": {
                               "mandatory": [
                                  "left_control",
                                  "left_shift",
-                                 "left_option",
-                                 "left_command"
+                                 "left_option"
                               ]
                            }
                         },
@@ -534,13 +533,12 @@
                      },
                      {
                         "from": {
-                           "key_code": "e",
+                           "key_code": "d",
                            "modifiers": {
                               "mandatory": [
                                  "left_control",
                                  "left_shift",
-                                 "left_option",
-                                 "left_command"
+                                 "left_option"
                               ]
                            }
                         },
