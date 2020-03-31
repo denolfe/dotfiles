@@ -133,5 +133,7 @@ export FZF_TMUX_HEIGHT=80%
 
 export BAT_THEME='Monokai Extended Bright'
 
+export AWS_PAGER='bat -p'
+
 source ~/.asdf/asdf.sh
 source ~/.asdf/completions/asdf.bash
