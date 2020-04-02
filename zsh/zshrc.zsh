@@ -135,5 +135,10 @@ export BAT_THEME='Monokai Extended Bright'
 
 export AWS_PAGER='bat -p'
 
+# Needed for Crystal on mac - openss + pkg-config
+if [ `uname` = Darwin ]; then
+  export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig
+fi
+
 source ~/.asdf/asdf.sh
 source ~/.asdf/completions/asdf.bash
