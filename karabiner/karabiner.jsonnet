@@ -143,40 +143,44 @@ local hyper(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from
                             hyper("d", "tab", ["left_control"]) + chromeOnly,
                         ],
                     },
+                    {
+                        "description": "Swap Command and Option on External Keyboards",
+                        local swaps = [
+                            { from: "left_command", to: "left_option" },
+                            { from: "left_option", to: "left_command"}
+                        ],
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "device_unless",
+                                        "identifiers": [
+                                            {
+                                                "vendor_id": 1452
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "type": "basic",
+                                "from": {
+                                    "key_code": swap.from,
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": swap.to
+                                    }
+                                ]
+                        } for swap in swaps
+                        ]
+                    }
                 ]
             },
-            "devices": [
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": false,
-                        "product_id": 61138,
-                        "vendor_id": 1240
-                    },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": false,
-                    "simple_modifications": [
-                        {
-                            "from": {
-                                "key_code": "left_command"
-                            },
-                            "to": {
-                                "key_code": "left_option"
-                            }
-                        },
-                        {
-                            "from": {
-                                "key_code": "left_option"
-                            },
-                            "to": {
-                                "key_code": "left_command"
-                            }
-                        }
-                    ]
-                }
-            ],
+            "devices": [],
             # Mapping of function keys
             local fnKey(from_key_code, to_key_code, is_consumer_key_code=true) = {
                 from: {
