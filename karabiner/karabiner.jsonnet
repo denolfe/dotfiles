@@ -4,39 +4,27 @@
 *
 */
 
-# Mapped to CapsLock below
-local ultraMods = [
-    "left_control",
-    "left_shift",
-    "left_option"
-];
+local pcRemaps = import 'pc-remaps.jsonnet';
+local utils = import 'utils.libsonnet';
 
-# CapsLock + Cmd
-local hyperMods = [
-    "left_control",
-    "left_shift",
-    "left_option",
-    "left_command"
-];
-
-local bind(modifier, from_key_code, to_key_code, to_key_mods=null) = {
-    from: {
-        key_code: from_key_code,
-        modifiers: {
-            mandatory: modifier
-        }
-    },
-    to: [
-        {
-            key_code: to_key_code,
-            [if to_key_mods != null then "modifiers"]: to_key_mods
-        },
+local mods = {
+    // CapsLock
+    ultra: [
+        "left_control",
+        "left_shift",
+        "left_option"
     ],
-    type: "basic"
+    // CapsLock + Cmd
+    hyper: [
+        "left_control",
+        "left_shift",
+        "left_option",
+        "left_command"
+    ]
 };
 
-local ultra(from_key_code, to_key_code, to_key_mods=null) = bind(ultraMods, from_key_code, to_key_code, to_key_mods);
-local hyper(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from_key_code, to_key_code, to_key_mods);
+local ultra(from_key_code, to_key_code, to_key_mods=null) = utils.bind(mods.ultra, from_key_code, to_key_code, to_key_mods);
+local hyper(from_key_code, to_key_code, to_key_mods=null) = utils.bind(mods.hyper, from_key_code, to_key_code, to_key_mods);
 
 # Main config
 {
@@ -57,7 +45,7 @@ local hyper(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from
                 },
                 "rules": [
                     {
-                        "description": "Change caps_lock to command+control+option+shift",
+                        "description": "Change CapsLock to Command + Ctrl + Option",
                         "manipulators": [
                             {
                                 "from": {
@@ -144,11 +132,7 @@ local hyper(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from
                         ],
                     },
                     {
-                        "description": "Swap Command and Option on External Keyboards",
-                        local swaps = [
-                            { from: "left_command", to: "left_option" },
-                            { from: "left_option", to: "left_command"}
-                        ],
+                        "description": "Swap Command and Option on non-Apple keyboards",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -175,9 +159,13 @@ local hyper(from_key_code, to_key_code, to_key_mods=null) = bind(hyperMods, from
                                         "key_code": swap.to
                                     }
                                 ]
-                        } for swap in swaps
+                        } for swap in [
+                                { from: "left_command", to: "left_option" },
+                                { from: "left_option", to: "left_command"}
+                            ]
                         ]
-                    }
+                    },
+                    pcRemaps,
                 ]
             },
             "devices": [],
