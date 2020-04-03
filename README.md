@@ -63,9 +63,9 @@
   - <kbd>cmd</kbd>+<kbd>u</kbd> - End of page
 - Remappings
   - <kbd>CapsLock</kbd>+<kbd>delete</kbd> - Forward delete
-  - <kbd>CapsLock</kbd>+<kbd>cmd</kbd>+delete - Forward delete word
-  - <kbd>CapsLock</kbd>+<kbd>cmd</kbd>+<kbd>q</kbd> - Spaces left
-  - <kbd>CapsLock</kbd>+<kbd>cmd</kbd>+<kbd>e</kbd> - Spaces right
+  - <kbd>CapsLock</kbd>+<kbd>cmd</kbd>+<kbd>delete</kbd> - Forward delete word
+  - <kbd>CapsLock</kbd>+<kbd>a</kbd> - Spaces left
+  - <kbd>CapsLock</kbd>+<kbd>d</kbd> - Spaces right
   - <kbd>CapsLock</kbd>+<kbd>s</kbd> - Mission Control
   - <kbd>CapsLock</kbd> +<kbd>cmd</kbd>+<kbd>s</kbd> - Show all app windows
 
