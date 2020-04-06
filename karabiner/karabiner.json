@@ -1594,6 +1594,14 @@
                      {
                         "conditions": [
                            {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
+                           {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",
                                  "^com\\.jetbrains\\."
@@ -1621,6 +1629,14 @@
                      },
                      {
                         "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
                            {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",
@@ -1687,6 +1703,14 @@
                      {
                         "conditions": [
                            {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
+                           {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",
                                  "^com\\.jetbrains\\."
@@ -1714,6 +1738,14 @@
                      },
                      {
                         "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
                            {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",
@@ -1745,6 +1777,14 @@
                      {
                         "conditions": [
                            {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
+                           {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",
                                  "^com\\.jetbrains\\."
@@ -1773,6 +1813,14 @@
                      },
                      {
                         "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
                            {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",
@@ -1804,6 +1852,14 @@
                      {
                         "conditions": [
                            {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
+                           {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",
                                  "^com\\.jetbrains\\."
@@ -1833,6 +1889,14 @@
                      },
                      {
                         "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
                            {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",
@@ -1864,6 +1928,14 @@
                      {
                         "conditions": [
                            {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
+                           {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",
                                  "^com\\.jetbrains\\."
@@ -1893,6 +1965,14 @@
                      },
                      {
                         "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
                            {
                               "bundle_identifiers": [
                                  "^com\\.microsoft\\.VSCode",

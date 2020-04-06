@@ -14,8 +14,9 @@ local utils = import 'utils.libsonnet';
             }
         ],
     },
-    local onlyEditors = nonApple + {
+    local onlyEditors = {
         "conditions": [
+            nonApple.conditions[0],
             {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
@@ -52,8 +53,7 @@ local utils = import 'utils.libsonnet';
         ],
     },
     "manipulators": [
-        // Copy
-        ctrlBind("c") + notIterm,
+        ctrlBind("c") + notIterm, // Copy
         ctrlBind("v"), // Paste
         ctrlBind("x"), // Cut
         ctrlBind("a"), // Select All
