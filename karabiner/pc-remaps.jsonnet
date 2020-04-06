@@ -25,7 +25,7 @@ local utils = import 'utils.libsonnet';
             }
         ]
     },
-    local CtrlCmdSwap(key, additionalMods=null) = nonApple +
+    local ctrlBind(key, additionalMods=null) = nonApple +
     {
         "type": "basic",
         "from": {
@@ -43,7 +43,7 @@ local utils = import 'utils.libsonnet';
     },
     "manipulators": [
         // Copy
-        CtrlCmdSwap("c") + {
+        ctrlBind("c") + {
             "conditions": [
                 {
                     "type": "frontmost_application_unless",
@@ -53,21 +53,21 @@ local utils = import 'utils.libsonnet';
                 }
             ]
         },
-        CtrlCmdSwap("v"), // Paste
-        CtrlCmdSwap("x"), // Cut
-        CtrlCmdSwap("a"), // Select All
-        CtrlCmdSwap("s"), // Save
-        CtrlCmdSwap("s", ["left_shift"]), // Save As
-        CtrlCmdSwap("r"), // Reload
-        CtrlCmdSwap("n"), // New
-        CtrlCmdSwap("z"), // Undo
+        ctrlBind("v"), // Paste
+        ctrlBind("x"), // Cut
+        ctrlBind("a"), // Select All
+        ctrlBind("s"), // Save
+        ctrlBind("s", ["left_shift"]), // Save As
+        ctrlBind("r"), // Reload
+        ctrlBind("n"), // New
+        ctrlBind("z"), // Undo
         utils.bind(["left_control"], "y", "z", ["left_command", "left_shift"]) + nonApple, // Redo
-        CtrlCmdSwap("f"), // Find
-        CtrlCmdSwap("f", ["left_shift"]), // Find All
-        CtrlCmdSwap("t"), // New Tab
-        CtrlCmdSwap("w"), // Close Tab
-        CtrlCmdSwap("i"), // Italic
-        CtrlCmdSwap("b"), // Bold
+        ctrlBind("f"), // Find
+        ctrlBind("f", ["left_shift"]), // Find All
+        ctrlBind("t"), // New Tab
+        ctrlBind("w"), // Close Tab
+        ctrlBind("i"), // Italic
+        ctrlBind("b"), // Bold
 
         utils.bind(["left_control"], "delete_or_backspace", "delete_or_backspace", "left_alt") + nonApple, // Ctrl + Backspace
         utils.bind(["left_command"], "delete_or_backspace", "delete_or_backspace", "left_alt") + nonApple, // Ctrl + Backspace
@@ -85,9 +85,9 @@ local utils = import 'utils.libsonnet';
         utils.bind(["left_control", "left_shift"], "up_arrow", "up_arrow", ["left_command", "left_shift"]) + nonApple,
 
         // Editors
-        CtrlCmdSwap("d") + onlyEditors,
-        CtrlCmdSwap("d", ["left_shift"]) + onlyEditors,
-        CtrlCmdSwap("l") + {
+        ctrlBind("d") + onlyEditors,
+        ctrlBind("d", ["left_shift"]) + onlyEditors,
+        ctrlBind("l") + {
             "conditions": [
                 {
                     "type": "frontmost_application_unless",
@@ -105,13 +105,13 @@ local utils = import 'utils.libsonnet';
                 }
             ]
         },
-        CtrlCmdSwap("p") + onlyEditors,
-        CtrlCmdSwap("p", ["left_shift"]) + onlyEditors,
+        ctrlBind("p") + onlyEditors,
+        ctrlBind("p", ["left_shift"]) + onlyEditors,
         utils.bind(["left_control"], "h", "f", ["left_option", "left_command"]) + onlyEditors,
-        CtrlCmdSwap("h", ["left_shift"]) + onlyEditors,
-        CtrlCmdSwap("l", ["left_shift"]) + onlyEditors,
-        CtrlCmdSwap("k", ["left_shift"],) + onlyEditors,
-        CtrlCmdSwap("e", ["left_shift"],) + onlyEditors,
-        CtrlCmdSwap("slash") + onlyEditors,
+        ctrlBind("h", ["left_shift"]) + onlyEditors,
+        ctrlBind("l", ["left_shift"]) + onlyEditors,
+        ctrlBind("k", ["left_shift"],) + onlyEditors,
+        ctrlBind("e", ["left_shift"],) + onlyEditors,
+        ctrlBind("slash") + onlyEditors,
     ]
 }
