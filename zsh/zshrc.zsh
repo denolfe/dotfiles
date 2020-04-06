@@ -63,7 +63,8 @@ POWERLEVEL9K_MODE='nerdfont-complete'
 zgen load bhilburn/powerlevel9k powerlevel9k
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status dir dir_writable vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs command_execution_time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs command_execution_time date)
+POWERLEVEL9K_DATE_FORMAT=%D{%m/%d}
 POWERLEVEL9K_STATUS_VERBOSE=false
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND="green"
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND="cyan"
