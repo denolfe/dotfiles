@@ -26,6 +26,14 @@ local mods = {
 local ultra(from_key_code, to_key_code, to_key_mods=null) = utils.bind(mods.ultra, from_key_code, to_key_code, to_key_mods);
 local hyper(from_key_code, to_key_code, to_key_mods=null) = utils.bind(mods.hyper, from_key_code, to_key_code, to_key_mods);
 
+local chromeOnly = { conditions: [{
+        type: "frontmost_application_if",
+        bundle_identifiers: [
+            "^com\\.google\\.Chrome$"
+        ]
+    }]
+};
+
 # Main config
 {
     "global": {
@@ -119,16 +127,66 @@ local hyper(from_key_code, to_key_code, to_key_mods=null) = utils.bind(mods.hype
                     },
                     {
                         "description": "Chrome-specific Ctrl-Tab Remap",
-                        local chromeOnly = { "conditions": [{
-                                "type": "frontmost_application_if",
-                                "bundle_identifiers": [
-                                    "^com\\.google\\.Chrome$"
-                                ]
-                            }]
-                        },
                         "manipulators": [
                             hyper("a", "tab", ["left_control", "left_shift"]) + chromeOnly,
                             hyper("d", "tab", ["left_control"]) + chromeOnly,
+                        ],
+                    },
+                    {
+                        "description": "Chrome Cmd/Ctrl+K Mapping",
+                        "manipulators": [
+                            {
+                                "description": "Cmd+K Mapping",
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "mandatory": "left_command"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "l",
+                                        "modifiers": ["left_command"],
+                                    },
+                                    {
+                                        "key_code": "slash",
+                                        "modifiers": ["left_shift"],
+                                    },
+                                ],
+                                "conditions": [ chromeOnly.conditions[0] ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Ctrl+K Mapping for non-Apple keyboards",
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "mandatory": "left_control"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "l",
+                                        "modifiers": ["left_command"],
+                                    },
+                                    {
+                                        "key_code": "slash",
+                                        "modifiers": ["left_shift"],
+                                    },
+                                ],
+                                "conditions": [
+                                    chromeOnly.conditions[0],
+                                    {
+                                        "type": "device_unless",
+                                        "identifiers": [
+                                            {
+                                                "vendor_id": 1452
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
                         ],
                     },
                     {

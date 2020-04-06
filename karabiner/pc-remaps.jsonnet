@@ -66,6 +66,9 @@ local utils = import 'utils.libsonnet';
         CtrlCmdSwap("f", ["left_shift"]), // Find All
         CtrlCmdSwap("t"), // New Tab
         CtrlCmdSwap("w"), // Close Tab
+        CtrlCmdSwap("i"), // Italic
+        CtrlCmdSwap("b"), // Bold
+
         utils.bind(["left_control"], "delete_or_backspace", "delete_or_backspace", "left_alt") + nonApple, // Ctrl + Backspace
         utils.bind(["left_command"], "delete_or_backspace", "delete_or_backspace", "left_alt") + nonApple, // Ctrl + Backspace
 
@@ -97,6 +100,7 @@ local utils = import 'utils.libsonnet';
                     "bundle_identifiers": [
                         "^com\\.microsoft\\.VSCode",
                         "^com\\.jetbrains\\.",
+                        "^com\\.google\\.Chrome$"
                     ],
                 }
             ]
