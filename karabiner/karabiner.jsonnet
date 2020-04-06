@@ -153,7 +153,7 @@ local chromeOnly = { conditions: [{
                                         "modifiers": ["left_shift"],
                                     },
                                 ],
-                                "conditions": [ chromeOnly.conditions[0] ],
+                                "conditions": chromeOnly.conditions,
                                 "type": "basic"
                             },
                             {
@@ -221,6 +221,24 @@ local chromeOnly = { conditions: [{
                                 { from: "left_command", to: "left_option" },
                                 { from: "left_option", to: "left_command"}
                             ]
+                        ]
+                    },
+                    {
+                        "description": "Cmd+` for Drop Alt Keyboard",
+                        "manipulators": [
+                            utils.bind(["left_command"], "escape", "grave_accent_and_tilde", ["left_command"]) + {
+                                "conditions": [
+                                    {
+                                        "type": "device_if",
+                                        "identifiers": [
+                                            {
+                                                "vendor_id": 1240,
+                                                "product_id": 61139
+                                            }
+                                        ]
+                                    }
+                                ],
+                            }
                         ]
                     },
                     pcRemaps,
