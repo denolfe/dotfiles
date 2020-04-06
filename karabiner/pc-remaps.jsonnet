@@ -25,6 +25,16 @@ local utils = import 'utils.libsonnet';
             }
         ]
     },
+    local notIterm = {
+        "conditions": [
+            {
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                    "^com\\.googlecode\\.iterm2$",
+                ],
+            }
+        ]
+    },
     local ctrlBind(key, additionalMods=null) = nonApple +
     {
         "type": "basic",
@@ -43,22 +53,13 @@ local utils = import 'utils.libsonnet';
     },
     "manipulators": [
         // Copy
-        ctrlBind("c") + {
-            "conditions": [
-                {
-                    "type": "frontmost_application_unless",
-                    "bundle_identifiers": [
-                        "^com\\.googlecode\\.iterm2$",
-                    ],
-                }
-            ]
-        },
+        ctrlBind("c") + notIterm,
         ctrlBind("v"), // Paste
         ctrlBind("x"), // Cut
         ctrlBind("a"), // Select All
         ctrlBind("s"), // Save
         ctrlBind("s", ["left_shift"]), // Save As
-        ctrlBind("r"), // Reload
+        ctrlBind("r") + notIterm,
         ctrlBind("n"), // New
         ctrlBind("z"), // Undo
         utils.bind(["left_control"], "y", "z", ["left_command", "left_shift"]) + nonApple, // Redo
@@ -89,12 +90,7 @@ local utils = import 'utils.libsonnet';
         ctrlBind("d", ["left_shift"]) + onlyEditors,
         ctrlBind("l") + {
             "conditions": [
-                {
-                    "type": "frontmost_application_unless",
-                    "bundle_identifiers": [
-                        "^com\\.googlecode\\.iterm2$",
-                    ],
-                },
+                notIterm.conditions[0],
                 {
                     "type": "frontmost_application_if",
                     "bundle_identifiers": [

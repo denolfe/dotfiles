@@ -1009,12 +1009,10 @@
                      {
                         "conditions": [
                            {
-                              "identifiers": [
-                                 {
-                                    "vendor_id": 1452
-                                 }
+                              "bundle_identifiers": [
+                                 "^com\\.googlecode\\.iterm2$"
                               ],
-                              "type": "device_unless"
+                              "type": "frontmost_application_unless"
                            }
                         ],
                         "from": {
