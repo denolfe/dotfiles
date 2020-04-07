@@ -26,12 +26,30 @@ local mods = {
 local ultra(from_key_code, to_key_code, to_key_mods=null) = utils.bind(mods.ultra, from_key_code, to_key_code, to_key_mods);
 local hyper(from_key_code, to_key_code, to_key_mods=null) = utils.bind(mods.hyper, from_key_code, to_key_code, to_key_mods);
 
-local chromeOnly = { conditions: [{
+local conditions = {
+    chromeOnly: {
         type: "frontmost_application_if",
         bundle_identifiers: [
             "^com\\.google\\.Chrome$"
         ]
-    }]
+    },
+    nonAppleDevice: {
+        type: "device_unless",
+        identifiers: [
+            {
+                vendor_id: 1452
+            }
+        ]
+    },
+    dropAltKeyboard: {
+        type: "device_if",
+        identifiers: [
+            {
+                vendor_id: 1240,
+                product_id: 61139
+            }
+        ]
+    }
 };
 
 # Main config
@@ -128,12 +146,12 @@ local chromeOnly = { conditions: [{
                     {
                         "description": "Chrome-specific Ctrl-Tab Remap",
                         "manipulators": [
-                            hyper("a", "tab", ["left_control", "left_shift"]) + chromeOnly,
-                            hyper("d", "tab", ["left_control"]) + chromeOnly,
+                            hyper("a", "tab", ["left_control", "left_shift"]) + { conditions: [conditions.chromeOnly] },
+                            hyper("d", "tab", ["left_control"]) + { conditions: [conditions.chromeOnly] },
                         ],
                     },
                     {
-                        "description": "Chrome Cmd/Ctrl+K Mapping",
+                        "description": "Chrome Remappings",
                         "manipulators": [
                             {
                                 "description": "Cmd+K Mapping",
@@ -153,7 +171,7 @@ local chromeOnly = { conditions: [{
                                         "modifiers": ["left_shift"],
                                     },
                                 ],
-                                "conditions": chromeOnly.conditions,
+                                "conditions": [conditions.chromeOnly],
                                 "type": "basic"
                             },
                             {
@@ -175,34 +193,55 @@ local chromeOnly = { conditions: [{
                                     },
                                 ],
                                 "conditions": [
-                                    chromeOnly.conditions[0],
-                                    {
-                                        "type": "device_unless",
-                                        "identifiers": [
-                                            {
-                                                "vendor_id": 1452
-                                            }
-                                        ]
-                                    }
+                                    conditions.chromeOnly,
+                                    conditions.nonAppleDevice
                                 ],
                                 "type": "basic"
-                            }
+                            },
+                            {
+                                "description": "Ctrl+H History for non-Apple keyboards",
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": {
+                                        "mandatory": "left_control"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "y",
+                                        "modifiers": ["left_command"],
+                                    }
+                                ],
+                                "conditions": [
+                                    conditions.chromeOnly,
+                                    conditions.nonAppleDevice
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Cmd+H History",
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": {
+                                        "mandatory": "left_command"
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "y",
+                                        "modifiers": ["left_command"],
+                                    }
+                                ],
+                                "conditions": [conditions.chromeOnly],
+                                "type": "basic"
+                            },
                         ],
                     },
                     {
                         "description": "Swap Command and Option on non-Apple keyboards",
                         "manipulators": [
                             {
-                                "conditions": [
-                                    {
-                                        "type": "device_unless",
-                                        "identifiers": [
-                                            {
-                                                "vendor_id": 1452
-                                            }
-                                        ]
-                                    }
-                                ],
+                                "conditions": [conditions.nonAppleDevice],
                                 "type": "basic",
                                 "from": {
                                     "key_code": swap.from,
@@ -227,17 +266,7 @@ local chromeOnly = { conditions: [{
                         "description": "Cmd+` for Drop Alt Keyboard",
                         "manipulators": [
                             utils.bind(["left_command"], "escape", "grave_accent_and_tilde", ["left_command"]) + {
-                                "conditions": [
-                                    {
-                                        "type": "device_if",
-                                        "identifiers": [
-                                            {
-                                                "vendor_id": 1240,
-                                                "product_id": 61139
-                                            }
-                                        ]
-                                    }
-                                ],
+                                "conditions": [ conditions.dropAltKeyboard ],
                             }
                         ]
                     },

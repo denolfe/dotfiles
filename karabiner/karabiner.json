@@ -661,7 +661,7 @@
                   ]
                },
                {
-                  "description": "Chrome Cmd/Ctrl+K Mapping",
+                  "description": "Chrome Remappings",
                   "manipulators": [
                      {
                         "conditions": [
@@ -730,6 +730,66 @@
                               "key_code": "slash",
                               "modifiers": [
                                  "left_shift"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "conditions": [
+                           {
+                              "bundle_identifiers": [
+                                 "^com\\.google\\.Chrome$"
+                              ],
+                              "type": "frontmost_application_if"
+                           },
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           }
+                        ],
+                        "description": "Ctrl+H History for non-Apple keyboards",
+                        "from": {
+                           "key_code": "h",
+                           "modifiers": {
+                              "mandatory": "left_control"
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "y",
+                              "modifiers": [
+                                 "left_command"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "conditions": [
+                           {
+                              "bundle_identifiers": [
+                                 "^com\\.google\\.Chrome$"
+                              ],
+                              "type": "frontmost_application_if"
+                           }
+                        ],
+                        "description": "Cmd+H History",
+                        "from": {
+                           "key_code": "h",
+                           "modifiers": {
+                              "mandatory": "left_command"
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "y",
+                              "modifiers": [
+                                 "left_command"
                               ]
                            }
                         ],
