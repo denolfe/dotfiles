@@ -1222,6 +1222,37 @@
                            }
                         ],
                         "from": {
+                           "key_code": "t",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "t",
+                              "modifiers": [
+                                 "left_command",
+                                 "left_shift"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           }
+                        ],
+                        "from": {
                            "key_code": "w",
                            "modifiers": {
                               "mandatory": [

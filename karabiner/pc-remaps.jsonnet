@@ -36,6 +36,7 @@ local utils = import 'utils.libsonnet';
             }
         ]
     },
+    // Create bind using Ctrl instead of Cmd
     local ctrlBind(key, additionalMods=null) = nonApple +
     {
         "type": "basic",
@@ -66,6 +67,7 @@ local utils = import 'utils.libsonnet';
         ctrlBind("f"), // Find
         ctrlBind("f", ["left_shift"]), // Find All
         ctrlBind("t"), // New Tab
+        ctrlBind("t", ["left_shift"]), // Restore Closed Tab
         ctrlBind("w"), // Close Tab
         ctrlBind("i"), // Italic
         ctrlBind("b"), // Bold
