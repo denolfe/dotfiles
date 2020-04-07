@@ -69,6 +69,8 @@ local utils = import 'utils.libsonnet';
         ctrlBind("t"), // New Tab
         ctrlBind("t", ["left_shift"]), // Restore Closed Tab
         ctrlBind("w"), // Close Tab
+        ctrlBind("equal_sign"), // Increase Size
+        ctrlBind("hyphen"), // Decrease Size
         ctrlBind("i"), // Italic
         ctrlBind("b"), // Bold
 

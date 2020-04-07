@@ -1282,6 +1282,64 @@
                            }
                         ],
                         "from": {
+                           "key_code": "equal_sign",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "equal_sign",
+                              "modifiers": [
+                                 "left_command"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           }
+                        ],
+                        "from": {
+                           "key_code": "hyphen",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "hyphen",
+                              "modifiers": [
+                                 "left_command"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           }
+                        ],
+                        "from": {
                            "key_code": "i",
                            "modifiers": {
                               "mandatory": [
