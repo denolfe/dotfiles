@@ -1,33 +1,52 @@
 local utils = import 'utils.libsonnet';
 
+local conditions = {
+    nonAppleDevice: {
+        "type": "device_unless",
+        "identifiers": [
+            {
+                "vendor_id": 1452
+            }
+        ]
+    },
+    editors: {
+        "type": "frontmost_application_if",
+        "bundle_identifiers": [
+            "^com\\.microsoft\\.VSCode",
+            "^com\\.jetbrains\\.",
+        ],
+    },
+    slack: {
+        "type": "frontmost_application_if",
+        "bundle_identifiers": [
+            "^com\\.tinyspeck\\.slackmacgap"
+        ],
+    }
+};
+
 {
     "description": "PC-Style Remaps",
+
     local nonApple = {
         "conditions": [
-            {
-                "type": "device_unless",
-                "identifiers": [
-                    {
-                        "vendor_id": 1452
-                    }
-                ]
-            }
+            conditions.nonAppleDevice
         ],
     },
     local onlyEditors = {
         "conditions": [
-            nonApple.conditions[0],
-            {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                    "^com\\.microsoft\\.VSCode",
-                    "^com\\.jetbrains\\.",
-                ],
-            }
+            conditions.nonAppleDevice,
+            conditions.editors
+        ]
+    },
+    local onlySlack = {
+        "conditions": [
+            conditions.nonAppleDevice,
+            conditions.slack
         ]
     },
     local notIterm = {
         "conditions": [
+            conditions.nonAppleDevice,
             {
                 "type": "frontmost_application_unless",
                 "bundle_identifiers": [
@@ -113,5 +132,8 @@ local utils = import 'utils.libsonnet';
         ctrlBind("k", ["left_shift"],) + onlyEditors,
         ctrlBind("e", ["left_shift"],) + onlyEditors,
         ctrlBind("slash") + onlyEditors,
+
+        // Slack
+        ctrlBind("k") + onlySlack
     ]
 }

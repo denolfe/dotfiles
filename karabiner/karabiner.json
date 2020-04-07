@@ -895,6 +895,14 @@
                      {
                         "conditions": [
                            {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
+                           {
                               "bundle_identifiers": [
                                  "^com\\.googlecode\\.iterm2$"
                               ],
@@ -1068,6 +1076,14 @@
                      },
                      {
                         "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
                            {
                               "bundle_identifiers": [
                                  "^com\\.googlecode\\.iterm2$"
@@ -1817,10 +1833,12 @@
                      {
                         "conditions": [
                            {
-                              "bundle_identifiers": [
-                                 "^com\\.googlecode\\.iterm2$"
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
                               ],
-                              "type": "frontmost_application_unless"
+                              "type": "device_unless"
                            },
                            {
                               "bundle_identifiers": [
@@ -2141,6 +2159,41 @@
                         "to": [
                            {
                               "key_code": "slash",
+                              "modifiers": [
+                                 "left_command"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           },
+                           {
+                              "bundle_identifiers": [
+                                 "^com\\.tinyspeck\\.slackmacgap"
+                              ],
+                              "type": "frontmost_application_if"
+                           }
+                        ],
+                        "from": {
+                           "key_code": "k",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "k",
                               "modifiers": [
                                  "left_command"
                               ]
