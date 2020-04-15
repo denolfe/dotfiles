@@ -131,7 +131,7 @@ local conditions = {
         ctrlBind("l", ["left_shift"]) + onlyEditors,
         ctrlBind("k", ["left_shift"],) + onlyEditors,
         ctrlBind("e", ["left_shift"],) + onlyEditors,
-        ctrlBind("slash") + onlyEditors,
+        ctrlBind("slash") + onlyEditors, // Comment
 
         // Slack
         ctrlBind("k") + onlySlack
