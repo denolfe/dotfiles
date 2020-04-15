@@ -13,6 +13,7 @@ brew "cfn-lint"
 brew "coreutils"
 brew "docker", link: false
 brew "docker-compose", link: false
+brew "fd"
 brew "fzf"
 brew "gnupg"
 brew "gradle"
