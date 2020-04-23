@@ -11,6 +11,7 @@ brew "awscli"
 brew "bat"
 brew "cfn-lint"
 brew "coreutils"
+brew "dive"
 brew "docker", link: false
 brew "docker-compose", link: false
 brew "fd"
