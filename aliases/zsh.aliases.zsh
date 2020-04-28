@@ -8,7 +8,6 @@ alias -g G='| grep'
 alias -g NUL='&> /dev/null'
 alias -g J='| python -m json.tool'
 alias -g CD='&& $_'
-alias -g CDD='cd $(ls -v1td */ | head -1)'
 
 # Detect the platform (similar to $OSTYPE)
 OS="`uname`"
