@@ -16,6 +16,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/kubectl
     zgen oh-my-zsh plugins/docker
     zgen oh-my-zsh plugins/docker-compose
+    zgen load michaelaquilina/zsh-autoswitch-virtualenv
     zgen load zsh-users/zsh-syntax-highlighting
     zgen load jocelynmallon/zshmarks
     zgen load caarlos0/zsh-mkc
@@ -61,7 +62,7 @@ POWERLEVEL9K_MODE='nerdfont-complete'
 zgen load bhilburn/powerlevel9k powerlevel9k
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status dir dir_writable vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs command_execution_time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(virtualenv background_jobs command_execution_time)
 POWERLEVEL9K_STATUS_VERBOSE=false
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND="green"
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND="cyan"
