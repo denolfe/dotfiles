@@ -1,6 +1,6 @@
 {
     "explorer.confirmDragAndDrop": false,
-    "editor.fontFamily": "'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "editor.codeLens": true,
     "editor.cursorBlinking": "smooth",
     "editor.formatOnPaste": true,
