@@ -55,11 +55,12 @@ cask "keepingyouawake"
 cask "linein"
 cask "maccy"
 cask "middleclick"
+cask "obs"
 cask "postman"
 cask "scroll-reverser"
 cask "slack"
 cask "spotify"
 cask "visual-studio-code"
-mas "Microsoft Remote Desktop", id: 1295203466
+cask "vlc"
 mas "Unsplash Wallpapers", id: 1284863847
 mas "Xcode", id: 497799835
