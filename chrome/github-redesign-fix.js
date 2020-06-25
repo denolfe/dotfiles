@@ -11,8 +11,6 @@
 (function () {
   let css = "";
 
-  console.log('RUNNINGGGGGG-------------------------------');
-
   css += ":root {";
   css += "  --width: 1600px;";
   css += "}";
