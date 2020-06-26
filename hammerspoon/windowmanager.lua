@@ -52,9 +52,13 @@ local grid = {
   left60 = '0,0 7x12',
   left66 = '0,0 8x12',
   topLeft = '0,0 6x6',
+  topLeft60 = '0,0 7x6',
   topRight = '6,0 6x6',
+  topRight40 = '7,0 5x6',
   bottomRight = '6,6 6x6',
+  bottomRight40 = '7,6 6x6',
   bottomLeft = '0,6 6x6',
+  bottomLeft60 = '0,6 7x6',
   full = '0,0 12x12',
   centeredBig = '0.5,0.5 11x11',
   centeredMedium = '2,1 8x10',
@@ -70,7 +74,7 @@ function moveToNextScreen()
 end
 
 -- Binds
-hs.hotkey.bind(ultra, 'q', chain({ grid.left60, grid.left50, grid.topLeft, grid.bottomLeft }))
+hs.hotkey.bind(ultra, 'q', chain({ grid.left60, grid.topLeft60, grid.bottomLeft60, grid.left50, grid.topLeft, grid.bottomLeft }))
 hs.hotkey.bind(ultra, 'w', chain({ grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall }))
-hs.hotkey.bind(ultra, 'e', chain({ grid.right40, grid.right50, grid.topRight, grid.bottomRight }))
+hs.hotkey.bind(ultra, 'e', chain({ grid.right40, grid.topRight40, grid.bottomRight40, grid.right50, grid.topRight, grid.bottomRight }))
 hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
