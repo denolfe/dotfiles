@@ -1,3 +1,5 @@
+local spaces = require("hs._asm.undocumented.spaces")
+
 hs.window.animationDuration = 0
 hs.grid.setGrid('12x12')
 hs.grid.MARGINX = 0
@@ -73,8 +75,20 @@ function moveToNextScreen()
   win:move(win:frame():toUnitRect(currentScreen:frame()), currentScreen:next(), true, 0)
 end
 
+-- https://stackoverflow.com/a/46834552/1717697
+-- move current window to the space sp
+-- function MoveWindowToSpace(sp)
+--   local win = hs.window.focusedWindow()      -- current window
+--   local uuid = win:screen():spacesUUID()     -- uuid for current screen
+--   local spaceID = spaces.layout()[uuid][sp]  -- internal index for sp
+--   spaces.moveWindowToSpace(win:id(), spaceID) -- move window to new space
+--   spaces.changeToSpace(spaceID)              -- follow window to new space
+-- end
+
 -- Binds
 hs.hotkey.bind(ultra, 'q', chain({ grid.left60, grid.topLeft60, grid.bottomLeft60, grid.left50, grid.topLeft, grid.bottomLeft }))
 hs.hotkey.bind(ultra, 'w', chain({ grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall }))
 hs.hotkey.bind(ultra, 'e', chain({ grid.right40, grid.topRight40, grid.bottomRight40, grid.right50, grid.topRight, grid.bottomRight }))
 hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
+-- hs.hotkey.bind(hyper, 'a', function() MoveWindowToSpace(1) end)
+-- hs.hotkey.bind(hyper, 'd', function() moveWindowToSpace(2) end)
