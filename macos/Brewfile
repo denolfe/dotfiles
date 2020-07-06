@@ -17,6 +17,7 @@ brew "docker-compose", link: false
 brew "dos2unix"
 brew "fd"
 brew "fzf"
+brew "git-standup"
 brew "gnupg"
 brew "gradle"
 brew "htop"
