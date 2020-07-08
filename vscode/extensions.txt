@@ -8,7 +8,7 @@ EditorConfig.EditorConfig
 faustinoaq.crystal-lang
 g3ortega.crystal
 GitLab.gitlab-workflow
-golang.Go
+golang.go
 heptio.jsonnet
 johnpapa.vscode-peacock
 kddejong.vscode-cfn-lint
@@ -20,6 +20,7 @@ ms-dotnettools.csharp
 ms-python.python
 oderwat.indent-rainbow
 pajoma.vscode-journal
+pnp.polacode
 redhat.vscode-yaml
 RobbOwen.synthwave-vscode
 rpinski.shebang-snippets
