@@ -18,6 +18,9 @@ mechatroner.rainbow-csv
 ms-azuretools.vscode-docker
 ms-dotnettools.csharp
 ms-python.python
+ms-vscode-remote.remote-containers
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-ssh-edit
 oderwat.indent-rainbow
 pajoma.vscode-journal
 pnp.polacode
