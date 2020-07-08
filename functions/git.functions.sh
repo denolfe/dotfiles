@@ -46,3 +46,44 @@ glremote() {
 glmaster() {
   git log master..HEAD --format='%C(bold cyan)%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset'
 }
+
+__repo_url=''
+
+# Open Origin Url
+gro() {
+  origin_url=$(git config --get remote.origin.url)
+  __construct_repo_url "$origin_url"
+
+  if [ -z "$1" ]; then
+    url="$__repo_url"
+  else
+    url="$__repo_url/$1"
+  fi
+  echo Opening "$url"...
+  open "$url"
+}
+
+# Open Upstream Url
+group() {
+  remote_url=$(git config --get remote."$(git config branch.master.remote)".url)
+  __construct_repo_url "$remote_url"
+
+  if [ -z "$1" ]; then
+    url="$__repo_url"
+  else
+    url="$__repo_url/$1"
+  fi
+  echo Opening "$url"...
+  open "$url"
+}
+
+__construct_repo_url() {
+  if [[ $1 =~ ^git@(.*):(.*)/(.*).git$ ]]; then
+    __repo_url=https://${match[1]}/${match[2]}/${match[3]}
+  elif [[ $1 =~ ^(https://.*)/(.*)/(.*).git$ ]]; then
+    __repo_url=${match[1]}/${match[2]}/${match[3]}
+  else
+    echo "Unable to find remote url"
+    return 1
+  fi
+}
