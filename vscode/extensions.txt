@@ -1,4 +1,8 @@
+bierner.github-markdown-preview
+bierner.markdown-checkbox
+bierner.markdown-emoji
 bierner.markdown-preview-github-styles
+bierner.markdown-yaml-preamble
 DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
 DigitalBrainstem.javascript-ejs-support
