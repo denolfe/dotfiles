@@ -80,7 +80,9 @@ local conditions = {
         ctrlBind("s"), // Save
         ctrlBind("s", ["left_shift"]), // Save As
         ctrlBind("r") + notIterm,
+        ctrlBind("r", ["left_shift"]) + notIterm,
         ctrlBind("n"), // New
+        ctrlBind("n", ["left_shift"]), // New Folder
         ctrlBind("z"), // Undo
         utils.bind(["left_control"], "y", "z", ["left_command", "left_shift"]) + nonApple, // Redo
         ctrlBind("f"), // Find
@@ -91,10 +93,9 @@ local conditions = {
         ctrlBind("equal_sign"), // Increase Size
         ctrlBind("hyphen"), // Decrease Size
         ctrlBind("i"), // Italic
-        ctrlBind("b"), // Bold
+        ctrlBind("b") + notIterm, // Bold
 
         utils.bind(["left_control"], "delete_or_backspace", "delete_or_backspace", "left_alt") + nonApple, // Ctrl + Backspace
-        utils.bind(["left_command"], "delete_or_backspace", "delete_or_backspace", "left_alt") + nonApple, // Ctrl + Backspace
 
         // Ctrl Arrows
         utils.bind(["left_control"], "left_arrow", "left_arrow", ["left_option"]) + nonApple,

@@ -1118,6 +1118,43 @@
                                  }
                               ],
                               "type": "device_unless"
+                           },
+                           {
+                              "bundle_identifiers": [
+                                 "^com\\.googlecode\\.iterm2$"
+                              ],
+                              "type": "frontmost_application_unless"
+                           }
+                        ],
+                        "from": {
+                           "key_code": "r",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "r",
+                              "modifiers": [
+                                 "left_command",
+                                 "left_shift"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
                            }
                         ],
                         "from": {
@@ -1133,6 +1170,37 @@
                               "key_code": "n",
                               "modifiers": [
                                  "left_command"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "conditions": [
+                           {
+                              "identifiers": [
+                                 {
+                                    "vendor_id": 1452
+                                 }
+                              ],
+                              "type": "device_unless"
+                           }
+                        ],
+                        "from": {
+                           "key_code": "n",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_control",
+                                 "left_shift"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "n",
+                              "modifiers": [
+                                 "left_command",
+                                 "left_shift"
                               ]
                            }
                         ],
@@ -1442,6 +1510,12 @@
                                  }
                               ],
                               "type": "device_unless"
+                           },
+                           {
+                              "bundle_identifiers": [
+                                 "^com\\.googlecode\\.iterm2$"
+                              ],
+                              "type": "frontmost_application_unless"
                            }
                         ],
                         "from": {
@@ -1478,33 +1552,6 @@
                            "modifiers": {
                               "mandatory": [
                                  "left_control"
-                              ]
-                           }
-                        },
-                        "to": [
-                           {
-                              "key_code": "delete_or_backspace",
-                              "modifiers": "left_alt"
-                           }
-                        ],
-                        "type": "basic"
-                     },
-                     {
-                        "conditions": [
-                           {
-                              "identifiers": [
-                                 {
-                                    "vendor_id": 1452
-                                 }
-                              ],
-                              "type": "device_unless"
-                           }
-                        ],
-                        "from": {
-                           "key_code": "delete_or_backspace",
-                           "modifiers": {
-                              "mandatory": [
-                                 "left_command"
                               ]
                            }
                         },
