@@ -183,9 +183,9 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>0 163 224 275 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1493 23 1065 1394 0 0 2560 1417 </string>
+	<string>1493 0 1065 1417 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>613 0 1065 1027 0 0 1680 1027 </string>
+	<string>1493 0 1065 1417 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>3173 1015 585 402 1680 0 2560 1417 </string>
 	<key>NeverWarnAboutOverrides</key>
@@ -1610,6 +1610,7 @@
 	<key>NoSyncAllAppVersions</key>
 	<array>
 		<string>3.3.9</string>
+		<string>3.3.11</string>
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
@@ -1636,7 +1637,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>BB607B70-0A8D-4750-9EDA-2D31DFA137C8</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>28</integer>
+	<integer>37</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2362,6 +2363,8 @@
 	<real>604677832.17101002</real>
 	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
+	<key>PasteTabToStringTabStopSize</key>
+	<integer>4</integer>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -2415,7 +2418,7 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.3.9</string>
+	<string>3.3.11</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
