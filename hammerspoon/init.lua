@@ -13,10 +13,10 @@ local bindApp = function(appName)
 end
 
 hs.hotkey.bind(ultra, ';', bindApp('iTerm'))
-hs.hotkey.bind(ultra, "'", bindApp('Google Chrome'))
-hs.hotkey.bind(ultra, '/', bindApp('Visual Studio Code'))
+hs.hotkey.bind(ultra, 'g', bindApp('Google Chrome'))
+hs.hotkey.bind(ultra, 'c', bindApp('Visual Studio Code'))
 hs.hotkey.bind(ultra, 'f', bindApp('Slack'))
-hs.hotkey.bind(ultra, 'g', bindApp('Spotify'))
+hs.hotkey.bind(ultra, 'v', bindApp('Spotify'))
 hs.hotkey.bind(ultra, 't', bindApp('Microsoft Outlook'))
 
 -- Spotify shortcuts
