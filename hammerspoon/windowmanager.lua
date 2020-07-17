@@ -62,7 +62,7 @@ local grid = {
   full = '0,0 12x12',
   centeredBig = '0.5,0.5 11x11',
   centeredMedium = '2,1 8x10',
-  centeredSmall = '3,1.5 6x9'
+  centeredSmall = '2.5,1.5 7x9'
 }
 
 -- Source: https://stackoverflow.com/a/58662204/1717697
