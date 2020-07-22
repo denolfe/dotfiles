@@ -127,6 +127,8 @@ local conditions = {
         },
         ctrlBind("p") + onlyEditors,
         ctrlBind("p", ["left_shift"]) + onlyEditors,
+        ctrlBind("d") + onlyEditors,
+        ctrlBind("d", ["left_shift"]) + onlyEditors,
         utils.bind(["left_control"], "h", "f", ["left_option", "left_command"]) + onlyEditors,
         ctrlBind("h", ["left_shift"]) + onlyEditors,
         ctrlBind("l", ["left_shift"]) + onlyEditors,
