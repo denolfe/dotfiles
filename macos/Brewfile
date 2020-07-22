@@ -12,6 +12,7 @@ brew "python@3.8"
 brew "awscli"
 brew "bat"
 brew "cfn-lint"
+brew "cmatrix"
 brew "coreutils"
 brew "dive"
 brew "docker", link: false
