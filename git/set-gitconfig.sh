@@ -7,6 +7,8 @@ git config --global user.name "Elliot DeNolf"
 git config --global push.default current
 git config --global core.autocrlf false
 git config --global core.whitespace cr-at-eol
+git config --global push.default current
+git config --global pull.rebase true
 git config --global status.short true
 git config --global status.branch true
 
@@ -23,7 +25,6 @@ git config --global alias.pom 'push origin master'
 git config --global alias.undolast 'reset HEAD~1'
 git config --global alias.revertlast 'revert HEAD'
 git config --global alias.editlast 'commit --amend -m'
-git config --global push.default current
 
 # Fancy Logs
 git config --global alias.l 'log --oneline --graph --decorate --all'
