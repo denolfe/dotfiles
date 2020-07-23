@@ -26,7 +26,7 @@ brew:
 
 # Restore Homebrew packages
 brew-restore:
-	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install | ruby
 	brew update
 	brew upgrade
 	brew install mas
