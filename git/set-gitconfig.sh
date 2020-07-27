@@ -9,6 +9,7 @@ git config --global core.autocrlf false
 git config --global core.whitespace cr-at-eol
 git config --global push.default current
 git config --global pull.rebase true
+git config --global rebase.autoStash true
 git config --global status.short true
 git config --global status.branch true
 
