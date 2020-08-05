@@ -87,6 +87,14 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 echo "  › Show battery percent"
 defaults write com.apple.menuextra.battery ShowPercent -bool true
 
+echo "  › Configure Menu Icons"
+defaults write com.apple.systemuiserver menuExtras -array \
+  "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
+  "/System/Library/CoreServices/Menu Extras/Battery.menu" \
+  "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
+  "/System/Library/CoreServices/Menu Extras/Clock.menu" \
+  "/System/Library/CoreServices/Menu Extras/Volume.menu"
+
 # if [ ! -z "$TRAVIS_JOB_ID" ]; then
 #   echo "  › Speed up wake from sleep to 24 hours from an hour"
 #   # http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
