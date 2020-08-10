@@ -16,6 +16,7 @@ heptio.jsonnet
 johnpapa.vscode-peacock
 kddejong.vscode-cfn-lint
 kofno.crystal-ide
+kumar-harsh.graphql-for-vscode
 matangover.mypy
 mechatroner.rainbow-csv
 ms-azuretools.vscode-docker
