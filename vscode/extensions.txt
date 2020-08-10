@@ -1,6 +1,7 @@
 bierner.markdown-checkbox
 bierner.markdown-emoji
 bierner.markdown-preview-github-styles
+CoenraadS.bracket-pair-colorizer-2
 DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
 DigitalBrainstem.javascript-ejs-support
