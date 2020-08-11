@@ -74,7 +74,7 @@ function moveToNextScreen()
 end
 
 -- Binds
-hs.hotkey.bind(ultra, 'q', chain({ grid.left60, grid.topLeft60, grid.bottomLeft60, grid.left50, grid.topLeft, grid.bottomLeft }))
+hs.hotkey.bind(ultra, 'q', chain({ grid.left60, grid.left50, grid.topLeft60, grid.bottomLeft60, grid.topLeft, grid.bottomLeft }))
 hs.hotkey.bind(ultra, 'w', chain({ grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall }))
-hs.hotkey.bind(ultra, 'e', chain({ grid.right40, grid.topRight40, grid.bottomRight40, grid.right50, grid.topRight, grid.bottomRight }))
+hs.hotkey.bind(ultra, 'e', chain({ grid.right40, grid.right50, grid.topRight40, grid.bottomRight40, grid.topRight, grid.bottomRight }))
 hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
