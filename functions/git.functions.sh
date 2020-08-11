@@ -6,7 +6,7 @@
 grau() {
   git remote add upstream "$1" || return 1
   git fetch upstream || return 1
-  git branch -u upstream/master
+  git branch -u upstream/"$(command git branch --show-current)"
 }
 
 # Stash changes, get latest master, re-apply
