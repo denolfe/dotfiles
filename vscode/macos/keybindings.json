@@ -66,5 +66,21 @@
     {
       "key": "cmd+shift+\\",
       "command": "workbench.action.moveEditorToPreviousGroup"
+    },
+    {
+      "key": "shift+cmd+=",
+      "command": "" // Removes default of zoomIn
+    },
+    {
+      "key": "shift+cmd+-",
+      "command": "" // Removes default of zoomOut
+    },
+    {
+      "key": "shift+cmd+=",
+      "command": "workbench.action.increaseViewSize"
+    },
+    {
+      "key": "shift+cmd+-",
+      "command": "workbench.action.decreaseViewSize"
     }
   ]
