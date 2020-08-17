@@ -2,7 +2,9 @@ andys8.jest-snippets
 bierner.markdown-checkbox
 bierner.markdown-emoji
 bierner.markdown-preview-github-styles
+bungcip.better-toml
 CoenraadS.bracket-pair-colorizer-2
+coolbear.systemd-unit-file
 DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
 DigitalBrainstem.javascript-ejs-support
