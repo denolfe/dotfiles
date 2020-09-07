@@ -167,6 +167,9 @@ defaults write com.apple.dock autohide -bool true
 echo "  › Don't animate opening applications from the Dock"
 defaults write com.apple.dock launchanim -bool false
 
+echo "  › Show App Switcher on all displays"
+defaults write com.apple.dock appswitcher-all-displays -bool true
+
 echo ""
 echo "› Kill related apps"
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
