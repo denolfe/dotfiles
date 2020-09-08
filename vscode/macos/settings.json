@@ -10,7 +10,7 @@
     "workbench.colorCustomizations": {
       "editorWhitespace.foreground": "#1e1e1e"
     },
-    "terminal.integrated.fontFamily": "'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
+    "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "yaml.customTags": [
         "!And",
         "!And sequence",
