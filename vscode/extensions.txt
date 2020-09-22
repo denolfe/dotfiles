@@ -1,3 +1,4 @@
+amillard98.specflow-tools
 andys8.jest-snippets
 bierner.markdown-checkbox
 bierner.markdown-emoji
@@ -16,6 +17,7 @@ g3ortega.crystal
 GitLab.gitlab-workflow
 golang.go
 heptio.jsonnet
+jeff-hykin.polacode-2019
 johnpapa.vscode-peacock
 kddejong.vscode-cfn-lint
 kofno.crystal-ide
@@ -28,9 +30,9 @@ ms-python.python
 ms-vscode-remote.remote-containers
 ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
+msysyamamoto.vscode-fluentd
 oderwat.indent-rainbow
 pajoma.vscode-journal
-pnp.polacode
 redhat.vscode-yaml
 RobbOwen.synthwave-vscode
 rpinski.shebang-snippets
