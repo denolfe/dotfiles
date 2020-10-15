@@ -4,6 +4,7 @@ bierner.markdown-checkbox
 bierner.markdown-emoji
 bierner.markdown-preview-github-styles
 bungcip.better-toml
+burkeholland.simple-react-snippets
 CoenraadS.bracket-pair-colorizer-2
 coolbear.systemd-unit-file
 DavidAnson.vscode-markdownlint
@@ -13,6 +14,7 @@ donjayamanne.githistory
 eamodio.gitlens
 EditorConfig.EditorConfig
 faustinoaq.crystal-lang
+formulahendry.auto-rename-tag
 g3ortega.crystal
 GitLab.gitlab-workflow
 golang.go
@@ -24,6 +26,8 @@ kofno.crystal-ide
 kumar-harsh.graphql-for-vscode
 matangover.mypy
 mechatroner.rainbow-csv
+mohsen1.react-javascript-to-typescript-transform-vscode
+mrmlnc.vscode-scss
 ms-azuretools.vscode-docker
 ms-dotnettools.csharp
 ms-python.python
@@ -36,6 +40,8 @@ pajoma.vscode-journal
 redhat.vscode-yaml
 RobbOwen.synthwave-vscode
 rpinski.shebang-snippets
+sibiraj-s.vscode-scss-formatter
+steoates.autoimport
 timonwong.shellcheck
 vscode-icons-team.vscode-icons
 webfreak.debug

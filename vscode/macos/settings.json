@@ -125,5 +125,21 @@
         ]
     },
     "workbench.iconTheme": "vscode-icons",
-    "editor.minimap.showSlider": "always"
+    "editor.minimap.showSlider": "always",
+    "explorer.confirmDelete": false,
+    "editor.cursorStyle": "block",
+    "auto-rename-tag.activationOnLanguage": [
+        "javascriptreact"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "editor.renameOnType": true,
+    "typescript.tsserver.pluginPaths": [
+        "typescript-plugin-css-modules"
+    ],
+    "scssFormatter.singleQuote": true,
+    "editor.colorDecorators": false
 }
