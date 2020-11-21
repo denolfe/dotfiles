@@ -13,6 +13,7 @@ DigitalBrainstem.javascript-ejs-support
 donjayamanne.githistory
 eamodio.gitlens
 EditorConfig.EditorConfig
+esbenp.prettier-vscode
 faustinoaq.crystal-lang
 formulahendry.auto-rename-tag
 g3ortega.crystal
@@ -35,12 +36,14 @@ ms-vscode-remote.remote-containers
 ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
 msysyamamoto.vscode-fluentd
+naumovs.color-highlight
 oderwat.indent-rainbow
 pajoma.vscode-journal
 redhat.vscode-yaml
 RobbOwen.synthwave-vscode
 rpinski.shebang-snippets
 sibiraj-s.vscode-scss-formatter
+silvenon.mdx
 steoates.autoimport
 timonwong.shellcheck
 vscode-icons-team.vscode-icons
