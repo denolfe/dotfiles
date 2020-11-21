@@ -82,5 +82,13 @@
     {
       "key": "shift+cmd+-",
       "command": "workbench.action.decreaseViewSize"
+    },
+    {
+      "key": "alt+-",
+      "command": "workbench.action.navigateBack"
+    },
+    {
+      "key": "alt+=",
+      "command": "workbench.action.navigateForward"
     }
   ]
