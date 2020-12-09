@@ -134,12 +134,39 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
+    "javascript.preferences.quoteStyle": "single",
+    "javascript.referencesCodeLens.enabled": true,
+    "javascript.referencesCodeLens.showOnAllFunctions": true,
+    "javascript.suggest.completeFunctionCalls": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.implementationsCodeLens.enabled": true,
+    "typescript.preferences.quoteStyle": "single",
+    "typescript.referencesCodeLens.enabled": true,
+    "typescript.referencesCodeLens.showOnAllFunctions": true,
+    "typescript.suggest.autoImports": false,
+    "typescript.suggest.completeFunctionCalls": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "editor.renameOnType": true,
     "typescript.tsserver.pluginPaths": [
         "typescript-plugin-css-modules"
     ],
     "scssFormatter.singleQuote": true,
-    "editor.colorDecorators": false
+    "editor.colorDecorators": false,
+    "window.zoomLevel": 0,
+    "terminal.integrated.fontSize": 11,
+    "gitHistory.showEditorTitleMenuBarIcons": false,
+    "gitlens.menus": false,
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "comment-ts.includeDescriptionTag": true,
+    "files.watcherExclude": {
+        "**/node_modules/**": false
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
 }
