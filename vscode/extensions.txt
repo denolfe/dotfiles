@@ -46,6 +46,7 @@ sibiraj-s.vscode-scss-formatter
 silvenon.mdx
 steoates.autoimport
 timonwong.shellcheck
+usernamehw.errorlens
 vscode-icons-team.vscode-icons
 webfreak.debug
 xabikos.JavaScriptSnippets
