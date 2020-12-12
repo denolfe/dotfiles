@@ -26,3 +26,4 @@ alias gstu="git status -uno"
 alias gundo="git reset HEAD~1"
 alias guns="git reset HEAD --"
 
+alias gstl="git stash list --pretty=format:'%C(blue)%gd%C(reset): %<(70,trunc)%s %C(green)(%cr)%C(reset)'"
