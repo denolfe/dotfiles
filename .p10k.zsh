@@ -31,7 +31,7 @@
 
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-    status                  # exit code of the last command
+    # status                  # exit code of the last command
     # os_icon                 # os identifier
     dir                     # current directory
     vcs                     # git status
@@ -187,9 +187,9 @@
   # Transparent background.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_BACKGROUND=
   # Green prompt symbol if the last command succeeded.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=76
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=2
   # Red prompt symbol if the last command failed.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=196
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=001
   # Default prompt symbol.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='❯'
   # Prompt symbol in command vi mode.
@@ -348,7 +348,7 @@
   #####################################[ vcs: git status ]######################################
   # Version control system colors.
   # typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=2
-  # typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=3
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=6
   # typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=2
   # typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=3
   # typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=8
@@ -504,7 +504,7 @@
   # typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=1
 
   # Status when the last command was terminated by a signal.
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=true
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=false
   # Use terse signal names: "INT" instead of "SIGINT(2)".
   typeset -g POWERLEVEL9K_STATUS_VERBOSE_SIGNAME=false
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
@@ -1293,7 +1293,7 @@
       # '*test*'  TEST    # to match your needs. Customize them as needed.
       '*'       DEFAULT)
   typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_FOREGROUND=7
-  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_BACKGROUND=027
+  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_BACKGROUND=27
   # typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   # Use POWERLEVEL9K_KUBECONTEXT_CONTENT_EXPANSION to specify the content displayed by kubecontext

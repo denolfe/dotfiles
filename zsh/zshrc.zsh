@@ -58,7 +58,7 @@ if ! zgen saved; then
     # Theme
     POWERLEVEL9K_MODE='nerdfont-complete'
     zgen load romkatv/powerlevel10k powerlevel10k
-    source ~/.p10k.zsh
+    source $DOTFILES/.p10k.zsh
 
     # Generate init.sh
     zgen save
@@ -66,7 +66,7 @@ fi
 
 POWERLEVEL9K_MODE='nerdfont-complete'
 zgen load romkatv/powerlevel10k powerlevel10k
-source ~/.p10k.zsh
+source $DOTFILES/.p10k.zsh
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status dir dir_writable vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(virtualenv background_jobs command_execution_time)
