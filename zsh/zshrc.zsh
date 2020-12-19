@@ -56,14 +56,13 @@ if ! zgen saved; then
     zgen load zsh-users/zsh-completions src
 
     # Theme
-    POWERLEVEL9K_MODE='nerdfont-complete'
     zgen load romkatv/powerlevel10k powerlevel10k
 
     # Generate init.sh
     zgen save
 fi
 
-source $DOTFILES/.p10k.zsh
+source $DOTFILES/zsh/p10k.zsh
 
 # History Options
 setopt append_history
