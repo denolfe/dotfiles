@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 #!/usr/bin/env bash
 # Get zgen
 source ~/.zgen/zgen.zsh
@@ -50,36 +57,13 @@ if ! zgen saved; then
 
     # Theme
     POWERLEVEL9K_MODE='nerdfont-complete'
-    zgen load bhilburn/powerlevel9k powerlevel9k
+    zgen load romkatv/powerlevel10k powerlevel10k
 
     # Generate init.sh
     zgen save
 fi
 
-POWERLEVEL9K_MODE='nerdfont-complete'
-zgen load bhilburn/powerlevel9k powerlevel9k
-
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status dir dir_writable vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(virtualenv background_jobs command_execution_time)
-POWERLEVEL9K_STATUS_VERBOSE=false
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND="green"
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND="cyan"
-POWERLEVEL9K_STATUS_ERROR_BACKGROUND="234"
-POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND="234"
-POWERLEVEL9K_VCS_BRANCH_ICON=""
-POWERLEVEL9K_VCS_GIT_ICON=""
-# POWERLEVEL9K_VCS_GIT_GITHUB_ICON=""
-# POWERLEVEL9K_VCS_GIT_GITLAB_ICON=""
-POWERLEVEL9K_HOME_ICON=""
-POWERLEVEL9K_HOME_SUB_ICON=""
-POWERLEVEL9K_FOLDER_ICON=""
-POWERLEVEL9K_VCS_STAGED_ICON="\u00b1"
-POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON="\u2193"
-POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON="\u2191"
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="234"
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="white"
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=2
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1
+source $DOTFILES/.p10k.zsh
 
 # History Options
 setopt append_history
