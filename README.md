@@ -16,7 +16,7 @@
 - Zsh Configuration
   - [Zgen](https://github.com/tarjoilija/zgen) - Plugin Manager
   - [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) - Zsh config framework
-  - [Powerlevel9k](https://github.com/Powerlevel9k/powerlevel9k) - Theme
+  - [Powerlevel10k](https://github.com/romkatv/powerlevel10k) - Theme
   - [asdf](https://github.com/asdf-vm/asdf) - Multi-language version manager
   - [fzf](https://github.com/junegunn/fzf) - Fuzzy finder
 - [Karabiner](https://karabiner-elements.pqrs.org/) - Hyper key + global Vim-like binds
