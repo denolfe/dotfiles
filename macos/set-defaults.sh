@@ -74,6 +74,10 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 echo "  › Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
+echo "  › Disable auto-capitalization and double-space period"
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -int 0
+
 echo "  › Set up trackpad & mouse speed to a reasonable number"
 defaults write -g com.apple.trackpad.scaling 3
 defaults write -g com.apple.mouse.scaling 3
