@@ -1378,8 +1378,8 @@
       # '*test*'  TEST    # to match your needs. Customize them as needed.
       '*nord*'  NORD    # to match your needs. Customize them as needed.
       '*'       DEFAULT)
-  # typeset -g POWERLEVEL9K_AWS_DEFAULT_FOREGROUND=7
-  # typeset -g POWERLEVEL9K_AWS_DEFAULT_BACKGROUND=1
+  typeset -g POWERLEVEL9K_AWS_DEFAULT_FOREGROUND=16
+  typeset -g POWERLEVEL9K_AWS_DEFAULT_BACKGROUND=3
   # typeset -g POWERLEVEL9K_AWS_DEFAULT_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   #[ aws_eb_env: aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/) ]#
