@@ -1629,7 +1629,7 @@
         break
       fi
     done
-    _p9k_prompt_segment "$0$state" 003 016 'AWS_ICON' 0 '' "${aws_profile//\%/%%}"
+    _p9k_prompt_segment "$0$state" 208 016 'AWS_ICON' 0 '' "${aws_profile//\%/%%}"
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
