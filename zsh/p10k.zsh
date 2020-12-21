@@ -75,7 +75,8 @@
     # haskell_stack           # haskell version from stack (https://haskellstack.org/)
     kubecontext             # current kubernetes context (https://kubernetes.io/)
     # terraform               # terraform workspace (https://www.terraform.io)
-    aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+    # aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+    work_aws                  # custom segment that includes checking of role_arn in ~/.aws/config file
     # aws_eb_env              # aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/)
     # azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)
     # gcloud                  # google cloud cli account and project (https://cloud.google.com/)
@@ -1376,7 +1377,6 @@
   typeset -g POWERLEVEL9K_AWS_CLASSES=(
       # '*prod*'  PROD    # These values are examples that are unlikely
       # '*test*'  TEST    # to match your needs. Customize them as needed.
-      '*nord*'  NORD    # to match your needs. Customize them as needed.
       '*'       DEFAULT)
   typeset -g POWERLEVEL9K_AWS_DEFAULT_FOREGROUND=16
   typeset -g POWERLEVEL9K_AWS_DEFAULT_BACKGROUND=3
@@ -1612,6 +1612,24 @@
   # Type `p10k help segment` for documentation and a more sophisticated example.
   function prompt_example() {
     p10k segment -b 1 -f 3 -i '⭐' -t 'hello, %n'
+  }
+
+  #####################################[ work_aws: custom aws segment ]#########################
+
+  typeset -g POWERLEVEL9K_WORK_AWS_SHOW_ON_COMMAND='aws|sls|serverless|aws-okta|awless|terraform|pulumi|terragrunt'
+
+  # Use default aws prompt as a base, then also evaluate role_arn from ~/.aws/config
+  prompt_work_aws() {
+    local aws_role=$(cat ~/.aws/config | grep _role_arn | awk 'BEGIN { FS = "::" } ; { print $2 }')
+    local aws_profile="${AWS_VAULT:-${AWSUME_PROFILE:-${AWS_PROFILE:-${AWS_DEFAULT_PROFILE:-$aws_role}}}}"
+    local pat class
+    for pat class in "${_POWERLEVEL9K_AWS_CLASSES[@]}"; do
+      if [[ $aws_profile == ${~pat} ]]; then
+        [[ -n $class ]] && state=_${${(U)class}//İ/I}
+        break
+      fi
+    done
+    _p9k_prompt_segment "$0$state" 003 016 'AWS_ICON' 0 '' "${aws_profile//\%/%%}"
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
