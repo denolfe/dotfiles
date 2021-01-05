@@ -10,6 +10,7 @@ fi
 source ~/.zgen/zgen.zsh
 
 export DOTFILES="$HOME/.dotfiles"
+export GPG_TTY=$TTY # https://unix.stackexchange.com/a/608921
 
 # Generate zgen init.sh if it doesn't exist
 if ! zgen saved; then
