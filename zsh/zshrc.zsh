@@ -25,7 +25,6 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/docker
     zgen oh-my-zsh plugins/docker-compose
     zgen load michaelaquilina/zsh-autoswitch-virtualenv
-    zgen load zsh-users/zsh-syntax-highlighting
     zgen load jocelynmallon/zshmarks
     zgen load caarlos0/zsh-mkc
     zgen load caarlos0/zsh-git-sync
@@ -50,7 +49,7 @@ if ! zgen saved; then
     bindkey "^k" history-substring-search-up
     bindkey "^j" history-substring-search-down
 
-  	# Warn you when you run a command that you've got an alias for
+    # Warn you when you run a command that you've got an alias for
     zgen load djui/alias-tips
 
     # Completion-only repos
