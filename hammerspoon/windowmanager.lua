@@ -44,14 +44,16 @@ if (mainScreen == 'LC49G95T') then
     left1='0,0 7x12',
     left2='0,0 8x12',
     left50 = '0,0 12x12',
+    left66 = '0,0 17x12',
     right1='17,0 7x12',
     right2='16,0 8x12',
     right50 = '12,0 12x12',
+    right66 = '7,0 17x12',
   }
 
-  hs.hotkey.bind(ultra, 'q', chain({ grid.left1, grid.left2, grid.left50 }))
+  hs.hotkey.bind(ultra, 'q', chain({ grid.left1, grid.left2, grid.left50, grid.left66 }))
   hs.hotkey.bind(ultra, 'w', chain({ grid.middle1, grid.middle2  }))
-  hs.hotkey.bind(ultra, 'e', chain({ grid.right1, grid.right2, grid.right50 }))
+  hs.hotkey.bind(ultra, 'e', chain({ grid.right1, grid.right2, grid.right50, grid.right66 }))
 else
   hs.grid.setGrid('12x12')
   grid = {
