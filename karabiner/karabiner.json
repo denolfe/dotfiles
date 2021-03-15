@@ -897,6 +897,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -932,6 +933,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -961,6 +963,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -990,6 +993,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1019,6 +1023,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1048,6 +1053,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1079,6 +1085,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1114,6 +1121,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1151,6 +1159,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1180,6 +1189,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1211,6 +1221,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1240,6 +1251,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1270,6 +1282,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1299,6 +1312,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1330,6 +1344,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1359,6 +1374,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1390,6 +1406,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1419,6 +1436,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1448,6 +1466,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1477,6 +1496,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1506,6 +1526,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1541,6 +1562,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1564,10 +1586,81 @@
                         "type": "basic"
                      },
                      {
+                        "from": {
+                           "key_code": "home",
+                           "modifiers": { }
+                        },
+                        "to": [
+                           {
+                              "key_code": "left_arrow",
+                              "modifiers": [
+                                 "left_command"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "from": {
+                           "key_code": "home",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_shift"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "left_arrow",
+                              "modifiers": [
+                                 "left_command",
+                                 "left_shift"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "from": {
+                           "key_code": "end",
+                           "modifiers": { }
+                        },
+                        "to": [
+                           {
+                              "key_code": "right_arrow",
+                              "modifiers": [
+                                 "left_command"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
+                        "from": {
+                           "key_code": "end",
+                           "modifiers": {
+                              "mandatory": [
+                                 "left_shift"
+                              ]
+                           }
+                        },
+                        "to": [
+                           {
+                              "key_code": "right_arrow",
+                              "modifiers": [
+                                 "left_command",
+                                 "left_shift"
+                              ]
+                           }
+                        ],
+                        "type": "basic"
+                     },
+                     {
                         "conditions": [
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1597,6 +1690,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1626,6 +1720,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1655,6 +1750,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1684,6 +1780,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1715,6 +1812,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1746,6 +1844,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1777,6 +1876,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1808,6 +1908,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1844,6 +1945,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1882,6 +1984,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1919,6 +2022,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1955,6 +2059,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -1993,6 +2098,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -2029,6 +2135,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -2067,6 +2174,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -2104,6 +2212,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -2142,6 +2251,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -2180,6 +2290,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -2218,6 +2329,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -2256,6 +2368,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],
@@ -2292,6 +2405,7 @@
                            {
                               "identifiers": [
                                  {
+                                    "product_id": 632,
                                     "vendor_id": 1452
                                  }
                               ],

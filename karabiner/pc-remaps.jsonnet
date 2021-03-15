@@ -5,7 +5,8 @@ local conditions = {
         "type": "device_unless",
         "identifiers": [
             {
-                "vendor_id": 1452
+                "vendor_id": 1452,
+                "product_id": 632
             }
         ]
     },
@@ -96,6 +97,12 @@ local conditions = {
         ctrlBind("b") + notIterm, // Bold
 
         utils.bind(["left_control"], "delete_or_backspace", "delete_or_backspace", "left_alt") + nonApple, // Ctrl + Backspace
+
+        // Fix Home/End functionality
+        utils.bind(null, "home", "left_arrow", ["left_command"]), // Home fix
+        utils.bind(["left_shift"], "home", "left_arrow", ["left_command", "left_shift"]), // Home+shift fix
+        utils.bind(null, "end", "right_arrow", ["left_command"]), // End fix
+        utils.bind(["left_shift"], "end", "right_arrow", ["left_command", "left_shift"]), // End+shift fix
 
         // Ctrl Arrows
         utils.bind(["left_control"], "left_arrow", "left_arrow", ["left_option"]) + nonApple,

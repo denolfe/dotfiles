@@ -3,7 +3,7 @@
         from: {
             key_code: from_key_code,
             modifiers: {
-                mandatory: modifier
+                [if modifier != null then "mandatory"]: modifier
             }
         },
         to: [
