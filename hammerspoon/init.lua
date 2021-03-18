@@ -15,6 +15,7 @@ end
 hs.hotkey.bind(ultra, ';', bindApp('iTerm'))
 hs.hotkey.bind(ultra, 'g', bindApp('Google Chrome'))
 hs.hotkey.bind(ultra, 'c', bindApp('Visual Studio Code'))
+hs.hotkey.bind(ultra, 'r', bindApp('Rider'))
 hs.hotkey.bind(ultra, 'f', bindApp('Slack'))
 hs.hotkey.bind(ultra, 'v', bindApp('Spotify'))
 hs.hotkey.bind(ultra, 't', bindApp('Microsoft Outlook'))
@@ -26,6 +27,6 @@ hs.hotkey.bind(ultra, '[',  hs.spotify.previous)
 hs.hotkey.bind(hyper, '\\', hs.spotify.displayCurrentTrack)
 
 -- Reload shortcut
-hs.hotkey.bind(ultra, 'r', hs.reload)
+hs.hotkey.bind(hyper, 'r', hs.reload)
 
 hs.alert.show('Config loaded')

@@ -106,7 +106,6 @@ function moveToNextScreen()
 end
 
 hs.hotkey.bind(hyper, 'tab', moveToNextScreen)
-hs.hotkey.bind(ultra, 'x', function() hs.fnutils.map(hs.window.visibleWindows(), hs.grid.snap) end)
 hs.hotkey.bind(hyper, '-', function() hs.grid.resizeWindowThinner(hs.window.focusedWindow()) end)
 hs.hotkey.bind(hyper, '=', function() hs.grid.resizeWindowWider(hs.window.focusedWindow()) end)
 hs.hotkey.bind(ultra, '-', function() hs.grid.pushWindowLeft(hs.window.focusedWindow()) end)
