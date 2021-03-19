@@ -79,7 +79,9 @@ cask "robo-3t"
 cask "scroll-reverser"
 cask "slack"
 cask "spotify"
+cask "switchresx"
 cask "visual-studio-code"
 cask "vlc"
+cask "wkhtmltopdf"
 mas "Unsplash Wallpapers", id: 1284863847
 mas "Xcode", id: 497799835
