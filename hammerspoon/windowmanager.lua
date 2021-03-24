@@ -15,7 +15,6 @@ local chain = (function(movements)
     local win = hs.window.frontmostWindow()
     local id = win:id()
     local now = hs.timer.secondsSinceEpoch()
-    local screen = win:screen()
 
     if
       lastSeenChain ~= movements or
@@ -24,14 +23,11 @@ local chain = (function(movements)
     then
       sequenceNumber = 1
       lastSeenChain = movements
-    elseif (sequenceNumber == 1) then
-      -- At end of chain, restart chain on next screen.
-      screen = screen:next()
     end
     lastSeenAt = now
     lastSeenWindow = id
 
-    hs.grid.set(win, movements[sequenceNumber], screen)
+    hs.grid.set(win, movements[sequenceNumber], win:screen())
     sequenceNumber = sequenceNumber % cycleLength + 1
   end
 end)
