@@ -16,6 +16,11 @@
       "when": "editorTextFocus"
     },
     {
+      "key": "cmd+l",
+      "command": "workbench.action.terminal.clear",
+      "when": "terminalFocus"
+    },
+    {
       "key": "cmd+shift+down",
       "command": "editor.action.moveLinesDownAction",
       "when": "editorTextFocus && !editorReadonly"
