@@ -8,7 +8,8 @@
     "editor.tabSize": 2,
     "editor.renderWhitespace": "all",
     "workbench.colorCustomizations": {
-      "editorWhitespace.foreground": "#1e1e1e"
+      "editorWhitespace.foreground": "#1e1e1e",
+      "inlineparameters.annotationBackground": "#2F2F2F"
     },
     "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "yaml.customTags": [
