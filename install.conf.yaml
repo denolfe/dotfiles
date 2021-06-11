@@ -23,6 +23,7 @@
     ~/.oh-my-zsh: zsh/oh-my-zsh
     ~/.zgen: zsh/zgen
     ~/.asdf: zsh/asdf
+    ~/.asdfrc: zsh/asdfrc
 
     ~/.bashrc:
       path: bash/bashrc
