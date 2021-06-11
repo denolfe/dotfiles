@@ -13,7 +13,7 @@ fyr() {
 
   jq -r '.scripts | to_entries | map("\(.key)\t\(.value|tostring)")|.[]' "$package" | \
   awk -F'\t' '{printf "%-15s %-30s\n", $1, $2}' | \
-  fzf --height 30% | \
+  fzf | \
   sed 's/ .*//' | \
   xargs yarn
 }
