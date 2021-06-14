@@ -153,7 +153,6 @@
     ],
     "scssFormatter.singleQuote": true,
     "editor.colorDecorators": false,
-    "window.zoomLevel": 0,
     "terminal.integrated.fontSize": 11,
     "gitHistory.showEditorTitleMenuBarIcons": false,
     "gitlens.menus": false,
@@ -170,4 +169,18 @@
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
+    "crystal-lang.server": "/usr/local/bin/crystalline",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "inline-parameters.fontStyle": "normal",
+    "inline-parameters.padding": "0.05em 0.15em",
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "editor.fontSize": 13,
+    // "workbench.panel.defaultLocation": "right",
 }
