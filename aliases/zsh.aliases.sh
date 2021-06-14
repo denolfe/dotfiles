@@ -27,8 +27,6 @@ alias ~='cd ~/'
 alias cp='cp -i'
 alias mv='mv -i'
 
-alias sudo='sudo '
-
 hs(){ history | grep -i "$1" ;}
 alias .f='cd ~/.dotfiles'
 
