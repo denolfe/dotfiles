@@ -74,12 +74,6 @@ local conditions = {
         ],
     },
     "manipulators": [
-        ctrlBind("c") + notIterm, // Copy
-        ctrlBind("v"), // Paste
-        ctrlBind("x"), // Cut
-        ctrlBind("a"), // Select All
-        ctrlBind("s"), // Save
-        ctrlBind("s", ["left_shift"]), // Save As
         ctrlBind("r") + notIterm,
         ctrlBind("r", ["left_shift"]) + notIterm,
         ctrlBind("n"), // New
