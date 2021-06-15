@@ -175,6 +175,9 @@
     },
     "inline-parameters.fontStyle": "normal",
     "inline-parameters.padding": "0.05em 0.15em",
+    "[markdown]": {
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    },
     "workbench.editorAssociations": [
         {
             "viewType": "jupyter.notebook.ipynb",
