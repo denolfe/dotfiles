@@ -12,6 +12,7 @@ eamodio.gitlens
 EditorConfig.EditorConfig
 esbenp.prettier-vscode
 faustinoaq.crystal-lang
+firsttris.vscode-jest-runner
 formulahendry.auto-rename-tag
 g3ortega.crystal
 golang.go
