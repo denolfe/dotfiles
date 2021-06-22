@@ -1,50 +1,41 @@
 {
-    "explorer.confirmDragAndDrop": false,
-    "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
-    "editor.codeLens": true,
-    "editor.cursorBlinking": "smooth",
-    "editor.formatOnPaste": true,
-    "editor.minimap.enabled": true,
-    "editor.tabSize": 2,
-    "editor.renderWhitespace": "all",
-    "workbench.colorCustomizations": {
-      "editorWhitespace.foreground": "#1e1e1e",
-      "inlineparameters.annotationBackground": "#2F2F2F"
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
     },
-    "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
-    "yaml.customTags": [
-        "!And",
-        "!And sequence",
-        "!If",
-        "!If sequence",
-        "!Not",
-        "!Not sequence",
-        "!Equals",
-        "!Equals sequence",
-        "!Or",
-        "!Or sequence",
-        "!FindInMap",
-        "!FindInMap sequence",
-        "!Base64",
-        "!Join",
-        "!Join sequence",
-        "!Cidr",
-        "!Ref",
-        "!Sub",
-        "!Sub sequence",
-        "!GetAtt",
-        "!GetAZs",
-        "!ImportValue",
-        "!ImportValue sequence",
-        "!Select",
-        "!Select sequence",
-        "!Split",
-        "!Split sequence"
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "auto-rename-tag.activationOnLanguage": [
+        "javascriptreact"
     ],
     "cfnLint.validateUsingJsonSchema": false,
-    "yaml.validate": false,
-    "files.trimTrailingWhitespace": true,
-    "files.trimFinalNewlines": true,
+    "comment-ts.includeDescriptionTag": true,
+    "crystal-lang.server": "/usr/local/bin/crystalline",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.codeLens": true,
+    "editor.codeLensFontSize": 10,
+    "editor.colorDecorators": false,
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorStyle": "block",
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 13,
+    "editor.formatOnPaste": true,
+    "editor.minimap.enabled": true,
+    "editor.minimap.showSlider": "always",
+    "editor.renameOnType": true,
+    "editor.renderWhitespace": "all",
+    "editor.tabSize": 2,
     "editor.tokenColorCustomizations": {
         "textMateRules": [
             {
@@ -125,64 +116,72 @@
             }
         ]
     },
-    "workbench.iconTheme": "vscode-icons",
-    "editor.minimap.showSlider": "always",
-    "explorer.confirmDelete": false,
-    "editor.cursorStyle": "block",
-    "auto-rename-tag.activationOnLanguage": [
-        "javascriptreact"
+    "eslint.validate": [
+        "typescript",
+        "typescriptreact"
     ],
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "files.watcherExclude": {
+        "**/node_modules/**": false
     },
+    "gitHistory.showEditorTitleMenuBarIcons": false,
+    "gitlens.menus": false,
+    "inline-parameters.fontStyle": "normal",
+    "inline-parameters.padding": "0.05em 0.15em",
     "javascript.preferences.quoteStyle": "single",
     "javascript.referencesCodeLens.enabled": true,
     "javascript.referencesCodeLens.showOnAllFunctions": true,
     "javascript.suggest.completeFunctionCalls": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
+    "scssFormatter.singleQuote": true,
+    "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
+    "terminal.integrated.fontSize": 11,
     "typescript.implementationsCodeLens.enabled": true,
     "typescript.preferences.quoteStyle": "single",
     "typescript.referencesCodeLens.enabled": true,
     "typescript.referencesCodeLens.showOnAllFunctions": true,
     "typescript.suggest.autoImports": false,
     "typescript.suggest.completeFunctionCalls": true,
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "editor.renameOnType": true,
     "typescript.tsserver.pluginPaths": [
         "typescript-plugin-css-modules"
     ],
-    "scssFormatter.singleQuote": true,
-    "editor.colorDecorators": false,
-    "terminal.integrated.fontSize": 11,
-    "gitHistory.showEditorTitleMenuBarIcons": false,
-    "gitlens.menus": false,
-    "[typescript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "workbench.colorCustomizations": {
+        "editorWhitespace.foreground": "#1e1e1e",
+        "inlineparameters.annotationBackground": "#2F2F2F"
     },
-    "comment-ts.includeDescriptionTag": true,
-    "files.watcherExclude": {
-        "**/node_modules/**": false
-    },
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[javascript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-    },
-    "crystal-lang.server": "/usr/local/bin/crystalline",
-    "[typescriptreact]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-    },
-    "inline-parameters.fontStyle": "normal",
-    "inline-parameters.padding": "0.05em 0.15em",
-    "[markdown]": {
-        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
-    },
-    "editor.fontSize": 13,
-    "eslint.validate": [
-        "typescript",
-        "typescriptreact",
+    "workbench.iconTheme": "vscode-icons",
+    "yaml.customTags": [
+        "!And",
+        "!And sequence",
+        "!If",
+        "!If sequence",
+        "!Not",
+        "!Not sequence",
+        "!Equals",
+        "!Equals sequence",
+        "!Or",
+        "!Or sequence",
+        "!FindInMap",
+        "!FindInMap sequence",
+        "!Base64",
+        "!Join",
+        "!Join sequence",
+        "!Cidr",
+        "!Ref",
+        "!Sub",
+        "!Sub sequence",
+        "!GetAtt",
+        "!GetAZs",
+        "!ImportValue",
+        "!ImportValue sequence",
+        "!Select",
+        "!Select sequence",
+        "!Split",
+        "!Split sequence"
     ],
-    "editor.codeLensFontSize": 10,
-    // "workbench.panel.defaultLocation": "right",
+    "yaml.validate": false
 }
