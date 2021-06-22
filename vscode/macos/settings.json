@@ -178,12 +178,11 @@
     "[markdown]": {
         "editor.defaultFormatter": "yzhang.markdown-all-in-one"
     },
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
     "editor.fontSize": 13,
+    "eslint.validate": [
+        "typescript",
+        "typescriptreact",
+    ],
+    "editor.codeLensFontSize": 10,
     // "workbench.panel.defaultLocation": "right",
 }
