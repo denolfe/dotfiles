@@ -33,28 +33,19 @@ local chain = (function(movements)
 end)
 
 local grid = {
-  top50 = '0,0 12x6',
-  top33 = '0,0 12x4',
-  top66 = '0,0 12x8',
+
+  left66 = '0,0 8x12',
+  left60 = '0,0 7x12',
+  left50 = '0,0 6x12',
+  left40 = '0,0 5x12',
+  left33 = '0,0 4x12',
+
+  right66 = '4,0 8x12',
+  right60 = '5,0 7x12',
   right50 = '6,0 6x12',
   right40 = '7,0 5x12',
   right33 = '8,0 4x12',
-  right66 = '4,0 8x12',
-  bottom50 = '0,6 12x6',
-  bottom33 = '0,8 12x4',
-  bottom66 = '0,4 12x8',
-  left50 = '0,0 6x12',
-  left33 = '0,0 4x12',
-  left60 = '0,0 7x12',
-  left66 = '0,0 8x12',
-  topLeft = '0,0 6x6',
-  topLeft60 = '0,0 7x6',
-  topRight = '6,0 6x6',
-  topRight40 = '7,0 5x6',
-  bottomRight = '6,6 6x6',
-  bottomRight40 = '7,6 6x6',
-  bottomLeft = '0,6 6x6',
-  bottomLeft60 = '0,6 7x6',
+
   full = '0,0 12x12',
   centeredBig = '0.5,0.5 11x11',
   centeredMedium = '2,1 8x10',
@@ -70,7 +61,7 @@ function moveToNextScreen()
 end
 
 -- Binds
-hs.hotkey.bind(ultra, 'q', chain({ grid.left60, grid.left50, grid.topLeft60, grid.bottomLeft60, grid.topLeft, grid.bottomLeft }))
+hs.hotkey.bind(ultra, 'q', chain({ grid.left60, grid.left50, grid.left40, grid.left33, grid.left66 }))
 hs.hotkey.bind(ultra, 'w', chain({ grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall }))
-hs.hotkey.bind(ultra, 'e', chain({ grid.right40, grid.right50, grid.topRight40, grid.bottomRight40, grid.topRight, grid.bottomRight }))
+hs.hotkey.bind(ultra, 'e', chain({ grid.right40, grid.right50, grid.right60, grid.right66, grid.right33 }))
 hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
