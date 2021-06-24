@@ -6,9 +6,9 @@ hs.grid.MARGINY = 0
 -- Cycle through positions on multiple presses
 local lastSeenChain = nil
 local lastSeenWindow = nil
-local chain = (function(movements)
+local chain = (function(gridPositions)
   local chainResetInterval = 1.5 -- seconds
-  local cycleLength = #movements
+  local cycleLength = #gridPositions
   local sequenceNumber = 1
 
   return function()
@@ -17,17 +17,52 @@ local chain = (function(movements)
     local now = hs.timer.secondsSinceEpoch()
 
     if
-      lastSeenChain ~= movements or
+      lastSeenChain ~= gridPositions or
       lastSeenAt < now - chainResetInterval or
       lastSeenWindow ~= id
     then
       sequenceNumber = 1
-      lastSeenChain = movements
+      lastSeenChain = gridPositions
     end
     lastSeenAt = now
     lastSeenWindow = id
 
-    hs.grid.set(win, movements[sequenceNumber], win:screen())
+    hs.grid.set(win, gridPositions[sequenceNumber], win:screen())
+    sequenceNumber = sequenceNumber % cycleLength + 1
+  end
+end)
+
+-- Cycle through side-by-side positions for 2 more recent windows
+local lastSeenSideBySide = nil
+local lastSeenWindowSideBySide = nil
+local chainSideBySide = (function(gridPositions)
+  local chainResetInterval = 1.5 -- seconds
+  local cycleLength = #gridPositions
+  local sequenceNumber = 1
+
+  return function()
+    local filter = hs.window.filter.new():setScreens(hs.window.frontmostWindow():screen():id())
+    local allWindows = filter:getWindows(hs.window.filter.sortByFocusedLast)
+    local win1 = allWindows[1]
+    local win2 = allWindows[2]
+    local id = win1:id()
+    local now = hs.timer.secondsSinceEpoch()
+
+    if
+      lastSeenSideBySide ~= gridPositions or
+      lastSeenAt < now - chainResetInterval or
+      lastSeenWindowSideBySide ~= id
+    then
+      sequenceNumber = 1
+      lastSeenSideBySide = gridPositions
+    end
+    lastSeenAt = now
+    lastSeenWindowSideBySide = id
+
+    hs.grid.set(win1, gridPositions[sequenceNumber][1], win1:screen())
+    if win1:screen() == win2:screen() then
+      hs.grid.set(win2, gridPositions[sequenceNumber][2], win2:screen())
+    end
     sequenceNumber = sequenceNumber % cycleLength + 1
   end
 end)
@@ -52,6 +87,21 @@ local grid = {
   centeredSmall = '2.5,1.5 7x9'
 }
 
+local leftSideBySideGrid = {
+  { grid.left60, grid.right40 },
+  { grid.left50, grid.right50 },
+  { grid.left40, grid.right60 },
+  { grid.left33, grid.right66 },
+  { grid.left66, grid.right33 },
+}
+local rightSideBySideGrid = {
+  { grid.right40, grid.left60 },
+  { grid.right50, grid.left50 },
+  { grid.right60, grid.left40 },
+  { grid.right66, grid.left33 },
+  { grid.right33, grid.left66 },
+}
+
 -- Source: https://stackoverflow.com/a/58662204/1717697
 function moveToNextScreen()
   local win = hs.window.focusedWindow()
@@ -61,7 +111,10 @@ function moveToNextScreen()
 end
 
 -- Binds
-hs.hotkey.bind(ultra, 'q', chain({ grid.left60, grid.left50, grid.left40, grid.left33, grid.left66 }))
+hs.hotkey.bind(hyper, 'q', chain({ grid.left60, grid.left50, grid.left40, grid.left33, grid.left66 }))
 hs.hotkey.bind(ultra, 'w', chain({ grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall }))
-hs.hotkey.bind(ultra, 'e', chain({ grid.right40, grid.right50, grid.right60, grid.right66, grid.right33 }))
+hs.hotkey.bind(hyper, 'e', chain({ grid.right40, grid.right50, grid.right60, grid.right66, grid.right33 }))
 hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
+
+hs.hotkey.bind(ultra, 'q', chainSideBySide(leftSideBySideGrid))
+hs.hotkey.bind(ultra, 'e', chainSideBySide(rightSideBySideGrid))
