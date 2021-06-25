@@ -3,11 +3,13 @@ hs.grid.setGrid('12x12')
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 
+local chainResetInterval = 1.5 -- seconds
+
 -- Cycle through positions on multiple presses
 local lastSeenChain = nil
 local lastSeenWindow = nil
+local lastSeenAt = nil
 local chain = (function(gridPositions)
-  local chainResetInterval = 1.5 -- seconds
   local cycleLength = #gridPositions
   local sequenceNumber = 1
 
@@ -35,8 +37,8 @@ end)
 -- Cycle through side-by-side positions for 2 more recent windows
 local lastSeenSideBySide = nil
 local lastSeenWindowSideBySide = nil
+local lastSeenAtSideBySide = nil
 local chainSideBySide = (function(gridPositions)
-  local chainResetInterval = 1.5 -- seconds
   local cycleLength = #gridPositions
   local sequenceNumber = 1
 
@@ -50,13 +52,13 @@ local chainSideBySide = (function(gridPositions)
 
     if
       lastSeenSideBySide ~= gridPositions or
-      lastSeenAt < now - chainResetInterval or
+      lastSeenAtSideBySide < now - chainResetInterval or
       lastSeenWindowSideBySide ~= id
     then
       sequenceNumber = 1
       lastSeenSideBySide = gridPositions
     end
-    lastSeenAt = now
+    lastSeenAtSideBySide = now
     lastSeenWindowSideBySide = id
 
     hs.grid.set(win1, gridPositions[sequenceNumber][1], win1:screen())
