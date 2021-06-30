@@ -151,7 +151,10 @@
     "typescript.updateImportsOnFileMove.enabled": "always",
     "workbench.colorCustomizations": {
         "editorWhitespace.foreground": "#1e1e1e",
-        "inlineparameters.annotationBackground": "#2F2F2F"
+        "inlineparameters.annotationBackground": "#2F2F2F",
+        "tab.activeBorderTop": "#007acc",
+        "tab.unfocusedHoverBorder": "#007acc",
+        "peekViewEditor.background": "#2F2F2F",
     },
     "workbench.iconTheme": "vscode-icons",
     "yaml.customTags": [
