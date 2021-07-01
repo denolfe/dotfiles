@@ -7,8 +7,8 @@ alias -g T='| tail'
 alias -g G='| grep'
 alias -g Gi='| grep -i'
 alias -g NUL='&> /dev/null'
-alias -g J='| python -m json.tool'
 alias -g CD='&& $_'
+alias -g F='| fzf'
 
 # Detect the platform (similar to $OSTYPE)
 OS="`uname`"
