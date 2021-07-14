@@ -26,6 +26,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/docker-compose
     zgen load michaelaquilina/zsh-autoswitch-virtualenv
     zgen load jocelynmallon/zshmarks
+    zgen load peterhurford/git-it-on.zsh
     zgen load caarlos0/zsh-mkc
     zgen load caarlos0/zsh-git-sync
     zgen load caarlos0/zsh-add-upstream
