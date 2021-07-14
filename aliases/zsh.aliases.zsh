@@ -9,6 +9,7 @@ alias -g Gi='| grep -i'
 alias -g NUL='&> /dev/null'
 alias -g CD='&& $_'
 alias -g F='| fzf'
+alias -g R='| rg'
 
 # Detect the platform (similar to $OSTYPE)
 OS="`uname`"
