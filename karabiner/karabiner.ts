@@ -1,6 +1,6 @@
 import { KarabinerComplexModifications, Key } from 'https://deno.land/x/karabiner@v0.2.0/karabiner.ts';
 import { hyper, ultra } from './lib/bind.ts';
-import { nonAppleDevice } from './lib/conditions.ts';
+import { chromeOnly, nonAppleDevice } from './lib/conditions.ts';
 
 const mods = new KarabinerComplexModifications();
 
@@ -62,45 +62,133 @@ mods.addRule({
   description: 'Ultra Directional Bindings',
   manipulators: [
     // Arrows
-    ultra('h', 'left_arrow'),
-    ultra('j', 'down_arrow'),
-    ultra('k', 'up_arrow'),
-    ultra('l', 'right_arrow'),
+    ultra({ key_code: 'h' }, { key_code: 'left_arrow' }),
+    ultra({ key_code: 'j' }, { key_code: 'down_arrow' }),
+    ultra({ key_code: 'k' }, { key_code: 'up_arrow' }),
+    ultra({ key_code: 'l' }, { key_code: 'right_arrow' }),
 
     // Arrows + Shift
-    hyper('h', '+left_arrow'),
-    hyper('j', '+down_arrow'),
-    hyper('k', '+up_arrow'),
-    hyper('l', '+right_arrow'),
+    hyper({ key_code: 'h' }, { key_code: 'left_arrow', modifiers: ['left_shift'] }),
+    hyper({ key_code: 'j' }, { key_code: 'down_arrow', modifiers: ['left_shift'] }),
+    hyper({ key_code: 'k' }, { key_code: 'up_arrow', modifiers: ['left_shift'] }),
+    hyper({ key_code: 'l' }, { key_code: 'right_arrow', modifiers: ['left_shift'] }),
 
-    ultra('n', '#left_arrow'), // Home
-    ultra('p', '#right_arrow'), // End
-    ultra('m', '!left_arrow'), // Left one word
-    ultra('period', '!right_arrow'), // Right one word
+    ultra({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_command'] }), // Home
+    ultra({ key_code: 'p' }, { key_code: 'right_arrow', modifiers: ['left_command'] }), // End
+    ultra({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_option'] }), // Left one word
+    ultra({ key_code: 'period' }, { key_code: 'right_arrow', modifiers: ['left_option'] }), // Right one word
 
-    hyper('n', '+#left_arrow'), // Home + Shift
-    hyper('p', '+#right_arrow'), // End + Shift
-    hyper('m', '+!left_arrow'), // Left one word + Shift
-    hyper('period', '+!right_arrow'), // Right one word + Shift
+    hyper({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_command'] }), // Home + Shift
+    hyper({ key_code: 'p' }, { key_code: 'right_arrow', modifiers: ['left_shift', 'left_command'] }), // End + Shift
+    hyper({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_option'] }), // Left one word + Shift
+    hyper({ key_code: 'period' }, { key_code: 'right_arrow', modifiers: ['left_shift', 'left_option'] }), // Right one word + Shift
 
-    // ultra('u', 'page_down'), // TODO: Needs PR
-    // ultra('i', 'page_up'), // TODO: Needs PR
-    hyper('u', '#down_arrow'), // End of page
-    hyper('i', '#up_arrow'), // Top of page
+    // ultra({ key_code: 'u' }, { key_code: 'page_down' }), // TODO: Needs PR
+    // ultra({ key_code: 'i' }, { key_code: 'page_up' }), // TODO: Needs PR
+    hyper({ key_code: 'u' }, { key_code: 'down_arrow', modifiers: ['left_command'] }), // End of page
+    hyper({ key_code: 'i' }, { key_code: 'up_arrow', modifiers: ['left_command'] }), // Top of page
   ],
 });
 
 mods.addRule({
   description: 'Ultra Remaps (forward delete, spaces, mission control)',
   manipulators: [
-    ultra('delete_or_backspace', 'delete_forward'), // Forward delete
-    // hyper('delete_or_backspace', 'delete_forward', ['fn', 'left_option']), // Forward delete word
-    ultra('a', '^left_arrow'),  // Spaces left
-    ultra('d', '^right_arrow'), // Spaces right
+    ultra({ key_code: 'delete_or_backspace' }, { key_code: 'delete_forward' }), // Forward delete
+    // hyper({ key_code: 'delete_or_backspace' }, { key_code: 'delete_forward', modifiers: ['fn', 'left_option'] }), // Forward delete word
+    ultra({ key_code: 'a' }, { key_code: 'left_arrow', modifiers: ['left_control'] }),  // Spaces left
+    ultra({ key_code: 'd' }, { key_code: 'right_arrow', modifiers: ['left_control'] }), // Spaces right
 
     // ultra('s', 'mission_control'), // TODO: Needs PR
-    hyper('s', '^down_arrow') // App windows
+    hyper({ key_code: 's' }, { key_code: 'down_arrow', modifiers: ['left_control'] }) // App windows
   ]
+})
+
+mods.addRule({
+  description: 'Chrome Remappings',
+  manipulators: [
+    {
+      // Cmd+K Mapping
+      from: {
+        key_code: 'k',
+        modifiers: {
+          mandatory: ['left_command']
+        }
+      },
+      to: [
+        {
+          key_code: 'l',
+          modifiers: ['left_command'],
+        },
+        {
+          key_code: 'slash',
+          modifiers: ['left_shift'],
+        },
+      ],
+      conditions: [chromeOnly],
+      type: 'basic'
+    },
+    {
+      // Ctrl+K Mapping for non-Apple keyboards
+      from: {
+        key_code: 'k',
+        modifiers: {
+          mandatory: ['left_control']
+        }
+      },
+      to: [
+        {
+          key_code: 'l',
+          modifiers: ['left_command'],
+        },
+        {
+          key_code: 'slash',
+          modifiers: ['left_shift'],
+        },
+      ],
+      conditions: [
+        chromeOnly,
+        nonAppleDevice
+      ],
+      type: 'basic'
+    },
+    {
+      // Ctrl+H History for non-Apple keyboards
+      from: {
+        key_code: 'h',
+        modifiers: {
+          mandatory: ['left_control']
+        }
+      },
+      to: [
+        {
+          key_code: 'y',
+          modifiers: ['left_command'],
+        }
+      ],
+      conditions: [
+        chromeOnly,
+        nonAppleDevice
+      ],
+      type: 'basic'
+    },
+    {
+      // Cmd+H History
+      from: {
+        key_code: 'h',
+        modifiers: {
+          mandatory: ['left_command']
+        }
+      },
+      to: [
+        {
+          key_code: 'y',
+          modifiers: ['left_command'],
+        }
+      ],
+      conditions: [chromeOnly],
+      type: 'basic'
+    },
+  ],
 })
 
 mods.writeToProfile('Deno');

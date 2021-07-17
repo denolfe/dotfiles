@@ -1,5 +1,4 @@
-import { Key, Manipulator } from 'https://deno.land/x/karabiner@v0.2.0/karabiner.ts';
-import { AhkKey, parseFrom, parseTo } from './ahk.ts';
+import { Key, Manipulator, KeyPressTo, KeyPressFrom } from 'https://deno.land/x/karabiner@v0.2.0/karabiner.ts';
 
 const ultraMods: Key[] = [
   'left_control',
@@ -34,17 +33,13 @@ function capsBind(from: Key, to?: Key, fromMods?: Key[], toMods?: Key[]): Manipu
 /**
  * CapsLock + Cmd + Key
  */
-export function hyper(from: AhkKey, to: AhkKey): Manipulator {
-  const parsedFrom = parseFrom(from)
-  const parsedTo = parseTo(to)
-  return capsBind(parsedFrom.key_code, parsedTo.key_code, hyperMods, parsedTo.modifiers)
+export function ultra(from: KeyPressFrom, to: KeyPressTo): Manipulator {
+  return capsBind(from.key_code, to.key_code, ultraMods, to.modifiers)
 }
 
 /**
  * CapsLock + Key
  */
-export function ultra(from: AhkKey, to: AhkKey): Manipulator {
-  const parsedFrom = parseFrom(from)
-  const parsedTo = parseTo(to)
-  return capsBind(parsedFrom.key_code, parsedTo.key_code, ultraMods, parsedTo.modifiers)
+export function hyper(from: KeyPressFrom, to: KeyPressTo): Manipulator {
+  return capsBind(from.key_code, to.key_code, hyperMods, to.modifiers)
 }
