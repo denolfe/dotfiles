@@ -2,28 +2,26 @@ import { Condition, KarabinerComplexModifications, Key, KeyPressTo } from "https
 import type { KeyPressFrom, Manipulator } from "https://deno.land/x/karabiner@v0.2.0/karabiner.ts";
 
 const mods = new KarabinerComplexModifications();
-const ultraMods: KeyPressFrom['modifiers'] = {
-  mandatory: [
-    "left_control",
-    "left_shift",
-    "left_option"
-  ]
-}
-const hyperMods: KeyPressFrom['modifiers'] = {
-  mandatory: [
-    "left_control",
-    "left_shift",
-    "left_option",
-    "left_command"
-  ]
-}
+const ultraMods: Key[] = [
+  "left_control",
+  "left_shift",
+  "left_option"
+]
+const hyperMods: Key[] = [
+  "left_control",
+  "left_shift",
+  "left_option",
+  "left_command"
+]
 
-function capsBind(modifiers: KeyPressFrom['modifiers'], fromKeyCode: Key, to: Key, toMods?: Key[]): Manipulator {
+function capsBind(from: Key, to?: Key, fromMods?: Key[], toMods?: Key[]): Manipulator {
   return {
     type: 'basic',
     from: {
-      key_code: fromKeyCode,
-      modifiers: modifiers,
+      key_code: from,
+      modifiers: {
+        mandatory: fromMods,
+      },
     },
     to: [
       {
@@ -34,19 +32,16 @@ function capsBind(modifiers: KeyPressFrom['modifiers'], fromKeyCode: Key, to: Ke
   }
 }
 
-function ultra(fromKeyCode: Key, to: Key, toMods?: Key[]): Manipulator { return capsBind(ultraMods, fromKeyCode, to, toMods) }
-
-function hyper(fromKeyCode: Key, to: Key, toMods?: Key[]): Manipulator { return capsBind(hyperMods, fromKeyCode, to, toMods) }
-
-function hyperAhk(fromKeyCode: Key, to: ModdedKey): Manipulator {
-  const parsed = parseKey(to)
-  return capsBind(hyperMods, fromKeyCode, parsed.key_code!, parsed.modifiers)
+function hyperAhk(from: ModdedKey, to: ModdedKey): Manipulator {
+  const parsedFrom = parseFrom(from)
+  const parsedTo = parseTo(to)
+  return capsBind(parsedFrom.key_code, parsedTo.key_code, hyperMods, parsedTo.modifiers)
 }
-function ultraAhk(fromKeyCode: Key, to: ModdedKey | Key): Manipulator {
-  const parsed = parseKey(to)
-  return capsBind(ultraMods, fromKeyCode, parsed.key_code!, parsed.modifiers)
+function ultraAhk(from: ModdedKey, to: ModdedKey): Manipulator {
+  const parsedFrom = parseFrom(from)
+  const parsedTo = parseTo(to)
+  return capsBind(parsedFrom.key_code, parsedTo.key_code, ultraMods, parsedTo.modifiers)
 }
-
 
 const conditions: Record<'chromeOnly' | 'nonAppleDevice' | 'dropAltKeyboard', Condition> = {
   chromeOnly: {
@@ -128,12 +123,12 @@ mods.addRule(
   }
 )
 
+const ahkMod = ['+', '^', '#', '!'] as const
+type AhkMod = typeof ahkMod[number]
 
-type AhkMod = '+' | '^' | '#' | '!'
-type ModdedKey = `${'+' | '^' | '#' | '!' | '+#' | '!#' | '+!#' | '+!'}${Key}`
-// const k: ModdedKey = ""
+type ModdedKey = Key | `${'+' | '^' | '#' | '!' | '+#' | '!#' | '+!#' | '+!'}${Key}`
 
-function parseKey(key: ModdedKey | Key): KeyPressTo {
+function formatKey(key: ModdedKey): { key: Key, modifiers: Key[] } {
   const modifiers: Key[] = []
   let stringKey: string = key as string
 
@@ -145,9 +140,7 @@ function parseKey(key: ModdedKey | Key): KeyPressTo {
     '!': 'left_option',
   }
 
-  const replacements: AhkMod[] = ['+', '^', '#', '!']
-
-  replacements.forEach(r => {
+  ahkMod.forEach(r => {
     if (stringKey.includes(r)) {
       modifiers.push(modMap[r])
       stringKey = stringKey.replace(r, '')
@@ -155,8 +148,28 @@ function parseKey(key: ModdedKey | Key): KeyPressTo {
   })
 
   return {
-    key_code: stringKey as Key,
+    key: stringKey as Key,
     modifiers
+  }
+}
+
+function parseTo(key: ModdedKey): KeyPressTo {
+  const { key: stringKey, modifiers } = formatKey(key)
+
+  return {
+    key_code: stringKey,
+    modifiers
+  }
+}
+
+function parseFrom(key: ModdedKey): KeyPressFrom {
+  const { key: stringKey, modifiers } = formatKey(key)
+
+  return {
+    key_code: stringKey,
+    modifiers: {
+      mandatory: modifiers
+    }
   }
 }
 
@@ -170,7 +183,6 @@ mods.addRule({
     ultraAhk("l", "right_arrow"),
 
     // Arrows + Shift
-    // hyper("h", "left_arrow", ["left_shift"]),
     hyperAhk("h", "+left_arrow"),
     hyperAhk("j", "+down_arrow"),
     hyperAhk("k", "+up_arrow"),
@@ -196,13 +208,13 @@ mods.addRule({
 mods.addRule({
   description: "Ultra Remaps (forward delete, spaces, mission control)",
   manipulators: [
-    ultra("delete_or_backspace", "delete_forward"), // Forward delete
+    ultraAhk("delete_or_backspace", "delete_forward"), // Forward delete
     // hyper("delete_or_backspace", "delete_forward", ["fn", "left_option"]), // Forward delete word
-    ultra("a", "left_arrow", ["left_control"]),  // Spaces left
-    ultra("d", "right_arrow", ["left_control"]), // Spaces right
+    ultraAhk("a", "^left_arrow"),  // Spaces left
+    ultraAhk("d", "^right_arrow"), // Spaces right
 
-    // ultra("s", "mission_control"), // Mission Control
-    hyper("s", "down_arrow", ["left_control"]) // App windows
+    // ultra("s", "mission_control"), // TODO: Needs PR
+    hyperAhk("s", "^down_arrow") // App windows
   ]
 })
 
