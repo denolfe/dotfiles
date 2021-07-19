@@ -6,6 +6,9 @@ import {
 } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
 import { nonAppleDevice } from './conditions.ts'
 
+/**
+ * Remap 2 keys, optional condition
+ */
 export function remap(
   from: KeyPressFrom,
   to: KeyPressTo,
