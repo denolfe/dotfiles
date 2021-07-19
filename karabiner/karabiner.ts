@@ -40,10 +40,10 @@ mods.addRule({
     hyper({ key_code: 'k' }, { key_code: 'up_arrow', modifiers: ['left_shift'] }),
     hyper({ key_code: 'l' }, { key_code: 'right_arrow', modifiers: ['left_shift'] }),
 
-    ultra({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_command'] }), // Home
-    ultra({ key_code: 'p' }, { key_code: 'right_arrow', modifiers: ['left_command'] }), // End
-    ultra({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_option'] }), // Left one word
-    ultra({ key_code: 'period' }, { key_code: 'right_arrow', modifiers: ['left_option'] }), // Right one word
+    ultra({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_command', 'left_shift'] }), // Home
+    ultra({ key_code: 'p' }, { key_code: 'right_arrow', modifiers: ['left_command', 'left_shift'] }), // End
+    ultra({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_option', 'left_shift'] }), // Left one word
+    ultra({ key_code: 'period' }, { key_code: 'right_arrow', modifiers: ['left_option', 'left_shift'] }), // Right one word
 
     // Home/End + Shift
     hyper({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_command'] }),
