@@ -18,6 +18,9 @@ export function remap(
     type: 'basic',
     from: {
       key_code: from.key_code,
+      modifiers: {
+        optional: ['any'],
+      },
     },
     to: [
       {
