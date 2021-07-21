@@ -26,61 +26,61 @@ mods.addRule({
 })
 
 mods.addRule({
-  description: 'Ultra Directional Bindings',
+  description: 'Hyper/Ultra Directional Bindings',
   manipulators: [
     // Arrows
-    ultra({ key_code: 'h' }, { key_code: 'left_arrow' }),
-    ultra({ key_code: 'j' }, { key_code: 'down_arrow' }),
-    ultra({ key_code: 'k' }, { key_code: 'up_arrow' }),
-    ultra({ key_code: 'l' }, { key_code: 'right_arrow' }),
+    hyper({ key_code: 'h' }, { key_code: 'left_arrow' }),
+    hyper({ key_code: 'j' }, { key_code: 'down_arrow' }),
+    hyper({ key_code: 'k' }, { key_code: 'up_arrow' }),
+    hyper({ key_code: 'l' }, { key_code: 'right_arrow' }),
 
     // Arrows + Shift
-    hyper({ key_code: 'h' }, { key_code: 'left_arrow', modifiers: ['left_shift'] }),
-    hyper({ key_code: 'j' }, { key_code: 'down_arrow', modifiers: ['left_shift'] }),
-    hyper({ key_code: 'k' }, { key_code: 'up_arrow', modifiers: ['left_shift'] }),
-    hyper({ key_code: 'l' }, { key_code: 'right_arrow', modifiers: ['left_shift'] }),
+    ultra({ key_code: 'h' }, { key_code: 'left_arrow', modifiers: ['left_shift'] }),
+    ultra({ key_code: 'j' }, { key_code: 'down_arrow', modifiers: ['left_shift'] }),
+    ultra({ key_code: 'k' }, { key_code: 'up_arrow', modifiers: ['left_shift'] }),
+    ultra({ key_code: 'l' }, { key_code: 'right_arrow', modifiers: ['left_shift'] }),
 
-    ultra({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_command'] }), // Home
-    ultra({ key_code: 'p' }, { key_code: 'right_arrow', modifiers: ['left_command'] }), // End
-    ultra({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_option'] }), // Left one word
-    ultra({ key_code: 'period' }, { key_code: 'right_arrow', modifiers: ['left_option'] }), // Right one word
+    hyper({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_command'] }), // Home
+    hyper({ key_code: 'p' }, { key_code: 'right_arrow', modifiers: ['left_command'] }), // End
+    hyper({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_option'] }), // Left one word
+    hyper({ key_code: 'period' }, { key_code: 'right_arrow', modifiers: ['left_option'] }), // Right one word
 
     // Home/End + Shift
-    hyper({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_command'] }),
-    hyper(
+    ultra({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_command'] }),
+    ultra(
       { key_code: 'p' },
       { key_code: 'right_arrow', modifiers: ['left_shift', 'left_command'] },
     ),
 
     // Left/Right one word + Shift
-    hyper({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_option'] }),
-    hyper(
+    ultra({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_option'] }),
+    ultra(
       { key_code: 'period' },
       { key_code: 'right_arrow', modifiers: ['left_shift', 'left_option'] },
     ),
 
-    ultra({ key_code: 'u' }, { key_code: 'page_down' }),
-    ultra({ key_code: 'i' }, { key_code: 'page_up' }),
-    hyper({ key_code: 'u' }, { key_code: 'down_arrow', modifiers: ['left_command'] }), // End of page
-    hyper({ key_code: 'i' }, { key_code: 'up_arrow', modifiers: ['left_command'] }), // Top of page
+    hyper({ key_code: 'u' }, { key_code: 'page_down' }),
+    hyper({ key_code: 'i' }, { key_code: 'page_up' }),
+    ultra({ key_code: 'u' }, { key_code: 'down_arrow', modifiers: ['left_command'] }), // End of page
+    ultra({ key_code: 'i' }, { key_code: 'up_arrow', modifiers: ['left_command'] }), // Top of page
   ],
 })
 
 mods.addRule({
-  description: 'Ultra Remaps (forward delete, spaces, mission control)',
+  description: 'Hyper/Ultra Remaps (forward delete, spaces, mission control)',
   manipulators: [
-    ultra({ key_code: 'delete_or_backspace' }, { key_code: 'delete_forward' }), // Forward delete
+    hyper({ key_code: 'delete_or_backspace' }, { key_code: 'delete_forward' }), // Forward delete
 
     // Forward delete word
-    hyper(
+    ultra(
       { key_code: 'delete_or_backspace' },
       { key_code: 'delete_forward', modifiers: ['fn', 'left_option'] },
     ),
-    ultra({ key_code: 'a' }, { key_code: 'left_arrow', modifiers: ['left_control'] }), // Spaces left
-    ultra({ key_code: 'd' }, { key_code: 'right_arrow', modifiers: ['left_control'] }), // Spaces right
+    hyper({ key_code: 'a' }, { key_code: 'left_arrow', modifiers: ['left_control'] }), // Spaces left
+    hyper({ key_code: 'd' }, { key_code: 'right_arrow', modifiers: ['left_control'] }), // Spaces right
 
-    ultra({ key_code: 's' }, { key_code: 'mission_control' }), // Mission Control
-    hyper({ key_code: 's' }, { key_code: 'down_arrow', modifiers: ['left_control'] }), // App windows
+    hyper({ key_code: 's' }, { key_code: 'mission_control' }), // Mission Control
+    ultra({ key_code: 's' }, { key_code: 'down_arrow', modifiers: ['left_control'] }), // App windows
   ],
 })
 
