@@ -11,7 +11,7 @@ import { nonAppleDevice } from './conditions.ts'
  */
 export function remap(
   from: KeyPressFrom,
-  to: KeyPressTo,
+  to: KeyPressTo | KeyPressTo[],
   conditions: Condition[] = [nonAppleDevice],
 ): Manipulator {
   const mapped: Manipulator = {
@@ -22,13 +22,8 @@ export function remap(
         optional: ['any'],
       },
     },
-    to: [
-      {
-        key_code: to.key_code,
-        modifiers: to.modifiers ?? undefined,
-      },
-    ],
-    conditions: conditions ? [...conditions] : undefined,
+    to: Array.isArray(to) ? to : [to],
+    conditions: conditions?.length > 0 ? [...conditions] : undefined,
   }
 
   if (from.modifiers) {

@@ -1,6 +1,6 @@
 import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
 import { hyper, ultra } from './lib/hyper.ts'
-import { chromeOnly, nonAppleDevice } from './lib/conditions.ts'
+import { chromeOnly } from './lib/conditions.ts'
 import { remap } from './lib/remap.ts'
 
 const mods = new KarabinerComplexModifications()
@@ -87,40 +87,27 @@ mods.addRule({
 mods.addRule({
   description: 'Chrome Remappings',
   manipulators: [
-    {
-      // Cmd+K Mapping
-      from: { key_code: 'k', modifiers: { mandatory: ['left_command'] } },
-      to: [
+    // Cmd+K Omnibar Google Search
+    remap(
+      { key_code: 'k', modifiers: { mandatory: ['left_command'] } },
+      [
         { key_code: 'l', modifiers: ['left_command'] },
         { key_code: 'slash', modifiers: ['left_shift'] },
       ],
-      conditions: [chromeOnly],
-      type: 'basic',
-    },
-    {
-      // Ctrl+K Mapping for non-Apple keyboards
-      from: { key_code: 'k', modifiers: { mandatory: ['left_control'] } },
-      to: [
-        { key_code: 'l', modifiers: ['left_command'] },
-        { key_code: 'slash', modifiers: ['left_shift'] },
-      ],
-      conditions: [chromeOnly, nonAppleDevice],
-      type: 'basic',
-    },
-    {
-      // Cmd+H History
-      from: { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
-      to: [{ key_code: 'y', modifiers: ['left_command'] }],
-      conditions: [chromeOnly],
-      type: 'basic',
-    },
-    {
-      // Cmd+J Downloads
-      from: { key_code: 'j', modifiers: { mandatory: ['left_command'] } },
-      to: [{ key_code: 'l', modifiers: ['left_command', 'left_option'] }],
-      conditions: [chromeOnly],
-      type: 'basic',
-    },
+      [chromeOnly]
+    ),
+    // Cmd+H History
+    remap(
+      { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'y', modifiers: ['left_command'] },
+      [chromeOnly]
+    ),
+    // Cmd+J Downloads
+    remap(
+      { key_code: 'j', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'l', modifiers: ['left_command', 'left_option'] },
+      [chromeOnly]
+    ),
   ],
 })
 
@@ -143,22 +130,18 @@ mods.addRule({
     remap(
       { key_code: 'left_arrow', modifiers: { mandatory: ['left_control'] } },
       { key_code: 'left_arrow', modifiers: ['left_option'] },
-      [nonAppleDevice],
     ),
     remap(
       { key_code: 'right_arrow', modifiers: { mandatory: ['left_control'] } },
       { key_code: 'right_arrow', modifiers: ['left_option'] },
-      [nonAppleDevice],
     ),
     remap(
       { key_code: 'down_arrow', modifiers: { mandatory: ['left_control'] } },
       { key_code: 'down_arrow', modifiers: ['left_command'] },
-      [nonAppleDevice],
     ),
     remap(
       { key_code: 'up_arrow', modifiers: { mandatory: ['left_control'] } },
       { key_code: 'up_arrow', modifiers: ['left_command'] },
-      [nonAppleDevice],
     ),
 
     // Ctrl + Arrows + Shift
@@ -168,7 +151,6 @@ mods.addRule({
         modifiers: { mandatory: ['left_control', 'left_shift'] },
       },
       { key_code: 'left_arrow', modifiers: ['left_option', 'left_shift'] },
-      [nonAppleDevice],
     ),
     remap(
       {
@@ -176,7 +158,6 @@ mods.addRule({
         modifiers: { mandatory: ['left_control', 'left_shift'] },
       },
       { key_code: 'right_arrow', modifiers: ['left_option', 'left_shift'] },
-      [nonAppleDevice],
     ),
     remap(
       {
@@ -184,7 +165,6 @@ mods.addRule({
         modifiers: { mandatory: ['left_control', 'left_shift'] },
       },
       { key_code: 'down_arrow', modifiers: ['left_command', 'left_shift'] },
-      [nonAppleDevice],
     ),
     remap(
       {
@@ -192,7 +172,6 @@ mods.addRule({
         modifiers: { mandatory: ['left_control', 'left_shift'] },
       },
       { key_code: 'up_arrow', modifiers: ['left_command', 'left_shift'] },
-      [nonAppleDevice],
     ),
   ],
 })
