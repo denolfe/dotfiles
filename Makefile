@@ -11,6 +11,9 @@ karabiner:
 	sleep 0.2
 	launchctl start org.pqrs.karabiner.karabiner_console_user_server
 
+karabinerts:
+	deno run --allow-env --allow-read --allow-write karabiner/karabiner.ts
+
 # Install extensions from vscode/extensions.txt
 vscode-install:
 	cat ${DOTFILES}/vscode/extensions.txt | xargs -L 1 code --install-extension
