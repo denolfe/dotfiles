@@ -354,6 +354,7 @@
   # typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=3
   # typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=8
   typeset -g POWERLEVEL9K_VCS_GIT_GITHUB_ICON=''
+  typeset -g POWERLEVEL9K_VCS_GIT_ICON=''
 
   # Branch icon. Set this parameter to '\uF126 ' for the popular Powerline branch icon.
   typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\uF126 '
