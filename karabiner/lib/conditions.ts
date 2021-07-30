@@ -3,7 +3,7 @@ import { Condition } from 'https://raw.githubusercontent.com/esamattis/deno_kara
 
 export const chromeOnly: Condition = {
   type: 'frontmost_application_if',
-  bundle_identifiers: ['^com\\.google\\.Chrome$'],
+  bundle_identifiers: ['com.google.Chrome'],
 }
 
 export const nonAppleDevice: Condition = {
@@ -17,5 +17,10 @@ export const nonAppleDevice: Condition = {
 
 export const vsCode: Condition = {
   type: 'frontmost_application_if',
-  bundle_identifiers: ['^com\\.microsoft\\.VSCode']
+  bundle_identifiers: ['com.microsoft.VSCode'],
+}
+
+export const slack: Condition = {
+  type: 'frontmost_application_if',
+  bundle_identifiers: ['com.tinyspeck.slackmacgap'],
 }

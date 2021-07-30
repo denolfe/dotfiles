@@ -1,6 +1,6 @@
 import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
 import { hyper, ultra } from './lib/hyper.ts'
-import { chromeOnly } from './lib/conditions.ts'
+import { chromeOnly, slack } from './lib/conditions.ts'
 import { remap } from './lib/remap.ts'
 
 const mods = new KarabinerComplexModifications()
@@ -94,19 +94,42 @@ mods.addRule({
         { key_code: 'l', modifiers: ['left_command'] },
         { key_code: 'slash', modifiers: ['left_shift'] },
       ],
-      [chromeOnly]
+      [chromeOnly],
     ),
     // Cmd+H History
     remap(
       { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
       { key_code: 'y', modifiers: ['left_command'] },
-      [chromeOnly]
+      [chromeOnly],
     ),
     // Cmd+J Downloads
     remap(
       { key_code: 'j', modifiers: { mandatory: ['left_command'] } },
       { key_code: 'l', modifiers: ['left_command', 'left_option'] },
-      [chromeOnly]
+      [chromeOnly],
+    ),
+  ],
+})
+
+mods.addRule({
+  description: 'Slack Remappings',
+  manipulators: [
+    // Back
+    remap(
+      { key_code: 'hyphen', modifiers: { mandatory: ['left_option'] } },
+      { key_code: 'open_bracket', modifiers: ['left_command'] },
+      [slack],
+    ),
+    // Forward
+    remap(
+      { key_code: 'equal_sign', modifiers: { mandatory: ['left_option'] } },
+      { key_code: 'close_bracket', modifiers: ['left_command'] },
+      [slack],
+    ),
+    remap(
+      { key_code: 'p', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'k', modifiers: ['left_command'] },
+      [slack],
     ),
   ],
 })
