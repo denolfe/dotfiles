@@ -65,3 +65,6 @@ alias to_upper="tr '[:lower:]' '[:upper:]'"
 if type rg > /dev/null 2>&1; then
   alias rg="rg -i --hidden -g '!.git/'"
 fi
+
+alias jwt_from_clip="pbpaste | jwt decode -j - | jq -r '.payload'"
+alias jqkeys="jq -r 'select(objects)|=[.] | map( paths(scalars) ) | map( map(select(numbers)=\"[]\") | join(\".\")) | unique | .[]' | sed 's/.\[\]/[]/g' | xargs printf -- '.%s\n'"
