@@ -63,5 +63,5 @@ alias to_lower="tr '[:upper:]' '[:lower:]'"
 alias to_upper="tr '[:lower:]' '[:upper:]'"
 
 if type rg > /dev/null 2>&1; then
-  alias rg="rg -i --hidden"
+  alias rg="rg -i --hidden -g '!.git/'"
 fi

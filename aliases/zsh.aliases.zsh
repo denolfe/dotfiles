@@ -10,6 +10,7 @@ alias -g NUL='&> /dev/null'
 alias -g CD='&& $_'
 alias -g F='| fzf'
 alias -g R='| rg'
+alias -g J='| jq'
 
 # Detect the platform (similar to $OSTYPE)
 OS="`uname`"
