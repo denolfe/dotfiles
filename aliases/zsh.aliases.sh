@@ -6,11 +6,13 @@ alias regen='zgen reset;source ~/.zshrc'
 alias ll='ls -la'
 alias llt='ls -lat'
 
-alias senable='sudo systemctl enable'
-alias srestart='sudo systemctl restart'
-alias sstatus='sudo systemctl status'
-alias sstop='sudo systemctl stop'
-alias sstart='sudo systemctl start'
+if type systemctl > /dev/null 2>&1; then
+  alias senable='sudo systemctl enable'
+  alias srestart='sudo systemctl restart'
+  alias sstatus='sudo systemctl status'
+  alias sstop='sudo systemctl stop'
+  alias sstart='sudo systemctl start'
+fi
 
 # Easier navigation
 alias ..='cd ..'
@@ -31,17 +33,17 @@ hs(){ history | grep -i "$1" ;}
 alias .f='cd ~/.dotfiles'
 
 # Detect the platform (similar to $OSTYPE)
-OS="`uname`"
+OS=$(uname)
 case $OS in
   'Linux')
-		alias ls='ls --color=auto -p'
-		alias sagi='sudo apt-get install'
-		alias sai='sudo apt install'
-		alias sagu='sudo apt-get update'
-		alias saar='sudo add-apt-repository'
-		alias sagr='sudo apt-get remove'
-		alias pbcopy='xclip -selection c'
-		alias pbpaste='xclip -selection clipboard -o'
+    alias ls='ls --color=auto -p'
+    alias sagi='sudo apt-get install'
+    alias sai='sudo apt install'
+    alias sagu='sudo apt-get update'
+    alias saar='sudo add-apt-repository'
+    alias sagr='sudo apt-get remove'
+    alias pbcopy='xclip -selection c'
+    alias pbpaste='xclip -selection clipboard -o'
     ;;
   'Darwin')
     ;;
@@ -55,7 +57,7 @@ alias tr2='tree -L 2 -C'
 alias tr3='tree -L 3 -C'
 
 if type bat > /dev/null 2>&1; then
-	alias cat="bat"
+  alias cat="bat"
 fi
 
 alias CDD='cd $(ls -v1td */ | head -1)'
