@@ -31,9 +31,9 @@
     "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 13,
     "editor.formatOnPaste": true,
-    "editor.minimap.enabled": true,
     "editor.minimap.showSlider": "always",
-    "editor.renameOnType": true,
+    "editor.linkedEditing": true,
+    "editor.renderLineHighlight": "all",
     "editor.renderWhitespace": "all",
     "editor.tabSize": 2,
     "editor.tokenColorCustomizations": {
@@ -143,7 +143,7 @@
     "typescript.preferences.quoteStyle": "single",
     "typescript.referencesCodeLens.enabled": true,
     "typescript.referencesCodeLens.showOnAllFunctions": true,
-    "typescript.suggest.autoImports": false,
+    "typescript.suggest.autoImports": true,
     "typescript.suggest.completeFunctionCalls": true,
     "typescript.tsserver.pluginPaths": [
         "typescript-plugin-css-modules"
@@ -155,6 +155,7 @@
         "tab.activeBorderTop": "#007acc",
         "tab.unfocusedHoverBorder": "#007acc",
         "peekViewEditor.background": "#2F2F2F",
+        "editor.lineHighlightBorder": "#383B3D"
     },
     "workbench.iconTheme": "vscode-icons",
     "yaml.customTags": [
@@ -186,5 +187,10 @@
         "!Split",
         "!Split sequence"
     ],
-    "yaml.validate": false
+    "yaml.validate": false,
+    "errorLens.exclude": [
+        "^Delete",
+        "^MD"
+    ],
+    "editor.minimap.maxColumn": 80
 }
