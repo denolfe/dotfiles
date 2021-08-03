@@ -64,3 +64,8 @@
     description: Configuring Git
     stdout: true
     quiet: false
+  -
+    command: yarn config set prefix ~/.yarn
+    description: Configuring yarn prefix
+    stdout: true
+    quiet: false
