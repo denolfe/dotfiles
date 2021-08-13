@@ -101,11 +101,26 @@
       "when": "!editorFocus"
     },
     {
-      "key": "alt+-",
+      "key": "cmd+[",
       "command": "workbench.action.navigateBack"
     },
     {
-      "key": "alt+=",
+      "key": "cmd+]",
       "command": "workbench.action.navigateForward"
-    }
-  ]
+    },
+    {
+      "key": "cmd+]",
+      "command": "-editor.action.indentLines",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "cmd+[",
+      "command": "-editor.action.outdentLines",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "cmd+[",
+      "command": "-markdown.extension.onOutdentLines",
+      "when": "editorTextFocus && !suggestWidgetVisible && editorLangId == 'markdown'"
+    },
+]
