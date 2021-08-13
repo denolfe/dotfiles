@@ -28,6 +28,7 @@
     "editor.colorDecorators": false,
     "editor.cursorBlinking": "smooth",
     "editor.cursorStyle": "block",
+    "editor.dragAndDrop": false,
     "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 13,
     "editor.formatOnPaste": true,
@@ -192,5 +193,8 @@
         "^Delete",
         "^MD"
     ],
-    "editor.minimap.maxColumn": 80
+    "editor.minimap.maxColumn": 80,
+    "deno.codeLens.references": true,
+    "deno.codeLens.referencesAllFunctions": true,
+    "deno.codeLens.implementations": true,
 }
