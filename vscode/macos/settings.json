@@ -9,13 +9,22 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[markdown]": {
-        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.markdownlint": true
+        },
     },
     "[typescript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+        "editor.defaultFormatter": "vscode.typescript-language-features",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true,
+        },
     },
     "[typescriptreact]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+        "editor.defaultFormatter": "vscode.typescript-language-features",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true,
+        },
     },
     "auto-rename-tag.activationOnLanguage": [
         "javascriptreact"
@@ -23,9 +32,6 @@
     "cfnLint.validateUsingJsonSchema": false,
     "comment-ts.includeDescriptionTag": true,
     "crystal-lang.server": "/usr/local/bin/crystalline",
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    },
     "editor.codeLens": true,
     "editor.codeLensFontSize": 10,
     "editor.colorDecorators": false,
