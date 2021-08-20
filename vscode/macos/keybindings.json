@@ -123,4 +123,29 @@
       "command": "-markdown.extension.onOutdentLines",
       "when": "editorTextFocus && !suggestWidgetVisible && editorLangId == 'markdown'"
     },
+    // Settings remap
+    {
+      "key": "cmd+,",
+      "command": "workbench.action.openSettingsJson"
+    },
+    {
+      "key": "shift+cmd+,",
+      "command": "workbench.action.openSettings"
+    },
+    {
+      "key": "cmd+,",
+      "command": "-workbench.action.openSettings"
+    },
+
+    // Keybindings
+    {
+      "key": "alt+cmd+,",
+      "command": "workbench.action.openGlobalKeybindingsFile"
+    },
+    // Select All Occurrences
+    {
+      "key": "shift+alt+d",
+      "command": "editor.action.selectHighlights",
+      "when": "editorFocus"
+    },
 ]
