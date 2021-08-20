@@ -163,7 +163,9 @@
         "editorWhitespace.foreground": "#1e1e1e",
         "inlineparameters.annotationBackground": "#2F2F2F",
         "tab.activeBorderTop": "#007acc",
+        "tab.activeBackground": "#01395e",
         "tab.unfocusedHoverBorder": "#007acc",
+        "tab.unfocusedActiveBorderTop": "#007acc",
         "peekViewEditor.background": "#2F2F2F",
         "editor.lineHighlightBorder": "#383B3D"
     },
