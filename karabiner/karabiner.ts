@@ -67,6 +67,16 @@ mods.addRule({
 })
 
 mods.addRule({
+  description: 'Disable Cmd+H',
+  manipulators: [
+    {
+      from: { key_code: 'h', modifiers: { mandatory: ['left_command'] }},
+      type: 'basic'
+    }
+  ]
+})
+
+mods.addRule({
   description: 'Hyper/Ultra Remaps (forward delete, spaces, mission control)',
   manipulators: [
     hyper({ key_code: 'delete_or_backspace' }, { key_code: 'delete_forward' }), // Forward delete
