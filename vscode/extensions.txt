@@ -1,3 +1,4 @@
+alefragnani.Bookmarks
 andys8.jest-snippets
 bierner.markdown-checkbox
 bierner.markdown-emoji
@@ -6,6 +7,7 @@ burkeholland.simple-react-snippets
 CoenraadS.bracket-pair-colorizer-2
 DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
+denoland.vscode-deno
 DigitalBrainstem.javascript-ejs-support
 donjayamanne.githistory
 eamodio.gitlens
