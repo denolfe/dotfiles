@@ -15,7 +15,7 @@ end
 hs.hotkey.bind(ultra, ';', bindApp('iTerm'))
 hs.hotkey.bind(ultra, 'g', bindApp('Google Chrome'))
 hs.hotkey.bind(ultra, 'c', bindApp('Visual Studio Code'))
-hs.hotkey.bind(ultra, 'r', bindApp('Rider'))
+hs.hotkey.bind(ultra, 'r', bindApp('Notion'))
 hs.hotkey.bind(ultra, 'f', bindApp('Slack'))
 hs.hotkey.bind(ultra, 'v', bindApp('Spotify'))
 hs.hotkey.bind(ultra, 't', bindApp('Microsoft Outlook'))
