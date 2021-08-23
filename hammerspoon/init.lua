@@ -24,7 +24,6 @@ hs.hotkey.bind(hyper, 't', bindApp('Microsoft Outlook'))
 hs.hotkey.bind(hyper, '\\', hs.spotify.playpause)
 hs.hotkey.bind(hyper, ']',  hs.spotify.next)
 hs.hotkey.bind(hyper, '[',  hs.spotify.previous)
-hs.hotkey.bind(hyperCmd, '\\', hs.spotify.displayCurrentTrack)
 
 -- Reload shortcut
 hs.hotkey.bind(hyperCmd, 'r', hs.reload)
