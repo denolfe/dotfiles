@@ -113,10 +113,10 @@ function moveToNextScreen()
 end
 
 -- Binds
-hs.hotkey.bind(hyper, 'q', chain({ grid.left60, grid.left50, grid.left40, grid.left33, grid.left66 }))
-hs.hotkey.bind(ultra, 'w', chain({ grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall }))
-hs.hotkey.bind(hyper, 'e', chain({ grid.right40, grid.right50, grid.right60, grid.right66, grid.right33 }))
-hs.hotkey.bind(ultra, 'tab', moveToNextScreen)
+hs.hotkey.bind(hyperCmd, 'q', chain({ grid.left60, grid.left50, grid.left40, grid.left33, grid.left66 }))
+hs.hotkey.bind(hyper, 'w', chain({ grid.full, grid.centeredBig, grid.centeredMedium, grid.centeredSmall }))
+hs.hotkey.bind(hyperCmd, 'e', chain({ grid.right40, grid.right50, grid.right60, grid.right66, grid.right33 }))
+hs.hotkey.bind(hyper, 'tab', moveToNextScreen)
 
-hs.hotkey.bind(ultra, 'q', chainSideBySide(leftSideBySideGrid))
-hs.hotkey.bind(ultra, 'e', chainSideBySide(rightSideBySideGrid))
+hs.hotkey.bind(hyper, 'q', chainSideBySide(leftSideBySideGrid))
+hs.hotkey.bind(hyper, 'e', chainSideBySide(rightSideBySideGrid))

@@ -1,6 +1,6 @@
 -- Modifiers
-ultra = {'ctrl','alt','shift'} -- Bound to CapsLock in Karabiner-Elements
-hyper = {'shift', 'cmd', 'alt', 'ctrl'} -- CapsLock + cmd
+hyper = {'ctrl','alt','shift'} -- Bound to CapsLock in Karabiner-Elements
+hyperCmd = {'shift', 'cmd', 'alt', 'ctrl'} -- CapsLock + cmd
 
 -- Chained binds for window resizing and movement
 require('windowmanager')
@@ -12,21 +12,21 @@ local bindApp = function(appName)
   end
 end
 
-hs.hotkey.bind(ultra, ';', bindApp('iTerm'))
-hs.hotkey.bind(ultra, 'g', bindApp('Google Chrome'))
-hs.hotkey.bind(ultra, 'c', bindApp('Visual Studio Code'))
-hs.hotkey.bind(ultra, 'r', bindApp('Notion'))
-hs.hotkey.bind(ultra, 'f', bindApp('Slack'))
-hs.hotkey.bind(ultra, 'v', bindApp('Spotify'))
-hs.hotkey.bind(ultra, 't', bindApp('Microsoft Outlook'))
+hs.hotkey.bind(hyper, ';', bindApp('iTerm'))
+hs.hotkey.bind(hyper, 'g', bindApp('Google Chrome'))
+hs.hotkey.bind(hyper, 'c', bindApp('Visual Studio Code'))
+hs.hotkey.bind(hyper, 'r', bindApp('Notion'))
+hs.hotkey.bind(hyper, 'f', bindApp('Slack'))
+hs.hotkey.bind(hyper, 'v', bindApp('Spotify'))
+hs.hotkey.bind(hyper, 't', bindApp('Microsoft Outlook'))
 
 -- Spotify shortcuts
-hs.hotkey.bind(ultra, '\\', hs.spotify.playpause)
-hs.hotkey.bind(ultra, ']',  hs.spotify.next)
-hs.hotkey.bind(ultra, '[',  hs.spotify.previous)
-hs.hotkey.bind(hyper, '\\', hs.spotify.displayCurrentTrack)
+hs.hotkey.bind(hyper, '\\', hs.spotify.playpause)
+hs.hotkey.bind(hyper, ']',  hs.spotify.next)
+hs.hotkey.bind(hyper, '[',  hs.spotify.previous)
+hs.hotkey.bind(hyperCmd, '\\', hs.spotify.displayCurrentTrack)
 
 -- Reload shortcut
-hs.hotkey.bind(hyper, 'r', hs.reload)
+hs.hotkey.bind(hyperCmd, 'r', hs.reload)
 
 hs.alert.show('Config loaded')
