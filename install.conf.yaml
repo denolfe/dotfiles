@@ -48,11 +48,6 @@
       path: vscode/macos/*.json
       force: true
 
-    ~/.config/karabiner/karabiner.json:
-      if: '[ `uname` = Darwin ]'
-      path: karabiner/karabiner.json
-      force: true
-
     ~/.hammerspoon:
       if: '[ `uname` = Darwin ]'
       path: hammerspoon
