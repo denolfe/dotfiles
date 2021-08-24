@@ -67,10 +67,16 @@ mods.addRule({
 })
 
 mods.addRule({
-  description: 'Disable Cmd+H',
+  description: 'Disable Specific macOS Shortcuts',
   manipulators: [
+    // Disable Cmd+H
     {
       from: { key_code: 'h', modifiers: { mandatory: ['left_command'] }},
+      type: 'basic'
+    },
+    // Disable Cmd+M
+    {
+      from: { key_code: 'm', modifiers: { mandatory: ['left_command'] }},
       type: 'basic'
     }
   ]
