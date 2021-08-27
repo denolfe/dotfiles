@@ -20,6 +20,10 @@ getlatest() {
   fi
 }
 
+gcob() {
+  git checkout "$(gbv | cut -c 3- | awk -F ' - ' '{ print $1 }' | fzf --height 30% --prompt="Checkout Branch > ")"
+}
+
 # Show previously used conventional commit scopes
 gscopes() {
   local output=$(git log --pretty=oneline --abbrev-commit --no-merges | grep "):" | cut -d "(" -f2 | cut -d ")" -f1)
