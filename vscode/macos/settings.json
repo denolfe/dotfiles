@@ -32,6 +32,7 @@
     "cfnLint.validateUsingJsonSchema": false,
     "comment-ts.includeDescriptionTag": true,
     "crystal-lang.server": "/usr/local/bin/crystalline",
+    "debug.showBreakpointsInOverviewRuler": true,
     "editor.codeLens": true,
     "editor.codeLensFontSize": 10,
     "editor.colorDecorators": false,
