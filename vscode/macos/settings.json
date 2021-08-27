@@ -159,6 +159,7 @@
         "typescript-plugin-css-modules"
     ],
     "typescript.updateImportsOnFileMove.enabled": "always",
+    "window.title": "${rootName}${separator}${activeEditorShort}",
     "workbench.colorCustomizations": {
         "editorWhitespace.foreground": "#1e1e1e",
         "inlineparameters.annotationBackground": "#2F2F2F",
