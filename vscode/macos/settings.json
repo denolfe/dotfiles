@@ -161,11 +161,13 @@
     ],
     "typescript.updateImportsOnFileMove.enabled": "always",
     "window.title": "${rootName}${separator}${activeEditorShort}",
+    "workbench.editor.highlightModifiedTabs": true, // Trial - modified tab
     "workbench.colorCustomizations": {
         "editorWhitespace.foreground": "#1e1e1e",
         "inlineparameters.annotationBackground": "#2F2F2F",
         "tab.activeBorderTop": "#007acc",
         "tab.activeBackground": "#01395e",
+        "tab.activeModifiedBorder": "#C586C0", // Trial - modified tab
         "tab.unfocusedHoverBorder": "#007acc",
         "tab.unfocusedActiveBorderTop": "#007acc",
         "peekViewEditor.background": "#2F2F2F",
@@ -206,7 +208,7 @@
         "^Delete",
         "^MD"
     ],
-    "editor.minimap.maxColumn": 80,
+    "editor.minimap.maxColumn": 60, // Trial from 80
     "deno.codeLens.references": true,
     "deno.codeLens.referencesAllFunctions": true,
     "deno.codeLens.implementations": true,
