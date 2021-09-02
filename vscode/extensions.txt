@@ -4,7 +4,6 @@ bierner.markdown-checkbox
 bierner.markdown-emoji
 bierner.markdown-preview-github-styles
 burkeholland.simple-react-snippets
-CoenraadS.bracket-pair-colorizer-2
 DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
 denoland.vscode-deno
@@ -24,7 +23,6 @@ johnpapa.vscode-peacock
 kddejong.vscode-cfn-lint
 kofno.crystal-ide
 kumar-harsh.graphql-for-vscode
-liamhammett.inline-parameters
 matangover.mypy
 mechatroner.rainbow-csv
 mohsen1.react-javascript-to-typescript-transform-vscode
