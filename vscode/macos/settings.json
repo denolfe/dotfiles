@@ -33,6 +33,7 @@
     "comment-ts.includeDescriptionTag": true,
     "crystal-lang.server": "/usr/local/bin/crystalline",
     "debug.showBreakpointsInOverviewRuler": true,
+    "editor.bracketPairColorization.enabled": true,
     "editor.codeLens": true,
     "editor.codeLensFontSize": 10,
     "editor.colorDecorators": false,
@@ -147,6 +148,10 @@
     "javascript.referencesCodeLens.showOnAllFunctions": true,
     "javascript.suggest.completeFunctionCalls": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
+    "jestrunner.debugOptions": {
+        "skipFiles": ["<node_internals>/**"],
+        "smartStep": true
+    },
     "scssFormatter.singleQuote": true,
     "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "terminal.integrated.fontSize": 11,
