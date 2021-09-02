@@ -45,3 +45,25 @@ if [[ -z $(git config --global --get user.email) ]]; then
   END="\033[0m"
   echo -e "!!!\n\n${START}Git Email not set, please configure!\n\ngit config --global user.email 'test@email.com'\n\n!!!${END}"
 fi
+
+# Delta
+
+git config --global pager.diff delta
+git config --global pager.log delta
+git config --global pager.reflog delta
+git config --global pager.show delta
+
+git config --global delta.plus-style 'syntax #012800'
+git config --global delta.plus-emph-style 'syntax #1B421A'
+git config --global delta.minus-style 'syntax #340001'
+git config --global delta.minus-emph-style 'syntax #673334'
+
+git config --global delta.file-decoration-style 'blue box'
+git config --global delta.hunk-header-style 'omit'
+
+git config --global delta.navigate 'syntax #340001'
+git config --global delta.navigate true
+git config --global delta.syntax-theme 'Solarized (dark)'
+git config --global delta.line-numbers true
+
+git config --global interactive.diffFilter 'delta --color-only'
