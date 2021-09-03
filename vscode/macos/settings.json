@@ -33,7 +33,8 @@
     "comment-ts.includeDescriptionTag": true,
     "crystal-lang.server": "/usr/local/bin/crystalline",
     "debug.showBreakpointsInOverviewRuler": true,
-    "editor.bracketPairColorization.enabled": true,
+    // False until https://github.com/microsoft/vscode/issues/131001 implemented
+    "editor.bracketPairColorization.enabled": false,
     "editor.codeLens": true,
     "editor.codeLensFontSize": 10,
     "editor.colorDecorators": false,
