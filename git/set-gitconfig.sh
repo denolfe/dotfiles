@@ -56,7 +56,7 @@ git config --global pager.show delta
 git config --global delta.plus-style 'syntax #012800'
 git config --global delta.plus-emph-style 'syntax #1B421A'
 git config --global delta.minus-style 'syntax #340001'
-git config --global delta.minus-emph-style 'syntax #673334'
+git config --global delta.minus-emph-style 'syntax #4E1A1B'
 
 git config --global delta.file-decoration-style 'blue box'
 git config --global delta.hunk-header-style 'omit'
