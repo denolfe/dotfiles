@@ -1622,16 +1622,10 @@
 
   # Use default aws prompt as a base, then also evaluate role_arn from ~/.aws/config
   prompt_work_aws() {
-    local aws_role=$(cat ~/.aws/config | grep _role_arn | awk 'BEGIN { FS = "::" } ; { print $2 }')
-    local aws_profile="${AWS_VAULT:-${AWSUME_PROFILE:-${AWS_PROFILE:-${AWS_DEFAULT_PROFILE:-$aws_role}}}}"
-    local pat class
-    for pat class in "${_POWERLEVEL9K_AWS_CLASSES[@]}"; do
-      if [[ $aws_profile == ${~pat} ]]; then
-        [[ -n $class ]] && state=_${${(U)class}//İ/I}
-        break
-      fi
-    done
-    _p9k_prompt_segment "$0$state" 208 016 'AWS_ICON' 0 '' "${aws_profile//\%/%%}"
+    local aws_config=$(cat ~/.aws/config)
+    local extend_team=$(echo $aws_config | grep extend_team | awk -F '=' '{print $2}')
+    local extend_role=$(echo $aws_config | grep extend_role | awk -F '=' '{print $2}')
+    _p9k_prompt_segment "$0$state" 208 016 'AWS_ICON' 0 '' "${extend_team//\%/%%}/${extend_role//\%/%%}"
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
