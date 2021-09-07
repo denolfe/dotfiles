@@ -58,7 +58,6 @@ cask "font-jetbrains-mono-nerd-font"
 cask "font-roboto-mono-nerd-font"
 cask "google-chrome"
 cask "hammerspoon"
-cask "hand-mirror"
 cask "iterm2"
 cask "jetbrains-toolbox"
 cask "karabiner-elements"
@@ -78,5 +77,6 @@ cask "slack"
 cask "spotify"
 cask "visual-studio-code"
 cask "vlc"
+mas "Hand Mirror", id: 1502839586
 mas "Unsplash Wallpapers", id: 1284863847
 mas "Xcode", id: 497799835
