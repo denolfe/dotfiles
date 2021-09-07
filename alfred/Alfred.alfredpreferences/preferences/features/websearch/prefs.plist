@@ -30,6 +30,19 @@
 			<key>utf8</key>
 			<true/>
 		</dict>
+		<key>6B943F6D-70B0-4D80-BAC6-1C944051D243</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>meet</string>
+			<key>text</key>
+			<string>Google Meet</string>
+			<key>url</key>
+			<string>https://meet.google.com</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
 		<key>95FCADAE-400F-4D42-90C4-646103507525</key>
 		<dict>
 			<key>enabled</key>
