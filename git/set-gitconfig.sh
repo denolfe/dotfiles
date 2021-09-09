@@ -13,6 +13,7 @@ git config --global rebase.autoStash true
 git config --global status.short true
 git config --global status.branch true
 git config --global branch.autoSetupMerge true
+git config --global init.defaultBranch master
 
 # Set aliases in .gitconfig
 git config --global alias.last 'log -1 HEAD'
