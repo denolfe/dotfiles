@@ -20,7 +20,7 @@ getlatest() {
   fi
 }
 
-gcob() {
+gswb() {
   git checkout "$(gbv | cut -c 3- | awk -F ' - ' '{ print $1 }' | fzf --height 30% --prompt="Checkout Branch > ")"
 }
 
