@@ -9,7 +9,6 @@ alias gbm="git branch --merged"
 alias gbmv="git branch -m"
 alias gbnm="git branch --no-merged"
 alias gbu="git branch -u"
-alias gbv="git branch -v"
 alias gbv="git for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) (%(color:green)%(committerdate:relative)%(color:reset))'"
 alias gbvv="git branch -vv"
 alias gcane="git commit --amend --no-edit"
@@ -24,7 +23,10 @@ alias gpdel="git push --delete"
 alias gpl="git pull"
 alias groot='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --show-cdup`; fi'
 alias gstu="git status -uno"
+
+alias gswm='git switch $(git_main_branch)'
+
 alias gundo="git reset HEAD~1"
 alias guns="git reset HEAD --"
 
-alias gstl="git stash list --pretty=format:'%C(blue)%gd%C(reset): %<(50,trunc)%s %C(green)(%cr)%C(reset)'"
+alias gstl="git stash list --pretty=format:'%C(blue)%gd%C(reset): %<(100,trunc)%s %C(green)(%cr)%C(reset)'"
