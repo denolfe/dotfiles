@@ -6,6 +6,11 @@ export const chromeOnly: Condition = {
   bundle_identifiers: ['com.google.Chrome'],
 }
 
+export const notChrome: Condition = {
+  type: 'frontmost_application_unless',
+  bundle_identifiers: ['com.google.Chrome'],
+}
+
 export const nonAppleDevice: Condition = {
   type: 'device_unless',
   identifiers: [

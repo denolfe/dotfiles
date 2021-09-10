@@ -1,6 +1,6 @@
 import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
 import { hyper, ultra } from './lib/hyper.ts'
-import { chromeOnly, slack } from './lib/conditions.ts'
+import { chromeOnly, notChrome, slack } from './lib/conditions.ts'
 import { remap } from './lib/remap.ts'
 
 const mods = new KarabinerComplexModifications()
@@ -72,7 +72,8 @@ mods.addRule({
     // Disable Cmd+H
     {
       from: { key_code: 'h', modifiers: { mandatory: ['left_command'] }},
-      type: 'basic'
+      type: 'basic',
+      conditions: [notChrome],
     },
     // Disable Cmd+M
     {
