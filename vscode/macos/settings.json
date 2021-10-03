@@ -44,6 +44,8 @@
     "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 13,
     "editor.formatOnPaste": true,
+    "editor.inlayHints.fontSize": 10,
+    "editor.minimap.maxColumn": 60,
     "editor.minimap.showSlider": "always",
     "editor.linkedEditing": true,
     "editor.renderLineHighlight": "all",
@@ -142,8 +144,6 @@
     },
     "gitHistory.showEditorTitleMenuBarIcons": false,
     "gitlens.menus": false,
-    "inline-parameters.fontStyle": "normal",
-    "inline-parameters.padding": "0.05em 0.15em",
     "javascript.preferences.quoteStyle": "single",
     "javascript.referencesCodeLens.enabled": true,
     "javascript.referencesCodeLens.showOnAllFunctions": true,
@@ -158,7 +158,7 @@
     "terminal.integrated.fontSize": 11,
     "typescript.implementationsCodeLens.enabled": true,
     "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterNames.enabled": "literals",
     "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
     "typescript.inlayHints.parameterTypes.enabled": true,
     "typescript.inlayHints.variableTypes.enabled": true,
@@ -174,11 +174,12 @@
     "window.title": "${rootName}${separator}${activeEditorShort}",
     "workbench.editor.highlightModifiedTabs": true, // Trial - modified tab
     "workbench.colorCustomizations": {
+        "editorInlayHint.foreground": "#909090",
+        "editorInlayHint.background": "#2F2F2F",
         "editorWhitespace.foreground": "#1e1e1e",
         "inlineparameters.annotationBackground": "#2F2F2F",
         "tab.activeBorderTop": "#007acc",
         "tab.activeBackground": "#01395e",
-        "tab.activeModifiedBorder": "#C586C0", // Trial - modified tab
         "tab.unfocusedHoverBorder": "#007acc",
         "tab.unfocusedActiveBorderTop": "#007acc",
         "peekViewEditor.background": "#2F2F2F",
@@ -219,7 +220,6 @@
         "^Delete",
         "^MD"
     ],
-    "editor.minimap.maxColumn": 60, // Trial from 80
     "deno.codeLens.references": true,
     "deno.codeLens.referencesAllFunctions": true,
     "deno.codeLens.implementations": true,
