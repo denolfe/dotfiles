@@ -216,4 +216,4 @@ mods.addRule({
   ],
 })
 
-mods.writeToProfile('Deno')
+mods.writeToProfile('Default profile')
