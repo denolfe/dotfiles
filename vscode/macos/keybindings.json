@@ -81,6 +81,10 @@
       "command": "" // Removes default of zoomOut
     },
     {
+      "key": "cmd+0",
+      "command": "workbench.action.zoomReset"
+    },
+    {
       "key": "shift+cmd+=",
       "command": "workbench.action.increaseViewWidth",
       "when": "editorFocus"
