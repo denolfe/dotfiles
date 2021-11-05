@@ -1,4 +1,5 @@
 alefragnani.Bookmarks
+aliariff.auto-add-brackets
 andys8.jest-snippets
 bierner.markdown-checkbox
 bierner.markdown-emoji
@@ -40,6 +41,7 @@ oderwat.indent-rainbow
 pajoma.vscode-journal
 redhat.vscode-commons
 redhat.vscode-yaml
+richie5um2.vscode-sort-json
 rpinski.shebang-snippets
 sibiraj-s.vscode-scss-formatter
 silvenon.mdx
