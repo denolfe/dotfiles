@@ -172,7 +172,6 @@
     ],
     "typescript.updateImportsOnFileMove.enabled": "always",
     "window.title": "${rootName}${separator}${activeEditorShort}",
-    "workbench.editor.highlightModifiedTabs": true, // Trial - modified tab
     "workbench.colorCustomizations": {
         "editorInlayHint.foreground": "#909090",
         "editorInlayHint.background": "#2F2F2F",
@@ -218,9 +217,12 @@
     "yaml.validate": false,
     "errorLens.exclude": [
         "^Delete",
-        "^MD"
+        "^MD",
+        "^Expected 'this' to be used by class method"
     ],
     "deno.codeLens.references": true,
     "deno.codeLens.referencesAllFunctions": true,
     "deno.codeLens.implementations": true,
+    "journal.tpl-entry": "# ${d:dddd, MMMM DD YYYY}\n\n## Standup\n\n\n\n## Tasks\n\n\n\n## Notes\n\n",
+
 }
