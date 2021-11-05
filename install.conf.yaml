@@ -48,6 +48,13 @@
       path: vscode/macos/*.json
       force: true
 
+    # VS Code MacOS Insiders
+    ~/Library/Application Support/Code - Insiders/User:
+      if: '[ `uname` = Darwin ]'
+      glob: true
+      path: vscode/macos/*.json
+      force: true
+
     ~/.hammerspoon:
       if: '[ `uname` = Darwin ]'
       path: hammerspoon
