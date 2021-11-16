@@ -49,6 +49,7 @@
     "editor.guides.bracketPairs": "active",
     "editor.guides.bracketPairsHorizontal": "active",
 
+    "editor.hover.above": false, // Trial
     "editor.inlayHints.fontSize": 10,
     "editor.minimap.maxColumn": 60,
     "editor.minimap.showSlider": "always",
