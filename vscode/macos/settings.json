@@ -33,8 +33,6 @@
     "comment-ts.includeDescriptionTag": true,
     "crystal-lang.server": "/usr/local/bin/crystalline",
     "debug.showBreakpointsInOverviewRuler": true,
-    // False until https://github.com/microsoft/vscode/issues/131001 implemented
-    "editor.bracketPairColorization.enabled": false,
     "editor.codeLens": true,
     "editor.codeLensFontSize": 10,
     "editor.colorDecorators": false,
@@ -44,12 +42,18 @@
     "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 13,
     "editor.formatOnPaste": true,
+
+    // Brackets/Guides
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.indentation": true,
+    "editor.guides.bracketPairs": "active",
+    "editor.guides.bracketPairsHorizontal": "active",
+
     "editor.inlayHints.fontSize": 10,
     "editor.minimap.maxColumn": 60,
     "editor.minimap.showSlider": "always",
     "editor.linkedEditing": true,
     "editor.renderLineHighlight": "all",
-    "editor.renderWhitespace": "all",
     "editor.tabSize": 2,
     "editor.tokenColorCustomizations": {
         "textMateRules": [
