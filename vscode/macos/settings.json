@@ -46,7 +46,7 @@
     // Brackets/Guides
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.indentation": true,
-    "editor.guides.bracketPairs": "active",
+    "editor.guides.bracketPairs": true,
     "editor.guides.bracketPairsHorizontal": "active",
 
     "editor.hover.above": false, // Trial
