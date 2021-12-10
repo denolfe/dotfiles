@@ -13,10 +13,8 @@ donjayamanne.githistory
 eamodio.gitlens
 EditorConfig.EditorConfig
 esbenp.prettier-vscode
-faustinoaq.crystal-lang
 firsttris.vscode-jest-runner
 formulahendry.auto-rename-tag
-g3ortega.crystal
 golang.go
 GraphQL.vscode-graphql
 heptio.jsonnet
@@ -30,8 +28,6 @@ mohsen1.react-javascript-to-typescript-transform-vscode
 mrmlnc.vscode-scss
 ms-azuretools.vscode-docker
 ms-dotnettools.csharp
-ms-python.python
-ms-toolsai.jupyter
 ms-vscode-remote.remote-containers
 ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
