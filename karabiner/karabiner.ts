@@ -1,5 +1,5 @@
 import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
-import { hyper, ultra } from './lib/hyper.ts'
+import { hyper, hyperCmd } from './lib/hyper.ts'
 import { chromeOnly, notChrome, slack } from './lib/conditions.ts'
 import { remap } from './lib/remap.ts'
 
@@ -26,7 +26,7 @@ mods.addRule({
 })
 
 mods.addRule({
-  description: 'Hyper/Ultra Directional Bindings',
+  description: 'Hyper/Hyper+Cmd Directional Bindings',
   manipulators: [
     // Arrows
     hyper({ key_code: 'h' }, { key_code: 'left_arrow' }),
@@ -35,10 +35,10 @@ mods.addRule({
     hyper({ key_code: 'l' }, { key_code: 'right_arrow' }),
 
     // Arrows + Shift
-    ultra({ key_code: 'h' }, { key_code: 'left_arrow', modifiers: ['left_shift'] }),
-    ultra({ key_code: 'j' }, { key_code: 'down_arrow', modifiers: ['left_shift'] }),
-    ultra({ key_code: 'k' }, { key_code: 'up_arrow', modifiers: ['left_shift'] }),
-    ultra({ key_code: 'l' }, { key_code: 'right_arrow', modifiers: ['left_shift'] }),
+    hyperCmd({ key_code: 'h' }, { key_code: 'left_arrow', modifiers: ['left_shift'] }),
+    hyperCmd({ key_code: 'j' }, { key_code: 'down_arrow', modifiers: ['left_shift'] }),
+    hyperCmd({ key_code: 'k' }, { key_code: 'up_arrow', modifiers: ['left_shift'] }),
+    hyperCmd({ key_code: 'l' }, { key_code: 'right_arrow', modifiers: ['left_shift'] }),
 
     hyper({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_command'] }), // Home
     hyper({ key_code: 'p' }, { key_code: 'right_arrow', modifiers: ['left_command'] }), // End
@@ -46,23 +46,23 @@ mods.addRule({
     hyper({ key_code: 'period' }, { key_code: 'right_arrow', modifiers: ['left_option'] }), // Right one word
 
     // Home/End + Shift
-    ultra({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_command'] }),
-    ultra(
+    hyperCmd({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_command'] }),
+    hyperCmd(
       { key_code: 'p' },
       { key_code: 'right_arrow', modifiers: ['left_shift', 'left_command'] },
     ),
 
     // Left/Right one word + Shift
-    ultra({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_option'] }),
-    ultra(
+    hyperCmd({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_option'] }),
+    hyperCmd(
       { key_code: 'period' },
       { key_code: 'right_arrow', modifiers: ['left_shift', 'left_option'] },
     ),
 
     hyper({ key_code: 'u' }, { key_code: 'page_down' }),
     hyper({ key_code: 'i' }, { key_code: 'page_up' }),
-    ultra({ key_code: 'u' }, { key_code: 'down_arrow', modifiers: ['left_command'] }), // End of page
-    ultra({ key_code: 'i' }, { key_code: 'up_arrow', modifiers: ['left_command'] }), // Top of page
+    hyperCmd({ key_code: 'u' }, { key_code: 'down_arrow', modifiers: ['left_command'] }), // End of page
+    hyperCmd({ key_code: 'i' }, { key_code: 'up_arrow', modifiers: ['left_command'] }), // Top of page
   ],
 })
 
@@ -84,12 +84,12 @@ mods.addRule({
 })
 
 mods.addRule({
-  description: 'Hyper/Ultra Remaps (forward delete, spaces, mission control)',
+  description: 'Hyper/Hyper+Cmd Remaps (forward delete, spaces, mission control)',
   manipulators: [
     hyper({ key_code: 'delete_or_backspace' }, { key_code: 'delete_forward' }), // Forward delete
 
     // Forward delete word
-    ultra(
+    hyperCmd(
       { key_code: 'delete_or_backspace' },
       { key_code: 'delete_forward', modifiers: ['fn', 'left_option'] },
     ),
@@ -97,7 +97,7 @@ mods.addRule({
     hyper({ key_code: 'd' }, { key_code: 'right_arrow', modifiers: ['left_control'] }), // Spaces right
 
     hyper({ key_code: 's' }, { key_code: 'mission_control' }), // Mission Control
-    ultra({ key_code: 's' }, { key_code: 'down_arrow', modifiers: ['left_control'] }), // App windows
+    hyperCmd({ key_code: 's' }, { key_code: 'down_arrow', modifiers: ['left_control'] }), // App windows
   ],
 })
 

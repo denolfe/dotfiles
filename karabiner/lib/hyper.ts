@@ -6,7 +6,7 @@ import {
 } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
 
 const hyperMods: Key[] = ['left_control', 'left_shift', 'left_option']
-const ultraMods: Key[] = ['left_control', 'left_shift', 'left_option', 'left_command']
+const hyperCmdMods: Key[] = ['left_control', 'left_shift', 'left_option', 'left_command']
 
 function bind(from: KeyPressFrom, to: KeyPressTo): Manipulator {
   return {
@@ -39,9 +39,9 @@ export function hyper(from: KeyPressFrom, to: KeyPressTo): Manipulator {
 /**
  * CapsLock + Cmd + Key
  */
-export function ultra(from: KeyPressFrom, to: KeyPressTo): Manipulator {
+export function hyperCmd(from: KeyPressFrom, to: KeyPressTo): Manipulator {
   from.modifiers = {
-    mandatory: ultraMods,
+    mandatory: hyperCmdMods,
   }
   return bind(from, to)
 }
