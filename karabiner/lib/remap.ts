@@ -23,7 +23,7 @@ export function remap(
       },
     },
     to: Array.isArray(to) ? to : [to],
-    conditions: conditions?.length > 0 ? [...conditions] : undefined,
+    conditions,
   }
 
   if (from.modifiers) {

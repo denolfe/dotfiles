@@ -1,14 +1,26 @@
 // deno-lint-ignore-file camelcase
 import { Condition } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
 
-export const chromeOnly: Condition = {
-  type: 'frontmost_application_if',
-  bundle_identifiers: ['com.google.Chrome'],
+type FrontmostApp = 'chrome' | 'vscode' | 'slack'
+
+const bundleMap: Record<FrontmostApp, string> = {
+  chrome: 'com.google.Chrome',
+  vscode: 'com.microsoft.VSCode',
+  slack: 'com.tinyspeck.slackmacgap',
 }
 
-export const notChrome: Condition = {
-  type: 'frontmost_application_unless',
-  bundle_identifiers: ['com.google.Chrome'],
+export function ifApp(app: FrontmostApp): Condition {
+  return {
+    type: 'frontmost_application_if',
+    bundle_identifiers: [bundleMap[app]],
+  }
+}
+
+export function notApp(app: FrontmostApp): Condition {
+  return {
+    type: 'frontmost_application_unless',
+    bundle_identifiers: [bundleMap[app]],
+  }
 }
 
 export const nonAppleDevice: Condition = {
@@ -18,14 +30,4 @@ export const nonAppleDevice: Condition = {
       vendor_id: 1452,
     },
   ],
-}
-
-export const vsCode: Condition = {
-  type: 'frontmost_application_if',
-  bundle_identifiers: ['com.microsoft.VSCode'],
-}
-
-export const slack: Condition = {
-  type: 'frontmost_application_if',
-  bundle_identifiers: ['com.tinyspeck.slackmacgap'],
 }

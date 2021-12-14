@@ -1,6 +1,6 @@
 import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
 import { hyper, hyperCmd } from './lib/hyper.ts'
-import { chromeOnly, notChrome, slack } from './lib/conditions.ts'
+import { ifApp, notApp } from './lib/conditions.ts'
 import { remap } from './lib/remap.ts'
 
 const mods = new KarabinerComplexModifications()
@@ -46,14 +46,20 @@ mods.addRule({
     hyper({ key_code: 'period' }, { key_code: 'right_arrow', modifiers: ['left_option'] }), // Right one word
 
     // Home/End + Shift
-    hyperCmd({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_command'] }),
+    hyperCmd(
+      { key_code: 'n' },
+      { key_code: 'left_arrow', modifiers: ['left_shift', 'left_command'] },
+    ),
     hyperCmd(
       { key_code: 'p' },
       { key_code: 'right_arrow', modifiers: ['left_shift', 'left_command'] },
     ),
 
     // Left/Right one word + Shift
-    hyperCmd({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_shift', 'left_option'] }),
+    hyperCmd(
+      { key_code: 'm' },
+      { key_code: 'left_arrow', modifiers: ['left_shift', 'left_option'] },
+    ),
     hyperCmd(
       { key_code: 'period' },
       { key_code: 'right_arrow', modifiers: ['left_shift', 'left_option'] },
@@ -71,16 +77,16 @@ mods.addRule({
   manipulators: [
     // Disable Cmd+H
     {
-      from: { key_code: 'h', modifiers: { mandatory: ['left_command'] }},
+      from: { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
       type: 'basic',
-      conditions: [notChrome],
+      conditions: [notApp('chrome')], // Allow for Cmd+H to be remapped in Chrome
     },
     // Disable Cmd+M
     {
-      from: { key_code: 'm', modifiers: { mandatory: ['left_command'] }},
-      type: 'basic'
-    }
-  ]
+      from: { key_code: 'm', modifiers: { mandatory: ['left_command'] } },
+      type: 'basic',
+    },
+  ],
 })
 
 mods.addRule({
@@ -111,19 +117,19 @@ mods.addRule({
         { key_code: 'l', modifiers: ['left_command'] },
         { key_code: 'slash', modifiers: ['left_shift'] },
       ],
-      [chromeOnly],
+      [ifApp('chrome')],
     ),
     // Cmd+H History
     remap(
       { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
       { key_code: 'y', modifiers: ['left_command'] },
-      [chromeOnly],
+      [ifApp('chrome')],
     ),
     // Cmd+J Downloads
     remap(
       { key_code: 'j', modifiers: { mandatory: ['left_command'] } },
       { key_code: 'l', modifiers: ['left_command', 'left_option'] },
-      [chromeOnly],
+      [ifApp('chrome')],
     ),
   ],
 })
@@ -135,18 +141,18 @@ mods.addRule({
     remap(
       { key_code: 'hyphen', modifiers: { mandatory: ['left_option'] } },
       { key_code: 'open_bracket', modifiers: ['left_command'] },
-      [slack],
+      [ifApp('slack')],
     ),
     // Forward
     remap(
       { key_code: 'equal_sign', modifiers: { mandatory: ['left_option'] } },
       { key_code: 'close_bracket', modifiers: ['left_command'] },
-      [slack],
+      [ifApp('slack')],
     ),
     remap(
       { key_code: 'p', modifiers: { mandatory: ['left_command'] } },
       { key_code: 'k', modifiers: ['left_command'] },
-      [slack],
+      [ifApp('slack')],
     ),
   ],
 })
