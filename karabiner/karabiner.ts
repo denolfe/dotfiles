@@ -70,16 +70,14 @@ mods.addRule({
   description: 'Disable Specific macOS Shortcuts',
   manipulators: [
     // Disable Cmd+H
-    {
-      from: { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
-      type: 'basic',
-      conditions: [notApp('chrome')], // Allow for Cmd+H to be remapped in Chrome
-    },
+    remap(
+      { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
+      undefined,
+      [notApp('chrome')], // Allow for Cmd+H to be remapped in Chrome
+    ),
+
     // Disable Cmd+M
-    {
-      from: { key_code: 'm', modifiers: { mandatory: ['left_command'] } },
-      type: 'basic',
-    },
+    remap({ key_code: 'm', modifiers: { mandatory: ['left_command'] } }, undefined),
   ],
 })
 
