@@ -8,13 +8,41 @@ import {
 const hyperMods: Key[] = ['left_control', 'left_shift', 'left_option']
 const hyperCmdMods: Key[] = ['left_control', 'left_shift', 'left_option', 'left_command']
 
-function bind(from: KeyPressFrom, to: KeyPressTo): Manipulator {
+/**
+ * CapsLock + Key
+ */
+export function hyper(from: Key, to: Key, options?: { modifiers: Key[] }): Manipulator {
+  return bind(
+    { key_code: from },
+    {
+      key_code: to,
+      ...(options?.modifiers && { modifiers: options?.modifiers }),
+    },
+    hyperMods,
+  )
+}
+
+/**
+ * CapsLock + Cmd + Key
+ */
+export function hyperCmd(from: Key, to: Key, options?: { modifiers: Key[] }): Manipulator {
+  return bind(
+    { key_code: from },
+    {
+      key_code: to,
+      ...(options?.modifiers && { modifiers: options?.modifiers }),
+    },
+    hyperCmdMods,
+  )
+}
+
+function bind(from: KeyPressFrom, to: KeyPressTo, mods: Key[]): Manipulator {
   return {
     type: 'basic',
     from: {
       key_code: from.key_code,
       modifiers: {
-        mandatory: from.modifiers?.mandatory,
+        mandatory: mods,
       },
     },
     to: [
@@ -24,24 +52,4 @@ function bind(from: KeyPressFrom, to: KeyPressTo): Manipulator {
       },
     ],
   }
-}
-
-/**
- * CapsLock + Key
- */
-export function hyper(from: KeyPressFrom, to: KeyPressTo): Manipulator {
-  from.modifiers = {
-    mandatory: hyperMods,
-  }
-  return bind(from, to)
-}
-
-/**
- * CapsLock + Cmd + Key
- */
-export function hyperCmd(from: KeyPressFrom, to: KeyPressTo): Manipulator {
-  from.modifiers = {
-    mandatory: hyperCmdMods,
-  }
-  return bind(from, to)
 }

@@ -29,46 +29,40 @@ mods.addRule({
   description: 'Hyper/Hyper+Cmd Directional Bindings',
   manipulators: [
     // Arrows
-    hyper({ key_code: 'h' }, { key_code: 'left_arrow' }),
-    hyper({ key_code: 'j' }, { key_code: 'down_arrow' }),
-    hyper({ key_code: 'k' }, { key_code: 'up_arrow' }),
-    hyper({ key_code: 'l' }, { key_code: 'right_arrow' }),
+    hyper('h', 'left_arrow'),
+    hyper('j', 'down_arrow'),
+    hyper('k', 'up_arrow'),
+    hyper('l', 'right_arrow'),
 
     // Arrows + Shift
-    hyperCmd({ key_code: 'h' }, { key_code: 'left_arrow', modifiers: ['left_shift'] }),
-    hyperCmd({ key_code: 'j' }, { key_code: 'down_arrow', modifiers: ['left_shift'] }),
-    hyperCmd({ key_code: 'k' }, { key_code: 'up_arrow', modifiers: ['left_shift'] }),
-    hyperCmd({ key_code: 'l' }, { key_code: 'right_arrow', modifiers: ['left_shift'] }),
+    hyperCmd('h', 'left_arrow', { modifiers: ['left_shift'] }),
+    hyperCmd('j', 'down_arrow', { modifiers: ['left_shift'] }),
+    hyperCmd('k', 'up_arrow', { modifiers: ['left_shift'] }),
+    hyperCmd('l', 'right_arrow', { modifiers: ['left_shift'] }),
 
-    hyper({ key_code: 'n' }, { key_code: 'left_arrow', modifiers: ['left_command'] }), // Home
-    hyper({ key_code: 'p' }, { key_code: 'right_arrow', modifiers: ['left_command'] }), // End
-    hyper({ key_code: 'm' }, { key_code: 'left_arrow', modifiers: ['left_option'] }), // Left one word
-    hyper({ key_code: 'period' }, { key_code: 'right_arrow', modifiers: ['left_option'] }), // Right one word
+    // Home/End
+    hyper('n', 'left_arrow', { modifiers: ['left_command'] }),
+    hyper('p', 'right_arrow', { modifiers: ['left_command'] }),
+
+    // Left/Right one word
+    hyper('m', 'left_arrow', { modifiers: ['left_option'] }),
+    hyper('period', 'right_arrow', { modifiers: ['left_option'] }),
 
     // Home/End + Shift
-    hyperCmd(
-      { key_code: 'n' },
-      { key_code: 'left_arrow', modifiers: ['left_shift', 'left_command'] },
-    ),
-    hyperCmd(
-      { key_code: 'p' },
-      { key_code: 'right_arrow', modifiers: ['left_shift', 'left_command'] },
-    ),
+    hyperCmd('n', 'left_arrow', { modifiers: ['left_shift', 'left_command'] }),
+    hyperCmd('p', 'right_arrow', { modifiers: ['left_shift', 'left_command'] }),
 
     // Left/Right one word + Shift
-    hyperCmd(
-      { key_code: 'm' },
-      { key_code: 'left_arrow', modifiers: ['left_shift', 'left_option'] },
-    ),
-    hyperCmd(
-      { key_code: 'period' },
-      { key_code: 'right_arrow', modifiers: ['left_shift', 'left_option'] },
-    ),
+    hyperCmd('m', 'left_arrow', { modifiers: ['left_shift', 'left_option'] }),
+    hyperCmd('period', 'right_arrow', { modifiers: ['left_shift', 'left_option'] }),
 
-    hyper({ key_code: 'u' }, { key_code: 'page_down' }),
-    hyper({ key_code: 'i' }, { key_code: 'page_up' }),
-    hyperCmd({ key_code: 'u' }, { key_code: 'down_arrow', modifiers: ['left_command'] }), // End of page
-    hyperCmd({ key_code: 'i' }, { key_code: 'up_arrow', modifiers: ['left_command'] }), // Top of page
+    // Page Up/Down
+    hyper('u', 'page_down'),
+    hyper('i', 'page_up'),
+
+    // Start/End of page
+    hyperCmd('u', 'down_arrow', { modifiers: ['left_command'] }),
+    hyperCmd('i', 'up_arrow', { modifiers: ['left_command'] }),
   ],
 })
 
@@ -92,18 +86,17 @@ mods.addRule({
 mods.addRule({
   description: 'Hyper/Hyper+Cmd Remaps (forward delete, spaces, mission control)',
   manipulators: [
-    hyper({ key_code: 'delete_or_backspace' }, { key_code: 'delete_forward' }), // Forward delete
+    hyper('delete_or_backspace', 'delete_forward'), // Forward delete
 
     // Forward delete word
-    hyperCmd(
-      { key_code: 'delete_or_backspace' },
-      { key_code: 'delete_forward', modifiers: ['fn', 'left_option'] },
-    ),
-    hyper({ key_code: 'a' }, { key_code: 'left_arrow', modifiers: ['left_control'] }), // Spaces left
-    hyper({ key_code: 'd' }, { key_code: 'right_arrow', modifiers: ['left_control'] }), // Spaces right
+    hyperCmd('delete_or_backspace', 'delete_forward', { modifiers: ['fn', 'left_option'] }),
 
-    hyper({ key_code: 's' }, { key_code: 'mission_control' }), // Mission Control
-    hyperCmd({ key_code: 's' }, { key_code: 'down_arrow', modifiers: ['left_control'] }), // App windows
+    // Spaces Left/Right
+    hyper('a', 'left_arrow', { modifiers: ['left_control'] }),
+    hyper('d', 'right_arrow', { modifiers: ['left_control'] }),
+
+    hyper('s', 'mission_control'), // Mission Control
+    hyperCmd('s', 'down_arrow', { modifiers: ['left_control'] }), // App windows
   ],
 })
 
