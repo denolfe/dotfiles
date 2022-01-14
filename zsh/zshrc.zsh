@@ -24,6 +24,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/kubectl
     zgen oh-my-zsh plugins/docker
     zgen oh-my-zsh plugins/docker-compose
+    zgen load zsh-users/zsh-autosuggestions
     zgen load michaelaquilina/zsh-autoswitch-virtualenv
     zgen load jocelynmallon/zshmarks
     zgen load denolfe/git-it-on.zsh
