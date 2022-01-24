@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016
 
 # Name
 git config --global user.name "Elliot DeNolf"
@@ -28,6 +29,9 @@ git config --global alias.pom 'push origin master'
 git config --global alias.undolast 'reset HEAD~1'
 git config --global alias.revertlast 'revert HEAD'
 git config --global alias.editlast 'commit --amend -m'
+git config --global alias.pr '!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f'
+git config --global alias.pr-clean '!git for-each-ref refs/heads/pr/* --format="%(refname)" | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done'
+
 
 # Fancy Logs
 git config --global alias.l 'log --oneline --graph --decorate --all'
