@@ -29,6 +29,9 @@
       path: bash/bashrc
       force: true
 
+    ~/.prettierrc.js:
+      path: node/prettierrc.js
+
     ~/bin:
       glob: true
       path: scripts/*
