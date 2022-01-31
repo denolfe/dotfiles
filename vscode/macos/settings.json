@@ -61,6 +61,12 @@
     "editor.tokenColorCustomizations": {
         "textMateRules": [
             {
+                "scope": ["keyword.control.flow.ts", "keyword.control.flow.tsx"],
+                "settings": {
+                    "fontStyle": "italic underline"
+                }
+            },
+            {
                 "scope": "text.html.markdown.journal.task.open.bullet",
                 "settings": {
                     "foreground": "#FFFF00"
