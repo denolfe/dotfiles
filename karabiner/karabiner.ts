@@ -149,6 +149,16 @@ mods.addRule({
 })
 
 mods.addRule({
+  description: 'Volume/Brightness Control',
+  manipulators: [
+    hyper('hyphen', 'volume_decrement'),
+    hyper('equal_sign', 'volume_increment'),
+    hyperCmd('hyphen', 'display_brightness_decrement'),
+    hyperCmd('equal_sign', 'display_brightness_increment'),
+  ]
+})
+
+mods.addRule({
   description: 'PC-Style Remaps (home, end, arrows)',
   manipulators: [
     // Home/End
