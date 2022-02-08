@@ -37,7 +37,6 @@
     "editor.codeLensFontSize": 10,
     "editor.colorDecorators": false,
     "editor.cursorBlinking": "smooth",
-    "editor.cursorSmoothCaretAnimation": true, // Trial
     "editor.cursorStyle": "block",
     "editor.cursorSurroundingLines": 5, // Trial
     "editor.dragAndDrop": false,
