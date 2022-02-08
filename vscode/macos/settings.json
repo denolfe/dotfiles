@@ -53,17 +53,23 @@
 
     "editor.hover.above": false, // Trial
     "editor.inlayHints.fontSize": 10,
-    "editor.minimap.maxColumn": 60,
+    "editor.minimap.maxColumn": 40,
     "editor.minimap.showSlider": "always",
     "editor.linkedEditing": true,
     "editor.renderLineHighlight": "all",
+    "editor.snippetSuggestions": "bottom",
+
+    // VS Intellicode
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+
     "editor.tabSize": 2,
     "editor.tokenColorCustomizations": {
         "textMateRules": [
             {
                 "scope": ["keyword.control.flow.ts", "keyword.control.flow.tsx"],
                 "settings": {
-                    "fontStyle": "italic underline"
+                    "fontStyle": "italic"
                 }
             },
             {
@@ -162,6 +168,16 @@
     "javascript.referencesCodeLens.showOnAllFunctions": true,
     "javascript.suggest.completeFunctionCalls": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
+    "jest.autoRun": {
+        "watch": false,
+    },
+    "jest.debugCodeLens.showWhenTestStateIn": [
+        "pass",
+        "fail",
+        "unknown"
+    ],
+    "jest.coverageFormatter": "GutterFormatter",
+
     "jestrunner.debugOptions": {
         "skipFiles": ["<node_internals>/**"],
         "smartStep": true
@@ -195,39 +211,9 @@
         "tab.unfocusedHoverBorder": "#007acc",
         "tab.unfocusedActiveBorderTop": "#007acc",
         "peekViewEditor.background": "#2F2F2F",
-        "editor.lineHighlightBorder": "#383B3D"
+        "editor.lineHighlightBorder": "#383B3D",
     },
     "workbench.iconTheme": "vscode-icons",
-    "yaml.customTags": [
-        "!And",
-        "!And sequence",
-        "!If",
-        "!If sequence",
-        "!Not",
-        "!Not sequence",
-        "!Equals",
-        "!Equals sequence",
-        "!Or",
-        "!Or sequence",
-        "!FindInMap",
-        "!FindInMap sequence",
-        "!Base64",
-        "!Join",
-        "!Join sequence",
-        "!Cidr",
-        "!Ref",
-        "!Sub",
-        "!Sub sequence",
-        "!GetAtt",
-        "!GetAZs",
-        "!ImportValue",
-        "!ImportValue sequence",
-        "!Select",
-        "!Select sequence",
-        "!Split",
-        "!Split sequence"
-    ],
-    "yaml.validate": false,
     "errorLens.exclude": [
         "^Delete",
         "^MD",
