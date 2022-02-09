@@ -242,6 +242,18 @@
         }
     },
 
+    // Suppress trailing comma warnings in settings.json
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "settings.json"
+            ],
+            "schema": {
+                "allowTrailingCommas": true
+            }
+        }
+    ],
+
     "peacock.favoriteColors": [
         // Custom
         {
