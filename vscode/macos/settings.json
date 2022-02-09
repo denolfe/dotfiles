@@ -167,15 +167,6 @@
     "javascript.referencesCodeLens.showOnAllFunctions": true,
     "javascript.suggest.completeFunctionCalls": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
-    "jest.autoRun": {
-        "watch": false,
-    },
-    "jest.debugCodeLens.showWhenTestStateIn": [
-        "pass",
-        "fail",
-        "unknown"
-    ],
-    "jest.coverageFormatter": "GutterFormatter",
 
     "jestrunner.debugOptions": {
         "skipFiles": ["<node_internals>/**"],
