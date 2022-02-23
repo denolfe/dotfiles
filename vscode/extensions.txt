@@ -44,6 +44,7 @@ tamj0rd2.ts-quickfixes-extension
 tht13.html-preview-vscode
 timonwong.shellcheck
 usernamehw.errorlens
+VisualStudioExptTeam.vscodeintellicode
 vscode-icons-team.vscode-icons
 xabikos.JavaScriptSnippets
 xyc.vscode-mdx-preview
