@@ -6,9 +6,6 @@
 	path = zsh/oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
 	ignore = dirty
-[submodule "zsh/asdf"]
-	path = zsh/asdf
-	url = https://github.com/asdf-vm/asdf.git
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
