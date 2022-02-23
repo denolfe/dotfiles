@@ -38,7 +38,6 @@ if ! zgen saved; then
     zgen load andrewferrier/fzf-z
 
     zgen oh-my-zsh plugins/asdf
-    zgen load kiurchv/asdf.plugin.zsh
 
     # These 2 must be in this order
     zgen load zsh-users/zsh-syntax-highlighting
