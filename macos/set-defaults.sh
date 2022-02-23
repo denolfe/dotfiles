@@ -82,6 +82,10 @@ echo "  › Set up trackpad & mouse speed to a reasonable number"
 defaults write -g com.apple.trackpad.scaling 3
 defaults write -g com.apple.mouse.scaling 3
 
+echo "  › Enable tap to click for trackpad"
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
 echo "  › Avoid the creation of .DS_Store files on network volumes"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
@@ -90,6 +94,7 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 echo "  › Show battery percent"
 defaults write com.apple.menuextra.battery ShowPercent -bool true
+defaults write ~/Library/Preferences/ByHost/com.apple.controlcenter.plist BatteryShowPercentage -bool true
 
 echo "  › Configure Menu Icons"
 defaults write com.apple.systemuiserver menuExtras -array \
