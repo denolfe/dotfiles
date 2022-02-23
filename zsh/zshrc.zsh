@@ -127,5 +127,6 @@ if [ `uname` = Darwin ]; then
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig
 fi
 
-source ~/.asdf/asdf.sh
-source ~/.asdf/completions/asdf.bash
+export ASDF_DOWNLOAD_PATH=bin/install
+source /usr/local/opt/asdf/libexec/asdf.sh
+source /usr/local/share/zsh/site-functions
