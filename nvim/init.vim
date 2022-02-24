@@ -15,8 +15,6 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'jeffkreeftmeijer/neovim-sensible'
 
-Plug 'rhysd/vim-crystal'
-
 call plug#end()
 
 
