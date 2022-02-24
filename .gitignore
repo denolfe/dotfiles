@@ -3,6 +3,7 @@ karabiner/sandbox
 cache
 nvim/plugged
 nvim/.netrwhist
+alfred/Alfred.alfredpreferences/remote
 
 # Created by https://www.gitignore.io/api/visualstudiocode,macos,vim
 # Edit at https://www.gitignore.io/?templates=visualstudiocode,macos,vim
