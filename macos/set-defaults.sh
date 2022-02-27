@@ -15,37 +15,14 @@ fi
 
 set +e
 
-disable_agent() {
-  mv "$1" "$1_DISABLED" >/dev/null 2>&1 ||
-    sudo mv "$1" "$1_DISABLED" >/dev/null 2>&1
-}
-
-unload_agent() {
-  launchctl unload -w "$1" >/dev/null 2>&1
-}
-
-test -z "$TRAVIS_JOB_ID" && sudo -v
-
 echo ""
 echo "› System:"
-echo "  › Disable press-and-hold for keys in favor of key repeat"
-defaults write -g ApplePressAndHoldEnabled -bool false
 
 echo "  › Show the ~/Library folder"
 chflags nohidden ~/Library
 
 echo "  › Show the /Volumes folder"
 sudo chflags nohidden /Volumes
-
-echo "  › Set a really fast key repeat"
-defaults write NSGlobalDomain KeyRepeat -int 2
-defaults write NSGlobalDomain InitialKeyRepeat -int 15
-
-# echo "  › Disable transparency"
-# defaults write com.apple.universalaccess reduceTransparency -bool true
-
-echo "  › Enable text replacement almost everywhere"
-defaults write -g WebAutomaticTextReplacementEnabled -bool true
 
 echo "  › Turn off keyboard illumination when computer is not used for 5 minutes"
 defaults write com.apple.BezelServices kDimTime -int 300
@@ -54,18 +31,28 @@ echo "  › Require password immediately after sleep or screen saver begins"
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-echo "  › Always show scrollbars"
-defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
-# Possible values: `WhenScrolling`, `Automatic` and `Always`
+echo "  › Enable text replacement almost everywhere"
+defaults write -g WebAutomaticTextReplacementEnabled -bool true
 
 echo "  › Disable Dashboard"
 defaults write com.apple.dashboard mcx-disabled -bool true
 
-echo "  › Don't automatically rearrange Spaces based on most recent use"
-defaults write com.apple.dock mru-spaces -bool false
+echo "  › Avoid the creation of .DS_Store files on network volumes"
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
-echo "  › Increase the window resize speed for Cocoa applications"
-defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+echo "  › Disable the 'Are you sure you want to open this application?' dialog"
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+#############################
+
+echo ""
+echo "› Keyboard/Mouse:"
+echo "  › Disable press-and-hold for keys in favor of key repeat"
+defaults write -g ApplePressAndHoldEnabled -bool false
+
+echo "  › Set a really fast key repeat"
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
 echo "  › Disable smart quotes and smart dashes as they're annoying when typing code"
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
@@ -86,11 +73,18 @@ echo "  › Enable tap to click for trackpad"
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
-echo "  › Avoid the creation of .DS_Store files on network volumes"
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+#############################
 
-echo "  › Disable the 'Are you sure you want to open this application?' dialog"
-defaults write com.apple.LaunchServices LSQuarantine -bool false
+echo ""
+echo "› UI:"
+echo "  › Always show scrollbars"
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+
+echo "  › Don't automatically rearrange Spaces based on most recent use"
+defaults write com.apple.dock mru-spaces -bool false
+
+echo "  › Increase the window resize speed for Cocoa applications"
+defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
 echo "  › Show battery percent"
 defaults write com.apple.menuextra.battery ShowPercent -bool true
@@ -103,16 +97,6 @@ defaults write com.apple.systemuiserver menuExtras -array \
   "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
   "/System/Library/CoreServices/Menu Extras/Clock.menu" \
   "/System/Library/CoreServices/Menu Extras/Volume.menu"
-
-# if [ ! -z "$TRAVIS_JOB_ID" ]; then
-#   echo "  › Speed up wake from sleep to 24 hours from an hour"
-#   # http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
-#   sudo pmset -a standbydelay 86400
-# fi
-
-echo "  › Removing duplicates in the 'Open With' menu"
-/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
-  -kill -r -domain local -domain system -domain user
 
 #############################
 
@@ -149,6 +133,10 @@ defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 echo "  › Disable the warning when changing a file extension"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
+echo "  › Removing duplicates in the 'Open With' menu"
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+  -kill -r -domain local -domain system -domain user
+
 #############################
 
 echo ""
@@ -164,7 +152,6 @@ defaults write com.apple.dock tilesize -int 48
 echo "  › Speeding up Mission Control animations and grouping windows by application"
 defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock showAppExposeGestureEnabled -int 1
-defaults write com.apple.dock "expose-group-by-app" -bool true
 
 echo "  › Remove the auto-hiding Dock delay"
 defaults write com.apple.dock autohide-delay -float 0
