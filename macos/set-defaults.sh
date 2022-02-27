@@ -163,6 +163,7 @@ defaults write com.apple.dock tilesize -int 48
 
 echo "  › Speeding up Mission Control animations and grouping windows by application"
 defaults write com.apple.dock expose-animation-duration -float 0.1
+defaults write com.apple.dock showAppExposeGestureEnabled -int 1
 defaults write com.apple.dock "expose-group-by-app" -bool true
 
 echo "  › Remove the auto-hiding Dock delay"
