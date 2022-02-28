@@ -91,12 +91,9 @@ defaults write com.apple.menuextra.battery ShowPercent -bool true
 defaults write ~/Library/Preferences/ByHost/com.apple.controlcenter.plist BatteryShowPercentage -bool true
 
 echo "  › Configure Menu Icons"
-defaults write com.apple.systemuiserver menuExtras -array \
-  "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
-  "/System/Library/CoreServices/Menu Extras/Battery.menu" \
-  "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
-  "/System/Library/CoreServices/Menu Extras/Clock.menu" \
-  "/System/Library/CoreServices/Menu Extras/Volume.menu"
+defaults write ~/Library/Preferences/ByHost/com.apple.controlcenter.plist Bluetooth -int 18
+defaults write ~/Library/Preferences/ByHost/com.apple.controlcenter.plist NowPlaying -int 8
+defaults write ~/Library/Preferences/ByHost/com.apple.controlcenter.plist Sound -int 18
 
 #############################
 
