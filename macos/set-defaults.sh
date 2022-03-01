@@ -27,6 +27,9 @@ sudo chflags nohidden /Volumes
 echo "  › Turn off keyboard illumination when computer is not used for 5 minutes"
 defaults write com.apple.BezelServices kDimTime -int 300
 
+echo "  › Play feedback when volume is changed"
+defaults write ~/Library/Preferences/.GlobalPreferences.plist com.apple.sound.beep.feedback -int 1
+
 echo "  › Require password immediately after sleep or screen saver begins"
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
