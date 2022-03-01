@@ -102,6 +102,10 @@ defaults write ~/Library/Preferences/ByHost/com.apple.controlcenter.plist Sound 
 
 echo ""
 echo "› Finder:"
+
+echo "  › New Finder window opens HOME directory"
+defaults write com.apple.finder NewWindowTarget -string 'PfHm'
+
 echo "  › Always open everything in Finder's list view"
 defaults write com.apple.Finder FXPreferredViewStyle Nlsv
 
