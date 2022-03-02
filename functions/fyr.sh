@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# USAGE: fyr [-s]
+#
+# OPTIONS:
+#  -s    short - omit full command of each script
+
 fyr() {
   relative_package=package.json
 
@@ -11,8 +16,15 @@ fyr() {
     return 1
   fi
 
-  jq -r '.scripts | to_entries | map("\(.key)\t\(.value|tostring)")|.[]' "$package" | \
-  awk -F'\t' '{printf "%-20s %-30s\n", $1, $2}' | \
+  scripts=$(jq -r '.scripts | to_entries | map("\(.key)\t\(.value|tostring)")|.[]' "$package")
+
+  if [ "$1" = "-s" ]; then
+    formatted_list=$(echo "$scripts" | awk -F'\t' '{print $1}')
+  else
+    formatted_list=$(echo "$scripts" |awk -F'\t' '{printf "%-20s %-30s\n", $1, $2}')
+  fi
+
+  echo "$formatted_list" | \
   fzf | \
   sed 's/ .*//' | \
   xargs yarn
