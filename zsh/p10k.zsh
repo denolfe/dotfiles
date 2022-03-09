@@ -76,7 +76,7 @@
     kubecontext             # current kubernetes context (https://kubernetes.io/)
     # terraform               # terraform workspace (https://www.terraform.io)
     # aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
-    # work_aws                  # custom segment that includes checking of role_arn in ~/.aws/config file
+    work_aws                  # custom segment that includes checking of role_arn in ~/.aws/config file
     # aws_eb_env              # aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/)
     # azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)
     # gcloud                  # google cloud cli account and project (https://cloud.google.com/)
@@ -1618,14 +1618,27 @@
 
   #####################################[ work_aws: custom aws segment ]#########################
 
-  typeset -g POWERLEVEL9K_WORK_AWS_SHOW_ON_COMMAND='aws|sls|serverless|aws-okta|awless|terraform|pulumi|terragrunt'
+  typeset -g POWERLEVEL9K_WORK_AWS_FOREGROUND=0
+  typeset -g POWERLEVEL9K_WORK_AWS_BACKGROUND=3
 
-  # Use default aws prompt as a base, then also evaluate role_arn from ~/.aws/config
+  # Show remaining time on AWS token, based upon credentials file modified date
   prompt_work_aws() {
-    local aws_config=$(cat ~/.aws/config)
-    local extend_team=$(echo $aws_config | grep extend_team | awk -F '=' '{print $2}')
-    local extend_role=$(echo $aws_config | grep extend_role | awk -F '=' '{print $2}')
-    _p9k_prompt_segment "$0$state" 208 016 'AWS_ICON' 0 '' "${extend_team//\%/%%}/${extend_role//\%/%%}"
+    if [[ ! -f ~/.aws/credentials ]]; then return; fi
+
+    local expiration_mins=50
+    local seconds_old=$(( ($(date +%s) - $(stat -f%c ~/.aws/credentials)) ))
+    local seconds_left=$(( ($expiration_mins*60) - $seconds_old ))
+    local aws_details
+    if (( $seconds_left < 0)); then
+      aws_details=exp
+    else
+      # ((h=${seconds_left}/3600))
+      ((m=(${seconds_left}%3600)/60))
+      # aws_details=${h//\%/%%}h${m//\%/%%}m
+      aws_details=${m//\%/%%}m
+    fi
+
+    _p9k_prompt_segment "$0$state" 208 016 'AWS_ICON' 0 '' "${aws_details//\%/%%}"
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
