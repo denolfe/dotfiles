@@ -14,9 +14,7 @@ esbenp.prettier-vscode
 firsttris.vscode-jest-runner
 formulahendry.auto-rename-tag
 GraphQL.vscode-graphql
-heptio.jsonnet
 johnpapa.vscode-peacock
-kddejong.vscode-cfn-lint
 kumar-harsh.graphql-for-vscode
 mechatroner.rainbow-csv
 mrmlnc.vscode-scss
