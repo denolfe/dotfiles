@@ -41,12 +41,14 @@
 
 #### Window Manager
 
-- <kbd>CapsLock</kbd>+<kbd>q</kbd> - Chained window sizing: left60, left50, topLeft, bottomLeft
-- <kbd>CapsLock</kbd>+<kbd>e</kbd> - Chained window sizing: right40, right50, topRight, bottomRight
-- <kbd>CapsLock</kbd>+<kbd>w</kbd> - Chained window sizing: full, centeredBig, centeredMedium, centeredSmall
-- <kbd>CapsLock</kbd>+<kbd>tab</kbd> - Move to next screen
+- Dual Window splitting, resize other window to fit
+  - <kbd>CapsLock</kbd>+<kbd>q</kbd> - Chained: 60%, 50%, 40%, 33%, 66%
+  - <kbd>CapsLock</kbd>+<kbd>e</kbd> - Chained: 40%, 50%, 60%, 66%, 33%
+  - <kbd>CapsLock</kbd>+<kbd>w</kbd> - Chained: full, centeredBig, centeredMedium, centeredSmall
 
-### Karabiner
+- <kbd>CapsLock</kbd>+<kbd>tab</kbd> - Move window to next screen
+
+### Keyboard Remaps - Karabiner
 
 - Hyper Key modifier
   - <kbd>CapsLock</kbd>
