@@ -14,7 +14,7 @@
 
 - [Dotbot](https://github.com/anishathalye/dotbot) - Installation
 - Zsh Configuration
-  - [Zgen](https://github.com/tarjoilija/zgen) - Plugin Manager
+  - [Zgenom](https://github.com/jandamm/zgenom) - Plugin Manager
   - [Oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) - Zsh config framework
   - [Powerlevel10k](https://github.com/romkatv/powerlevel10k) - Theme
   - [asdf](https://github.com/asdf-vm/asdf) - Multi-language version manager
