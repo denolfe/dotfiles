@@ -21,7 +21,7 @@
       path: zsh/zshrc.zsh
       force: true
     ~/.oh-my-zsh: zsh/oh-my-zsh
-    ~/.zgen: zsh/zgen
+    ~/.zgenom: zsh/zgenom
     ~/.asdfrc: zsh/asdfrc
 
     ~/.bashrc:
