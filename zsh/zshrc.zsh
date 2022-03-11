@@ -7,41 +7,42 @@ fi
 
 #!/usr/bin/env bash
 # Get zgen
-source ~/.zgen/zgen.zsh
+source ~/.zgenom/zgenom.zsh
 
 export DOTFILES="$HOME/.dotfiles"
 export GPG_TTY=$TTY # https://unix.stackexchange.com/a/608921
+export ZGEN_CUSTOM_COMPDUMP=$ZSH_COMPDUMP
 
 # Generate zgen init.sh if it doesn't exist
-if ! zgen saved; then
-    zgen oh-my-zsh
+if ! zgenom saved; then
+    zgenom ohmyzsh
 
     # Plugins
-    zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/github
-    zgen oh-my-zsh plugins/sudo
-    zgen oh-my-zsh plugins/command-not-found
-    zgen oh-my-zsh plugins/kubectl
-    zgen oh-my-zsh plugins/docker
-    zgen oh-my-zsh plugins/docker-compose
-    zgen load zsh-users/zsh-autosuggestions
-    zgen load michaelaquilina/zsh-autoswitch-virtualenv
-    zgen load jocelynmallon/zshmarks
-    zgen load denolfe/git-it-on.zsh
-    zgen load caarlos0/zsh-mkc
-    zgen load caarlos0/zsh-git-sync
-    zgen load caarlos0/zsh-add-upstream
-    zgen load denolfe/zsh-travis
-    zgen load denolfe/zsh-prepend
+    zgenom ohmyzsh plugins/git
+    zgenom ohmyzsh plugins/github
+    zgenom ohmyzsh plugins/sudo
+    zgenom ohmyzsh plugins/command-not-found
+    zgenom ohmyzsh plugins/kubectl
+    zgenom ohmyzsh plugins/docker
+    zgenom ohmyzsh plugins/docker-compose
+    zgenom load zsh-users/zsh-autosuggestions
+    zgenom load michaelaquilina/zsh-autoswitch-virtualenv
+    zgenom load jocelynmallon/zshmarks
+    zgenom load denolfe/git-it-on.zsh
+    zgenom load caarlos0/zsh-mkc
+    zgenom load caarlos0/zsh-git-sync
+    zgenom load caarlos0/zsh-add-upstream
+    zgenom load denolfe/zsh-travis
+    zgenom load denolfe/zsh-prepend
 
-    zgen load agkozak/zsh-z
-    zgen load andrewferrier/fzf-z
+    zgenom load agkozak/zsh-z
+    zgenom load andrewferrier/fzf-z
 
-    zgen oh-my-zsh plugins/asdf
+    zgenom ohmyzsh plugins/asdf
 
     # These 2 must be in this order
-    zgen load zsh-users/zsh-syntax-highlighting
-    zgen load zsh-users/zsh-history-substring-search
+    zgenom load zsh-users/zsh-syntax-highlighting
+    zgenom load zsh-users/zsh-history-substring-search
 
     # Set keystrokes for substring searching
     zmodload zsh/terminfo
@@ -51,16 +52,16 @@ if ! zgen saved; then
     bindkey "^j" history-substring-search-down
 
     # Warn you when you run a command that you've got an alias for
-    zgen load djui/alias-tips
+    zgenom load djui/alias-tips
 
     # Completion-only repos
-    zgen load zsh-users/zsh-completions src
+    zgenom load zsh-users/zsh-completions src
 
     # Theme
-    zgen load romkatv/powerlevel10k powerlevel10k
+    zgenom load romkatv/powerlevel10k powerlevel10k
 
     # Generate init.sh
-    zgen save
+    zgenom save
 fi
 
 source $DOTFILES/zsh/p10k.zsh
