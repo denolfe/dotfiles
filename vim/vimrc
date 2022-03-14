@@ -29,5 +29,8 @@ set showmode                    " Show current mode.
 set autoread
 set ignorecase
 
+set timeoutlen=1000
+set ttimeoutlen=0
+
 let g:indentLine_leadingSpacChar='·'
 let g:indentLine_leadingSpaceEnabled='1'
