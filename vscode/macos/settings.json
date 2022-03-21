@@ -207,6 +207,7 @@
         "peekViewEditor.background": "#2F2F2F",
         "editor.lineHighlightBorder": "#383B3D",
     },
+    "workbench.editor.historyBasedLanguageDetection": true,
     "workbench.iconTheme": "vscode-icons",
     "errorLens.exclude": [
         "^Delete",
