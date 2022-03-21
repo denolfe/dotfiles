@@ -301,6 +301,84 @@
         {
             "name": "Vue Green",
             "value": "#42b883"
+        },
+
+        // VS Dark
+        {
+            "name": "VS Dark Gray 1",
+            "value": "#d4d4d4"
+        },
+        {
+            "name": "VS Dark Gray 2",
+            "value": "#808080"
+        },
+        {
+            "name": "VS Dark Gray 3",
+            "value": "#303030"
+        },
+        {
+            "name": "VS Dark Gray 4",
+            "value": "#282c34"
+        },
+        {
+            "name": "VS Dark Black",
+            "value": "#1e1e1e"
+        },
+        {
+            "name": "VS Dark Red",
+            "value": "#f44747"
+        },
+        {
+            "name": "VS Dark Rose",
+            "value": "#d16969"
+        },
+        {
+            "name": "VS Dark Peach",
+            "value": "#ce9178"
+        },
+        {
+            "name": "VS Dark Yellow",
+            "value": "#dcdcaa"
+        },
+        {
+            "name": "VS Dark Orange",
+            "value": "#d7ba7d"
+        },
+        {
+            "name": "VS Dark Light Green",
+            "value": "#b5cea8"
+        },
+        {
+            "name": "VS Dark Green",
+            "value": "#608b4e"
+        },
+        {
+            "name": "VS Dark Aqua",
+            "value": "#4ec9b0"
+        },
+        {
+            "name": "VS Dark Blue 1",
+            "value": "#9cdcfe"
+        },
+        {
+            "name": "VS Dark Blue 2",
+            "value": "#569cd6"
+        },
+        {
+            "name": "VS Dark Blue 3",
+            "value": "#007acc"
+        },
+        {
+            "name": "VS Dark Blue 4",
+            "value": "#264f78"
+        },
+        {
+            "name": "VS Dark Purple 1",
+            "value": "#c586c0"
+        },
+        {
+            "name": "VS Dark Purple 2",
+            "value": "#646695"
         }
     ]
 }
