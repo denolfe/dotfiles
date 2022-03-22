@@ -21,7 +21,6 @@ alias gl="git l3"
 alias glast="git log -1 HEAD"
 alias gpdel="git push --delete"
 alias gpl="git pull"
-alias groot='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --show-cdup`; fi'
 alias gstu="git status -uno"
 
 alias gswm='git switch $(git_main_branch)'
