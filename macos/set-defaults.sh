@@ -68,6 +68,9 @@ echo "  › Disable auto-capitalization and double-space period"
 defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -int 0
 
+echo "  › Use function keys on external keyboards"
+defaults write NSGlobalDomain com.apple.keyboard.fnState -int 1
+
 echo "  › Set up trackpad & mouse speed to a reasonable number"
 defaults write -g com.apple.trackpad.scaling 3
 defaults write -g com.apple.mouse.scaling 3
