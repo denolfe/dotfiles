@@ -32,7 +32,6 @@ if ! zgenom saved; then
     zgenom load caarlos0/zsh-mkc
     zgenom load caarlos0/zsh-git-sync
     zgenom load caarlos0/zsh-add-upstream
-    zgenom load denolfe/zsh-travis
     zgenom load denolfe/zsh-prepend
 
     zgenom load agkozak/zsh-z
