@@ -1,14 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
+#
 # Sets reasonable macOS defaults.
 #
-# Or, in other words, set shit how I like in macOS.
-#
-# The original idea (and a couple settings) were grabbed from:
-#   https://github.com/mathiasbynens/dotfiles/blob/master/.osx
-# More from:
-#    https://gist.github.com/brandonb927/3195465
-#
-# Run ./set-defaults.sh and you'll be good to go.
+# Inspiration from https://mths.be/macos
+
 if [ "$(uname -s)" != "Darwin" ]; then
   exit 0
 fi
