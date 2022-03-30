@@ -114,7 +114,7 @@ if type fd > /dev/null 2>&1; then
 fi
 
 # FZF config and theme
-export FZF_DEFAULT_OPTS='--reverse --bind 'ctrl-l:cancel' --height=90%'
+export FZF_DEFAULT_OPTS='--reverse --bind 'ctrl-l:cancel' --height=90% --pointer='▶''
 source $DOTFILES/zsh/fzf-theme.sh
 export FZF_TMUX_HEIGHT=80%
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
