@@ -401,7 +401,7 @@
             "off": {
                 "files.exclude": {
                     "**/node_modules": false,
-                    "**/dist": true,
+                    "**/dist": false,
                 }
             }
         }
