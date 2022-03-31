@@ -385,20 +385,24 @@
     "settingsOnFire.toggle": {
         "Screen Share Mode": {
             "on": {
+                "_label": "Enable",
                 "window.zoomLevel": 0.5,
             },
             "off": {
+                "_label": "Disable",
                 "window.zoomLevel": -0.25,
             }
         },
-        "Hide Internals / Artifacts": {
+        "Internals / Artifacts": {
             "on": {
+                "_label": "Hide",
                 "files.exclude": {
                     "**/node_modules": true,
                     "**/dist": true,
                 }
             },
             "off": {
+                "_label": "Show",
                 "files.exclude": {
                     "**/node_modules": false,
                     "**/dist": false,
