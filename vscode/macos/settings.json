@@ -381,5 +381,29 @@
             "name": "VS Dark Purple 2",
             "value": "#646695"
         }
-    ]
+    ],
+    "settingsOnFire.toggle": {
+        "Screen Share Mode": {
+            "on": {
+                "window.zoomLevel": 0.5,
+            },
+            "off": {
+                "window.zoomLevel": -0.25,
+            }
+        },
+        "Hide Internals / Artifacts": {
+            "on": {
+                "files.exclude": {
+                    "**/node_modules": true,
+                    "**/dist": true,
+                }
+            },
+            "off": {
+                "files.exclude": {
+                    "**/node_modules": false,
+                    "**/dist": true,
+                }
+            }
+        }
+    },
 }

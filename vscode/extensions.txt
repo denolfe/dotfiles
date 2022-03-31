@@ -9,6 +9,7 @@ dbaeumer.vscode-eslint
 denoland.vscode-deno
 donjayamanne.githistory
 eamodio.gitlens
+edb.settings-on-fire
 EditorConfig.EditorConfig
 esbenp.prettier-vscode
 firsttris.vscode-jest-runner
