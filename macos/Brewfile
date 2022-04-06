@@ -18,6 +18,7 @@ brew "deno"
 brew "docker", link: false
 brew "docker-compose", link: false
 brew "dos2unix"
+brew "exa"
 brew "fd"
 brew "fzf"
 brew "git"

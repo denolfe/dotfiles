@@ -3,8 +3,13 @@
 alias rl='source ~/.zshrc; echo ".zshrc reloaded"'
 alias regen='zgenom reset;source ~/.zshrc'
 
-alias ll='ls -la'
-alias llt='ls -lat'
+if type exa > /dev/null 2>&1; then
+  alias ll='exa -alF --icons --color=always --group-directories-first'
+  alias llt='exa -alF --icons --color=always -s=mod --reverse'
+else
+  alias ll='ls -la'
+  alias llt='ls -lat'
+fi
 
 if type systemctl > /dev/null 2>&1; then
   alias senable='sudo systemctl enable'
