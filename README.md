@@ -18,7 +18,7 @@
 | Global Key Rebinds, Hyper Key | [Karabiner](https://karabiner-elements.pqrs.org/)         | [config](./karabiner/karabiner.ts) |
 | App Focus, Window Management  | [Hammerspoon](https://www.hammerspoon.org/)               | [config](./hammerspoon/init.lua)   |
 
-### [Makefile](./Makefile)
+## [Makefile](./Makefile)
 
 - Install with dotbot
 - Homebrew save/restore
@@ -26,14 +26,14 @@
 - Karabiner config compilation
 - Install MacOS defaults
 
-### Keyboard Mappings
+## Keyboard Mappings
 
-#### Hyper Key modifier
+### Hyper Key modifier
 
 - <kbd>CapsLock</kbd>
 - <kbd>CapsLock</kbd>+<kbd>cmd</kbd>
 
-#### Directional Bindings (<kbd>CapsLock</kbd>) w/ Selection (+<kbd>cmd</kbd>)
+### Directional Bindings (<kbd>CapsLock</kbd>) w/ Selection (+<kbd>cmd</kbd>)
 
 - <kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> - VIM arrows
 - <kbd>m</kbd> - Left one word
@@ -45,7 +45,7 @@
 - <kbd>cmd</kbd>+<kbd>i</kbd> - Top of page
 - <kbd>cmd</kbd>+<kbd>u</kbd> - End of page
 
-#### Remappings
+### Remappings
 
 - <kbd>CapsLock</kbd>+<kbd>delete</kbd> - Forward delete
 - <kbd>CapsLock</kbd>+<kbd>cmd</kbd>+<kbd>delete</kbd> - Forward delete word
@@ -54,9 +54,9 @@
 - <kbd>CapsLock</kbd>+<kbd>s</kbd> - Mission Control
 - <kbd>CapsLock</kbd> +<kbd>cmd</kbd>+<kbd>s</kbd> - Show all app windows
 
-### HammerSpoon
+## HammerSpoon
 
-#### Window Launch or Focus
+### Window Launch or Focus
 
 - <kbd>CapsLock</kbd>+<kbd>;</kbd> - iTerm
 - <kbd>CapsLock</kbd>+<kbd>g</kbd> - Google Chrome
@@ -64,7 +64,7 @@
 - <kbd>CapsLock</kbd>+<kbd>f</kbd> - Slack
 - <kbd>CapsLock</kbd>+<kbd>v</kbd> - Spotify
 
-#### Window Manager
+### Window Manager
 
 - Dual Window splitting, resize other window to fit
   - <kbd>CapsLock</kbd>+<kbd>q</kbd> - Chained: 60%, 50%, 40%, 33%, 66%
