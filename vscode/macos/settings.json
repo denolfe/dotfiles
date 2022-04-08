@@ -191,7 +191,7 @@
     ],
     "typescript.updateImportsOnFileMove.enabled": "always",
     "window.title": "${rootName}${separator}${activeEditorShort}",
-    "window.zoomLevel": -0.25,
+    "window.zoomLevel": -0.5,
     "workbench.colorCustomizations": {
         "editorInlayHint.foreground": "#909090",
         "editorInlayHint.background": "#2F2F2F",
