@@ -149,6 +149,24 @@ mods.addRule({
 })
 
 mods.addRule({
+  description: 'Spotify Remappings',
+  manipulators: [
+    // Currently Playing
+    remap(
+      { key_code: 'j', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'j', modifiers: ['left_option', 'left_shift'] },
+      [ifApp('spotify')],
+    ),
+    // Queue
+    remap(
+      { key_code: 'k', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'q', modifiers: ['left_option', 'left_shift'] },
+      [ifApp('spotify')],
+    ),
+  ],
+})
+
+mods.addRule({
   description: 'Volume/Brightness Control',
   manipulators: [
     hyper('hyphen', 'volume_decrement'),
