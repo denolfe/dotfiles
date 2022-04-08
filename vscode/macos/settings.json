@@ -1,11 +1,5 @@
 {
-    "[javascript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-    },
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[jsonc]": {
+    "[json][jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[markdown]": {
@@ -14,11 +8,13 @@
             "source.fixAll.markdownlint": true
         },
     },
-    "[typescript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features",
+    "[typescript][typescriptreact][javascript][javascriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
-            "source.fixAll.eslint": true,
+            "source.fixAll": true,
+            "source.organizeImports": true,
         },
+        "editor.formatOnSave": true,
     },
     "[typescriptreact]": {
         "editor.defaultFormatter": "vscode.typescript-language-features",
