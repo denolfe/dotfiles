@@ -94,11 +94,11 @@ export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 REPORTTIME=2
 TIMEFMT="%U user %S system %P cpu %*Es total"
 
+# Source local zshrc if exists
+test -f ~/.zshrc.local && source ~/.zshrc.local
+
 # Place to stash environment variables
-if [[ -a ~/.secrets ]]
-then
-  source ~/.secrets
-fi
+test -f ~/.secrets && source ~/.secrets
 
 # Load functions
 for f in $DOTFILES/functions/*; do source $f; done
