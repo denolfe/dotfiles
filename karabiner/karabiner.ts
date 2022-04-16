@@ -1,6 +1,6 @@
 import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
-import { hyper, hyperCmd } from './lib/hyper.ts'
 import { ifApp, notApp } from './lib/conditions.ts'
+import { hyper, hyperCmd } from './lib/hyper.ts'
 import { remap } from './lib/remap.ts'
 
 const mods = new KarabinerComplexModifications()
@@ -73,7 +73,7 @@ mods.addRule({
     remap(
       { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
       undefined,
-      [notApp('chrome')], // Allow for Cmd+H to be remapped in Chrome
+      [notApp('chrome'), notApp('spotify')], // App whitelist for allowing Cmd+H to be remapped
     ),
 
     // Disable Cmd+M
@@ -151,6 +151,12 @@ mods.addRule({
 mods.addRule({
   description: 'Spotify Remappings',
   manipulators: [
+    // Home
+    remap(
+      { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'h', modifiers: ['left_option', 'left_shift'] },
+      [ifApp('spotify')],
+    ),
     // Currently Playing
     remap(
       { key_code: 'j', modifiers: { mandatory: ['left_command'] } },
@@ -173,7 +179,7 @@ mods.addRule({
     hyper('equal_sign', 'volume_increment'),
     hyperCmd('hyphen', 'display_brightness_decrement'),
     hyperCmd('equal_sign', 'display_brightness_increment'),
-  ]
+  ],
 })
 
 mods.addRule({
