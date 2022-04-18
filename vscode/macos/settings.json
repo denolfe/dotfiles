@@ -382,11 +382,14 @@
         "Screen Share Mode": {
             "on": {
                 "_label": "Enable",
-                "window.zoomLevel": 0.5,
+                "window.zoomLevel": 1,
+                "editor.minimap.enabled": false,
+
             },
             "off": {
                 "_label": "Disable",
-                "window.zoomLevel": -0.25,
+                "window.zoomLevel": -0.5,
+                "editor.minimap.enabled": true,
             }
         },
         "Internals / Artifacts": {
