@@ -77,7 +77,9 @@ mods.addRule({
     ),
 
     // Disable Cmd+M
-    remap({ key_code: 'm', modifiers: { mandatory: ['left_command'] } }, undefined),
+    remap({ key_code: 'm', modifiers: { mandatory: ['left_command'] } }, undefined, [
+      notApp('spotify'), // App whitelist for allowing Cmd+M to be remapped
+    ]),
   ],
 })
 
@@ -167,6 +169,12 @@ mods.addRule({
     remap(
       { key_code: 'k', modifiers: { mandatory: ['left_command'] } },
       { key_code: 'q', modifiers: ['left_option', 'left_shift'] },
+      [ifApp('spotify')],
+    ),
+    // Made for you
+    remap(
+      { key_code: 'm', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'm', modifiers: ['left_option', 'left_shift'] },
       [ifApp('spotify')],
     ),
   ],
