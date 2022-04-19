@@ -75,6 +75,7 @@ setopt hist_ignore_space
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_verify
+setopt inc_append_history
 
 # Share history across all your terminal windows
 setopt share_history
@@ -85,8 +86,8 @@ setopt pushd_ignore_dups
 #setopt pushd_silent
 
 # Increase history size
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=1000000000
+SAVEHIST=1000000000
 HISTFILE=~/.zsh_history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
