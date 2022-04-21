@@ -36,6 +36,7 @@ if ! zgenom saved; then
 
     zgenom load agkozak/zsh-z
     zgenom load andrewferrier/fzf-z
+    zgenom load reegnz/jq-zsh-plugin
 
     zgenom ohmyzsh plugins/asdf
 
