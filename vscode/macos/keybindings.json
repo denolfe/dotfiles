@@ -152,4 +152,20 @@
       "command": "editor.action.selectHighlights",
       "when": "editorFocus"
     },
+
+    // Go to references, definition, type
+    {
+      "key": "cmd+k cmd+j",
+      "command": "editor.action.goToReferences",
+      "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+      "key": "cmd+k cmd+k",
+      "command": "editor.action.revealDefinition",
+      "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+      "key": "cmd+k k",
+      "command": "editor.action.peekTypeDefinition"
+    },
 ]
