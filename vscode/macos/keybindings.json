@@ -168,4 +168,38 @@
       "key": "cmd+k k",
       "command": "editor.action.peekTypeDefinition"
     },
+
+    // ctrl+tab -> alt+tab
+    {
+      "key": "alt+tab",
+      "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+      "when": "!activeEditorGroupEmpty"
+    },
+    {
+      "key": "alt+tab",
+      "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
+      "when": "inEditorsPicker && inQuickOpen"
+    },
+
+    // Other interface nav
+    {
+      "key": "cmd+k cmd+e",
+      "command": "workbench.view.explorer",
+      "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+      "key": "cmd+k cmd+g",
+      "command": "workbench.view.scm",
+      "when": "workbench.scm.active"
+    },
+
+    // Change tabs left/right
+    {
+      "key": "cmd+k cmd+n",
+      "command": "workbench.action.previousEditor"
+    },
+    {
+      "key": "cmd+k cmd+p",
+      "command": "workbench.action.nextEditor"
+    },
 ]
