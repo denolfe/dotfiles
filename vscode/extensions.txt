@@ -14,7 +14,11 @@ EditorConfig.EditorConfig
 esbenp.prettier-vscode
 firsttris.vscode-jest-runner
 formulahendry.auto-rename-tag
+foxundermoon.shell-format
+GitHub.vscode-pull-request-github
 GraphQL.vscode-graphql
+humao.rest-client
+IronGeek.vscode-env
 johnpapa.vscode-peacock
 kumar-harsh.graphql-for-vscode
 mechatroner.rainbow-csv
@@ -29,6 +33,7 @@ redhat.vscode-commons
 redhat.vscode-yaml
 richie5um2.vscode-sort-json
 rpinski.shebang-snippets
+ryuta46.multi-command
 sibiraj-s.vscode-scss-formatter
 silvenon.mdx
 tht13.html-preview-vscode
