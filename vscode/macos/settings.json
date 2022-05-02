@@ -217,8 +217,12 @@
     "deno.codeLens.references": true,
     "deno.codeLens.referencesAllFunctions": true,
     "deno.codeLens.implementations": true,
-    "journal.tpl-entry": "# ${d:dddd, MMMM DD YYYY}\n\n## Standup\n\n\n\n## Tasks\n\n\n\n## Notes\n\n",
-
+    "journal.templates": [
+        {
+            "name": "entry",
+            "template": "# ${d:dddd, MMMM DD YYYY}\n\n## Standup\n\n\n\n## Tasks\n\n\n\n## Notes\n\n"
+        },
+    ],
     "auto.languages": {
         "javascript": {
             "symbol": "$",
