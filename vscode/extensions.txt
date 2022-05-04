@@ -17,6 +17,7 @@ formulahendry.auto-rename-tag
 foxundermoon.shell-format
 GitHub.vscode-pull-request-github
 GraphQL.vscode-graphql
+hoovercj.vscode-settings-cycler
 humao.rest-client
 IronGeek.vscode-env
 johnpapa.vscode-peacock
