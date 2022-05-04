@@ -81,10 +81,6 @@
     "command": "" // Removes default of zoomOut
   },
   {
-    "key": "cmd+0",
-    "command": "workbench.action.zoomReset"
-  },
-  {
     "key": "shift+cmd+=",
     "command": "workbench.action.increaseViewWidth",
     "when": "editorFocus"
@@ -239,5 +235,30 @@
   {
     "key": "cmd+k cmd+r",
     "command": "extension.runPrevJest"
+  },
+  // Multi-Command
+  {
+    "key": "shift+alt+/",
+    "command": "extension.multiCommand.execute",
+    "args": {
+      "command": "multiCommand.commentThenDuplicate"
+    },
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+b",
+    "command": "extension.multiCommand.execute",
+    "args": {
+      "command": "multiCommand.makeSpace"
+    },
+  },
+  // Settings Cycler
+  {
+    "key": "cmd+0",
+    "command": "settings.cycle.screenshare"
+  },
+  {
+    "key": "cmd+shift+0",
+    "command": "settings.cycle.livestream"
   },
 ]
