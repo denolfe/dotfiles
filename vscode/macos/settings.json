@@ -1,5 +1,5 @@
 {
-    "[json][jsonc]": {
+    "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[jsonc]": {
@@ -11,16 +11,18 @@
             "source.fixAll.markdownlint": true
         },
     },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
             "source.fixAll": true,
-            "source.organizeImports": true,
         },
         "editor.formatOnSave": true,
     },
     "[typescriptreact]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
             "source.fixAll.eslint": true,
         },
@@ -42,13 +44,11 @@
     "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 13,
     "editor.formatOnPaste": true,
-
     // Brackets/Guides
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.indentation": true,
     "editor.guides.bracketPairs": true,
     "editor.guides.bracketPairsHorizontal": "active",
-
     "editor.hover.above": false, // Trial
     "editor.inlayHints.fontSize": 10,
     "editor.minimap.maxColumn": 40,
@@ -56,11 +56,9 @@
     "editor.linkedEditing": true,
     "editor.renderLineHighlight": "all",
     "editor.snippetSuggestions": "bottom",
-
     // VS Intellicode
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-
     "editor.tabSize": 2,
     "editor.tokenColorCustomizations": {
         "textMateRules": [
@@ -170,9 +168,10 @@
     "javascript.referencesCodeLens.showOnAllFunctions": true,
     "javascript.suggest.completeFunctionCalls": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
-
     "jestrunner.debugOptions": {
-        "skipFiles": ["<node_internals>/**"],
+        "skipFiles": [
+            "<node_internals>/**"
+        ],
         "smartStep": true
     },
     "scssFormatter.singleQuote": true,
@@ -241,7 +240,6 @@
             "stringWrapper": "`"
         }
     },
-
     // Suppress trailing comma warnings in settings.json
     "json.schemas": [
         {
@@ -253,7 +251,6 @@
             }
         }
     ],
-
     "peacock.favoriteColors": [
         // Custom
         {
@@ -268,7 +265,6 @@
             "name": "Firebase Yellow",
             "value": "#FFCA28"
         },
-
         // Standard
         {
             "name": "Angular Red",
@@ -306,7 +302,6 @@
             "name": "Vue Green",
             "value": "#42b883"
         },
-
         // VS Dark
         {
             "name": "VS Dark Gray 1",
@@ -446,7 +441,6 @@
                 "_label": "Enable",
                 "window.zoomLevel": 1,
                 "editor.minimap.enabled": false,
-
             },
             "off": {
                 "_label": "Disable",
