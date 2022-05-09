@@ -4,6 +4,19 @@
 <dict>
 	<key>customSites</key>
 	<dict>
+		<key>01A5E295-39C9-43AE-91BB-554013A981E4</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>print</string>
+			<key>text</key>
+			<string>Printables</string>
+			<key>url</key>
+			<string>https://www.printables.com/search/models?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
 		<key>38E79B46-63D3-4119-8CE1-A5B921456BB8</key>
 		<dict>
 			<key>enabled</key>
