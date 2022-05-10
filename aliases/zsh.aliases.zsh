@@ -14,6 +14,7 @@ alias -g CD='&& $_'
 alias -g F='| fzf'
 alias -g R='| rg'
 alias -g J='| jq'
+alias -g P='$(pbpaste)'
 
 # Detect the platform (similar to $OSTYPE)
 OS="$(uname)"
