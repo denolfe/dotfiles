@@ -201,6 +201,7 @@
         "inlineparameters.annotationBackground": "#2F2F2F",
         "tab.activeBorderTop": "#007acc",
         "tab.activeBackground": "#01395e",
+        "tab.unfocusedActiveBackground": "#002d4b",
         "tab.unfocusedHoverBorder": "#007acc",
         "tab.unfocusedActiveBorderTop": "#007acc",
         "peekViewEditor.background": "#2F2F2F",
