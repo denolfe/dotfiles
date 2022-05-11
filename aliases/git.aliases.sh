@@ -22,6 +22,7 @@ alias glast="git log -1 HEAD"
 alias gpdel="git push --delete"
 alias gpl="git pull"
 alias gstu="git status -uno"
+alias gshno="git show --name-only"
 
 alias gswm='git switch $(git_main_branch)'
 
