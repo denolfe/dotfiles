@@ -41,11 +41,6 @@
     "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly"
   },
   {
-    "key": "cmd+i",
-    "command": "expandLineSelection",
-    "when": "editorTextFocus"
-  },
-  {
     "key": "cmd+shift+k",
     "command": "editor.action.insertCursorAtEndOfEachLineSelected",
     "when": "editorTextFocus"
@@ -195,11 +190,11 @@
 
   // Change tabs left/right
   {
-    "key": "cmd+k cmd+n",
+    "key": "cmd+u",
     "command": "workbench.action.previousEditor"
   },
   {
-    "key": "cmd+k cmd+p",
+    "key": "cmd+i",
     "command": "workbench.action.nextEditor"
   },
 
