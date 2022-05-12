@@ -166,12 +166,12 @@
 
   // ctrl+tab -> alt+tab
   {
-    "key": "alt+tab",
+    "key": "alt+p",
     "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
     "when": "!activeEditorGroupEmpty"
   },
   {
-    "key": "alt+tab",
+    "key": "alt+p",
     "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
     "when": "inEditorsPicker && inQuickOpen"
   },
