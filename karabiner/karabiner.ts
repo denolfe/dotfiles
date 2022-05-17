@@ -124,6 +124,16 @@ mods.addRule({
       { key_code: 'l', modifiers: ['left_command', 'left_option'] },
       [ifApp('chrome')],
     ),
+
+    // Cmd+Shift+D Duplicate Tab
+    remap(
+      { key_code: 'd', modifiers: { mandatory: ['left_command', 'left_shift'] } },
+      [
+        { key_code: 'l', modifiers: ['left_command'] },
+        { key_code: 'return_or_enter', modifiers: ['left_option'] },
+      ],
+      [ifApp('chrome')],
+    ),
   ],
 })
 
