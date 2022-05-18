@@ -105,7 +105,7 @@ mods.addRule({
   manipulators: [
     // Cmd+K Omnibar Google Search
     remap(
-      { key_code: 'k', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'k', modifiers: { mandatory: ['left_command', 'left_shift'] } },
       [
         { key_code: 'l', modifiers: ['left_command'] },
         { key_code: 'slash', modifiers: ['left_shift'] },
@@ -187,6 +187,20 @@ mods.addRule({
       { key_code: 'm', modifiers: ['left_option', 'left_shift'] },
       [ifApp('spotify')],
     ),
+
+    // Back
+    remap(
+      { key_code: 'open_bracket', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'left_arrow', modifiers: ['left_option'] },
+      [ifApp('spotify')],
+    ),
+    // Forward
+    remap(
+      { key_code: 'close_bracket', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'right_arrow', modifiers: ['left_option'] },
+      [ifApp('spotify')],
+    ),
+    // ),
   ],
 })
 
