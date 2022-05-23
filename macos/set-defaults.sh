@@ -104,6 +104,9 @@ echo "› Finder:"
 echo "  › New Finder window opens HOME directory"
 defaults write com.apple.finder NewWindowTarget -string 'PfHm'
 
+echo "  › Display file extensions"
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
 echo "  › Always open everything in Finder's list view"
 defaults write com.apple.Finder FXPreferredViewStyle Nlsv
 
