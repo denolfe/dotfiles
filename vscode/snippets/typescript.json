@@ -1,0 +1,68 @@
+{
+  // Functions
+  "arrow_func_body": {
+    "prefix": "arrowFuncBody",
+    "body": "($0) => {\n\t$1\n}",
+    "description": "arrow function body"
+  },
+  // Jest
+  "describe": {
+    "prefix": "desc",
+    "body": "describe('${1:Name of the group}', () => {\n\t$0\n});",
+    "description": "creates a describe block"
+  },
+  "it": {
+    "prefix": "it",
+    "body": "it('${1:should }', () => {\n\t$0\n});",
+    "description": "creates an it block"
+  },
+  "ita": {
+    "prefix": "ita",
+    "body": "it('${1:should }', async () => {\n\t$0\n});",
+    "description": "creates an it block with async callback function"
+  },
+  "ite:table": {
+    "prefix": "itet",
+    "body": [
+      "it.each`",
+      "\tdescription                       | input",
+      "\t${}  | ${}",
+      "`('should ${1} when \\$description', ({ input }) => {",
+      "\t$0",
+      "})"
+    ],
+    "description": "it.each block with table"
+  },
+  "ite": {
+    "prefix": "ite",
+    "body": [
+      "it.each([${1:[1, 2], [2, 4]}])(",
+      "\t'${2:double(%d)}',",
+      "\t(${3:input, expected}) => {",
+      "\t\t${0:expect(double(input)).toBe(expected);}",
+      "\t}",
+      ");"
+    ],
+    "description": "creates an it block with different test data sets"
+  },
+  "afterAll": {
+    "prefix": "aa",
+    "body": "afterAll(() => {\n\t$0\n});",
+    "description": "afterAll function is called once after all specs"
+  },
+  "afterEach": {
+    "prefix": "ae",
+    "body": "afterEach(() => {\n\t$0\n});",
+    "description": "afterEach function is called once after each spec"
+  },
+  "beforeAll": {
+    "prefix": "ba",
+    "body": "beforeAll(() => {\n\t$0\n});",
+    "description": "beforeAll function is called once before all specs"
+  },
+  "beforeEach": {
+    "prefix": "be",
+    "body": "beforeEach(() => {\n\t$0\n});",
+    "description": "beforeEach function is called once before each spec"
+  },
+}

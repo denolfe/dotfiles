@@ -51,6 +51,11 @@
       path: vscode/macos/*.json
       force: true
 
+    ~/Library/Application Support/Code/User/snippets:
+      if: '[ `uname` = Darwin ]'
+      path: vscode/snippets
+      force: true
+
     # VS Code MacOS Insiders
     ~/Library/Application Support/Code - Insiders/User:
       if: '[ `uname` = Darwin ]'
