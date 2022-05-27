@@ -31,8 +31,8 @@ git config --global alias.revertlast 'revert HEAD'
 git config --global alias.editlast 'commit --amend -m'
 git config --global alias.pr '!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f'
 git config --global alias.pr-clean '!git for-each-ref refs/heads/pr/* --format="%(refname)" | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done'
-git config --global alias.fzau '!git ls-files -m --exclude-standard | fzf -m --print0 --preview "git diff $@ -- {-1} | delta" | xargs -0 -o -t git add -p'
-git config --global alias.fza '!git ls-files -m -o --exclude-standard | fzf -m --print0 --preview "git diff $@ -- {-1} | delta" | xargs -0 -o -t git add -p'
+git config --global alias.fzau '!git ls-files -m --exclude-standard | fzf -m --print0 --preview-window down,90% --preview "git diff $@ -- {-1} | delta" | xargs -0 -o -t git add -p'
+git config --global alias.fza '!git ls-files -m -o --exclude-standard | fzf -m --print0 --preview-window down,90% --preview "git diff $@ -- {-1} | delta" | xargs -0 -o -t git add -p'
 
 
 # Fancy Logs
