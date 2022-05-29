@@ -7,6 +7,10 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+  -
+    command: ./macos/install-homebrew.sh
+    description: Installing Homebrew
+    stdout: true
 
 - link:
     # ~/.dotfiles: ''
