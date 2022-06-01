@@ -7,10 +7,20 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
-  -
-    command: ./macos/install-homebrew.sh
-    description: Installing Homebrew
-    stdout: true
+
+- install-brew: true
+
+- brew:
+    - asdf
+    - fzf
+    - git
+    - exa
+    - neovim
+    - tree
+    - fd
+    - jq
+    - ripgrep
+    - zsh
 
 - link:
     # ~/.dotfiles: ''
@@ -71,6 +81,23 @@
       if: '[ `uname` = Darwin ]'
       path: hammerspoon
       force: true
+
+- asdf:
+  - plugin: nodejs
+    global: lts-gallium
+    versions:
+      - lts-carbon
+      - lts-dubnium
+      - lts-erbium
+      - lts-fermium
+      - lts-gallium
+      - latest
+  - plugin: yarn
+    url: https://github.com/twuni/asdf-yarn
+    global: latest
+    versions:
+      - latest
+  - plugin: golang
 
 - shell:
   -
