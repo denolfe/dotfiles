@@ -7,20 +7,10 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
-
-- install-brew: true
-
-- brew:
-    - asdf
-    - fzf
-    - git
-    - exa
-    - neovim
-    - tree
-    - fd
-    - jq
-    - ripgrep
-    - zsh
+  -
+    command: ./macos/setup-homebrew.sh
+    description: Installing Homebrew and Essential Packages
+    stdout: true
 
 - link:
     # ~/.dotfiles: ''
