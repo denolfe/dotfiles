@@ -190,11 +190,11 @@
 
   // Change tabs left/right
   {
-    "key": "cmd+u",
+    "key": "cmd+shift+[",
     "command": "workbench.action.previousEditor"
   },
   {
-    "key": "cmd+i",
+    "key": "cmd+shift+]",
     "command": "workbench.action.nextEditor"
   },
 
