@@ -198,6 +198,18 @@
     "command": "workbench.action.nextEditor"
   },
 
+  // Change tabs in workbench
+  {
+    "key": "shift+cmd+]",
+    "command": "workbench.action.nextPanelView",
+    "when": "panelFocus"
+  },
+  {
+    "key": "shift+cmd+[",
+    "command": "workbench.action.previousPanelView",
+    "when": "panelFocus"
+  },
+
   // Snippets
   {
     "key": "cmd+shift+9",
