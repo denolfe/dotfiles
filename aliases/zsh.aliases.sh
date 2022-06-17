@@ -2,6 +2,7 @@
 
 alias rl='source ~/.zshrc; echo ".zshrc reloaded"'
 alias regen='zgenom reset;source ~/.zshrc'
+alias .f='cd ~/.dotfiles'
 
 if type exa > /dev/null 2>&1; then
   alias ll='exa -alF --icons --color=always --group-directories-first'
@@ -9,14 +10,6 @@ if type exa > /dev/null 2>&1; then
 else
   alias ll='ls -la'
   alias llt='ls -lat'
-fi
-
-if type systemctl > /dev/null 2>&1; then
-  alias senable='sudo systemctl enable'
-  alias srestart='sudo systemctl restart'
-  alias sstatus='sudo systemctl status'
-  alias sstop='sudo systemctl stop'
-  alias sstart='sudo systemctl start'
 fi
 
 # Easier navigation
@@ -35,7 +28,6 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 hs(){ history | grep -i "$1" ;}
-alias .f='cd ~/.dotfiles'
 
 # Detect the platform (similar to $OSTYPE)
 OS=$(uname)
@@ -49,6 +41,14 @@ case $OS in
     alias sagr='sudo apt-get remove'
     alias pbcopy='xclip -selection c'
     alias pbpaste='xclip -selection clipboard -o'
+
+    if type systemctl > /dev/null 2>&1; then
+      alias senable='sudo systemctl enable'
+      alias srestart='sudo systemctl restart'
+      alias sstatus='sudo systemctl status'
+      alias sstop='sudo systemctl stop'
+      alias sstart='sudo systemctl start'
+    fi
     ;;
   'Darwin')
     ;;
