@@ -271,6 +271,13 @@
       "command": "multiCommand.makeSpace"
     },
   },
+  {
+    "key": "cmd+k shift+w",
+    "command": "extension.multiCommand.execute",
+    "args": {
+      "command": "multiCommand.closeAllTabsExceptCurrent"
+    },
+  },
   // Settings Cycler
   {
     "key": "cmd+0",

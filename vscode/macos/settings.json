@@ -397,10 +397,18 @@
             ]
         },
         "multiCommand.commentThenDuplicate": {
+            "label": "Comment Then Duplicate",
             "sequence": [
                 "editor.action.commentLine",
                 "editor.action.copyLinesDownAction",
                 "editor.action.commentLine",
+            ]
+        },
+        "multiCommand.closeAllTabsExceptCurrent": {
+            "label": "Close All Tabs Except Current",
+            "sequence": [
+                "workbench.action.closeEditorsInOtherGroups",
+                "workbench.action.closeOtherEditors",
             ]
         },
     },
