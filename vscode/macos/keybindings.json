@@ -118,6 +118,18 @@
     "command": "-markdown.extension.onOutdentLines",
     "when": "editorTextFocus && !suggestWidgetVisible && editorLangId == 'markdown'"
   },
+
+  // Next/Prev change in current file
+  {
+    "key": "cmd+alt+]",
+    "command": "workbench.action.editor.nextChange"
+  },
+  {
+    "key": "cmd+alt+[",
+    "command": "workbench.action.editor.previousChange"
+  },
+
+
   // Settings remap
   {
     "key": "cmd+,",
