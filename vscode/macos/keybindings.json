@@ -284,11 +284,15 @@
     },
   },
   {
-    "key": "cmd+k shift+w",
+    "key": "cmd+k cmd+w",
     "command": "extension.multiCommand.execute",
     "args": {
       "command": "multiCommand.closeAllTabsExceptCurrent"
     },
+  },
+  {
+    "key": "cmd+k cmd+w",
+    "command": "-workbench.action.closeAllEditors"
   },
   // Settings Cycler
   {
