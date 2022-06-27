@@ -410,6 +410,7 @@
                 "workbench.action.closeEditorsInOtherGroups",
                 "workbench.action.closeOtherEditors",
                 "workbench.files.action.collapseExplorerFolders",
+                "workbench.action.closePanel",
             ]
         },
     },
