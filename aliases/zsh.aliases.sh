@@ -71,6 +71,7 @@ alias to_upper="tr '[:lower:]' '[:upper:]'"
 
 if type rg > /dev/null 2>&1; then
   alias rg="rg -i --hidden -g '!.git/'"
+  alias rgf="rg --files | rg"
 fi
 
 alias jwt_from_clip="pbpaste | jwt decode -j - | jq -r '.payload'"
