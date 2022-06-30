@@ -13,7 +13,12 @@ export function remap(
   from: KeyPressFrom,
   to: KeyPressTo | KeyPressTo[] | undefined,
   conditions: Condition[] = [nonAppleDevice],
+  options?: {
+    toIfAlone?: Manipulator['to_if_alone'],
+    toIfHeldDown?: Manipulator['to_if_held_down'],
+  }
 ): Manipulator {
+  const { toIfAlone, toIfHeldDown } = options || {}
   const mapped: Manipulator = {
     type: 'basic',
     from: {
@@ -23,6 +28,8 @@ export function remap(
       },
     },
     ...(to && { to: Array.isArray(to) ? to : [to] }),
+    ...(toIfAlone && { to_if_alone: toIfAlone }),
+    ...(toIfHeldDown && { to_if_held_down: toIfHeldDown }),
     conditions,
   }
 

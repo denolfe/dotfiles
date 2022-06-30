@@ -28,8 +28,23 @@ mods.addRule({
 mods.addRule({
   description: 'Swap Esc/Tilde on Drop Alt Keyboard',
   manipulators: [
-    remap({ key_code: 'escape' }, { key_code: 'grave_accent_and_tilde' }, [isDropAltKeyboard]),
-    remap({ key_code: 'grave_accent_and_tilde' }, { key_code: 'escape' }, [isDropAltKeyboard]),
+    // Remap esc to grave/tilde, normal esc if held
+    remap(
+      { key_code: 'escape' },
+      undefined,
+      [isDropAltKeyboard],
+      {
+        toIfAlone: [{ key_code: 'grave_accent_and_tilde' }],
+        toIfHeldDown: [{ key_code: 'escape', halt: true }],
+      },
+    ),
+
+    // Keep Shift+Grave -> Tilde
+    remap(
+      { key_code: 'escape', modifiers: { mandatory: ['left_shift'] } },
+      { key_code: 'grave_accent_and_tilde', modifiers: ['left_shift'] },
+      [isDropAltKeyboard],
+    ),
   ],
 })
 
