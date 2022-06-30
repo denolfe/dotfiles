@@ -1,5 +1,5 @@
 import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
-import { ifApp, notApp } from './lib/conditions.ts'
+import { ifApp, isDropAltKeyboard, notApp } from './lib/conditions.ts'
 import { hyper, hyperCmd } from './lib/hyper.ts'
 import { remap } from './lib/remap.ts'
 
@@ -22,6 +22,14 @@ mods.addRule({
   manipulators: [
     remap({ key_code: 'left_command' }, { key_code: 'left_option' }),
     remap({ key_code: 'left_option' }, { key_code: 'left_command' }),
+  ],
+})
+
+mods.addRule({
+  description: 'Swap Esc/Tilde on Drop Alt Keyboard',
+  manipulators: [
+    remap({ key_code: 'escape' }, { key_code: 'grave_accent_and_tilde' }, [isDropAltKeyboard]),
+    remap({ key_code: 'grave_accent_and_tilde' }, { key_code: 'escape' }, [isDropAltKeyboard]),
   ],
 })
 

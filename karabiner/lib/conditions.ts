@@ -32,3 +32,13 @@ export const nonAppleDevice: Condition = {
     },
   ],
 }
+
+export const isDropAltKeyboard: Condition = {
+  type: 'device_if',
+  identifiers: [
+    {
+      vendor_id: 1240,
+      product_id: 61139,
+    },
+  ],
+}
