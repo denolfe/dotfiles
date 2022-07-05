@@ -1,7 +1,7 @@
 import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
 import { ifApp, isDropAltKeyboard, notApp } from './lib/conditions.ts'
 import { hyper, hyperCmd } from './lib/hyper.ts'
-import { remap } from './lib/remap.ts'
+import { remap, unmap } from './lib/remap.ts'
 
 const mods = new KarabinerComplexModifications()
 
@@ -81,16 +81,16 @@ mods.addRule({
   description: 'Disable Specific macOS Shortcuts',
   manipulators: [
     // Disable Cmd+H
-    remap(
+    unmap(
       { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
-      undefined,
       [notApp('chrome'), notApp('spotify')], // App whitelist for allowing Cmd+H to be remapped
     ),
 
     // Disable Cmd+M
-    remap({ key_code: 'm', modifiers: { mandatory: ['left_command'] } }, undefined, [
-      notApp('spotify'), // App whitelist for allowing Cmd+M to be remapped
-    ]),
+    unmap(
+      { key_code: 'm', modifiers: { mandatory: ['left_command'] } },
+      [notApp('spotify')], // App whitelist for allowing Cmd+M to be remapped
+    ),
   ],
 })
 

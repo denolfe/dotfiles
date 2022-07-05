@@ -14,9 +14,9 @@ export function remap(
   to: KeyPressTo | KeyPressTo[] | undefined,
   conditions: Condition[] = [nonAppleDevice],
   options?: {
-    toIfAlone?: Manipulator['to_if_alone'],
-    toIfHeldDown?: Manipulator['to_if_held_down'],
-  }
+    toIfAlone?: Manipulator['to_if_alone']
+    toIfHeldDown?: Manipulator['to_if_held_down']
+  },
 ): Manipulator {
   const { toIfAlone, toIfHeldDown } = options || {}
   const mapped: Manipulator = {
@@ -38,4 +38,8 @@ export function remap(
   }
 
   return mapped
+}
+
+export function unmap(from: KeyPressFrom, conditions: Condition[] = [nonAppleDevice]): Manipulator {
+  return remap(from, undefined, conditions)
 }
