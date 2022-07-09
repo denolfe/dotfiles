@@ -233,7 +233,12 @@
     "command": "explorer.newFolder",
     "when": "explorerViewletFocus"
   },
-
+  // Explorer open file
+  {
+    "key": "cmd+enter",
+    "command": "explorer.openAndPassFocus",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
+  },
   // Snippets
   {
     "key": "cmd+shift+9",
