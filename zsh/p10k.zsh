@@ -1651,7 +1651,7 @@
 
   # Show if packages are linked in current node_modules
   prompt_yarn_link() {
-    if [ ! -d "./node_modules" ]; then return; fi
+    if [ ! -d "./node_modules" ] || [ -f "lerna.json" ]; then return; fi
 
     local links=$(find ./node_modules -type l -maxdepth 1 | sed 's/\.\/node_modules\///')
     if [ $links ]; then
