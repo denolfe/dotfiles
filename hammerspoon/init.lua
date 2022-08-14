@@ -8,7 +8,12 @@ require('windowmanager')
 -- App shortcuts
 local bindApp = function(appName)
   return function()
-    hs.application.launchOrFocus(appName)
+    local app = hs.appfinder.appFromName(appName)
+    if app == nil then
+      hs.application.launchOrFocus(appName)
+    else
+      app:activate()
+    end
   end
 end
 
