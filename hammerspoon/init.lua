@@ -30,11 +30,32 @@ end
 
 hs.hotkey.bind(hyper, ';', bindApp('iTerm'))
 hs.hotkey.bind(hyper, 'g', bindApp('Google Chrome'))
-hs.hotkey.bind(hyper, 'c', bindApp('Visual Studio Code'))
+hs.hotkey.bind(hyper, 'c', bindApp('Code'))
 hs.hotkey.bind(hyper, 'r', bindApp('Notion'))
 hs.hotkey.bind(hyper, 'f', cycleApps('Slack', 'Discord'))
 hs.hotkey.bind(hyper, 'v', bindApp('Spotify'))
 -- hs.hotkey.bind(hyper, 't', bindApp(''))
+
+-- Gather windows based upon filter
+local windowFilters = {
+  chat = hs.window.filter.new{'Slack', 'Discord'},
+  code = hs.window.filter.new{'Code'},
+  chrome = hs.window.filter.new{'Google Chrome'},
+}
+
+local gatherWindows = function(wf)
+  return function()
+    for _, win in ipairs(wf:getWindows(hs.window.filter.sortByFocused)) do
+      log.i(win)
+      win:move(hs.screen.mainScreen():frame())
+      win:focus()
+    end
+  end
+end
+
+hs.hotkey.bind(hyperCmd, 'g', gatherWindows(windowFilters.chrome))
+hs.hotkey.bind(hyperCmd, 'c', gatherWindows(windowFilters.code))
+hs.hotkey.bind(hyperCmd, 'f', gatherWindows(windowFilters.chat))
 
 -- Spotify shortcuts
 hs.hotkey.bind(hyper, '\\', hs.spotify.playpause)
