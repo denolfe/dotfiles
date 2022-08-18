@@ -1,0 +1,30 @@
+{
+  "name": "parcel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "parcel": "parcel build src/phoenix.ts",
+    "parcel:watch": "parcel watch src/phoenix.ts"
+  },
+  "module": "dist/phoenix.js",
+  "devDependencies": {
+    "@types/lodash": "^4.14.183",
+    "@types/phoenix": "github:mafredri/phoenix-typings#main",
+    "parcel": "^2.7.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  },
+  "prettier": {
+    "printWidth": 85,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "always"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
