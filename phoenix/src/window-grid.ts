@@ -1,23 +1,64 @@
-import { arrEquals } from './utils'
+import { log } from './logger'
 
 const ROWS = 12
 const COLS = 12
 
+type GridValue = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+
 type GridPosition = {
   x: number
   y: number
-  w: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
-  h: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  w: GridValue
+  h: GridValue
 }
 
-type GridPositionSideBySide = GridPosition[][]
-
 const chainResetInterval = 1500
-let lastSeenChain: GridPosition[] | undefined
-let lastSeenWindow: number
-let lastSeenAt: number
+
+type SplitWindowLayout = { primary: GridPosition; secondary: GridPosition }
+
+type GridKeys = '8x12' | '7x12' | '6x12' | '5x12' | '4x12'
+
+function calcSplitWindowLayout(primary: GridPosition): SplitWindowLayout {
+  const secondaryXy =
+    primary.x === 0 && primary.y === 0
+      ? { x: primary.w, y: primary.y }
+      : { x: 0, y: 0 }
+
+  const secondary: GridPosition = {
+    ...secondaryXy,
+    w: (COLS - primary.w) as GridValue,
+    h: ROWS,
+  }
+  return { primary, secondary }
+}
+
+export const splitWindowLayout: Record<
+  'left' | 'right',
+  Record<GridKeys, SplitWindowLayout>
+> = {
+  left: {
+    '8x12': calcSplitWindowLayout({ x: 0, y: 0, w: 8, h: 12 }),
+    '7x12': calcSplitWindowLayout({ x: 0, y: 0, w: 7, h: 12 }),
+    '6x12': calcSplitWindowLayout({ x: 0, y: 0, w: 6, h: 12 }),
+    '5x12': calcSplitWindowLayout({ x: 0, y: 0, w: 5, h: 12 }),
+    '4x12': calcSplitWindowLayout({ x: 0, y: 0, w: 4, h: 12 }),
+  },
+  right: {
+    '4x12': calcSplitWindowLayout({ x: 8, y: 0, w: 4, h: 12 }),
+    '5x12': calcSplitWindowLayout({ x: 7, y: 0, w: 5, h: 12 }),
+    '6x12': calcSplitWindowLayout({ x: 6, y: 0, w: 6, h: 12 }),
+    '7x12': calcSplitWindowLayout({ x: 5, y: 0, w: 7, h: 12 }),
+    '8x12': calcSplitWindowLayout({ x: 4, y: 0, w: 8, h: 12 }),
+  },
+}
+
+// Share cache between cycle functions
+const lastSeenCache: { chainId?: string; windowId?: number; timestamp: number } = {
+  timestamp: 0,
+}
 
 export function cycleWindowPositions(gridPositions: GridPosition[]) {
+  const chainId = String(gridPositions[0].w)
   const cycleLength = gridPositions.length
   let sequenceNumber = 0
 
@@ -28,51 +69,50 @@ export function cycleWindowPositions(gridPositions: GridPosition[]) {
     const now = Date.now()
 
     if (
-      (!!lastSeenChain && !arrEquals(lastSeenChain, gridPositions)) || // Different chain aka different bind
-      lastSeenAt < now - chainResetInterval || // beyond reset interval
-      lastSeenWindow !== id || // different window
+      lastSeenCache.chainId !== chainId || // Different chain aka different bind
+      lastSeenCache.timestamp < now - chainResetInterval || // beyond reset interval
+      (lastSeenCache.windowId && lastSeenCache.windowId !== id) || // different window
       sequenceNumber > cycleLength - 1 // restart at first position in chain
     ) {
       sequenceNumber = 0
-      lastSeenChain = gridPositions
+      lastSeenCache.chainId = chainId
     }
 
-    lastSeenAt = now
-    lastSeenWindow = id
+    lastSeenCache.timestamp = now
+    lastSeenCache.windowId = id
 
     move(gridPositions[sequenceNumber])
     sequenceNumber += 1
   }
 }
 
-let lastSeenChainSideBySide: GridPosition[][] | undefined
-let lastSeenWindowSideBySide: number
-let lastSeenAtSideBySide: number
-export function cycleSideBySide(gridPositions: GridPosition[][]) {
+export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
+  const chainId = String(gridPositions[0].primary.w)
   const cycleLength = gridPositions.length
   let sequenceNumber = 0
 
   return () => {
-    const [win1, win2] = Window.recent()
+    const currentScreen = Window.focused()?.screen()
+    if (!currentScreen) return
+    const [win1, win2] = Window.recent().filter((w) => w.screen() === currentScreen)
     const id = win1.hash()
     const now = Date.now()
 
     if (
-      (!!lastSeenChainSideBySide &&
-        !arrEquals(lastSeenChainSideBySide, gridPositions)) || // Different chain aka different bind
-      lastSeenAtSideBySide < now - chainResetInterval || // beyond reset interval
-      lastSeenWindowSideBySide !== id || // different window
+      lastSeenCache.chainId !== chainId || // Different chain aka different bind
+      lastSeenCache.timestamp < now - chainResetInterval || // beyond reset interval
+      (lastSeenCache.windowId && lastSeenCache.windowId !== id) || // different window
       sequenceNumber > cycleLength - 1 // restart at first position in chain
     ) {
       sequenceNumber = 0
-      lastSeenChainSideBySide = gridPositions
+      lastSeenCache.chainId = chainId
     }
 
-    lastSeenAtSideBySide = now
-    lastSeenWindowSideBySide = id
+    lastSeenCache.timestamp = now
+    lastSeenCache.windowId = id
 
-    move(gridPositions[sequenceNumber][0], win1)
-    move(gridPositions[sequenceNumber][1], win2)
+    move(gridPositions[sequenceNumber].primary, win1)
+    move(gridPositions[sequenceNumber].secondary, win2)
     sequenceNumber += 1
   }
 }
@@ -113,8 +153,8 @@ function computeNewFrameFromGrid(
   gridPos: GridPosition,
 ): Rectangle | undefined {
   const screenRect = screen.flippedVisibleFrame()
-
   if (!screenRect) return
+
   var unitX = screenRect.width / COLS
   var unitY = screenRect.height / ROWS
   var newFrame = {

@@ -1,7 +1,8 @@
 import { log } from './logger'
 import {
-  cycleSideBySide,
+  cycleWindowSplit,
   cycleWindowPositions,
+  splitWindowLayout,
   moveToNextScreen,
 } from './window-grid'
 
@@ -11,30 +12,7 @@ const HYPER: Phoenix.ModifierKey[] = ['ctrl', 'shift', 'option']
 const HYPER_CMD: Phoenix.ModifierKey[] = [...HYPER, 'cmd']
 
 Key.on(
-  '1',
-  HYPER_CMD,
-  cycleWindowPositions([
-    { x: 0, y: 0, w: 7, h: 12 },
-    { x: 0, y: 0, w: 5, h: 12 },
-    { x: 0, y: 0, w: 4, h: 12 },
-    { x: 0, y: 0, w: 8, h: 12 },
-  ]),
-)
-
-Key.on(
-  '3',
-  HYPER_CMD,
-  cycleWindowPositions([
-    { x: 7, y: 0, w: 5, h: 12 },
-    { x: 6, y: 0, w: 6, h: 12 },
-    { x: 5, y: 0, w: 7, h: 12 },
-    { x: 4, y: 0, w: 8, h: 12 },
-    { x: 8, y: 0, w: 4, h: 12 },
-  ]),
-)
-
-Key.on(
-  '2',
+  'w',
   HYPER,
   cycleWindowPositions([
     { x: 0, y: 0, w: 12, h: 12 },
@@ -44,52 +22,32 @@ Key.on(
   ]),
 )
 
-Key.on('4', HYPER, () => {
+Key.on('tab', HYPER, () => {
   moveToNextScreen()
 })
 
+// Cycle 2-window split, left side primary
 Key.on(
-  '1',
+  'q',
   HYPER,
-  cycleSideBySide([
-    [
-      { x: 0, y: 0, w: 7, h: 12 },
-      { x: 7, y: 0, w: 5, h: 12 },
-    ],
-    [
-      { x: 0, y: 0, w: 6, h: 12 },
-      { x: 6, y: 0, w: 6, h: 12 },
-    ],
-    [
-      { x: 0, y: 0, w: 5, h: 12 },
-      { x: 5, y: 0, w: 7, h: 12 },
-    ],
-    [
-      { x: 0, y: 0, w: 4, h: 12 },
-      { x: 4, y: 0, w: 8, h: 12 },
-    ],
+  cycleWindowSplit([
+    splitWindowLayout.left['7x12'],
+    splitWindowLayout.left['6x12'],
+    splitWindowLayout.left['5x12'],
+    splitWindowLayout.left['4x12'],
+    splitWindowLayout.left['8x12'],
   ]),
 )
 
+// Cycle 2-window split, right side primary
 Key.on(
-  '3',
+  'e',
   HYPER,
-  cycleSideBySide([
-    [
-      { x: 7, y: 0, w: 5, h: 12 },
-      { x: 0, y: 0, w: 7, h: 12 },
-    ],
-    [
-      { x: 6, y: 0, w: 6, h: 12 },
-      { x: 0, y: 0, w: 6, h: 12 },
-    ],
-    [
-      { x: 5, y: 0, w: 7, h: 12 },
-      { x: 0, y: 0, w: 5, h: 12 },
-    ],
-    [
-      { x: 4, y: 0, w: 8, h: 12 },
-      { x: 0, y: 0, w: 4, h: 12 },
-    ],
+  cycleWindowSplit([
+    splitWindowLayout.right['5x12'],
+    splitWindowLayout.right['6x12'],
+    splitWindowLayout.right['7x12'],
+    splitWindowLayout.right['8x12'],
+    splitWindowLayout.right['4x12'],
   ]),
 )
