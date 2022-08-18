@@ -10,12 +10,14 @@ type GridPosition = {
   h: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 }
 
+type GridPositionSideBySide = GridPosition[][]
+
 const chainResetInterval = 1500
 let lastSeenChain: GridPosition[] | undefined
 let lastSeenWindow: number
 let lastSeenAt: number
 
-export function chainWindowPositions(gridPositions: GridPosition[]) {
+export function cycleWindowPositions(gridPositions: GridPosition[]) {
   const cycleLength = gridPositions.length
   let sequenceNumber = 0
 
@@ -43,8 +45,40 @@ export function chainWindowPositions(gridPositions: GridPosition[]) {
   }
 }
 
-export function move(gridPos: GridPosition) {
-  const win = Window.focused()
+let lastSeenChainSideBySide: GridPosition[][] | undefined
+let lastSeenWindowSideBySide: number
+let lastSeenAtSideBySide: number
+export function cycleSideBySide(gridPositions: GridPosition[][]) {
+  const cycleLength = gridPositions.length
+  let sequenceNumber = 0
+
+  return () => {
+    const [win1, win2] = Window.recent()
+    const id = win1.hash()
+    const now = Date.now()
+
+    if (
+      (!!lastSeenChainSideBySide &&
+        !arrEquals(lastSeenChainSideBySide, gridPositions)) || // Different chain aka different bind
+      lastSeenAtSideBySide < now - chainResetInterval || // beyond reset interval
+      lastSeenWindowSideBySide !== id || // different window
+      sequenceNumber > cycleLength - 1 // restart at first position in chain
+    ) {
+      sequenceNumber = 0
+      lastSeenChainSideBySide = gridPositions
+    }
+
+    lastSeenAtSideBySide = now
+    lastSeenWindowSideBySide = id
+
+    move(gridPositions[sequenceNumber][0], win1)
+    move(gridPositions[sequenceNumber][1], win2)
+    sequenceNumber += 1
+  }
+}
+
+export function move(gridPos: GridPosition, currentWindow?: Window) {
+  const win = currentWindow ?? Window.focused()
   if (!win) return
 
   const screen = win.screen()
@@ -92,9 +126,7 @@ function computeNewFrameFromGrid(
   return newFrame
 }
 
-type FrameRatio = (frame: Rectangle) => Rectangle
-
-function frameRatio(a: Rectangle, b: Rectangle): FrameRatio {
+function frameRatio(a: Rectangle, b: Rectangle): (frame: Rectangle) => Rectangle {
   const widthRatio = b.width / a.width
   const heightRatio = b.height / a.height
 

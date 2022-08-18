@@ -1,14 +1,19 @@
-import { chainWindowPositions, moveToNextScreen } from './window-grid'
+import { log } from './logger'
+import {
+  cycleSideBySide,
+  cycleWindowPositions,
+  moveToNextScreen,
+} from './window-grid'
 
 console.log('Phoenix Started')
 
-const hyper: Phoenix.ModifierKey[] = ['ctrl', 'shift', 'option']
-const hyperCmd: Phoenix.ModifierKey[] = [...hyper, 'cmd']
+const HYPER: Phoenix.ModifierKey[] = ['ctrl', 'shift', 'option']
+const HYPER_CMD: Phoenix.ModifierKey[] = [...HYPER, 'cmd']
 
 Key.on(
   '1',
-  hyper,
-  chainWindowPositions([
+  HYPER_CMD,
+  cycleWindowPositions([
     { x: 0, y: 0, w: 7, h: 12 },
     { x: 0, y: 0, w: 5, h: 12 },
     { x: 0, y: 0, w: 4, h: 12 },
@@ -18,8 +23,8 @@ Key.on(
 
 Key.on(
   '3',
-  hyper,
-  chainWindowPositions([
+  HYPER_CMD,
+  cycleWindowPositions([
     { x: 7, y: 0, w: 5, h: 12 },
     { x: 6, y: 0, w: 6, h: 12 },
     { x: 5, y: 0, w: 7, h: 12 },
@@ -30,8 +35,8 @@ Key.on(
 
 Key.on(
   '2',
-  hyper,
-  chainWindowPositions([
+  HYPER,
+  cycleWindowPositions([
     { x: 0, y: 0, w: 12, h: 12 },
     { x: 0.5, y: 0.5, w: 11, h: 11 },
     { x: 2, y: 1, w: 8, h: 10 },
@@ -39,6 +44,52 @@ Key.on(
   ]),
 )
 
-Key.on('4', hyper, () => {
+Key.on('4', HYPER, () => {
   moveToNextScreen()
 })
+
+Key.on(
+  '1',
+  HYPER,
+  cycleSideBySide([
+    [
+      { x: 0, y: 0, w: 7, h: 12 },
+      { x: 7, y: 0, w: 5, h: 12 },
+    ],
+    [
+      { x: 0, y: 0, w: 6, h: 12 },
+      { x: 6, y: 0, w: 6, h: 12 },
+    ],
+    [
+      { x: 0, y: 0, w: 5, h: 12 },
+      { x: 5, y: 0, w: 7, h: 12 },
+    ],
+    [
+      { x: 0, y: 0, w: 4, h: 12 },
+      { x: 4, y: 0, w: 8, h: 12 },
+    ],
+  ]),
+)
+
+Key.on(
+  '3',
+  HYPER,
+  cycleSideBySide([
+    [
+      { x: 7, y: 0, w: 5, h: 12 },
+      { x: 0, y: 0, w: 7, h: 12 },
+    ],
+    [
+      { x: 6, y: 0, w: 6, h: 12 },
+      { x: 0, y: 0, w: 6, h: 12 },
+    ],
+    [
+      { x: 5, y: 0, w: 7, h: 12 },
+      { x: 0, y: 0, w: 5, h: 12 },
+    ],
+    [
+      { x: 4, y: 0, w: 8, h: 12 },
+      { x: 0, y: 0, w: 4, h: 12 },
+    ],
+  ]),
+)

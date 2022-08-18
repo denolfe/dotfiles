@@ -4,10 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "parcel": "parcel build src/phoenix.ts",
-    "parcel:watch": "parcel watch src/phoenix.ts"
+    "build": "parcel build src/phoenix.ts",
+    "dev": "parcel watch src/phoenix.ts",
+    "typecheck": "tsc --noEmit"
   },
   "module": "dist/phoenix.js",
   "devDependencies": {
