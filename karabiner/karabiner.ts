@@ -174,6 +174,12 @@ mods.addRule({
 mods.addRule({
   description: 'Spotify Remappings',
   manipulators: [
+    // Media Keys
+    // @ts-ignore backslash not in typing
+    hyper('backslash', 'play_or_pause'),
+    hyper('close_bracket', 'fastforward'),
+    hyper('open_bracket', 'rewind'),
+
     // Home
     remap(
       { key_code: 'h', modifiers: { mandatory: ['left_command'] } },
