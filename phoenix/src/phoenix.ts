@@ -29,7 +29,9 @@ Key.on(
   ]),
 )
 
-// Cycle 2-window split, left side primary
+/**
+ * Cycle 2-window split, left side primary
+ */
 Key.on(
   'q',
   HYPER,
@@ -42,7 +44,9 @@ Key.on(
   ]),
 )
 
-// Cycle 2-window split, right side primary
+/**
+ * Cycle 2-window split, right side primary
+ */
 Key.on(
   'e',
   HYPER,

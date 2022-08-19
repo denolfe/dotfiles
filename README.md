@@ -11,12 +11,12 @@
 ![Image](preview.png)
 
 | Component                     | Tool                                                      | Config                             |
-|-------------------------------|-----------------------------------------------------------|------------------------------------|
+| ----------------------------- | --------------------------------------------------------- | ---------------------------------- |
 | Installation                  | [Dotbot](https://github.com/anishathalye/dotbot)          | [config](./install.conf.yaml)      |
 | Theme                         | [Powerlevel10k](https://github.com/romkatv/powerlevel10k) | [config](./zsh/p10k.zsh)           |
 | .zshrc                        | [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)    | [config](./zsh/zshrc.zsh)          |
 | Global Key Rebinds, Hyper Key | [Karabiner](https://karabiner-elements.pqrs.org/)         | [config](./karabiner/karabiner.ts) |
-| App Focus, Window Management  | [Hammerspoon](https://www.hammerspoon.org/)               | [config](./hammerspoon/init.lua)   |
+| App Focus, Window Management  | [Phoenix](https://kasper.github.io/phoenix/)              | [config](./phoenix/src/phoenix.ts) |
 
 ## [Makefile](./Makefile)
 
@@ -24,6 +24,7 @@
 - Homebrew save/restore
 - VS Code extension save/restore
 - Karabiner config compilation
+- Phoenix config compilation
 - Install MacOS defaults
 
 ## Keyboard Mappings
@@ -54,7 +55,7 @@
 - <kbd>CapsLock</kbd>+<kbd>s</kbd> - Mission Control
 - <kbd>CapsLock</kbd> +<kbd>cmd</kbd>+<kbd>s</kbd> - Show all app windows
 
-## HammerSpoon
+## Phoenix
 
 ### Window Launch or Focus
 
