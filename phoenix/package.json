@@ -22,9 +22,5 @@
     "singleQuote": true,
     "trailingComma": "all",
     "arrowParens": "always"
-  },
-  "dependencies": {
-    "lodash": "^4.17.21",
-    "robotjs": "^0.6.0"
   }
 }
