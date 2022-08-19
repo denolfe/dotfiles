@@ -1,4 +1,4 @@
-import { log } from './logger'
+import { log } from './utils/logger'
 
 const ROWS = 12
 const COLS = 12
@@ -63,9 +63,8 @@ export function cycleWindowPositions(gridPositions: GridPosition[]) {
   let sequenceNumber = 0
 
   return () => {
-    const win = Window.focused()
-    if (!win) return
-    const id = win?.hash()
+    const id = Window.focused()?.hash()
+    if (!id) return
     const now = Date.now()
 
     if (
