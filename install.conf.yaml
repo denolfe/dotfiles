@@ -36,6 +36,10 @@
     ~/.prettierrc.js:
       path: node/prettierrc.js
 
+    ~/.phoenix.js:
+      path: phoenix/dist/phoenix.js
+      force: true
+
     ~/bin:
       glob: true
       path: scripts/*
