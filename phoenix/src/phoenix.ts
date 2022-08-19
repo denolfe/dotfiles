@@ -1,4 +1,5 @@
 import { log } from './logger'
+import * as spotify from './spotify'
 import {
   cycleWindowSplit,
   cycleWindowPositions,
@@ -17,6 +18,11 @@ bindApp('c', HYPER, 'Visual Studio Code')
 bindApp('r', HYPER, 'Notion')
 bindApp('v', HYPER, 'Spotify')
 bindCycleApps('f', HYPER, ['Slack', 'Discord'])
+
+Key.on('\\', HYPER, () => spotify.playOrPause())
+Key.on(']', HYPER, () => spotify.nextTrack())
+Key.on('[', HYPER, () => spotify.previousTrack())
+Key.on('t', HYPER, () => log.notify('error test'))
 
 Key.on(
   'w',
