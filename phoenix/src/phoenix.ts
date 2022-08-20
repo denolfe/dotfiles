@@ -5,12 +5,16 @@ import {
   cycleWindowPositions,
   splitWindowLayout,
   moveToNextScreen,
+  moveToInternalDisplay,
 } from './window-grid'
+import { initScreens } from './screen'
 
 console.log('Phoenix Started')
 
 const HYPER: Phoenix.ModifierKey[] = ['ctrl', 'shift', 'option']
 const HYPER_CMD: Phoenix.ModifierKey[] = [...HYPER, 'cmd']
+
+initScreens()
 
 bindApp(';', HYPER, 'iTerm')
 bindApp('g', HYPER, 'Google Chrome')
@@ -69,6 +73,10 @@ Key.on('tab', HYPER, () => {
   moveToNextScreen()
 })
 
+Key.on('tab', HYPER_CMD, () => {
+  moveToInternalDisplay()
+})
+
 /**
  * Launch or focus last app window
  */
@@ -102,7 +110,7 @@ function bindCycleApps(
   appNames: string[],
 ) {
   Key.on(key, mods, () => {
-    const apps = appNames.map((a) => App.get(a)).filter(Boolean)
+    const apps = appNames.map(a => App.get(a)).filter(Boolean)
     const currentApp = App.focused().name()
     if (currentApp === apps[0]?.name()) {
       apps[1]?.focus() || App.launch(appNames[1], { focus: true })

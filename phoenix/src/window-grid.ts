@@ -1,3 +1,4 @@
+import { getInternalDisplay, getMainDisplay } from './screen'
 import { log } from './utils/logger'
 
 const ROWS = 12
@@ -93,7 +94,7 @@ export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
   return () => {
     const currentScreen = Window.focused()?.screen()
     if (!currentScreen) return
-    const [win1, win2] = Window.recent().filter((w) => w.screen() === currentScreen)
+    const [win1, win2] = Window.recent().filter(w => w.screen() === currentScreen)
     const id = win1.hash()
     const now = Date.now()
 
@@ -135,8 +136,33 @@ export function move(gridPos: GridPosition, currentWindow?: Window) {
 export function moveToNextScreen() {
   const win = Window.focused()
   if (!win) return
+  const currentScreen = win.screen()
+  let newScreen = currentScreen.next()
+
+  if (currentScreen.isEqual(newScreen)) return
+
+  // Avoid internal display
+  if (newScreen.flippedVisibleFrame().width === 1792) {
+    newScreen = newScreen.next()
+  }
+
+  // Always move from internal to main
+  if (currentScreen.isEqual(getInternalDisplay())) {
+    newScreen = getMainDisplay()
+  }
+
+  const ratio = frameRatio(
+    currentScreen.flippedVisibleFrame(),
+    newScreen.flippedVisibleFrame(),
+  )
+  win.setFrame(ratio(win.frame()))
+}
+
+export function moveToInternalDisplay() {
+  const win = Window.focused()
+  if (!win) return
   const oldScreen = win.screen()
-  const newScreen = oldScreen.next()
+  const newScreen = getInternalDisplay()
 
   if (oldScreen.isEqual(newScreen)) return
 
