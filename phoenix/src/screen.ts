@@ -1,7 +1,9 @@
 const screenCache: Record<string, Screen> = {}
+const screenCount: number = Screen.all().length
 
 export const getInternalDisplay = () => screenCache['internal']
 export const getMainDisplay = () => screenCache['main']
+export const getScreenCount = () => screenCount
 
 export function initScreens() {
   const allScreens = Screen.all()
@@ -16,7 +18,9 @@ export function initScreens() {
   })
 
   // Debug
-  // Object.entries(screenCache).forEach(([name, screen]) =>
-  //   console.log(name, screen.flippedVisibleFrame().width),
-  // )
+  Object.entries(screenCache).forEach(([name, screen]) =>
+    console.log(name, screen.flippedVisibleFrame().width),
+  )
+
+  console.log('Screen count:', screenCount)
 }

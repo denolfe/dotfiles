@@ -1,4 +1,4 @@
-import { getInternalDisplay, getMainDisplay } from './screen'
+import { getInternalDisplay, getMainDisplay, getScreenCount } from './screen'
 import { log } from './utils/logger'
 
 const ROWS = 12
@@ -134,21 +134,29 @@ export function move(gridPos: GridPosition, currentWindow?: Window) {
 }
 
 export function moveToNextScreen() {
-  const win = Window.focused()
+  let win = Window.focused()
   if (!win) return
+
+  // Handle Google Chrome's cmd+f
+  if (!win.isNormal() && win.app().name() === 'Google Chrome') {
+    win = Window.recent()[1]
+    // win = win.app().mainWindow()
+  }
   const currentScreen = win.screen()
   let newScreen = currentScreen.next()
 
   if (currentScreen.isEqual(newScreen)) return
 
-  // Avoid internal display
-  if (newScreen.flippedVisibleFrame().width === 1792) {
-    newScreen = newScreen.next()
-  }
+  if (getScreenCount() >= 3) {
+    // Avoid internal display in triple
+    if (newScreen.flippedVisibleFrame().width === 1792) {
+      newScreen = newScreen.next()
+    }
 
-  // Always move from internal to main
-  if (currentScreen.isEqual(getInternalDisplay())) {
-    newScreen = getMainDisplay()
+    // Always move from internal to main
+    if (currentScreen.isEqual(getInternalDisplay())) {
+      newScreen = getMainDisplay()
+    }
   }
 
   const ratio = frameRatio(
@@ -159,8 +167,9 @@ export function moveToNextScreen() {
 }
 
 export function moveToInternalDisplay() {
-  const win = Window.focused()
+  let win = Window.focused()
   if (!win) return
+  if (!win.isNormal()) win = Window.recent()[1]
   const oldScreen = win.screen()
   const newScreen = getInternalDisplay()
 

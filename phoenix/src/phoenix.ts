@@ -8,13 +8,21 @@ import {
   moveToInternalDisplay,
 } from './window-grid'
 import { initScreens } from './screen'
+import { titleModal } from './modal'
 
 console.log('Phoenix Started')
+titleModal('Config Loaded!', undefined, App.get('Phoenix')?.icon())
 
 const HYPER: Phoenix.ModifierKey[] = ['ctrl', 'shift', 'option']
 const HYPER_CMD: Phoenix.ModifierKey[] = [...HYPER, 'cmd']
 
 initScreens()
+
+Event.on('screensDidChange', () => {
+  Phoenix.reload()
+})
+
+Key.on('r', HYPER_CMD, () => Phoenix.reload())
 
 bindApp(';', HYPER, 'iTerm')
 bindApp('g', HYPER, 'Google Chrome')
@@ -80,16 +88,11 @@ Key.on('tab', HYPER_CMD, () => {
 /**
  * Launch or focus last app window
  */
-function bindApp(
-  key: string,
-  mods: Phoenix.ModifierKey[],
-  appName: string,
-  appLaunchName?: string,
-) {
+function bindApp(key: string, mods: Phoenix.ModifierKey[], appName: string) {
   Key.on(key, mods, () => {
     const app = App.get(appName)
-    if (!app) {
-      App.launch(appLaunchName ?? appName, { focus: true })
+    if (!app || !app.windows().length) {
+      App.launch(appName, { focus: true })
     } else if (
       Window.focused()?.app().bundleIdentifier() === app.bundleIdentifier()
     ) {
