@@ -1,4 +1,4 @@
-.PHONY: install karabiner phoenix macos brew brew-restore
+.PHONY: install karabiner phoenix macos brew brew-restore phoenix-dev
 
 # Run dotbot install script
 install:
@@ -11,6 +11,10 @@ karabiner:
 # Build and output phoenix config
 phoenix:
 	yarn --cwd phoenix run build
+
+# Watch and build phoenix config
+phoenix-dev:
+	yarn --cwd phoenix run dev
 
 # Install extensions from vscode/extensions.txt
 vscode-install:
