@@ -3,11 +3,12 @@ import * as spotify from './spotify'
 import {
   cycleWindowSplit,
   cycleWindowPositions,
-  splitWindowLayout,
+  splitWindowLayout as layout,
   moveToNextScreen,
   moveToInternalDisplay,
   swapAllWindowsBetweenDisplays,
   gatherAllWindows,
+  centeredWindowPositions as centered,
 } from './window-grid'
 import { initScreens } from './screen'
 import { titleModal } from './modal'
@@ -44,10 +45,10 @@ Key.on(
   'w',
   HYPER,
   cycleWindowPositions([
-    { x: 0, y: 0, w: 12, h: 12 },
-    { x: 0.5, y: 0.5, w: 11, h: 11 },
-    { x: 2, y: 1, w: 8, h: 10 },
-    { x: 2.5, y: 1.5, w: 7, h: 9 },
+    centered.full,
+    centered.centeredBig,
+    centered.centeredMedium,
+    centered.centeredSmall,
   ]),
 )
 
@@ -58,11 +59,11 @@ Key.on(
   'q',
   HYPER,
   cycleWindowSplit([
-    splitWindowLayout.left['7x12'],
-    splitWindowLayout.left['6x12'],
-    splitWindowLayout.left['5x12'],
-    splitWindowLayout.left['4x12'],
-    splitWindowLayout.left['8x12'],
+    layout.left60,
+    layout.left50,
+    layout.left40,
+    layout.left33,
+    layout.left66,
   ]),
 )
 
@@ -73,11 +74,11 @@ Key.on(
   'e',
   HYPER,
   cycleWindowSplit([
-    splitWindowLayout.right['5x12'],
-    splitWindowLayout.right['6x12'],
-    splitWindowLayout.right['7x12'],
-    splitWindowLayout.right['8x12'],
-    splitWindowLayout.right['4x12'],
+    layout.right40,
+    layout.right50,
+    layout.right60,
+    layout.right66,
+    layout.right33,
   ]),
 )
 

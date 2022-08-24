@@ -1,23 +1,37 @@
 import { getInternalDisplay, getMainDisplay, getScreenCount } from './screen'
 import { log } from './utils/logger'
 
-const ROWS = 12
-const COLS = 12
-
-type GridValue = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
-
+/**
+ * Window position and size on 0-1 grid
+ */
 type GridPosition = {
   x: number
   y: number
-  w: GridValue
-  h: GridValue
+  w: number
+  h: number
 }
 
 const chainResetInterval = 1500
 
 type SplitWindowLayout = { primary: GridPosition; secondary: GridPosition }
 
-type GridKeys = '8x12' | '7x12' | '6x12' | '5x12' | '4x12'
+type SplitWindowGridPositions =
+  | 'left66'
+  | 'left60'
+  | 'left50'
+  | 'left40'
+  | 'left33'
+  | 'right33'
+  | 'right40'
+  | 'right50'
+  | 'right60'
+  | 'right66'
+
+type CenteredGridPositions =
+  | 'full'
+  | 'centeredBig'
+  | 'centeredMedium'
+  | 'centeredSmall'
 
 function calcSplitWindowLayout(primary: GridPosition): SplitWindowLayout {
   const secondaryXy =
@@ -27,30 +41,35 @@ function calcSplitWindowLayout(primary: GridPosition): SplitWindowLayout {
 
   const secondary: GridPosition = {
     ...secondaryXy,
-    w: (COLS - primary.w) as GridValue,
-    h: ROWS,
+    w: 1 - primary.w,
+    h: 1,
   }
   return { primary, secondary }
 }
 
-export const splitWindowLayout: Record<
-  'left' | 'right',
-  Record<GridKeys, SplitWindowLayout>
-> = {
-  left: {
-    '8x12': calcSplitWindowLayout({ x: 0, y: 0, w: 8, h: 12 }),
-    '7x12': calcSplitWindowLayout({ x: 0, y: 0, w: 7, h: 12 }),
-    '6x12': calcSplitWindowLayout({ x: 0, y: 0, w: 6, h: 12 }),
-    '5x12': calcSplitWindowLayout({ x: 0, y: 0, w: 5, h: 12 }),
-    '4x12': calcSplitWindowLayout({ x: 0, y: 0, w: 4, h: 12 }),
-  },
-  right: {
-    '4x12': calcSplitWindowLayout({ x: 8, y: 0, w: 4, h: 12 }),
-    '5x12': calcSplitWindowLayout({ x: 7, y: 0, w: 5, h: 12 }),
-    '6x12': calcSplitWindowLayout({ x: 6, y: 0, w: 6, h: 12 }),
-    '7x12': calcSplitWindowLayout({ x: 5, y: 0, w: 7, h: 12 }),
-    '8x12': calcSplitWindowLayout({ x: 4, y: 0, w: 8, h: 12 }),
-  },
+/**
+ * Side-by-side split window layouts
+ * 12x12 grid turned into 0-1 values
+ */
+export const splitWindowLayout: Record<SplitWindowGridPositions, SplitWindowLayout> =
+  {
+    left66: calcSplitWindowLayout({ x: 0, y: 0, w: 0.67, h: 1 }),
+    left60: calcSplitWindowLayout({ x: 0, y: 0, w: 0.58, h: 1 }),
+    left50: calcSplitWindowLayout({ x: 0, y: 0, w: 0.5, h: 1 }),
+    left40: calcSplitWindowLayout({ x: 0, y: 0, w: 0.42, h: 1 }),
+    left33: calcSplitWindowLayout({ x: 0, y: 0, w: 0.33, h: 1 }),
+    right33: calcSplitWindowLayout({ x: 0.67, y: 0, w: 0.33, h: 1 }),
+    right40: calcSplitWindowLayout({ x: 0.58, y: 0, w: 0.42, h: 1 }),
+    right50: calcSplitWindowLayout({ x: 0.5, y: 0, w: 0.5, h: 1 }),
+    right60: calcSplitWindowLayout({ x: 0.42, y: 0, w: 0.58, h: 1 }),
+    right66: calcSplitWindowLayout({ x: 0.33, y: 0, w: 0.67, h: 1 }),
+  }
+
+export const centeredWindowPositions: Record<CenteredGridPositions, GridPosition> = {
+  full: { x: 0, y: 0, w: 1, h: 1 },
+  centeredBig: { x: 0.04, y: 0.04, w: 0.92, h: 0.92 },
+  centeredMedium: { x: 0.17, y: 0.08, w: 0.67, h: 0.83 },
+  centeredSmall: { x: 0.21, y: 0.125, w: 0.58, h: 0.75 },
 }
 
 // Share cache between cycle functions
@@ -140,7 +159,6 @@ export function moveToNextScreen() {
   // Handle Google Chrome's cmd+f
   if (!win.isNormal() && win.app().name() === 'Google Chrome') {
     win = Window.recent()[1]
-    // win = win.app().mainWindow()
   }
   const currentScreen = win.screen()
   let newScreen = currentScreen.next()
@@ -223,8 +241,8 @@ function computeNewFrameFromGrid(
   const screenRect = screen.flippedVisibleFrame()
   if (!screenRect) return
 
-  var unitX = screenRect.width / COLS
-  var unitY = screenRect.height / ROWS
+  var unitX = screenRect.width / 1
+  var unitY = screenRect.height / 1
   var newFrame = {
     x: screenRect.x + gridPos.x * unitX,
     y: screenRect.y + gridPos.y * unitY,
