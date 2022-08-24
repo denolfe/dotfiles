@@ -14,7 +14,7 @@ import { initScreens } from './screen'
 import { titleModal } from './modal'
 
 console.log('Phoenix Started')
-titleModal('Config Loaded!', undefined, App.get('Phoenix')?.icon())
+titleModal('Config Loaded', undefined, App.get('Phoenix')?.icon())
 
 const HYPER: Phoenix.ModifierKey[] = ['ctrl', 'shift', 'option']
 const HYPER_CMD: Phoenix.ModifierKey[] = [...HYPER, 'cmd']
