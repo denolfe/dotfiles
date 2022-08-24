@@ -182,6 +182,40 @@ export function moveToInternalDisplay() {
   win.setFrame(ratio(win.frame()))
 }
 
+export function swapAllWindowsBetweenDisplays() {
+  let screen1 = Screen.main()
+  let allScreens = Screen.all()
+  let screen2 = allScreens.filter(
+    s => !s.isEqual(screen1) && !s.isEqual(getInternalDisplay()),
+  )?.[0]
+
+  if (!screen2) return
+
+  const screen1Windows = screen1.windows()
+  const screen2Windows = screen2.windows()
+
+  screen1Windows.forEach(w => moveToSpecificScreen(screen1, screen2, w))
+  screen2Windows.forEach(w => moveToSpecificScreen(screen2, screen1, w))
+}
+
+export function gatherAllWindows() {
+  const allWindows = Screen.all().flatMap(s => {
+    return s.windows()
+  })
+
+  allWindows.forEach(w => w.setFrame(Screen.main().flippedVisibleFrame()))
+}
+
+// Internal Functions
+
+function moveToSpecificScreen(oldScreen: Screen, newScreen: Screen, win: Window) {
+  const ratio = frameRatio(
+    oldScreen.flippedVisibleFrame(),
+    newScreen.flippedVisibleFrame(),
+  )
+  win.setFrame(ratio(win.frame()))
+}
+
 function computeNewFrameFromGrid(
   screen: Screen,
   gridPos: GridPosition,

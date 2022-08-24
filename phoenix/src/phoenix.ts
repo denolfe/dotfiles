@@ -6,6 +6,8 @@ import {
   splitWindowLayout,
   moveToNextScreen,
   moveToInternalDisplay,
+  swapAllWindowsBetweenDisplays,
+  gatherAllWindows,
 } from './window-grid'
 import { initScreens } from './screen'
 import { titleModal } from './modal'
@@ -34,7 +36,9 @@ bindCycleApps('f', HYPER, ['Slack', 'Discord'])
 Key.on('\\', HYPER, () => spotify.playOrPause())
 Key.on(']', HYPER, () => spotify.nextTrack())
 Key.on('[', HYPER, () => spotify.previousTrack())
-Key.on('t', HYPER, () => log.notify('error test'))
+
+Key.on('t', HYPER, () => swapAllWindowsBetweenDisplays())
+Key.on('t', HYPER_CMD, () => gatherAllWindows())
 
 Key.on(
   'w',
@@ -96,8 +100,8 @@ function bindApp(key: string, mods: Phoenix.ModifierKey[], appName: string) {
     } else if (
       Window.focused()?.app().bundleIdentifier() === app.bundleIdentifier()
     ) {
-      // focus second to last window
-      app.windows()[1].focus() // TODO: Make this cycle all app windows
+      // focus second to last window if it exists
+      app.windows()[1]?.focus() // TODO: Make this cycle all app windows
     } else {
       app.mainWindow()?.focus() // last used window
     }
