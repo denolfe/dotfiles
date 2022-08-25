@@ -11,7 +11,7 @@ type GridPosition = {
   h: number
 }
 
-const chainResetInterval = 1500
+const CHAIN_RESET_INTERVAL = 1500
 
 type SplitWindowLayout = { primary: GridPosition; secondary: GridPosition }
 
@@ -70,7 +70,12 @@ export const centeredWindowPositions: Record<CenteredGridPositions, GridPosition
 }
 
 // Share cache between cycle functions
-const lastSeenCache: { chainId?: string; windowId?: number; timestamp: number } = {
+const lastSeenCache: {
+  chainId?: string
+  windowId?: number
+  timestamp: number
+  screenId?: number
+} = {
   timestamp: 0,
 }
 
@@ -83,14 +88,16 @@ export function cycleWindowPositions(gridPositions: GridPosition[]) {
     const win = Window.focused()
     if (!win) return
 
-    const id = win.hash()
+    const winId = win.hash()
+    const screenId = win.screen().hash()
     const now = Date.now()
 
     // Check if should reset sequence
     if (
       lastSeenCache.chainId !== chainId || // Different chain aka different bind
-      lastSeenCache.timestamp < now - chainResetInterval || // Beyond reset interval
-      (lastSeenCache.windowId && lastSeenCache.windowId !== id) || // Different window
+      lastSeenCache.timestamp < now - CHAIN_RESET_INTERVAL || // Beyond reset interval
+      lastSeenCache.windowId !== winId || // Different window
+      lastSeenCache.screenId !== screenId || // Different screen
       sequenceNumber > cycleLength - 1 // Beyond cycle length
     ) {
       sequenceNumber = 0
@@ -98,7 +105,8 @@ export function cycleWindowPositions(gridPositions: GridPosition[]) {
     }
 
     lastSeenCache.timestamp = now
-    lastSeenCache.windowId = id
+    lastSeenCache.windowId = winId
+    lastSeenCache.screenId = screenId
 
     // Check if already at new position and should skip to next position
     if (winIsInGridPos(win, gridPositions[sequenceNumber])) {
@@ -119,13 +127,15 @@ export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
     const currentScreen = Window.focused()?.screen()
     if (!currentScreen) return
     const [win1, win2] = Window.recent().filter(w => w.screen() === currentScreen)
-    const id = win1.hash()
+    const winId = win1.hash()
+    const screenId = win1.screen().hash()
     const now = Date.now()
 
     if (
       lastSeenCache.chainId !== chainId || // Different chain aka different bind
-      lastSeenCache.timestamp < now - chainResetInterval || // Beyond reset interval
-      (lastSeenCache.windowId && lastSeenCache.windowId !== id) || // Different window
+      lastSeenCache.timestamp < now - CHAIN_RESET_INTERVAL || // Beyond reset interval
+      lastSeenCache.windowId !== winId || // Different window
+      lastSeenCache.screenId !== screenId || // Different screen
       sequenceNumber > cycleLength - 1 // Restart at first position in chain
     ) {
       sequenceNumber = 0
@@ -133,7 +143,8 @@ export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
     }
 
     lastSeenCache.timestamp = now
-    lastSeenCache.windowId = id
+    lastSeenCache.windowId = winId
+    lastSeenCache.screenId = screenId
 
     // Check if already at new position and should skip to next position
     if (winIsInGridPos(win1, gridPositions[sequenceNumber].primary)) {
