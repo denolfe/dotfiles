@@ -80,15 +80,18 @@ export function cycleWindowPositions(gridPositions: GridPosition[]) {
   let sequenceNumber = 0
 
   return () => {
-    const id = Window.focused()?.hash()
-    if (!id) return
+    const win = Window.focused()
+    if (!win) return
+
+    const id = win.hash()
     const now = Date.now()
 
+    // Check if should reset sequence
     if (
       lastSeenCache.chainId !== chainId || // Different chain aka different bind
-      lastSeenCache.timestamp < now - chainResetInterval || // beyond reset interval
-      (lastSeenCache.windowId && lastSeenCache.windowId !== id) || // different window
-      sequenceNumber > cycleLength - 1 // restart at first position in chain
+      lastSeenCache.timestamp < now - chainResetInterval || // Beyond reset interval
+      (lastSeenCache.windowId && lastSeenCache.windowId !== id) || // Different window
+      sequenceNumber > cycleLength - 1 // Beyond cycle length
     ) {
       sequenceNumber = 0
       lastSeenCache.chainId = chainId
@@ -96,6 +99,11 @@ export function cycleWindowPositions(gridPositions: GridPosition[]) {
 
     lastSeenCache.timestamp = now
     lastSeenCache.windowId = id
+
+    // Check if already at new position and should skip to next position
+    if (winIsInGridPos(win, gridPositions[sequenceNumber])) {
+      sequenceNumber += 1
+    }
 
     move(gridPositions[sequenceNumber])
     sequenceNumber += 1
@@ -116,9 +124,9 @@ export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
 
     if (
       lastSeenCache.chainId !== chainId || // Different chain aka different bind
-      lastSeenCache.timestamp < now - chainResetInterval || // beyond reset interval
-      (lastSeenCache.windowId && lastSeenCache.windowId !== id) || // different window
-      sequenceNumber > cycleLength - 1 // restart at first position in chain
+      lastSeenCache.timestamp < now - chainResetInterval || // Beyond reset interval
+      (lastSeenCache.windowId && lastSeenCache.windowId !== id) || // Different window
+      sequenceNumber > cycleLength - 1 // Restart at first position in chain
     ) {
       sequenceNumber = 0
       lastSeenCache.chainId = chainId
@@ -127,8 +135,13 @@ export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
     lastSeenCache.timestamp = now
     lastSeenCache.windowId = id
 
+    // Check if already at new position and should skip to next position
+    if (winIsInGridPos(win1, gridPositions[sequenceNumber].primary)) {
+      sequenceNumber += 1
+    }
+
     move(gridPositions[sequenceNumber].primary, win1)
-    move(gridPositions[sequenceNumber].secondary, win2)
+    if (win2) move(gridPositions[sequenceNumber].secondary, win2)
     sequenceNumber += 1
   }
 }
@@ -138,7 +151,7 @@ export function move(gridPos: GridPosition, currentWindow?: Window) {
   if (!win) return
 
   const screen = win.screen()
-  var newFrame = computeNewFrameFromGrid(screen, gridPos)
+  const newFrame = computeNewFrameFromGrid(screen, gridPos)
   if (!newFrame) return
 
   win.setFrame({
@@ -238,13 +251,13 @@ function computeNewFrameFromGrid(
   const screenRect = screen.flippedVisibleFrame()
   if (!screenRect) return
 
-  var unitX = screenRect.width / 1
-  var unitY = screenRect.height / 1
-  var newFrame = {
-    x: screenRect.x + gridPos.x * unitX,
-    y: screenRect.y + gridPos.y * unitY,
-    width: gridPos.w * unitX,
-    height: gridPos.h * unitY,
+  const unitX = screenRect.width / 1
+  const unitY = screenRect.height / 1
+  const newFrame = {
+    x: Math.round(screenRect.x + gridPos.x * unitX),
+    y: Math.round(screenRect.y + gridPos.y * unitY),
+    width: Math.round(gridPos.w * unitX),
+    height: Math.round(gridPos.h * unitY),
   }
   return newFrame
 }
@@ -261,4 +274,29 @@ function frameRatio(a: Rectangle, b: Rectangle): (frame: Rectangle) => Rectangle
 
     return { width, height, x, y }
   }
+}
+
+function winIsInGridPos(win: Window, newGridPos: GridPosition): boolean {
+  const screen = win.screen()
+  const currentFrame = win.frame()
+
+  if (!newGridPos) return false
+
+  const newFrame = computeNewFrameFromGrid(screen, newGridPos)
+  if (!newFrame) return false
+
+  console.log('currentFrame', JSON.stringify(currentFrame))
+  console.log('newFrame', JSON.stringify(newFrame))
+
+  // Compare current with proposed
+  if (
+    currentFrame.x === newFrame.x &&
+    currentFrame.y === newFrame.y &&
+    currentFrame.height === newFrame.height &&
+    currentFrame.width === newFrame.width
+  ) {
+    return true
+  }
+
+  return false
 }
