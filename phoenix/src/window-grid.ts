@@ -212,10 +212,15 @@ export function moveToInternalDisplay() {
 
 export function swapAllWindowsBetweenDisplays() {
   let screen1 = Screen.main()
+  if (getScreenCount() === 1) return
+
   let allScreens = Screen.all()
-  let screen2 = allScreens.filter(
-    s => !s.isEqual(screen1) && !s.isEqual(getInternalDisplay()),
-  )?.[0]
+
+  let otherScreens = allScreens.filter(s => !s.isEqual(screen1))
+  let screen2 =
+    getScreenCount() === 2
+      ? otherScreens?.[0]
+      : otherScreens.filter(s => !s.isEqual(getInternalDisplay()))?.[0]
 
   if (!screen2) return
 
