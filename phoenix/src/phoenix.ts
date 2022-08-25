@@ -22,10 +22,12 @@ const HYPER_CMD: Phoenix.ModifierKey[] = [...HYPER, 'cmd']
 initScreens()
 
 Event.on('screensDidChange', () => {
-  Phoenix.reload()
+  initScreens()
 })
 
 Key.on('r', HYPER_CMD, () => Phoenix.reload())
+
+// App binds
 
 bindApp(';', HYPER, 'iTerm')
 bindApp('g', HYPER, 'Google Chrome')
@@ -34,21 +36,23 @@ bindApp('r', HYPER, 'Notion')
 bindApp('v', HYPER, 'Spotify')
 bindCycleApps('f', HYPER, ['Slack', 'Discord'])
 
+// Spotify Controls
+
 Key.on('\\', HYPER, () => spotify.playOrPause())
 Key.on(']', HYPER, () => spotify.nextTrack())
 Key.on('[', HYPER, () => spotify.previousTrack())
 
-Key.on('t', HYPER, () => swapAllWindowsBetweenDisplays())
-Key.on('t', HYPER_CMD, () => gatherAllWindows())
+// Window Manipulation
 
 Key.on(
   'w',
   HYPER,
   cycleWindowPositions([
     centered.full,
-    centered.centeredBig,
-    centered.centeredMedium,
-    centered.centeredSmall,
+    centered.big,
+    centered.medium,
+    centered.small,
+    centered.xs,
   ]),
 )
 
@@ -89,6 +93,19 @@ Key.on('tab', HYPER, () => {
 Key.on('tab', HYPER_CMD, () => {
   moveToInternalDisplay()
 })
+
+// TODO: Add chording and bind to HYPER_CMD + w
+Key.on('t', HYPER, () => {
+  swapAllWindowsBetweenDisplays()
+  titleModal('All windows swapped')
+})
+
+Key.on('t', HYPER_CMD, () => {
+  gatherAllWindows()
+  titleModal('Gathered all windows')
+})
+
+// TODO: Gather all windows from single app
 
 /**
  * Launch or focus last app window

@@ -27,11 +27,7 @@ type SplitWindowGridPositions =
   | 'right60'
   | 'right66'
 
-type CenteredGridPositions =
-  | 'full'
-  | 'centeredBig'
-  | 'centeredMedium'
-  | 'centeredSmall'
+type CenteredGridPositions = 'full' | 'big' | 'medium' | 'small' | 'xs'
 
 function calcSplitWindowLayout(primary: GridPosition): SplitWindowLayout {
   const secondaryXy =
@@ -67,9 +63,10 @@ export const splitWindowLayout: Record<SplitWindowGridPositions, SplitWindowLayo
 
 export const centeredWindowPositions: Record<CenteredGridPositions, GridPosition> = {
   full: { x: 0, y: 0, w: 1, h: 1 },
-  centeredBig: { x: 0.04, y: 0.04, w: 0.92, h: 0.92 },
-  centeredMedium: { x: 0.17, y: 0.08, w: 0.67, h: 0.83 },
-  centeredSmall: { x: 0.21, y: 0.125, w: 0.58, h: 0.75 },
+  big: { x: 0.04, y: 0.04, w: 0.92, h: 0.92 },
+  medium: { x: 0.17, y: 0.08, w: 0.67, h: 0.83 },
+  small: { x: 0.21, y: 0.125, w: 0.58, h: 0.75 },
+  xs: { x: 0.29, y: 0.21, w: 0.42, h: 0.58 },
 }
 
 // Share cache between cycle functions
