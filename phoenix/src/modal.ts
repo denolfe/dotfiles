@@ -1,14 +1,21 @@
 /**
  * Show modal in title position
  */
-export function titleModal(text: string, duration: number = 1, icon?: Image) {
+export function titleModal(
+  text: string,
+  options?: {
+    duration?: number
+    icon?: Image
+    screen?: Screen
+  },
+) {
   const m = new Modal()
+  options = options || {}
+  const { duration, icon, screen } = options
   m.text = text
-  m.duration = duration
-  if (icon) {
-    m.icon = icon
-  }
-  showTitleOn(m, Screen.main())
+  m.duration = duration ?? 1
+  m.icon = icon
+  showTitleOn(m, screen ?? Screen.main())
 }
 
 /**

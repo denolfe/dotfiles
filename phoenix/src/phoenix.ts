@@ -10,11 +10,11 @@ import {
   gatherAllWindows,
   centeredWindowPositions as centered,
 } from './window-grid'
-import { initScreens } from './screen'
+import { getMainDisplay, initScreens } from './screen'
 import { titleModal } from './modal'
 
 console.log('Phoenix Started')
-titleModal('Config Loaded', undefined, App.get('Phoenix')?.icon())
+titleModal('Config Loaded', { icon: App.get('Phoenix')?.icon() })
 
 const HYPER: Phoenix.ModifierKey[] = ['ctrl', 'shift', 'option']
 const HYPER_CMD: Phoenix.ModifierKey[] = [...HYPER, 'cmd']
@@ -97,7 +97,7 @@ Key.on('tab', HYPER_CMD, () => {
 // TODO: Add chording and bind to HYPER_CMD + w
 Key.on('t', HYPER, () => {
   swapAllWindowsBetweenDisplays()
-  titleModal('All windows swapped')
+  titleModal('All windows swapped', { screen: getMainDisplay() })
 })
 
 Key.on('t', HYPER_CMD, () => {
