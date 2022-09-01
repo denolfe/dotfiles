@@ -12,12 +12,10 @@ import {
 } from './window-grid'
 import { getMainDisplay, initScreens } from './screen'
 import { titleModal } from './modal'
+import { hyperCmd, hyper, HYPER } from './hyper'
 
 console.log('Phoenix Started')
 titleModal('Config Loaded', { icon: App.get('Phoenix')?.icon() })
-
-const HYPER: Phoenix.ModifierKey[] = ['ctrl', 'shift', 'option']
-const HYPER_CMD: Phoenix.ModifierKey[] = [...HYPER, 'cmd']
 
 initScreens()
 
@@ -25,28 +23,27 @@ Event.on('screensDidChange', () => {
   initScreens()
 })
 
-Key.on('r', HYPER_CMD, () => Phoenix.reload())
+hyperCmd('r', () => Phoenix.reload())
 
 // App binds
 
-bindApp(';', HYPER, 'iTerm')
-bindApp('g', HYPER, 'Google Chrome')
-bindApp('c', HYPER, 'Visual Studio Code')
-bindApp('r', HYPER, 'Notion')
-bindApp('v', HYPER, 'Spotify')
-bindCycleApps('f', HYPER, ['Slack', 'Discord'])
+bindApp(';', 'iTerm')
+bindApp('g', 'Google Chrome')
+bindApp('c', 'Visual Studio Code')
+bindApp('r', 'Notion')
+bindApp('v', 'Spotify')
+bindCycleApps('f', ['Slack', 'Discord'])
 
 // Spotify Controls
 
-Key.on('\\', HYPER, () => spotify.playOrPause())
-Key.on(']', HYPER, () => spotify.nextTrack())
-Key.on('[', HYPER, () => spotify.previousTrack())
+hyper('\\', () => spotify.playOrPause())
+hyper(']', () => spotify.nextTrack())
+hyper('[', () => spotify.previousTrack())
 
 // Window Manipulation
 
-Key.on(
+hyper(
   'w',
-  HYPER,
   cycleWindowPositions([
     centered.full,
     centered.big,
@@ -56,51 +53,45 @@ Key.on(
   ]),
 )
 
-/**
- * Cycle 2-window split, left side primary
- */
-Key.on(
+/** Cycle 2-window split, left side primary */
+hyper(
   'q',
-  HYPER,
   cycleWindowSplit([
+    layout.left66,
     layout.left60,
     layout.left50,
     layout.left40,
     layout.left33,
-    layout.left66,
   ]),
 )
 
-/**
- * Cycle 2-window split, right side primary
- */
-Key.on(
+/** Cycle 2-window split, right side primary */
+hyper(
   'e',
-  HYPER,
   cycleWindowSplit([
+    layout.right33,
     layout.right40,
     layout.right50,
     layout.right60,
     layout.right66,
-    layout.right33,
   ]),
 )
 
-Key.on('tab', HYPER, () => {
+hyper('tab', () => {
   moveToNextScreen()
 })
 
-Key.on('tab', HYPER_CMD, () => {
+hyperCmd('tab', () => {
   moveToInternalDisplay()
 })
 
 // TODO: Add chording and bind to HYPER_CMD + w
-Key.on('t', HYPER, () => {
+hyper('t', () => {
   swapAllWindowsBetweenDisplays()
   titleModal('All windows swapped', { screen: getMainDisplay() })
 })
 
-Key.on('t', HYPER_CMD, () => {
+hyperCmd('t', () => {
   gatherAllWindows()
   titleModal('Gathered all windows')
 })
@@ -110,8 +101,8 @@ Key.on('t', HYPER_CMD, () => {
 /**
  * Launch or focus last app window
  */
-function bindApp(key: string, mods: Phoenix.ModifierKey[], appName: string) {
-  Key.on(key, mods, () => {
+function bindApp(key: string, appName: string) {
+  Key.on(key, HYPER, () => {
     const app = App.get(appName)
     if (!app || !app.windows().length) {
       App.launch(appName, { focus: true })
@@ -129,12 +120,8 @@ function bindApp(key: string, mods: Phoenix.ModifierKey[], appName: string) {
 /**
  * Cycle between 2 apps
  */
-function bindCycleApps(
-  key: string,
-  mods: Phoenix.ModifierKey[],
-  appNames: string[],
-) {
-  Key.on(key, mods, () => {
+function bindCycleApps(key: string, appNames: string[]) {
+  Key.on(key, HYPER, () => {
     const apps = appNames.map(a => App.get(a)).filter(Boolean)
     const currentApp = App.focused().name()
     if (currentApp === apps[0]?.name()) {
