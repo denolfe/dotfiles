@@ -79,7 +79,10 @@ const lastSeenCache: {
   timestamp: 0,
 }
 
-export function cycleWindowPositions(gridPositions: GridPosition[]) {
+export function cycleWindowPositions(
+  gridPositions: GridPosition[],
+  smartCycle = false,
+) {
   const chainId = String(gridPositions[0].w)
   const cycleLength = gridPositions.length
   let sequenceNumber = 0
@@ -109,7 +112,7 @@ export function cycleWindowPositions(gridPositions: GridPosition[]) {
     lastSeenCache.screenId = screenId
 
     // Check if already at new position and should skip to next position
-    if (winIsInGridPos(win, gridPositions[sequenceNumber])) {
+    if (smartCycle && winIsInGridPos(win, gridPositions[sequenceNumber])) {
       sequenceNumber += 1
     }
 
@@ -118,7 +121,10 @@ export function cycleWindowPositions(gridPositions: GridPosition[]) {
   }
 }
 
-export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
+export function cycleWindowSplit(
+  gridPositions: SplitWindowLayout[],
+  smartCycle = true,
+) {
   const chainId = String(gridPositions[0].primary.w)
   const cycleLength = gridPositions.length
   let sequenceNumber = 0
@@ -126,7 +132,9 @@ export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
   return () => {
     const currentScreen = Window.focused()?.screen()
     if (!currentScreen) return
-    const [win1, win2] = Window.recent().filter(w => w.screen() === currentScreen)
+    const [win1, win2] = Window.recent().filter(
+      w => w.screen() === currentScreen && w.isNormal(),
+    )
     const winId = win1.hash()
     const screenId = win1.screen().hash()
     const now = Date.now()
@@ -147,7 +155,7 @@ export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
     lastSeenCache.screenId = screenId
 
     // Check if already at new position and should skip to next position
-    if (winIsInGridPos(win1, gridPositions[sequenceNumber].primary)) {
+    if (smartCycle && winIsInGridPos(win1, gridPositions[sequenceNumber].primary)) {
       sequenceNumber += 1
     }
 
@@ -244,7 +252,7 @@ export function swapAllWindowsBetweenDisplays() {
 
 export function gatherAllWindows() {
   const allWindows = Screen.all().flatMap(s => {
-    return s.windows()
+    return s.windows().filter(w => w.isNormal())
   })
 
   allWindows.forEach(w => w.setFrame(Screen.main().flippedVisibleFrame()))
@@ -278,6 +286,7 @@ function computeNewFrameFromGrid(
   return newFrame
 }
 
+/** Creates function for maintaining ratio between 2 frames */
 function frameRatio(a: Rectangle, b: Rectangle): (frame: Rectangle) => Rectangle {
   const widthRatio = b.width / a.width
   const heightRatio = b.height / a.height
