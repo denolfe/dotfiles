@@ -4,6 +4,9 @@
 install:
 	./install
 
+link:
+	./install --only link
+
 # Build and output karabiner.json
 karabiner:
 	deno run --allow-env --allow-read --allow-write karabiner/karabiner.ts
