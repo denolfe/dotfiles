@@ -47,8 +47,8 @@ hyper(
   cycleWindowPositions([
     centered.full,
     centered.big,
-    centered.medium,
-    centered.small,
+    centered.med,
+    centered.sm,
     centered.xs,
   ]),
 )

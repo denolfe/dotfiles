@@ -27,7 +27,7 @@ type SplitWindowGridPositions =
   | 'right60'
   | 'right66'
 
-type CenteredGridPositions = 'full' | 'big' | 'medium' | 'small' | 'xs'
+type CenteredGridPositions = 'full' | 'big' | 'med' | 'sm' | 'xs'
 
 function calcSplitWindowLayout(primary: GridPosition): SplitWindowLayout {
   const secondaryXy =
@@ -62,10 +62,10 @@ export const splitWindowLayout: Record<SplitWindowGridPositions, SplitWindowLayo
   }
 
 export const centeredWindowPositions: Record<CenteredGridPositions, GridPosition> = {
-  full: { x: 0, y: 0, w: 1, h: 1 },
-  big: { x: 0.04, y: 0.04, w: 0.92, h: 0.92 },
-  medium: { x: 0.17, y: 0.08, w: 0.67, h: 0.83 },
-  small: { x: 0.21, y: 0.125, w: 0.58, h: 0.75 },
+  full: centeredWindow16x9(1),
+  big: centeredWindow16x9(0.92),
+  med: centeredWindow16x9(0.83),
+  sm: { x: 0.21, y: 0.125, w: 0.58, h: 0.75 },
   xs: { x: 0.29, y: 0.21, w: 0.42, h: 0.58 },
 }
 
@@ -324,4 +324,10 @@ function winIsInGridPos(win: Window, newGridPos: GridPosition): boolean {
   }
 
   return false
+}
+
+/** Get 16:9 window grid position */
+function centeredWindow16x9(percent: number): GridPosition {
+  const leftXy = (1 - percent) / 2
+  return { x: leftXy, y: leftXy, w: percent, h: percent }
 }
