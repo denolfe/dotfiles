@@ -29,6 +29,8 @@ alias mv='mv -i'
 
 hs(){ history | grep -i "$1" ;}
 
+alias ca='code -a'
+
 # Detect the platform (similar to $OSTYPE)
 OS=$(uname)
 case $OS in
@@ -57,9 +59,12 @@ esac
 
 # Other bash stuff
 alias t="touch"
-alias tr1='tree -L 1 -C'
-alias tr2='tree -L 2 -C'
-alias tr3='tree -L 3 -C'
+
+# tree w/ .gitignore - https://unix.stackexchange.com/a/632196
+alias tr1='rg --files | tree --fromfile -L 1 -C'
+alias tr2='rg --files | tree --fromfile -L 2 -C'
+alias tr3='rg --files | tree --fromfile -L 3 -C'
+alias trall='rg --files | tree --fromfile -C'
 
 if type bat > /dev/null 2>&1; then
   alias cat="bat"

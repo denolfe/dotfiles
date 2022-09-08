@@ -15,3 +15,6 @@ alias yga='yarn global add'
 alias yrm='yarn remove'
 alias yad='yarn add --dev'
 alias ynuke='rm -f yarn.lock && rm -rf node_modules && yarn'
+
+alias la='lerna add'
+alias lad='lerna add --dev'
