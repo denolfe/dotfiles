@@ -21,12 +21,12 @@
     "when": "terminalFocus"
   },
   {
-    "key": "cmd+shift+down",
+    "key": "cmd+shift+u",
     "command": "editor.action.moveLinesDownAction",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "cmd+shift+up",
+    "key": "cmd+shift+i",
     "command": "editor.action.moveLinesUpAction",
     "when": "editorTextFocus && !editorReadonly"
   },
