@@ -214,13 +214,20 @@
         "tab.unfocusedActiveBorderTop": "#007acc",
         "peekViewEditor.background": "#2F2F2F",
         "editor.lineHighlightBorder": "#383B3D",
+        // "editorStickyScroll.background": "#383B3D"
     },
     "workbench.editor.historyBasedLanguageDetection": true,
     "workbench.iconTheme": "vscode-icons",
     "errorLens.exclude": [
         "^Delete",
         "^MD",
-        "^Expected 'this' to be used by class method"
+        "^Expected 'this' to be used by class method",
+        // Formatting related
+        "^Expected indentation",
+        "^Trailing spaces not allowed",
+        "^Block must not be padded",
+        "^Missing trailing comma",
+        "^Missing semicolon",
     ],
     "deno.codeLens.references": true,
     "deno.codeLens.referencesAllFunctions": true,
