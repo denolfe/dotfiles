@@ -12,7 +12,8 @@ import {
 } from './window-grid'
 import { getMainDisplay, initScreens } from './screen'
 import { titleModal } from './modal'
-import { hyperCmd, hyper, HYPER } from './hyper'
+import { hyperCmd, hyper, HYPER, HYPER_CMD } from './hyper'
+import { appendToClipboard } from './utils/clipboard'
 
 console.log('Phoenix Started')
 titleModal('Config Loaded', { icon: App.get('Phoenix')?.icon() })
@@ -94,6 +95,10 @@ hyper('t', () => {
 hyperCmd('t', () => {
   gatherAllWindows()
   titleModal('Gathered all windows')
+})
+
+Key.on('c', HYPER_CMD, () => {
+  appendToClipboard()
 })
 
 // TODO: Gather all windows from single app
