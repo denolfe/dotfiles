@@ -29,3 +29,6 @@ set ignorecase
 
 let g:indentLine_leadingSpacChar='·'
 let g:indentLine_leadingSpaceEnabled='1'
+
+" Disable quote concealing in JSON files. Overrides indentLevel default.
+let g:vim_json_conceal=0
