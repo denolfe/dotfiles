@@ -79,10 +79,7 @@ const lastSeenCache: {
   timestamp: 0,
 }
 
-export function cycleWindowPositions(
-  gridPositions: GridPosition[],
-  smartCycle = false,
-) {
+export function cycleWindowPositions(gridPositions: GridPosition[]) {
   const chainId = String(gridPositions[0].w)
   const cycleLength = gridPositions.length
   let sequenceNumber = 0
@@ -111,20 +108,12 @@ export function cycleWindowPositions(
     lastSeenCache.windowId = winId
     lastSeenCache.screenId = screenId
 
-    // Check if already at new position and should skip to next position
-    if (smartCycle && winIsInGridPos(win, gridPositions[sequenceNumber])) {
-      sequenceNumber += 1
-    }
-
     move(gridPositions[sequenceNumber])
     sequenceNumber += 1
   }
 }
 
-export function cycleWindowSplit(
-  gridPositions: SplitWindowLayout[],
-  smartCycle = true,
-) {
+export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
   const chainId = String(gridPositions[0].primary.w)
   const cycleLength = gridPositions.length
   let sequenceNumber = 0
@@ -153,11 +142,6 @@ export function cycleWindowSplit(
     lastSeenCache.timestamp = now
     lastSeenCache.windowId = winId
     lastSeenCache.screenId = screenId
-
-    // Check if already at new position and should skip to next position
-    if (smartCycle && winIsInGridPos(win1, gridPositions[sequenceNumber].primary)) {
-      sequenceNumber += 1
-    }
 
     move(gridPositions[sequenceNumber].primary, win1)
     if (win2) move(gridPositions[sequenceNumber].secondary, win2)
