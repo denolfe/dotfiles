@@ -14,11 +14,13 @@ import { getMainDisplay, initScreens } from './screen'
 import { titleModal } from './modal'
 import { hyperCmd, hyper, HYPER, HYPER_CMD } from './hyper'
 import { appendToClipboard } from './utils/clipboard'
+import { initWindowCaching } from './window-cache'
 
 console.log('Phoenix Started')
 titleModal('Config Loaded', { icon: App.get('Phoenix')?.icon() })
 
 initScreens()
+initWindowCaching()
 
 Event.on('screensDidChange', () => {
   initScreens()

@@ -1,5 +1,6 @@
 import { getInternalDisplay, getMainDisplay, getScreenCount } from './screen'
 import { log } from './utils/logger'
+import { cacheWindowsOnScreen, getPrevWindow } from './window-cache'
 
 /**
  * Window position and size on 0-1 grid
@@ -121,9 +122,11 @@ export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
   return () => {
     const currentScreen = Window.focused()?.screen()
     if (!currentScreen) return
-    const [win1, win2] = Window.recent().filter(
-      w => w.screen() === currentScreen && w.isNormal(),
-    )
+    const win1 = Window.focused()
+    if (!win1) return
+
+    const win2 = getPrevWindow()
+
     const winId = win1.hash()
     const screenId = win1.screen().hash()
     const now = Date.now()
@@ -143,7 +146,7 @@ export function cycleWindowSplit(gridPositions: SplitWindowLayout[]) {
     lastSeenCache.windowId = winId
     lastSeenCache.screenId = screenId
 
-    move(gridPositions[sequenceNumber].primary, win1)
+    move(gridPositions[sequenceNumber].primary)
     if (win2) move(gridPositions[sequenceNumber].secondary, win2)
     sequenceNumber += 1
   }
@@ -195,6 +198,7 @@ export function moveToNextScreen() {
     newScreen.flippedVisibleFrame(),
   )
   win.setFrame(ratio(win.frame()))
+  cacheWindowsOnScreen()
 }
 
 export function moveToInternalDisplay() {
@@ -211,6 +215,7 @@ export function moveToInternalDisplay() {
     newScreen.flippedVisibleFrame(),
   )
   win.setFrame(ratio(win.frame()))
+  cacheWindowsOnScreen()
 }
 
 export function swapAllWindowsBetweenDisplays() {
