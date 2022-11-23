@@ -1,7 +1,8 @@
-import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
-import { ifApp, isDropAltKeyboard, notApp } from './lib/conditions.ts'
-import { hyper, hyperCmd } from './lib/hyper.ts'
-import { remap, unmap } from './lib/remap.ts'
+import { KarabinerComplexModifications } from './lib/complex-modifications'
+import { ifApp, isDropAltKeyboard, notApp } from './lib/conditions'
+import { hyper, hyperCmd } from './lib/hyper'
+import { KarabinerConfig } from './lib/karabiner-config'
+import { remap, unmap } from './lib/remap'
 
 const mods = new KarabinerComplexModifications()
 
@@ -290,4 +291,6 @@ mods.addRule({
   ],
 })
 
-mods.writeToProfile('Default profile')
+const config = new KarabinerConfig()
+config.addProfile(mods.outputProfile())
+config.writeConfig()

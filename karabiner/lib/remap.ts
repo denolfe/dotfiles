@@ -1,10 +1,5 @@
-import {
-  Manipulator,
-  KeyPressTo,
-  KeyPressFrom,
-  Condition,
-} from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
-import { nonAppleDevice } from './conditions.ts'
+import { Manipulator, KeyPressTo, KeyPressFrom, Condition } from './types'
+import { nonAppleDevice } from './conditions'
 
 /**
  * Remap 2 keys, optional condition

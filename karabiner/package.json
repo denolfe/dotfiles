@@ -1,0 +1,17 @@
+{
+  "name": "karabiner",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Elliot DeNolf <denolfe@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1",
+    "tsm": "^2.2.2"
+  },
+  "scripts": {
+    "build": "tsm karabiner.ts",
+    "watch": "nodemon --exec yarn build -e ts"
+  }
+}

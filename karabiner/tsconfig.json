@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "target": "ES2021",
+    "strict": true,
+    "noEmit": false,
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["ES2021"],
+    "rootDir": ".",
+    "outDir": "./dist",
+  },
+  "exclude": ["node_modules"]
+}
