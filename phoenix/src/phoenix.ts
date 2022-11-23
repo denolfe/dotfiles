@@ -9,6 +9,7 @@ import {
   swapAllWindowsBetweenDisplays,
   gatherAllWindows,
   centeredWindowPositions as centered,
+  gridPositions,
 } from './window-grid'
 import { getMainDisplay, initScreens } from './screen'
 import { titleModal } from './modal'
@@ -77,6 +78,28 @@ hyper(
     layout.right50,
     layout.right60,
     layout.right66,
+  ]),
+)
+
+hyperCmd(
+  'q',
+  cycleWindowPositions([
+    gridPositions.left66,
+    gridPositions.left60,
+    gridPositions.left50,
+    gridPositions.left40,
+    gridPositions.left33,
+  ]),
+)
+
+hyperCmd(
+  'e',
+  cycleWindowPositions([
+    gridPositions.right33,
+    gridPositions.right40,
+    gridPositions.right50,
+    gridPositions.right60,
+    gridPositions.right66,
   ]),
 )
 

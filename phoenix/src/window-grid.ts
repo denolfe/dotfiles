@@ -16,7 +16,7 @@ const CHAIN_RESET_INTERVAL = 1500
 
 type SplitWindowLayout = { primary: GridPosition; secondary: GridPosition }
 
-type SplitWindowGridPositions =
+type SplitWindowGridPosition =
   | 'left66'
   | 'left60'
   | 'left50'
@@ -28,41 +28,39 @@ type SplitWindowGridPositions =
   | 'right60'
   | 'right66'
 
-type CenteredGridPositions = 'full' | 'big' | 'med' | 'sm' | 'xs'
+type CenteredGridPosition = 'full' | 'big' | 'med' | 'sm' | 'xs'
 
-function calcSplitWindowLayout(primary: GridPosition): SplitWindowLayout {
-  const secondaryXy =
-    primary.x === 0 && primary.y === 0
-      ? { x: primary.w, y: primary.y }
-      : { x: 0, y: 0 }
-
-  const secondary: GridPosition = {
-    ...secondaryXy,
-    w: 1 - primary.w,
-    h: 1,
-  }
-  return { primary, secondary }
+export const gridPositions: Record<SplitWindowGridPosition, GridPosition> = {
+  left66: { x: 0, y: 0, w: 0.67, h: 1 },
+  left60: { x: 0, y: 0, w: 0.58, h: 1 },
+  left50: { x: 0, y: 0, w: 0.5, h: 1 },
+  left40: { x: 0, y: 0, w: 0.42, h: 1 },
+  left33: { x: 0, y: 0, w: 0.33, h: 1 },
+  right33: { x: 0.67, y: 0, w: 0.33, h: 1 },
+  right40: { x: 0.58, y: 0, w: 0.42, h: 1 },
+  right50: { x: 0.5, y: 0, w: 0.5, h: 1 },
+  right60: { x: 0.42, y: 0, w: 0.58, h: 1 },
+  right66: { x: 0.33, y: 0, w: 0.67, h: 1 },
 }
 
 /**
  * Side-by-side split window layouts
- * 12x12 grid turned into 0-1 values
  */
-export const splitWindowLayout: Record<SplitWindowGridPositions, SplitWindowLayout> =
+export const splitWindowLayout: Record<SplitWindowGridPosition, SplitWindowLayout> =
   {
-    left66: calcSplitWindowLayout({ x: 0, y: 0, w: 0.67, h: 1 }),
-    left60: calcSplitWindowLayout({ x: 0, y: 0, w: 0.58, h: 1 }),
-    left50: calcSplitWindowLayout({ x: 0, y: 0, w: 0.5, h: 1 }),
-    left40: calcSplitWindowLayout({ x: 0, y: 0, w: 0.42, h: 1 }),
-    left33: calcSplitWindowLayout({ x: 0, y: 0, w: 0.33, h: 1 }),
-    right33: calcSplitWindowLayout({ x: 0.67, y: 0, w: 0.33, h: 1 }),
-    right40: calcSplitWindowLayout({ x: 0.58, y: 0, w: 0.42, h: 1 }),
-    right50: calcSplitWindowLayout({ x: 0.5, y: 0, w: 0.5, h: 1 }),
-    right60: calcSplitWindowLayout({ x: 0.42, y: 0, w: 0.58, h: 1 }),
-    right66: calcSplitWindowLayout({ x: 0.33, y: 0, w: 0.67, h: 1 }),
+    left66: { primary: gridPositions.left66, secondary: gridPositions.right33 },
+    left60: { primary: gridPositions.left60, secondary: gridPositions.right40 },
+    left50: { primary: gridPositions.left50, secondary: gridPositions.right50 },
+    left40: { primary: gridPositions.left40, secondary: gridPositions.right60 },
+    left33: { primary: gridPositions.left33, secondary: gridPositions.right66 },
+    right33: { primary: gridPositions.right33, secondary: gridPositions.left66 },
+    right40: { primary: gridPositions.right40, secondary: gridPositions.left60 },
+    right50: { primary: gridPositions.right50, secondary: gridPositions.left50 },
+    right60: { primary: gridPositions.right60, secondary: gridPositions.left40 },
+    right66: { primary: gridPositions.right66, secondary: gridPositions.left33 },
   }
 
-export const centeredWindowPositions: Record<CenteredGridPositions, GridPosition> = {
+export const centeredWindowPositions: Record<CenteredGridPosition, GridPosition> = {
   full: centeredWindow16x9(1),
   big: centeredWindow16x9(0.92),
   med: centeredWindow16x9(0.83),
@@ -159,13 +157,7 @@ export function move(gridPos: GridPosition, currentWindow?: Window) {
   const screen = win.screen()
   const newFrame = computeNewFrameFromGrid(screen, gridPos)
   if (!newFrame) return
-
-  win.setFrame({
-    x: newFrame.x,
-    y: newFrame.y,
-    width: newFrame.width,
-    height: newFrame.height,
-  })
+  win.setFrame(newFrame)
 }
 
 export function moveToNextScreen() {
