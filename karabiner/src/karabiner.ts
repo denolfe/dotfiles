@@ -146,6 +146,13 @@ mods.addRule({
       ],
       [ifApp('chrome')],
     ),
+
+    // Cmd+P Fuzzy Tab Search
+    remap(
+      { key_code: 'p', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'a', modifiers: ['left_command', 'left_shift'] },
+      [ifApp('chrome')],
+    ),
   ],
 })
 

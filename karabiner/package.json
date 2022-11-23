@@ -11,7 +11,7 @@
     "tsm": "^2.2.2"
   },
   "scripts": {
-    "build": "tsm karabiner.ts",
+    "build": "tsm src/karabiner.ts",
     "watch": "nodemon --exec yarn build -e ts"
   }
 }

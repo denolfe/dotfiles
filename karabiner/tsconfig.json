@@ -7,7 +7,7 @@
     "noEmit": false,
     "typeRoots": ["node_modules/@types"],
     "lib": ["ES2021"],
-    "rootDir": ".",
+    "rootDir": "./src",
     "outDir": "./dist",
   },
   "exclude": ["node_modules"]
