@@ -46,6 +46,7 @@ hyper('[', () => spotify.previousTrack())
 
 // Window Manipulation
 
+// Cycle centered position sizes
 hyper(
   'w',
   cycleWindowPositions([
@@ -57,7 +58,10 @@ hyper(
   ]),
 )
 
-/** Cycle 2-window split, left side primary */
+// 50 split, swap sides on subsequent presses
+hyperCmd('w', cycleWindowSplit([layout.left50, layout.right50]))
+
+// Cycle 2-window split, left side primary
 hyper(
   'q',
   cycleWindowSplit([
@@ -69,7 +73,7 @@ hyper(
   ]),
 )
 
-/** Cycle 2-window split, right side primary */
+// Cycle 2-window split, right side primary
 hyper(
   'e',
   cycleWindowSplit([
@@ -81,6 +85,7 @@ hyper(
   ]),
 )
 
+// Cycle left side sizes
 hyperCmd(
   'q',
   cycleWindowPositions([
@@ -92,6 +97,7 @@ hyperCmd(
   ]),
 )
 
+// Cycle right side sizes
 hyperCmd(
   'e',
   cycleWindowPositions([
