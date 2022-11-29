@@ -20,12 +20,21 @@
             "source.fixAll": true,
         },
         "editor.formatOnSave": true,
+        "togglequotes.chars": [
+            "'",
+            "`",
+        ]
     },
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
             "source.fixAll.eslint": true,
         },
+        "togglequotes.chars": [
+            "\"",
+            "'",
+            "`",
+        ]
     },
     "auto-rename-tag.activationOnLanguage": [
         "javascriptreact"
