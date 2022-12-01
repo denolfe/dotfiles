@@ -1,9 +1,17 @@
-import { KarabinerComplexModifications } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
 import { ifApp, isDropAltKeyboard, notApp } from './lib/conditions.ts'
 import { hyper, hyperCmd } from './lib/hyper.ts'
+import { KarabinerComplexModifications } from './lib/karabiner-complex-modifications.ts'
 import { remap, unmap } from './lib/remap.ts'
 
-const mods = new KarabinerComplexModifications()
+const mods = new KarabinerComplexModifications({
+  parameters: {
+    'basic.simultaneous_threshold_milliseconds': 50,
+    'basic.to_delayed_action_delay_milliseconds': 250,
+    'basic.to_if_alone_timeout_milliseconds': 500,
+    'basic.to_if_held_down_threshold_milliseconds': 50,
+    'mouse_motion_to_scroll.speed': 100,
+  },
+})
 
 mods.addRule({
   description: 'Hyper Key',
@@ -290,4 +298,4 @@ mods.addRule({
   ],
 })
 
-mods.writeToProfile('Default profile')
+mods.writeToProfile()

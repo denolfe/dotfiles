@@ -11,6 +11,9 @@ link:
 karabiner:
 	deno run --allow-env --allow-read --allow-write karabiner/karabiner.ts
 
+karabiner-dev:
+	deno run --watch --allow-env --allow-read --allow-write karabiner/karabiner.ts
+
 # Build and output phoenix config
 phoenix:
 	yarn --cwd phoenix run build

@@ -1,5 +1,5 @@
 // deno-lint-ignore-file camelcase
-import { Condition } from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
+import { Condition } from './types.ts'
 
 type FrontmostApp = 'chrome' | 'vscode' | 'slack' | 'spotify'
 
@@ -7,7 +7,7 @@ const bundleMap: Record<FrontmostApp, string> = {
   chrome: 'com.google.Chrome',
   vscode: 'com.microsoft.VSCode',
   slack: 'com.tinyspeck.slackmacgap',
-  spotify: 'com.spotify.client'
+  spotify: 'com.spotify.client',
 }
 
 export function ifApp(app: FrontmostApp): Condition {

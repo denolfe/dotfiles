@@ -1,7 +1,4 @@
-import {
-  Key,
-  Manipulator,
-} from 'https://raw.githubusercontent.com/esamattis/deno_karabiner/master/lib/karabiner.ts'
+import { Key, Manipulator } from './types.ts'
 
 const hyperMods: Key[] = ['left_control', 'left_shift', 'left_option']
 const hyperCmdMods: Key[] = ['left_control', 'left_shift', 'left_option', 'left_command']
