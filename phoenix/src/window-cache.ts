@@ -57,7 +57,7 @@ export function cacheWindowsOnScreen() {
   windowCache.length = 0
   const screenId = Screen.main()
   const [win1, win2] = Window.recent().filter(
-    w => w.screen().hash() === screenId.hash() && w.isNormal(),
+    w => w?.screen()?.hash() === screenId.hash() && w.isNormal(),
   )
   if (win2) cacheWindow(win2)
   if (win1) cacheWindow(win1)
