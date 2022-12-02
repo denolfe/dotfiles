@@ -74,6 +74,9 @@ echo "  › Enable tap to click for trackpad"
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+echo " › Set touchbar to app controls with control strip"
+defaults write com.apple.touchbar.agent PresentationModeGlobal -string appWithControlStrip
+
 #############################
 
 echo ""
