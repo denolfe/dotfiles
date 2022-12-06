@@ -1655,7 +1655,7 @@
 
     local links=$(find ./node_modules -type l -maxdepth 1 | sed 's/\.\/node_modules\///')
     if [ $links ]; then
-      p10k segment -f 208 -i '🔗' -t $links
+      p10k segment -f 208 -i '🔗' -t $(echo $links | tr '\n' ',' | sed 's/,$//')
     fi
   }
 
