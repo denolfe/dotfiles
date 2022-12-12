@@ -24,6 +24,10 @@ export function initWindowCaching() {
   Event.on('spaceDidChange', () => {
     cacheWindowsOnScreen()
   })
+
+  Event.on('mouseDidLeftClick', ({ x, y }) => {
+    cacheWindowsOnScreen()
+  })
 }
 
 type CachedWindow = { window: Window; screenId: number }
