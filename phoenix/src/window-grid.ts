@@ -190,7 +190,7 @@ export function moveToNextScreen() {
     newScreen.flippedVisibleFrame(),
   )
   win.setFrame(ratio(win.frame()))
-  cacheWindowsOnScreen()
+  cacheWindowsOnScreen(newScreen)
 }
 
 export function moveToInternalDisplay() {
@@ -207,7 +207,7 @@ export function moveToInternalDisplay() {
     newScreen.flippedVisibleFrame(),
   )
   win.setFrame(ratio(win.frame()))
-  cacheWindowsOnScreen()
+  cacheWindowsOnScreen(newScreen)
 }
 
 export function swapAllWindowsBetweenDisplays() {

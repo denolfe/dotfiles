@@ -57,9 +57,9 @@ export function getPrevWindow(): Window | undefined {
   return windowCache[1]?.window
 }
 
-export function cacheWindowsOnScreen() {
+export function cacheWindowsOnScreen(screen?: Screen) {
   windowCache.length = 0
-  const screenId = Screen.main()
+  const screenId = screen ?? Screen.main()
   const [win1, win2] = Window.recent().filter(
     w => w?.screen()?.hash() === screenId.hash() && w.isNormal(),
   )
