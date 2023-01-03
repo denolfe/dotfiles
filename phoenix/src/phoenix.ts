@@ -13,8 +13,8 @@ import {
 } from './window-grid'
 import { getMainDisplay, initScreens } from './screen'
 import { titleModal } from './modal'
-import { hyperCmd, hyper, HYPER, HYPER_CMD } from './hyper'
-import { appendToClipboard } from './utils/clipboard'
+import { hyperCmd, hyper, HYPER } from './hyper'
+import { getClipboard, setClipboard } from './utils/clipboard'
 import { initWindowCaching } from './window-cache'
 
 console.log('Phoenix Started')
@@ -128,8 +128,34 @@ hyperCmd('t', () => {
   titleModal('Gathered all windows')
 })
 
-Key.on('c', HYPER_CMD, () => {
-  appendToClipboard()
+/**
+ * Open https link from clipboard with proper protocol for desktop apps
+ * Supports: Discord, Notion
+ */
+hyper('o', async () => {
+  let link = await getClipboard()
+  log('clipboard:', link)
+
+  const linkReplacements = [
+    { includes: 'discord.com/channels/', replaceProtocol: 'discord://' },
+    { includes: 'notion.so/', replaceProtocol: 'notion://' },
+  ]
+
+  if (link.startsWith('https://')) {
+    linkReplacements.forEach(({ includes, replaceProtocol }) => {
+      if (link.includes(includes)) {
+        link = link.replace('https://', replaceProtocol)
+        log('Opening link:', link)
+        Task.run('/usr/bin/open', [link], task => {
+          if (task.output) {
+            // showToast(`Link opened: ${link}`)
+            log('Opening link:', link)
+          }
+        })
+      }
+    })
+    setClipboard(link)
+  }
 })
 
 // TODO: Gather all windows from single app
