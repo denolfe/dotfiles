@@ -12,10 +12,11 @@ import {
   gridPositions,
 } from './window-grid'
 import { getMainDisplay, initScreens } from './screen'
-import { titleModal } from './modal'
+import { showToast, titleModal } from './modal'
 import { hyperCmd, hyper, HYPER } from './hyper'
 import { getClipboard, setClipboard } from './utils/clipboard'
 import { initWindowCaching } from './window-cache'
+import { open } from './utils/open'
 
 console.log('Phoenix Started')
 titleModal('Config Loaded', { icon: App.get('Phoenix')?.icon() })
@@ -137,25 +138,25 @@ hyper('o', async () => {
   log('clipboard:', link)
 
   const linkReplacements = [
-    { includes: 'discord.com/channels/', replaceProtocol: 'discord://' },
-    { includes: 'notion.so/', replaceProtocol: 'notion://' },
+    {
+      name: 'Discord',
+      includes: 'discord.com/channels/',
+      replaceProtocol: 'discord://',
+    },
+    { name: 'Notion', includes: 'notion.so/', replaceProtocol: 'notion://' },
   ]
 
   if (link.startsWith('https://')) {
-    linkReplacements.forEach(({ includes, replaceProtocol }) => {
+    linkReplacements.forEach(({ name, includes, replaceProtocol }) => {
       if (link.includes(includes)) {
         link = link.replace('https://', replaceProtocol)
-        log('Opening link:', link)
-        Task.run('/usr/bin/open', [link], task => {
-          if (task.output) {
-            // showToast(`Link opened: ${link}`)
-            log('Opening link:', link)
-          }
-        })
+        // log('Opening link:', link)
+        showToast(`Opening ${name} link`)
       }
     })
     setClipboard(link)
   }
+  open(link)
 })
 
 // TODO: Gather all windows from single app

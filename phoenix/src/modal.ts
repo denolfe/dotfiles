@@ -32,6 +32,26 @@ export function showCenterOn(modal: Modal, screen: Screen) {
   showAt(modal, screen, 2, 2)
 }
 
+/**
+ * Show modal in toast position on screen.
+ */
+export function showToast(
+  text: string,
+  options?: {
+    duration?: number
+    icon?: Image
+    screen?: Screen
+  },
+) {
+  const m = new Modal()
+  options = options || {}
+  const { duration, icon, screen } = options
+  m.text = text
+  m.duration = duration ?? 1
+  m.icon = icon
+  showAt(m, screen ?? Screen.main(), 1.05, 1.05)
+}
+
 function showAt(modal: Modal, screen: Screen, widthDiv: number, heightDiv: number) {
   const { height, width, x, y } = modal.frame()
   const sf = screen.visibleFrame()
