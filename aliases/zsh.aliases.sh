@@ -4,6 +4,9 @@ alias rl='source ~/.zshrc; echo ".zshrc reloaded"'
 alias regen='zgenom reset;source ~/.zshrc'
 alias .f='cd ~/.dotfiles'
 
+# Karabiner sometimes unresponsive after sleep: https://github.com/pqrs-org/Karabiner-Elements/issues/3078
+alias rk="sudo pkill Karabiner-DriverKit-VirtualHIDDeviceClient"
+
 if type exa > /dev/null 2>&1; then
   alias ll='exa -alF --icons --color=always --group-directories-first'
   alias llt='exa -alF --icons --color=always -s=mod --reverse'
@@ -77,6 +80,11 @@ alias to_upper="tr '[:lower:]' '[:upper:]'"
 if type rg > /dev/null 2>&1; then
   alias rg="rg -i --hidden -g '!.git/'"
   alias rgf="rg --files | rg"
+fi
+
+if type terminal-notifier > /dev/null 2>&1; then
+  # notify alias with iterm2 icon
+  alias notify="terminal-notifier -title 'ZSH' -sound funk -message"
 fi
 
 alias jwt_from_clip="pbpaste | jwt decode -j - | jq -r '.payload'"
