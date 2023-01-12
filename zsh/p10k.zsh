@@ -76,7 +76,7 @@
     # haskell_stack           # haskell version from stack (https://haskellstack.org/)
     kubecontext             # current kubernetes context (https://kubernetes.io/)
     # terraform               # terraform workspace (https://www.terraform.io)
-    # aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+    aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
     # work_aws                # custom segment that includes checking of role_arn in ~/.aws/config file
     yarn_link                 # show current yarn links
     # aws_eb_env              # aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/)
