@@ -181,6 +181,33 @@
     "command": "editor.action.rename",
     "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
   },
+
+  // Emmet
+  {
+    "key": "cmd+m cmd+o",
+    "command": "editor.emmet.action.balanceOut"
+  },
+  {
+    "key": "cmd+m cmd+i",
+    "command": "editor.emmet.action.balanceIn"
+  },
+  {
+    "key": "cmd+m cmd+m",
+    "command": "editor.emmet.action.matchTag"
+  },
+  {
+    "key": "cmd+m cmd+r",
+    "command": "editor.emmet.action.updateTag"
+  },
+  {
+    "key": "cmd+m cmd+backspace",
+    "command": "editor.emmet.action.removeTag"
+  },
+  {
+    "key": "cmd+m cmd+w",
+    "command": "editor.emmet.action.wrapWithAbbreviation"
+  },
+
   // ctrl+tab -> alt+tab
   {
     "key": "alt+p",
