@@ -175,6 +175,12 @@
     "key": "cmd+k k",
     "command": "editor.action.peekTypeDefinition"
   },
+  // Go to next error in tab
+  {
+    "key": "cmd+k cmd+p",
+    "command": "editor.action.marker.next",
+    "when": "editorFocus"
+  },
   // Rename Symbol
   {
     "key": "cmd+r cmd+r",
