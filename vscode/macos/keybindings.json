@@ -175,7 +175,12 @@
     "key": "cmd+k k",
     "command": "editor.action.peekTypeDefinition"
   },
-
+  // Rename Symbol
+  {
+    "key": "cmd+r cmd+r",
+    "command": "editor.action.rename",
+    "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+  },
   // ctrl+tab -> alt+tab
   {
     "key": "alt+p",
