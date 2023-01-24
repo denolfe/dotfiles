@@ -76,6 +76,11 @@
       path: hammerspoon
       force: true
 
+    ~/Library/Application Support/com.colliderli.iina/input_conf/YouTube.conf:
+      if: '[ `uname` = Darwin ]'
+      path: iina/YouTube.conf
+      force: true
+
 - asdf:
   - plugin: nodejs
     url: https://github.com/asdf-vm/asdf-nodejs
