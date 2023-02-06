@@ -1,0 +1,1929 @@
+# espanso match file
+
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  - trigger: "blog:rbac"
+    replace: |
+      - https://payloadcms.com/blog/build-your-own-rbac
+      - https://payloadcms.com/blog/access-control-overview"
+  - trigger: "featreq;"
+    replace: |
+      Feel free to submit a feature request, so we can discuss/prioritize with everyone.
+
+      https://github.com/payloadcms/payload/discussions
+
+
+  # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
+
+  # But matches can also be dynamic:
+
+  # Print the current date
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%m/%d/%Y"
+
+  # Print the output of a shell command
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo 'Hello from your shell'"
+
+# Customizations ported from personal AutoHotkey autocorrect
+
+  - trigger: aalso
+    replace: also
+    word: true
+  - trigger: abalcne
+    replace: balance
+    word: true
+  - trigger: abel
+    replace: able
+    word: true
+  - trigger: abut
+    replace: about
+    word: true
+  - trigger: accuonts
+    replace: accounts
+    word: true
+  - trigger: additioanl
+    replace: additional
+    word: true
+  - trigger: aer
+    replace: are
+    word: true
+  - trigger: apear
+    replace: appear
+    word: true
+  - trigger: apge
+    replace: page
+    word: true
+  - trigger: aplly
+    replace: apply
+    word: true
+  - trigger: aruond
+    replace: around
+    word: true
+  - trigger: attachd
+    replace: attached
+    word: true
+  - trigger: availabe
+    replace: available
+    word: true
+  - trigger: avialable
+    replace: available
+    word: true
+  - trigger: baalnce
+    replace: balance
+    word: true
+  - trigger: balacne
+    replace: balance
+    word: true
+  - trigger: bette
+    replace: better
+    word: true
+  - trigger: budnle
+    replace: bundle
+    word: true
+  - trigger: budnler
+    replace: bundler
+    word: true
+  - trigger: buidl
+    replace: build
+    word: true
+  - trigger: caes
+    replace: case
+    word: true
+  - trigger: cahnge
+    replace: change
+    word: true
+  - trigger: cahnges
+    replace: changes
+    word: true
+  - trigger: cal
+    replace: call
+    word: true
+  - trigger: cathc
+    replace: catch
+    word: true
+  - trigger: cehck
+    replace: check
+    word: true
+  - trigger: celar
+    replace: clear
+    word: true
+  - trigger: chacne
+    replace: chance
+    word: true
+  - trigger: chang
+    replace: change
+    word: true
+  - trigger: clearning
+    replace: clearing
+    word: true
+  - trigger: clera
+    replace: clear
+    word: true
+  - trigger: clipbaord
+    replace: clipboard
+    word: true
+  - trigger: closesly
+    replace: closely
+    word: true
+  - trigger: clsoe
+    replace: close
+    word: true
+  - trigger: clsoing
+    replace: closing
+    word: true
+  - trigger: committment
+    replace: commitment
+    word: true
+  - trigger: componenets
+    replace: components
+    word: true
+  - trigger: consoel
+    replace: console
+    word: true
+  - trigger: consol
+    replace: console
+    word: true
+  - trigger: contine
+    replace: continue
+    word: true
+  - trigger: cosnole
+    replace: console
+    word: true
+  - trigger: csae
+    replace: case
+    word: true
+  - trigger: csea
+    replace: case
+    word: true
+  - trigger: cuase
+    replace: cause
+    word: true
+  - trigger: cuasing
+    replace: causing
+    word: true
+  - trigger: curiousity
+    replace: curiosity
+    word: true
+  - trigger: currenty
+    replace: currently
+    word: true
+  - trigger: custoemr
+    replace: customer
+    word: true
+  - trigger: daet
+    replace: date
+    word: true
+  - trigger: dashbaord
+    replace: dashboard
+    word: true
+  - trigger: dashbord
+    replace: dashboard
+    word: true
+  - trigger: databsae
+    replace: database
+    word: true
+  - trigger: datetiem
+    replace: datetime
+    word: true
+  - trigger: deelte
+    replace: delete
+    word: true
+  - trigger: defualt
+    replace: default
+    word: true
+  - trigger: defualts
+    replace: defaults
+    word: true
+  - trigger: Deposite
+    replace: deposit
+    word: true
+  - trigger: descriptiong
+    replace: description
+    word: true
+  - trigger: downlaods
+    replace: downloads
+    word: true
+  - trigger: dropdwon
+    replace: dropdown
+    word: true
+  - trigger: DSRAM
+    replace: SDRAM
+    word: true
+  - trigger: dtaabase
+    replace: database
+    word: true
+  - trigger: dtae
+    replace: date
+    word: true
+  - trigger: eht
+    replace: the
+    word: true
+  - trigger: emai
+    replace: email
+    word: true
+  - trigger: emant
+    replace: meant
+    word: true
+  - trigger: engouh
+    replace: enough
+    word: true
+  - trigger: evalutate
+    replace: evaluate
+    word: true
+  - trigger: exapmle
+    replace: example
+    word: true
+  - trigger: exti
+    replace: exit
+    word: true
+  - trigger: fieds
+    replace: fields
+    word: true
+  - trigger: focsu
+    replace: focus
+    word: true
+  - trigger: gao
+    replace: ago
+    word: true
+  - trigger: giong
+    replace: going
+    word: true
+  - trigger: goive
+    replace: give
+    word: true
+  - trigger: gothca
+    replace: gotcha
+    word: true
+  - trigger: hapy
+    replace: happy
+    word: true
+  - trigger: headphoens
+    replace: headphones
+    word: true
+  - trigger: hte
+    replace: the
+    word: true
+  - trigger: htofix
+    replace: hotfix
+    word: true
+  - trigger: hw
+    replace: how
+    word: true
+  - trigger: hwat
+    replace: what
+    word: true
+  - trigger: hwen
+    replace: when
+    word: true
+  - trigger: hwere
+    replace: where
+    word: true
+  - trigger: hwo
+    replace: how
+    word: true
+  - trigger: iamge
+    replace: image
+    word: true
+  - trigger: Ido
+    replace: I do
+    word: true
+  - trigger: insatll
+    replace: install
+    word: true
+  - trigger: instaed
+    replace: instead
+    word: true
+  - trigger: installatino
+    replace: installation
+    word: true
+  - trigger: inviet
+    replace: invite
+    word: true
+  - trigger: isee
+    replace: i see
+    word: true
+  - trigger: ishte
+    replace: is the
+    word: true
+  - trigger: isnert
+    replace: insert
+    word: true
+  - trigger: isntance
+    replace: instance
+    word: true
+  - trigger: isseu
+    replace: issue
+    word: true
+  - trigger: isseus
+    replace: issues
+    word: true
+  - trigger: iwht
+    replace: with
+    word: true
+  - trigger: jion
+    replace: join
+    word: true
+  - trigger: kep
+    replace: keep
+    word: true
+  - trigger: keybaord
+    replace: keyboard
+    word: true
+  - trigger: kidna
+    replace: kinda
+    word: true
+  - trigger: knof
+    replace: know
+    word: true
+  - trigger: knw
+    replace: know
+    word: true
+  - trigger: laod
+    replace: load
+    word: true
+  - trigger: lcicking
+    replace: clicking
+    word: true
+  - trigger: liens
+    replace: lines
+    word: true
+  - trigger: likeyl
+    replace: likely
+    word: true
+  - trigger: loclahost
+    replace: localhost
+    word: true
+  - trigger: loking
+    replace: looking
+    word: true
+  - trigger: mena
+    replace: mean
+    word: true
+  - trigger: mesenger
+    replace: messenger
+    word: true
+  - trigger: moer
+    replace: more
+    word: true
+  - trigger: montiro
+    replace: monitor
+    word: true
+  - trigger: mosue
+    replace: mouse
+    word: true
+  - trigger: mre
+    replace: more
+    word: true
+  - trigger: msot
+    replace: most
+    word: true
+  - trigger: msut
+    replace: must
+    word: true
+  - trigger: mw
+    replace: me
+    word: true
+  - trigger: ncie
+    replace: nice
+    word: true
+  - trigger: ndoe
+    replace: node
+    word: true
+  - trigger: neds
+    replace: needs
+    word: true
+  - trigger: neede
+    replace: needed
+    word: true
+  - trigger: ocurring
+    replace: occurring
+    word: true
+  - trigger: oen
+    replace: one
+    word: true
+  - trigger: oens
+    replace: ones
+    word: true
+  - trigger: oepn
+    replace: open
+    word: true
+  - trigger: optiosn
+    replace: options
+    word: true
+  - trigger: orign
+    replace: origin
+    word: true
+  - trigger: oring
+    replace: origin
+    word: true
+  - trigger: otuline
+    replace: outline
+    word: true
+  - trigger: ovid
+    replace: void
+    word: true
+  - trigger: owrking
+    replace: working
+    word: true
+  - trigger: owrks
+    replace: works
+    word: true
+  - trigger: pleaes
+    replace: please
+    word: true
+  - trigger: positin
+    replace: position
+    word: true
+  - trigger: positoin
+    replace: position
+    word: true
+  - trigger: postiion
+    replace: position
+    word: true
+  - trigger: previosu
+    replace: previous
+    word: true
+  - trigger: pritn
+    replace: print
+    word: true
+  - trigger: procedrue
+    replace: procedure
+    word: true
+  - trigger: projcet
+    replace: project
+    word: true
+  - trigger: puhs
+    replace: push
+    word: true
+  - trigger: purcahse
+    replace: purchase
+    word: true
+  - trigger: purchae
+    replace: purchase
+    word: true
+  - trigger: pust
+    replace: puts
+    word: true
+  - trigger: quetsion
+    replace: question
+    word: true
+  - trigger: quti
+    replace: quit
+    word: true
+  - trigger: rae
+    replace: are
+    word: true
+  - trigger: readd
+    replace: read
+    word: true
+  - trigger: receie
+    replace: receive
+    word: true
+  - trigger: redy
+    replace: ready
+    word: true
+  - trigger: remoev
+    replace: remove
+    word: true
+  - trigger: remvoe
+    replace: remove
+    word: true
+  - trigger: repot
+    replace: report
+    word: true
+  - trigger: resposne
+    replace: response
+    word: true
+  - trigger: reutnr
+    replace: return
+    word: true
+  - trigger: reutrn
+    replace: return
+    word: true
+  - trigger: reviewd
+    replace: reviewed
+    word: true
+  - trigger: salse
+    replace: sales
+    word: true
+  - trigger: scheudle
+    replace: schedule
+    word: true
+  - trigger: sciprt
+    replace: script
+    word: true
+  - trigger: seelct
+    replace: select
+    word: true
+  - trigger: sems
+    replace: seems
+    word: true
+  - trigger: separaate
+    replace: separate
+    word: true
+  - trigger: serach
+    replace: search
+    word: true
+  - trigger: shoud
+    replace: should
+    word: true
+  - trigger: shwing
+    replace: showing
+    word: true
+  - trigger: shwo
+    replace: show
+    word: true
+  - trigger: softwaer
+    replace: software
+    word: true
+  - trigger: softwrae
+    replace: software
+    word: true
+  - trigger: somehwere
+    replace: somewhere
+    word: true
+  - trigger: someoen
+    replace: someone
+    word: true
+  - trigger: somewehre
+    replace: somewhere
+    word: true
+  - trigger: specal
+    replace: special
+    word: true
+  - trigger: srue
+    replace: sure
+    word: true
+  - trigger: ssystem
+    replace: system
+    word: true
+  - trigger: stakc
+    replace: stack
+    word: true
+  - trigger: stuido
+    replace: studio
+    word: true
+  - trigger: subliem
+    replace: sublime
+    word: true
+  - trigger: sutiod
+    replace: studio
+    word: true
+  - trigger: syste
+    replace: system
+    word: true
+  - trigger: tabel
+    replace: table
+    word: true
+  - trigger: taeks
+    replace: takes
+    word: true
+  - trigger: tbale
+    replace: table
+    word: true
+  - trigger: tble
+    replace: table
+    word: true
+  - trigger: tehse
+    replace: these
+    word: true
+  - trigger: thakns
+    replace: thanks
+    word: true
+  - trigger: thans
+    replace: thanks
+    word: true
+  - trigger: thesee
+    replace: these
+    word: true
+  - trigger: thnaks
+    replace: thanks
+    word: true
+  - trigger: thoght
+    replace: thought
+    word: true
+  - trigger: thogu
+    replace: though
+    word: true
+  - trigger: thouhgt
+    replace: thought
+    word: true
+  - trigger: thtat
+    replace: that
+    word: true
+  - trigger: tlak
+    replace: talk
+    word: true
+  - trigger: togetehr
+    replace: together
+    word: true
+  - trigger: toher
+    replace: other
+    word: true
+  - trigger: trhough
+    replace: through
+    word: true
+  - trigger: trid
+    replace: tried
+    word: true
+  - trigger: troble
+    replace: trouble
+    word: true
+  - trigger: tseted
+    replace: tested
+    word: true
+  - trigger: tseting
+    replace: testing
+    word: true
+  - trigger: tutorila
+    replace: tutorial
+    word: true
+  - trigger: tyeps
+    replace: types
+    word: true
+  - trigger: udpate
+    replace: update
+    word: true
+  - trigger: uesr
+    replace: user
+    word: true
+  - trigger: ugess
+    replace: guess
+    word: true
+  - trigger: umable
+    replace: unable
+    word: true
+  - trigger: upate
+    replace: update
+    word: true
+  - trigger: updaet
+    replace: update
+    word: true
+  - trigger: updtae
+    replace: update
+    word: true
+  - trigger: veiw
+    replace: view
+    word: true
+  - trigger: vew
+    replace: view
+    word: true
+  - trigger: viisble
+    replace: visible
+    word: true
+  - trigger: voiemail
+    replace: voice mail
+    word: true
+  - trigger: wante
+    replace: wanted
+    word: true
+  - trigger: warehosue
+    replace: warehouse
+    word: true
+  - trigger: watns
+    replace: wants
+    word: true
+  - trigger: websotrm
+    replace: webstorm
+    word: true
+  - trigger: wek
+    replace: week
+    word: true
+  - trigger: werhe
+    replace: where
+    word: true
+  - trigger: wher
+    replace: where
+    word: true
+  - trigger: whiel
+    replace: while
+    word: true
+  - trigger: whre
+    replace: where
+    word: true
+  - trigger: whwer
+    replace: where
+    word: true
+  - trigger: wihtout
+    replace: without
+    word: true
+  - trigger: wit
+    replace: with
+    word: true
+  - trigger: witth
+    replace: with
+    word: true
+  - trigger: wnidows
+    replace: windows
+    word: true
+  - trigger: wold
+    replace: would
+    word: true
+  - trigger: yo ua
+    replace: you a
+    word: true
+
+  # And much more! For more information, visit the docs: https://espanso.org/docs/
+
+  # - trigger: "intented"
+  #   replace: "intended"
+  #   word: true
+  # - trigger: "quetsiosn"
+  #   replace: "questions"
+  #   word: true
+  # - trigger: "quetsions"
+  #   replace: "questions"
+  #   word: true
+  # - trigger: "problms"
+  #   replace: "problems"
+  #   word: true
+  # - trigger: "problm"
+  #   replace: "problem"
+  #   word: true
+  # - trigger: "soemone"
+  #   replace: "someone"
+  #   word: true
+  # - trigger: "nohting"
+  #   replace: "nothing"
+  #   word: true
+  # - trigger: "whatit"
+  #   replace: "what it"
+  #   word: true
+  # - trigger: "tht"
+  #   replace: "that"
+  #   word: true
+  # - trigger: "questsions"
+  #   replace: "questions"
+  #   word: true
+  # - trigger: "actally"
+  #   replace: "actually"
+  #   word: true
+  # - trigger: "labe"
+  #   replace: "label"
+  #   word: true
+  # - trigger: "thansk"
+  #   replace: "thanks"
+  #   word: true
+  # - trigger: "thansks"
+  #   replace: "thanks"
+  #   word: true
+  # - trigger: "tahnk"
+  #   replace: "thank"
+  #   word: true
+  # - trigger: "develper"
+  #   replace: "developer"
+  #   word: true
+  # - trigger: "abot"
+  #   replace: "about"
+  #   word: true
+  # - trigger: "nto"
+  #   replace: "not"
+  #   word: true
+  # - trigger: "pleae"
+  #   replace: "please"
+  #   word: true
+  # - trigger: "trae"
+  #   replace: "trace"
+  #   word: true
+  # - trigger: "oders"
+  #   replace: "orders"
+  #   word: true
+  # - trigger: "belive"
+  #   replace: "believe"
+  #   word: true
+  # - trigger: "unelss"
+  #   replace: "unless"
+  #   word: true
+  # - trigger: "thaat"
+  #   replace: "that"
+  #   word: true
+  # - trigger: "crases"
+  #   replace: "crashes"
+  #   word: true
+  # - trigger: "paty"
+  #   replace: "party"
+  #   word: true
+  # - trigger: "mappigns"
+  #   replace: "mappings"
+  #   word: true
+  # - trigger: "qeustion"
+  #   replace: "question"
+  #   word: true
+  # - trigger: "buton"
+  #   replace: "button"
+  #   word: true
+  # - trigger: "inventoyr"
+  #   replace: "inventory"
+  #   word: true
+  # - trigger: "wil"
+  #   replace: "will"
+  #   word: true
+  # - trigger: "th"
+  #   replace: "the"
+  #   word: true
+  # - trigger: "limiation"
+  #   replace: "limitation"
+  #   word: true
+  # - trigger: "ou"
+  #   replace: "you"
+  #   word: true
+  # - trigger: "locaion"
+  #   replace: "location"
+  #   word: true
+  # - trigger: "tehre"
+  #   replace: "there"
+  #   word: true
+  # - trigger: "naem"
+  #   replace: "name"
+  #   word: true
+  # - trigger: "possibel"
+  #   replace: "possible"
+  #   word: true
+  # - trigger: "btu"
+  #   replace: "but"
+  #   word: true
+  # - trigger: "commends"
+  #   replace: "comments"
+  #   word: true
+  # - trigger: "questins"
+  #   replace: "questions"
+  #   word: true
+  # - trigger: "cant"
+  #   replace: "can't"
+  #   word: true
+  # - trigger: "kno"
+  #   replace: "know"
+  #   word: true
+  # - trigger: "wht"
+  #   replace: "what"
+  #   word: true
+  # - trigger: "hsas"
+  #   replace: "has"
+  #   word: true
+  # - trigger: "freigh"
+  #   replace: "freight"
+  #   word: true
+  # - trigger: "pleae"
+  #   replace: "please"
+  #   word: true
+  # - trigger: "possibl"
+  #   replace: "possible"
+  #   word: true
+  # - trigger: "simiar"
+  #   replace: "similar"
+  #   word: true
+  # - trigger: "het"
+  #   replace: "the"
+  #   word: true
+  # - trigger: "regaurding"
+  #   replace: "regarding"
+  #   word: true
+  # - trigger: "wsa"
+  #   replace: "was"
+  #   word: true
+  # - trigger: "wsas"
+  #   replace: "was"
+  #   word: true
+  # - trigger: "yu"
+  #   replace: "you"
+  #   word: true
+  # - trigger: "soemthing"
+  #   replace: "something"
+  #   word: true
+  # - trigger: "eithr"
+  #   replace: "either"
+  #   word: true
+  # - trigger: "leaing"
+  #   replace: "leaving"
+  #   word: true
+  # - trigger: "thse"
+  #   replace: "these"
+  #   word: true
+  # - trigger: "thsee"
+  #   replace: "these"
+  #   word: true
+  # - trigger: "dong"
+  #   replace: "doing"
+  #   word: true
+  # - trigger: "soe"
+  #   replace: "some"
+  #   word: true
+  # - trigger: "whwat"
+  #   replace: "what"
+  #   word: true
+  # - trigger: "thise"
+  #   replace: "this"
+  #   word: true
+  # - trigger: "woul"
+  #   replace: "would"
+  #   word: true
+  # - trigger: "throgh"
+  #   replace: "through"
+  #   word: true
+  # - trigger: "cn"
+  #   replace: "can"
+  #   word: true
+  # - trigger: "htat"
+  #   replace: "that"
+  #   word: true
+  # - trigger: "havent"
+  #   replace: "haven't"
+  #   word: true
+  # - trigger: "trieds"
+  #   replace: "tries"
+  #   word: true
+  # - trigger: "tey"
+  #   replace: "they"
+  #   word: true
+  # - trigger: "ahs"
+  #   replace: "has"
+  #   word: true
+  # - trigger: "werent"
+  #   replace: "weren't"
+  #   word: true
+  # - trigger: "trynig"
+  #   replace: "trying"
+  #   word: true
+  # - trigger: "selct"
+  #   replace: "select"
+  #   word: true
+  # - trigger: "tiems"
+  #   replace: "times"
+  #   word: true
+  # - trigger: "saerch"
+  #   replace: "search"
+  #   word: true
+  # - trigger: "passwrod"
+  #   replace: "password"
+  #   word: true
+  # - trigger: "chnge"
+  #   replace: "change"
+  #   word: true
+  # - trigger: "hav"
+  #   replace: "have"
+  #   word: true
+  # - trigger: "mocing"
+  #   replace: "moving"
+  #   word: true
+  # - trigger: "quantityt"
+  #   replace: "quantity"
+  #   word: true
+  # - trigger: "containt"
+  #   replace: "contain"
+  #   word: true
+  # - trigger: "curency"
+  #   replace: "currency"
+  #   word: true
+  # - trigger: "rull"
+  #   replace: "rule"
+  #   word: true
+  # - trigger: "skll"
+  #   replace: "skill"
+  #   word: true
+  # - trigger: "opn"
+  #   replace: "open"
+  #   word: true
+  # - trigger: "te"
+  #   replace: "the"
+  #   word: true
+  # - trigger: "netowrk"
+  #   replace: "network"
+  #   word: true
+  # - trigger: "hae"
+  #   replace: "have"
+  #   word: true
+  # - trigger: "msised"
+  #   replace: "missed"
+  #   word: true
+  # - trigger: "daitional"
+  #   replace: "additional"
+  #   word: true
+  # - trigger: "geta"
+  #   replace: "get a"
+  #   word: true
+  # - trigger: "wen"
+  #   replace: "when"
+  #   word: true
+  # - trigger: "tol"
+  #   replace: "told"
+  #   word: true
+  # - trigger: "lik"
+  #   replace: "like"
+  #   word: true
+  # - trigger: "lok"
+  #   replace: "look"
+  #   word: true
+  # - trigger: "assistane"
+  #   replace: "assistance"
+  #   word: true
+  # - trigger: "isisue"
+  #   replace: "issue"
+  #   word: true
+  # - trigger: "hlped"
+  #   replace: "helped"
+  #   word: true
+  # - trigger: "itno"
+  #   replace: "into"
+  #   word: true
+  # - trigger: "riht"
+  #   replace: "right"
+  #   word: true
+  # - trigger: "doig"
+  #   replace: "doing"
+  #   word: true
+  # - trigger: "loggin"
+  #   replace: "logging"
+  #   word: true
+  # - trigger: "frim"
+  #   replace: "from"
+  #   word: true
+  # - trigger: "tak"
+  #   replace: "take"
+  #   word: true
+  # - trigger: "ofr"
+  #   replace: "for"
+  #   word: true
+  # - trigger: "seomthing"
+  #   replace: "something"
+  #   word: true
+  # - trigger: "simiar"
+  #   replace: "similar"
+  #   word: true
+  # - trigger: "acse"
+  #   replace: "case"
+  #   word: true
+  # - trigger: "handlr"
+  #   replace: "handler"
+  #   word: true
+  # - trigger: "becauase"
+  #   replace: "because"
+  #   word: true
+  # - trigger: "custoemr"
+  #   replace: "customer"
+  #   word: true
+  # - trigger: "premissions"
+  #   replace: "permissions"
+  #   word: true
+  # - trigger: "assiged"
+  #   replace: "assigned"
+  #   word: true
+  # - trigger: "inteded"
+  #   replace: "intended"
+  #   word: true
+  # - trigger: "ot"
+  #   replace: "to"
+  #   word: true
+  # - trigger: "aftre"
+  #   replace: "after"
+  #   word: true
+  # - trigger: "remembr"
+  #   replace: "remember"
+  #   word: true
+  # - trigger: "curent"
+  #   replace: "current"
+  #   word: true
+  # - trigger: "avaiable"
+  #   replace: "available"
+  #   word: true
+  # - trigger: "voicemail"
+  #   replace: "voice mail"
+  #   word: true
+  # - trigger: "aer"
+  #   replace: "are"
+  #   word: true
+  # - trigger: "unabel"
+  #   replace: "unable"
+  #   word: true
+  # - trigger: "daabase"
+  #   replace: "database"
+  #   word: true
+  # - trigger: "backp"
+  #   replace: "backup"
+  #   word: true
+  # - trigger: "attahced"
+  #   replace: "attached"
+  #   word: true
+  # - trigger: "muh"
+  #   replace: "much"
+  #   word: true
+  # - trigger: "glas"
+  #   replace: "glad"
+  #   word: true
+  # - trigger: "theat"
+  #   replace: "that"
+  #   word: true
+  # - trigger: "afer"
+  #   replace: "after"
+  #   word: true
+  # - trigger: "hsould"
+  #   replace: "should"
+  #   word: true
+  # - trigger: "extensiosn"
+  #   replace: "extensions"
+  #   word: true
+  # - trigger: "backto"
+  #   replace: "back to"
+  #   word: true
+  # - trigger: "updaing"
+  #   replace: "updating"
+  #   word: true
+  # - trigger: "ofa"
+  #   replace: "of a"
+  #   word: true
+  # - trigger: "databse"
+  #   replace: "database"
+  #   word: true
+  # - trigger: "antoher"
+  #   replace: "another"
+  #   word: true
+  # - trigger: "unabe"
+  #   replace: "unable"
+  #   word: true
+  # - trigger: "plase"
+  #   replace: "please"
+  #   word: true
+  # - trigger: "graed"
+  #   replace: "grayed"
+  #   word: true
+  # - trigger: "tets"
+  #   replace: "test"
+  #   word: true
+  # - trigger: "teh"
+  #   replace: "the"
+  #   word: true
+  # - trigger: "availabel"
+  #   replace: "available"
+  #   word: true
+  # - trigger: "unaable"
+  #   replace: "unable"
+  #   word: true
+  # - trigger: "attched"
+  #   replace: "attached"
+  #   word: true
+  # - trigger: "culd"
+  #   replace: "could"
+  #   word: true
+  # - trigger: "doen"
+  #   replace: "done"
+  #   word: true
+  # - trigger: "connectins"
+  #   replace: "connections"
+  #   word: true
+  # - trigger: "spoek"
+  #   replace: "spoke"
+  #   word: true
+  # - trigger: "gothca"
+  #   replace: "gotcha"
+  #   word: true
+  # - trigger: "closesly"
+  #   replace: "closely"
+  #   word: true
+  # - trigger: "reviewd"
+  #   replace: "reviewed"
+  #   word: true
+  # - trigger: "kep"
+  #   replace: "keep"
+  #   word: true
+  # - trigger: "hwere"
+  #   replace: "where"
+  #   word: true
+  # - trigger: "attachd"
+  #   replace: "attached"
+  #   word: true
+  # - trigger: "liens"
+  #   replace: "lines"
+  #   word: true
+  # - trigger: "redy"
+  #   replace: "ready"
+  #   word: true
+  # - trigger: "msut"
+  #   replace: "must"
+  #   word: true
+  # - trigger: "shoud"
+  #   replace: "should"
+  #   word: true
+  # - trigger: "goive"
+  #   replace: "give"
+  #   word: true
+  # - trigger: "availabe"
+  #   replace: "available"
+  #   word: true
+  # - trigger: "hw"
+  #   replace: "how"
+  #   word: true
+  # - trigger: "emant"
+  #   replace: "meant"
+  #   word: true
+  # - trigger: "warehosue"
+  #   replace: "warehouse"
+  #   word: true
+  # - trigger: "aalso"
+  #   replace: "also"
+  #   word: true
+  # - trigger: "wold"
+  #   replace: "would"
+  #   word: true
+  # - trigger: "thesee"
+  #   replace: "these"
+  #   word: true
+  # - trigger: "contine"
+  #   replace: "continue"
+  #   word: true
+  # - trigger: "thogu"
+  #   replace: "though"
+  #   word: true
+  # - trigger: "dropdwon"
+  #   replace: "dropdown"
+  #   word: true
+  # - trigger: "optiosn"
+  #   replace: "options"
+  #   word: true
+  # - trigger: "witth"
+  #   replace: "with"
+  #   word: true
+  # - trigger: "ssystem"
+  #   replace: "system"
+  #   word: true
+  # - trigger: "shwo"
+  #   replace: "show"
+  #   word: true
+  # - trigger: "fieds"
+  #   replace: "fields"
+  #   word: true
+  # - trigger: "syste"
+  #   replace: "system"
+  #   word: true
+  # - trigger: "abut"
+  #   replace: "about"
+  #   word: true
+  # - trigger: "knof"
+  #   replace: "know"
+  #   word: true
+  # - trigger: "toher"
+  #   replace: "other"
+  #   word: true
+  # - trigger: "aplly"
+  #   replace: "apply"
+  #   word: true
+  # - trigger: "sciprt"
+  #   replace: "script"
+  #   word: true
+  # - trigger: "thoght"
+  #   replace: "thought"
+  #   word: true
+  # - trigger: "currenty"
+  #   replace: "currently"
+  #   word: true
+  # - trigger: "wit"
+  #   replace: "with"
+  #   word: true
+  # - trigger: "voiemail"
+  #   replace: "voice mail"
+  #   word: true
+  # - trigger: "shwing"
+  #   replace: "showing"
+  #   word: true
+  # - trigger: "chang"
+  #   replace: "change"
+  #   word: true
+  # - trigger: "knw"
+  #   replace: "know"
+  #   word: true
+  # - trigger: "bette"
+  #   replace: "better"
+  #   word: true
+  # - trigger: "werhe"
+  #   replace: "where"
+  #   word: true
+  # - trigger: "pleaes"
+  #   replace: "please"
+  #   word: true
+  # - trigger: "descriptiong"
+  #   replace: "description"
+  #   word: true
+  # - trigger: "cal"
+  #   replace: "call"
+  #   word: true
+  # - trigger: "scheudle"
+  #   replace: "schedule"
+  #   word: true
+  # - trigger: "remvoe"
+  #   replace: "remove"
+  #   word: true
+  # - trigger: "purcahse"
+  #   replace: "purchase"
+  #   word: true
+  # - trigger: "avialable"
+  #   replace: "available"
+  #   word: true
+  # - trigger: "troble"
+  #   replace: "trouble"
+  #   word: true
+  # - trigger: "neede"
+  #   replace: "needed"
+  #   word: true
+  # - trigger: "quetsion"
+  #   replace: "question"
+  #   word: true
+  # - trigger: "trid"
+  #   replace: "tried"
+  #   word: true
+  # - trigger: "keybaord"
+  #   replace: "keyboard"
+  #   word: true
+  # - trigger: "emai"
+  #   replace: "email"
+  #   word: true
+  # - trigger: "defualts"
+  #   replace: "defaults"
+  #   word: true
+  # - trigger: "loking"
+  #   replace: "looking"
+  #   word: true
+  # - trigger: "hapy"
+  #   replace: "happy"
+  #   word: true
+  # - trigger: "Deposite"
+  #   replace: "deposit"
+  #   word: true
+  # - trigger: "cehck"
+  #   replace: "check"
+  #   word: true
+  # - trigger: "hwat"
+  #   replace: "what"
+  #   word: true
+  # - trigger: "iwht"
+  #   replace: "with"
+  #   word: true
+  # - trigger: "mw"
+  #   replace: "me"
+  #   word: true
+  # - trigger: "dashbaord"
+  #   replace: "dashboard"
+  #   word: true
+  # - trigger: "tehse"
+  #   replace: "these"
+  #   word: true
+  # - trigger: "mre"
+  #   replace: "more"
+  #   word: true
+  # - trigger: "montiro"
+  #   replace: "monitor"
+  #   word: true
+  # - trigger: "tseted"
+  #   replace: "tested"
+  #   word: true
+  # - trigger: "receie"
+  #   replace: "receive"
+  #   word: true
+  # - trigger: "resposne"
+  #   replace: "response"
+  #   word: true
+  # - trigger: "purchae"
+  #   replace: "purchase"
+  #   word: true
+  # - trigger: "softwaer"
+  #   replace: "software"
+  #   word: true
+  # - trigger: "separaate"
+  #   replace: "separate"
+  #   word: true
+  # - trigger: "clearning"
+  #   replace: "clearing"
+  #   word: true
+  # - trigger: "oen"
+  #   replace: "one"
+  #   word: true
+  # - trigger: "clsoing"
+  #   replace: "closing"
+  #   word: true
+  # - trigger: "downlaods"
+  #   replace: "downloads"
+  #   word: true
+  # - trigger: "projcet"
+  #   replace: "project"
+  #   word: true
+  # - trigger: "repot"
+  #   replace: "report"
+  #   word: true
+  # - trigger: "thouhgt"
+  #   replace: "thought"
+  #   word: true
+  # - trigger: "yo"
+  #   replace: "a::you a"
+  #   word: true
+  # - trigger: "isseu"
+  #   replace: "issue"
+  #   word: true
+  # - trigger: "umable"
+  #   replace: "unable"
+  #   word: true
+  # - trigger: "thans"
+  #   replace: "thanks"
+  #   word: true
+  # - trigger: "ishte"
+  #   replace: "is the"
+  #   word: true
+  # - trigger: "inviet"
+  #   replace: "invite"
+  #   word: true
+  # - trigger: "wihtout"
+  #   replace: "without"
+  #   word: true
+  # - trigger: "evalutate"
+  #   replace: "evaluate"
+  #   word: true
+  # - trigger: "installatino"
+  #   replace: "installation"
+  #   word: true
+  # - trigger: "owrks"
+  #   replace: "works"
+  #   word: true
+  # - trigger: "thakns"
+  #   replace: "thanks"
+  #   word: true
+  # - trigger: "iamge"
+  #   replace: "image"
+  #   word: true
+  # - trigger: "whre"
+  #   replace: "where"
+  #   word: true
+  # - trigger: "ocurring"
+  #   replace: "occurring"
+  #   word: true
+  # - trigger: "isseus"
+  #   replace: "issues"
+  #   word: true
+  # - trigger: "oepn"
+  #   replace: "open"
+  #   word: true
+  # - trigger: "cahnge"
+  #   replace: "change"
+  #   word: true
+  # - trigger: "laod"
+  #   replace: "load"
+  #   word: true
+  # - trigger: "taeks"
+  #   replace: "takes"
+  #   word: true
+  # - trigger: "wante"
+  #   replace: "wanted"
+  #   word: true
+  # - trigger: "msot"
+  #   replace: "most"
+  #   word: true
+  # - trigger: "reutnr"
+  #   replace: "return"
+  #   word: true
+  # - trigger: "curiousity"
+  #   replace: "curiosity"
+  #   word: true
+  # - trigger: "thnaks"
+  #   replace: "thanks"
+  #   word: true
+  # - trigger: "hwo"
+  #   replace: "how"
+  #   word: true
+  # - trigger: "previosu"
+  #   replace: "previous"
+  #   word: true
+  # - trigger: "mesenger"
+  #   replace: "messenger"
+  #   word: true
+  # - trigger: "salse"
+  #   replace: "sales"
+  #   word: true
+  # - trigger: "eht"
+  #   replace: "the"
+  #   word: true
+  # - trigger: "watns"
+  #   replace: "wants"
+  #   word: true
+  # - trigger: "abel"
+  #   replace: "able"
+  #   word: true
+  # - trigger: "committment"
+  #   replace: "commitment"
+  #   word: true
+  # - trigger: "tble"
+  #   replace: "table"
+  #   word: true
+  # - trigger: "custoemr"
+  #   replace: "customer"
+  #   word: true
+  # - trigger: "cahnges"
+  #   replace: "changes"
+  #   word: true
+  # - trigger: "tlak"
+  #   replace: "talk"
+  #   word: true
+  # - trigger: "quti"
+  #   replace: "quit"
+  #   word: true
+  # - trigger: "procedrue"
+  #   replace: "procedure"
+  #   word: true
+  # - trigger: "dtaabase"
+  #   replace: "database"
+  #   word: true
+  # - trigger: "Ido"
+  #   replace: "I do"
+  #   word: true
+  # - trigger: "readd"
+  #   replace: "read"
+  #   word: true
+  # - trigger: "vew"
+  #   replace: "view"
+  #   word: true
+  # - trigger: "specal"
+  #   replace: "special"
+  #   word: true
+  # - trigger: "veiw"
+  #   replace: "view"
+  #   word: true
+  # - trigger: "clsoe"
+  #   replace: "close"
+  #   word: true
+  # - trigger: "neds"
+  #   replace: "needs"
+  #   word: true
+  # - trigger: "DSRAM"
+  #   replace: "SDRAM"
+  #   word: true
+  # - trigger: "engouh"
+  #   replace: "enough"
+  #   word: true
+  # - trigger: "giong"
+  #   replace: "going"
+  #   word: true
+  # - trigger: "deelte"
+  #   replace: "delete"
+  #   word: true
+  # - trigger: "viisble"
+  #   replace: "visible"
+  #   word: true
+  # - trigger: "likeyl"
+  #   replace: "likely"
+  #   word: true
+  # - trigger: "subliem"
+  #   replace: "sublime"
+  #   word: true
+  # - trigger: "lcicking"
+  #   replace: "clicking"
+  #   word: true
+  # - trigger: "updaet"
+  #   replace: "update"
+  #   word: true
+  # - trigger: "defualt"
+  #   replace: "default"
+  #   word: true
+  # - trigger: "componenets"
+  #   replace: "components"
+  #   word: true
+  # - trigger: "udpate"
+  #   replace: "update"
+  #   word: true
+  # - trigger: "aer"
+  #   replace: "are"
+  #   word: true
+  # - trigger: "rae"
+  #   replace: "are"
+  #   word: true
+  # - trigger: "hte"
+  #   replace: "the"
+  #   word: true
+  # - trigger: "cuase"
+  #   replace: "cause"
+  #   word: true
+  # - trigger: "cuasing"
+  #   replace: "causing"
+  #   word: true
+  # - trigger: "additioanl"
+  #   replace: "additional"
+  #   word: true
+  # - trigger: "databsae"
+  #   replace: "database"
+  #   word: true
+  # - trigger: "sutiod"
+  #   replace: "studio"
+  #   word: true
+  # - trigger: "trhough"
+  #   replace: "through"
+  #   word: true
+  # - trigger: "htofix"
+  #   replace: "hotfix"
+  #   word: true
+  # - trigger: "tabel"
+  #   replace: "table"
+  #   word: true
+  # - trigger: "buidl"
+  #   replace: "build"
+  #   word: true
+  # - trigger: "caes"
+  #   replace: "case"
+  #   word: true
+  # - trigger: "owrking"
+  #   replace: "working"
+  #   word: true
+  # - trigger: "dashbord"
+  #   replace: "dashboard"
+  #   word: true
+  # - trigger: "sems"
+  #   replace: "seems"
+  #   word: true
+  # - trigger: "isee"
+  #   replace: "i see"
+  #   word: true
+  # - trigger: "kidna"
+  #   replace: "kinda"
+  #   word: true
+  # - trigger: "clera"
+  #   replace: "clear"
+  #   word: true
+  # - trigger: "wek"
+  #   replace: "week"
+  #   word: true
+  # - trigger: "budnler"
+  #   replace: "bundler"
+  #   word: true
+  # - trigger: "celar"
+  #   replace: "clear"
+  #   word: true
+  # - trigger: "budnle"
+  #   replace: "bundle"
+  #   word: true
+  # - trigger: "csae"
+  #   replace: "case"
+  #   word: true
+  # - trigger: "oens"
+  #   replace: "ones"
+  #   word: true
+  # - trigger: "csea"
+  #   replace: "case"
+  #   word: true
+  # - trigger: "ncie"
+  #   replace: "nice"
+  #   word: true
+  # - trigger: "apear"
+  #   replace: "appear"
+  #   word: true
+  # - trigger: "ugess"
+  #   replace: "guess"
+  #   word: true
+  # - trigger: "pritn"
+  #   replace: "print"
+  #   word: true
+  # - trigger: "keybaord"
+  #   replace: "keyboard"
+  #   word: true
+  # - trigger: "whiel"
+  #   replace: "while"
+  #   word: true
+  # - trigger: "purcahse"
+  #   replace: "purchase"
+  #   word: true
+  # - trigger: "instaed"
+  #   replace: "instead"
+  #   word: true
+  # - trigger: "pust"
+  #   replace: "puts"
+  #   word: true
+  # - trigger: "mena"
+  #   replace: "mean"
+  #   word: true
+  # - trigger: "somewehre"
+  #   replace: "somewhere"
+  #   word: true
+  # - trigger: "uesr"
+  #   replace: "user"
+  #   word: true
+  # - trigger: "wher"
+  #   replace: "where"
+  #   word: true
+  # - trigger: "gao"
+  #   replace: "ago"
+  #   word: true
+  # - trigger: "daet"
+  #   replace: "date"
+  #   word: true
+  # - trigger: "serach"
+  #   replace: "search"
+  #   word: true
+  # - trigger: "reutrn"
+  #   replace: "return"
+  #   word: true
+  # - trigger: "focsu"
+  #   replace: "focus"
+  #   word: true
+  # - trigger: "someoen"
+  #   replace: "someone"
+  #   word: true
+  # - trigger: "aruond"
+  #   replace: "around"
+  #   word: true
+  # - trigger: "loclahost"
+  #   replace: "localhost"
+  #   word: true
+  # - trigger: "remoev"
+  #   replace: "remove"
+  #   word: true
+  # - trigger: "isnert"
+  #   replace: "insert"
+  #   word: true
+  # - trigger: "tbale"
+  #   replace: "table"
+  #   word: true
+  # - trigger: "datetiem"
+  #   replace: "datetime"
+  #   word: true
+  # - trigger: "positin"
+  #   replace: "position"
+  #   word: true
+  # - trigger: "positoin"
+  #   replace: "position"
+  #   word: true
+  # - trigger: "insatll"
+  #   replace: "install"
+  #   word: true
+  # - trigger: "upate"
+  #   replace: "update"
+  #   word: true
+  # - trigger: "postiion"
+  #   replace: "position"
+  #   word: true
+  # - trigger: "updtae"
+  #   replace: "update"
+  #   word: true
+  # - trigger: "whwer"
+  #   replace: "where"
+  #   word: true
+  # - trigger: "thtat"
+  #   replace: "that"
+  #   word: true
+  # - trigger: "balacne"
+  #   replace: "balance"
+  #   word: true
+  # - trigger: "abalcne"
+  #   replace: "balance"
+  #   word: true
+  # - trigger: "baalnce"
+  #   replace: "balance"
+  #   word: true
+  # - trigger: "headphoens"
+  #   replace: "headphones"
+  #   word: true
+  # - trigger: "srue"
+  #   replace: "sure"
+  #   word: true
+  # - trigger: "softwrae"
+  #   replace: "software"
+  #   word: true
+  # - trigger: "jion"
+  #   replace: "join"
+  #   word: true
+  # - trigger: "ovid"
+  #   replace: "void"
+  #   word: true
+  # - trigger: "puhs"
+  #   replace: "push"
+  #   word: true
+  # - trigger: "exti"
+  #   replace: "exit"
+  #   word: true
+  # - trigger: "orign"
+  #   replace: "origin"
+  #   word: true
+  # - trigger: "oring"
+  #   replace: "origin"
+  #   word: true
+  # - trigger: "cosnole"
+  #   replace: "console"
+  #   word: true
+  # - trigger: "stuido"
+  #   replace: "studio"
+  #   word: true
+  # - trigger: "cathc"
+  #   replace: "catch"
+  #   word: true
+  # - trigger: "clipbaord"
+  #   replace: "clipboard"
+  #   word: true
+  # - trigger: "hwen"
+  #   replace: "when"
+  #   word: true
+  # - trigger: "tutorila"
+  #   replace: "tutorial"
+  #   word: true
+  # - trigger: "tyeps"
+  #   replace: "types"
+  #   word: true
+  # - trigger: "ndoe"
+  #   replace: "node"
+  #   word: true
+  # - trigger: "consol"
+  #   replace: "console"
+  #   word: true
+  # - trigger: "otuline"
+  #   replace: "outline"
+  #   word: true
+  # - trigger: "consoel"
+  #   replace: "console"
+  #   word: true
+  # - trigger: "isntance"
+  #   replace: "instance"
+  #   word: true
+  # - trigger: "wnidows"
+  #   replace: "windows"
+  #   word: true
+  # - trigger: "accuonts"
+  #   replace: "accounts"
+  #   word: true
+  # - trigger: "mosue"
+  #   replace: "mouse"
+  #   word: true
+  # - trigger: "apge"
+  #   replace: "page"
+  #   word: true
+  # - trigger: "ovid"
+  #   replace: "void"
+  #   word: true
+  # - trigger: "togetehr"
+  #   replace: "together"
+  #   word: true
+  # - trigger: "websotrm"
+  #   replace: "webstorm"
+  #   word: true
+  # - trigger: "moer"
+  #   replace: "more"
+  #   word: true
+  # - trigger: "tutorila"
+  #   replace: "tutorial"
+  #   word: true
+  # - trigger: "tyeps"
+  #   replace: "types"
+  #   word: true
+  # - trigger: "ndoe"
+  #   replace: "node"
+  #   word: true
+  # - trigger: "consol"
+  #   replace: "console"
+  #   word: true
+  # - trigger: "otuline"
+  #   replace: "outline"
+  #   word: true
+  # - trigger: "consoel"
+  #   replace: "console"
+  #   word: true
+  # - trigger: "isntance"
+  #   replace: "instance"
+  #   word: true
+  # - trigger: "wnidows"
+  #   replace: "windows"
+  #   word: true
+  # - trigger: "accuonts"
+  #   replace: "accounts"
+  #   word: true
+  # - trigger: "mosue"
+  #   replace: "mouse"
+  #   word: true
+  # - trigger: "apge"
+  #   replace: "page"
+  #   word: true
+  # - trigger: "seelct"
+  #   replace: "select"
+  #   word: true
+  # - trigger: "somehwere"
+  #   replace: "somewhere"
+  #   word: true
+  # - trigger: "tseting"
+  #   replace: "testing"
+  #   word: true
+  # - trigger: "exapmle"
+  #   replace: "example"
+  #   word: true
+  # - trigger: "dtae"
+  #   replace: "date"
+  #   word: true
+  # - trigger: "stakc"
+  #   replace: "stack"
+  #   word: true
+  # - trigger: "chacne"
+  #   replace: "chance"
+  #   word: true
