@@ -77,6 +77,9 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 echo " › Set touchbar to app controls with control strip"
 defaults write com.apple.touchbar.agent PresentationModeGlobal -string appWithControlStrip
 
+echo " › Enable full keyboard access for all controls (Tab in modal dialogs)"
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
 #############################
 
 echo ""
