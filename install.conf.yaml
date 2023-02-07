@@ -81,6 +81,11 @@
       path: iina/YouTube.conf
       force: true
 
+    ~/Library/Application Support/espanso:
+      if: '[ `uname` = Darwin ]'
+      path: espanso
+      force: true
+
 - asdf:
   - plugin: nodejs
     url: https://github.com/asdf-vm/asdf-nodejs
