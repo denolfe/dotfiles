@@ -36,6 +36,9 @@
             "`",
         ]
     },
+    "[shellscript]": {
+        "editor.inlineSuggest.enabled": true,
+    },
     "auto-rename-tag.activationOnLanguage": [
         "javascriptreact"
     ],
@@ -49,7 +52,7 @@
     "editor.colorDecorators": false,
     "editor.cursorBlinking": "smooth",
     "editor.cursorStyle": "block",
-    "editor.cursorSurroundingLines": 5, // Trial
+    "editor.cursorSurroundingLines": 5,
     "editor.dragAndDrop": false,
     "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 13,
@@ -484,6 +487,7 @@
                 "workbench.action.closeOtherEditors",
                 "workbench.files.action.collapseExplorerFolders",
                 "workbench.action.closePanel",
+                "workbench.files.action.showActiveFileInExplorer"
             ]
         },
     },
@@ -493,11 +497,15 @@
             "overrideWorkspaceSettings": false,
             "values": [
                 {
-                    "window.zoomLevel": 1,
+                    "window.zoomLevel": 0.25,
                     "editor.minimap.enabled": false,
                 },
                 {
                     "window.zoomLevel": -0.5,
+                    "editor.minimap.enabled": true,
+                },
+                {
+                    "window.zoomLevel": -1.0,
                     "editor.minimap.enabled": true,
                 }
             ]
@@ -527,6 +535,16 @@
         }
     ],
     "settingsOnFire.toggle": {
+        "GitHub CoPilot": {
+            "on": {
+                "_label": "Enable",
+                "editor.inlineSuggest.enabled": true,
+            },
+            "off": {
+                "_label": "Disable",
+                "editor.inlineSuggest.enabled": false,
+            }
+        },
         "Screen Share Mode": {
             "on": {
                 "_label": "Enable",
@@ -535,7 +553,7 @@
             },
             "off": {
                 "_label": "Disable",
-                "window.zoomLevel": -0.5,
+                "window.zoomLevel": -0.25,
                 "editor.minimap.enabled": true,
             }
         },
@@ -545,6 +563,8 @@
                 "files.exclude": {
                     "**/node_modules": true,
                     "**/dist": true,
+                    "**/build": true,
+                    "**/cdk.out": true,
                 }
             },
             "off": {
@@ -552,9 +572,76 @@
                 "files.exclude": {
                     "**/node_modules": false,
                     "**/dist": false,
+                    "**/build": false,
+                    "**/cdk.out": false,
                 }
             }
         }
     },
     "terminal.integrated.persistentSessionReviveProcess": "never",
+    "editor.inlineSuggest.enabled": true, // GitHub Copilot, true to enable
+    "editor.minimap.enabled": true,
+    "scm.diffDecorations": "all",
+    "workbench.statusBar.visible": true,
+    "workbench.editor.labelFormat": "default",
+    "markdown-preview-github-styles.colorTheme": "system",
+    "yaml.customTags": [
+        "!And",
+        "!And sequence",
+        "!If",
+        "!If sequence",
+        "!Not",
+        "!Not sequence",
+        "!Equals",
+        "!Equals sequence",
+        "!Or",
+        "!Or sequence",
+        "!FindInMap",
+        "!FindInMap sequence",
+        "!Base64",
+        "!Join",
+        "!Join sequence",
+        "!Cidr",
+        "!Ref",
+        "!Sub",
+        "!Sub sequence",
+        "!GetAtt",
+        "!GetAZs",
+        "!ImportValue",
+        "!ImportValue sequence",
+        "!Select",
+        "!Select sequence",
+        "!Split",
+        "!Split sequence"
+    ],
+    "yaml.validate": false,
+    "vsicons.dontShowNewVersionMessage": true,
+    "files.exclude": {
+        "**/node_modules": false,
+        "**/dist": false,
+        "**/cdk.out": false,
+        "**/build": false
+    },
+    "plantuml.java": "/usr/bin/java",
+    "workbench.editor.enablePreview": false,
+    "githubPullRequests.pullBranch": "never",
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "workbench.tree.renderIndentGuides": "always",
+    "typescript.tsserver.log": "verbose",
+    "explorer.autoReveal": true,
+    // "editor.experimental.stickyScroll.enabled": true,
+    "deno.enable": false,
+    "errorLens.enabledDiagnosticLevels": [
+        "warning",
+        "info",
+        "error"
+    ],
+    "window.zoomLevel": -0.5,
+    "zenMode.fullScreen": false,
+    "tailwind-fold.unfoldIfLineSelected": true,
+    "tailwind-fold.foldStyle": "QUOTES",
+    "tailwind-fold.foldedTextColor": "#909090",
+    "tailwind-fold.foldedTextBackgroundColor": "#2F2F2F",
+    "tailwind-fold.autoFold": false,
+    "tailwind-fold.showTailwindImage": false,
 }
