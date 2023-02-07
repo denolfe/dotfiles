@@ -276,6 +276,62 @@
             }
         }
     ],
+    "todohighlight.defaultStyle": {
+        "color": "#000",
+        "backgroundColor": "#608b4e",
+        "overviewRulerColor": "#808080",
+        "borderRadius": "2px",
+        "isWholeLine": false
+    },
+    "todohighlight.keywords": [
+        {
+            "text": "HACK:",
+            "backgroundColor": "#808080",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "NOTE:",
+            "backgroundColor": "#d7ba7d",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "TODO:",
+            "color": "#fff",
+            "backgroundColor": "#608b4e",
+        },
+        {
+            "text": "FIXME:",
+            "color": "#fff",
+            "backgroundColor": "#f44747"
+        },
+        {
+            "text": "WARNING:",
+            "color": "#fff",
+            "backgroundColor": "#f44747"
+        },
+        {
+            "text": "WHY:",
+            "color": "#fff",
+            "backgroundColor": "#d16969",
+            "overviewRulerColor": "#d16969",
+        },
+        "DEBUG:",
+        "REVIEW:",
+        "ISSUE:",
+        "BUG:"
+    ],
+    "todohighlight.include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+    ],
+    "todohighlight.exclude": [
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/build/**",
+        "**/*.json",
+    ],
     "peacock.favoriteColors": [
         // Custom
         {
