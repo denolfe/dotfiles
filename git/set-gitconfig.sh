@@ -5,10 +5,10 @@
 git config --global user.name "Elliot DeNolf"
 
 # Set git global settings
-git config --global push.default current
 git config --global core.autocrlf false
 git config --global core.whitespace cr-at-eol
 git config --global push.default current
+git config --global push.autoSetupRemote
 git config --global pull.rebase true
 git config --global rebase.autoStash true
 git config --global status.short true
