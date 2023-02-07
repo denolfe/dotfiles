@@ -18,3 +18,6 @@ alias ynuke='rm -f yarn.lock && rm -rf node_modules && yarn'
 
 alias la='lerna add'
 alias lad='lerna add --dev'
+
+alias cpj='cat package.json'
+alias cpjs='cat package.json | jq -r ".scripts"'
