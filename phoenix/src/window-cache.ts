@@ -10,22 +10,31 @@ export function initWindowCaching() {
   logCache()
 
   Event.on('appDidActivate', () => {
+    console.log('EVENT: appDidActivate')
     const win = Window.focused()
     if (!win || !win.isNormal()) return
     cacheWindow(win)
   })
 
-  Event.on('windowDidFocus', () => {
-    const win = Window.focused()
-    if (!win || !win.isNormal()) return
-    cacheWindow(win)
-  })
+  /**
+   * Disabled. This conflicts with appDidActivate.
+   * However, if a new app is launched, it will not be cached until clicked.
+   * */
+  // Event.on('windowDidFocus', () => {
+  //   console.log('EVENT: windowDidFocus')
+  //   const win = Window.focused()
+  //   logCache()
+  //   if (!win || !win.isNormal()) return
+  //   cacheWindow(win)
+  // })
 
   Event.on('spaceDidChange', () => {
+    console.log('EVENT: spaceDidChange')
     cacheWindowsOnScreen()
   })
 
   Event.on('mouseDidLeftClick', ({ x, y }) => {
+    console.log('EVENT: mouseDidLeftClick')
     cacheWindowsOnScreen()
   })
 }
@@ -48,8 +57,8 @@ export function cacheWindow(win: Window) {
 
 export function logCache() {
   console.log(
-    'cache',
-    windowCache.map(w => w.window.title()),
+    `cache: ${windowCache.length}`,
+    windowCache.map(w => `${w.window.app().name()}`).join(', '),
   )
 }
 
