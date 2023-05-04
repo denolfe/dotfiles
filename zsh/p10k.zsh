@@ -1653,7 +1653,8 @@
   prompt_yarn_link() {
     if [ ! -d "./node_modules" ] || [ -f "lerna.json" ] || [ -f "turbo.json" ]; then return; fi
 
-    local links=$(find ./node_modules -type l -maxdepth 1 | sed 's/\.\/node_modules\///')
+    # remove prefixed .bin
+    local links=$(find ./node_modules -type l -maxdepth 2 | sed 's/\.\/node_modules\///' | grep -v '\.bin')
     if [ $links ]; then
       p10k segment -f 208 -i '🔗' -t $(echo $links | tr '\n' ',' | sed 's/,$//')
     fi
