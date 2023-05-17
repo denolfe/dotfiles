@@ -44,6 +44,7 @@
     "cfnLint.validateUsingJsonSchema": false,
     "comment-ts.includeDescriptionTag": true,
     "crystal-lang.server": "/usr/local/bin/crystalline",
+    "debug.inlineValues": "on",
     "debug.showBreakpointsInOverviewRuler": true,
     "editor.codeLens": true,
     "editor.codeLensFontSize": 10,
@@ -61,6 +62,7 @@
     "editor.guides.bracketPairs": true,
     "editor.guides.bracketPairsHorizontal": "active",
     "editor.hover.above": false, // Trial
+    "editor.inlayHints.enabled": "on",
     "editor.inlayHints.fontSize": 10,
     "editor.minimap.maxColumn": 40,
     "editor.minimap.showSlider": "always",
