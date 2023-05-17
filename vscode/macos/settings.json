@@ -262,6 +262,16 @@
             "editorSuggestWidget.selectedBackground": "#01395e",
         },
     },
+
+    // Remove unnecessary extension notifications and telemetry
+    "telemetry.telemetryLevel": "error",
+    "extensions.ignoreRecommendations": true,
+    "gitlens.showWelcomeOnInstall": false,
+    "gitlens.showWhatsNewAfterUpgrades": false,
+    "redhat.telemetry.enabled": false,
+    "shellcheck.disableVersionCheck": true,
+
+    "workbench.welcomePage.walkthroughs.openOnInstall": false,
     "workbench.editor.historyBasedLanguageDetection": true,
     "workbench.iconTheme": "vscode-icons",
     "errorLens.exclude": [
