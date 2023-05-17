@@ -343,6 +343,23 @@
     "command": "settings.cycle.screenshare"
   },
   {
+    "key": "cmd+k cmd+m",
+    "command": "settings.cycle",
+    "when": "editorTextFocus && editorLangId =~ /^typescript|^javascript/",
+    "args": {
+      "id": "ts-toggle-misc-hints",
+      "overrideWorkspaceSettings": true,
+      "values": [
+        {
+          "editor.inlayHints.enabled": "off",
+        },
+        {
+          "editor.inlayHints.enabled": "on",
+        }
+      ]
+    }
+  },
+  {
     "key": "cmd+shift+0",
     "command": "settings.cycle.livestream"
   },
