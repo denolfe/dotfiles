@@ -239,6 +239,13 @@
     "workbench.colorCustomizations": {
         "editorInlayHint.foreground": "#909090",
         "editorInlayHint.background": "#2F2F2F",
+        "editorInlayHint.parameterForeground": "#909090",
+        "editorInlayHint.parameterBackground": "#2F2F2F",
+        "editorInlayHint.typeForeground": "#909090",
+        "editorInlayHint.typeBackground": "#2F2F2F",
+        // Inline debugger values
+        "editor.inlineValuesForeground": "#5d5d5d",
+        "editor.inlineValuesBackground": "#1e1e1e",
         "editorWhitespace.foreground": "#1e1e1e",
         "inlineparameters.annotationBackground": "#2F2F2F",
         "tab.activeBorderTop": "#007acc",
@@ -248,7 +255,10 @@
         "tab.unfocusedActiveBorderTop": "#007acc",
         "peekViewEditor.background": "#2F2F2F",
         "editor.lineHighlightBorder": "#383B3D",
-        // "editorStickyScroll.background": "#383B3D"
+        "editorStickyScroll.background": "#383B3D",
+        "[Default Dark Modern]": {
+            "editorSuggestWidget.selectedBackground": "#01395e",
+        },
     },
     "workbench.editor.historyBasedLanguageDetection": true,
     "workbench.iconTheme": "vscode-icons",
