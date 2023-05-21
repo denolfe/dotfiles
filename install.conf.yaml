@@ -11,12 +11,15 @@
     command: ./macos/setup-homebrew.sh
     description: Installing Homebrew and Essential Packages
     stdout: true
+  -
+    description: Downloading vim-plug to ~/.vim/autoload/plug.vim
+    command: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    stdout: true
 
 - link:
     # ~/.dotfiles: ''
 
     ~/.vimrc: vim/vimrc
-    ~/.vim/autoload/plug.vim: vim/vim-plug/plug.vim
     ~/.config/nvim:
       path: nvim
       force: true
