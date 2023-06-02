@@ -117,7 +117,7 @@ fi
 
 # FZF config and theme
 export FZF_DEFAULT_OPTS='--reverse --bind 'ctrl-l:cancel' --height=90% --pointer='▶''
-source $DOTFILES/zsh/fzf-theme.sh
+source $DOTFILES/zsh/fzf-theme-dark-plus.sh
 export FZF_TMUX_HEIGHT=80%
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
