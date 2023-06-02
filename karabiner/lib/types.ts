@@ -227,6 +227,7 @@ export interface ComplexModificationParameters {
 
 export interface KarabinerProfile {
   name?: string
+  selected: boolean
   complex_modifications?: {
     parameters?: ComplexModificationParameters
     rules?: Rule[]
@@ -234,9 +235,11 @@ export interface KarabinerProfile {
 }
 
 export interface KarabinerGlobals {
+  ask_for_confirmation_before_quitting: boolean
   check_for_updates_on_startup: boolean
   show_in_menu_bar: boolean
   show_profile_name_in_menu_bar: boolean
+  unsafe_ui: boolean
 }
 
 export interface KarabinerConfig {
