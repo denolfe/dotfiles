@@ -1,22 +1,19 @@
-import { Rule, KarabinerConfig, ComplexModificationParameters, KarabinerProfile } from './types.ts'
+import { Rule, KarabinerConfig, ComplexModificationParameters, KarabinerGlobals } from './types.ts'
 
 export class KarabinerComplexModifications {
-  rules = [] as Rule[]
-  parameters: ComplexModificationParameters
-  title = 'Deno Karabiner'
-  id = 'deno'
+  private rules = [] as Rule[]
+  private global: KarabinerGlobals
+  private parameters: ComplexModificationParameters
 
-  constructor(options?: {
-    title?: string
-    id?: string
-    parameters?: ComplexModificationParameters
-  }) {
-    if (options?.title) {
-      this.title = options.title
+  constructor(options?: { parameters?: ComplexModificationParameters }) {
+    this.global = {
+      ask_for_confirmation_before_quitting: true,
+      check_for_updates_on_startup: true,
+      show_in_menu_bar: true,
+      show_profile_name_in_menu_bar: false,
+      unsafe_ui: false,
     }
-    if (options?.id) {
-      this.id = options.id
-    }
+
     this.parameters = options?.parameters ?? {
       'basic.simultaneous_threshold_milliseconds': 50,
       'basic.to_delayed_action_delay_milliseconds': 250,
@@ -34,60 +31,38 @@ export class KarabinerComplexModifications {
     }
   }
 
-  getRules(): Rule[] {
-    const rules: Rule[] = []
-
-    for (const rule of this.rules) {
-      rules.push(rule)
-    }
-
-    return rules
+  printConfig() {
+    console.log(this.outputConfig())
   }
 
-  /**
-   * In the format of
-   * https://karabiner-elements.pqrs.org/docs/json/root-data-structure/#custom-json-file-in-configkarabinerassetscomplex_modifications
-   */
-  print() {
-    console.log(JSON.stringify({ title: this.title, rules: this.getRules() }, null, '    '))
+  private outputConfig(): string {
+    const fullConfig: KarabinerConfig = {
+      global: this.global,
+      profiles: [
+        {
+          name: 'Default profile',
+          selected: true,
+          complex_modifications: {
+            parameters: this.parameters,
+            rules: this.rules,
+          },
+        },
+      ],
+    }
+    return JSON.stringify(fullConfig, null, '  ')
   }
 
-  outputConfig(): string {
-    return JSON.stringify({ title: this.title, rules: this.getRules() }, null, '  ')
-  }
+  writeConfig(): void {
+    const config = this.outputConfig()
 
-  outputProfile(profileName = 'Default profile'): KarabinerProfile {
-    return {
-      name: profileName ?? 'Default profile',
-      complex_modifications: {
-        parameters: this.parameters,
-        rules: this.getRules(),
-      },
-    }
-  }
+    // Write to .dotfiles dir for version control
+    const __dirname = new URL('.', import.meta.url).pathname
+    Deno.writeTextFileSync(`${__dirname}/../karabiner.json`, config)
 
-  async writeToProfile(profileName = 'Default profile', configPath?: string) {
-    if (!configPath) {
-      const homeDir = Deno.env.get('HOME')
-      configPath = homeDir + '/.config/karabiner/karabiner.json'
-    }
-
-    console.log(`\nWriting profile: '${profileName}'`)
-    const content = await Deno.readTextFile(configPath)
-    const config: KarabinerConfig | undefined = JSON.parse(content)
-
-    let profile = config?.profiles?.find(profile => {
-      return profile.name === profileName
-    })
-
-    if (profile) {
-      profile = this.outputProfile(profileName)
-    } else {
-      console.log(`Profile not found, creating...`)
-      config?.profiles?.push(this.outputProfile(profileName))
-    }
-
-    await Deno.writeTextFile(configPath, JSON.stringify(config, null, '  '))
+    // Write to karabiner config location
+    const configPath = `${Deno.env.get('HOME')}/.config/karabiner/karabiner.json`
+    console.log(`Writing config to ${configPath}`)
+    Deno.writeTextFileSync(configPath, config)
     console.log('Done!')
   }
 }

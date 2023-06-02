@@ -298,4 +298,4 @@ mods.addRule({
   ],
 })
 
-mods.writeToProfile()
+mods.writeConfig()

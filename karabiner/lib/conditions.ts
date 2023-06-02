@@ -30,6 +30,9 @@ export const nonAppleDevice: Condition = {
     {
       vendor_id: 1452,
     },
+    {
+      vendor_id: 0, // M1 macbooks and beyond
+    },
   ],
 }
 
