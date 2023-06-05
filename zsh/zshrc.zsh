@@ -138,5 +138,5 @@ export ITERM2_SHOULD_DECORATE_PROMPT=0
 source $DOTFILES/iterm2/iterm2_shell_integration.zsh
 
 export ASDF_DOWNLOAD_PATH=bin/install
-source /usr/local/opt/asdf/libexec/asdf.sh
-source /usr/local/share/zsh/site-functions
+source /opt/homebrew/opt/asdf/libexec/asdf.sh
+source /opt/homebrew/share/zsh/site-functions
