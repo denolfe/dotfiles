@@ -11,7 +11,9 @@ source ~/.zgenom/zgenom.zsh
 
 export DOTFILES="$HOME/.dotfiles"
 export GPG_TTY=$TTY # https://unix.stackexchange.com/a/608921
-export ZGEN_CUSTOM_COMPDUMP=$ZSH_COMPDUMP
+
+# Override compdump name: https://github.com/jandamm/zgenom/discussions/121
+export ZGEN_CUSTOM_COMPDUMP="~/.zcompdump-$(whoami).zwc"
 
 # Generate zgen init.sh if it doesn't exist
 if ! zgenom saved; then
