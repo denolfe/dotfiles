@@ -125,7 +125,7 @@ export FZF_TMUX_HEIGHT=80%
 
 export EXA_ICON_SPACING=2
 
-export BAT_THEME='Monokai Extended Bright'
+export BAT_THEME='Visual Studio Dark+'
 
 export AWS_PAGER='bat -p'
 
