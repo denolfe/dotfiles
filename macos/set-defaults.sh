@@ -80,6 +80,9 @@ defaults write com.apple.touchbar.agent PresentationModeGlobal -string appWithCo
 echo " › Enable full keyboard access for all controls (Tab in modal dialogs)"
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
+echo " › Disable Fn key emoji picker"
+defaults write com.apple.HIToolbox AppleFnUsageType -int 0
+
 #############################
 
 echo ""
