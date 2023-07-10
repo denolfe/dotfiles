@@ -4,8 +4,9 @@ alias rl='source ~/.zshrc; echo ".zshrc reloaded"'
 alias regen='zgenom reset;source ~/.zshrc'
 alias .f='cd ~/.dotfiles'
 
-# Karabiner sometimes unresponsive after sleep: https://github.com/pqrs-org/Karabiner-Elements/issues/3078
-alias rk="sudo pkill Karabiner-DriverKit-VirtualHIDDeviceClient"
+# Karabiner seems to be fiddly with CapsLock state on wake, so this is a way to restart it while spamming CapsLock.
+# New keyboard blinks when CapsLock is enabled, so this is a quick way to fix.
+alias rk="launchctl stop org.pqrs.karabiner.karabiner_console_user_server;sleep 2;launchctl start org.pqrs.karabiner.karabiner_console_user_server"
 
 if type exa > /dev/null 2>&1; then
   alias ll='exa -alF --icons --color=always --group-directories-first'
