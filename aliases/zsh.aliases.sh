@@ -2,7 +2,10 @@
 
 alias rl='source ~/.zshrc; echo ".zshrc reloaded"'
 alias regen='zgenom reset;source ~/.zshrc'
+
+# Main directories
 alias .f='cd ~/.dotfiles'
+alias .d='cd ~/dev'
 
 # Karabiner seems to be fiddly with CapsLock state on wake, so this is a way to restart it while spamming CapsLock.
 # New keyboard blinks when CapsLock is enabled, so this is a quick way to fix.
