@@ -41,6 +41,8 @@ if ! zgenom saved; then
 
     zgenom ohmyzsh plugins/asdf
 
+    zgenom load ntnyq/omz-plugin-pnpm
+
     # These 2 must be in this order
     zgenom load zsh-users/zsh-syntax-highlighting
     zgenom load zsh-users/zsh-history-substring-search
