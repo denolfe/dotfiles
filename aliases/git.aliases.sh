@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Some additional git aliases
+# Modeled after patterns established by: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
 
 alias gst="git status"
 alias gau="git add -u"
@@ -16,6 +17,7 @@ alias gcof="git checkout -f"
 alias gct="git checkout -t"
 alias gdc="git diff --cached"
 alias gdlast="git diff HEAD~1..HEAD"
+alias gdno="git diff --name-only"
 alias gl="git l3"
 alias glast="git log -1 HEAD"
 alias gpdel="git push --delete"
