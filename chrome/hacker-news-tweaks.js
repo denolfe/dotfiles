@@ -1,15 +1,20 @@
 // ==UserScript==
 // @name            Hacker News Tweaks
-// @version         0.0.1
+// @version         0.0.2
 // @description     Misc HN tweaks
 // @homepage        https://github.com/denolfe/dotfiles
 // @include         https://news.ycombinator.com/*
-// @author       Elliot DeNolf
+// @author          Elliot DeNolf
 // @run-at          document-end
 // @grant           none
 // ==/UserScript==
 
-function GM_addStyle (css) {
+// Open article links in new window
+document.querySelectorAll('.titleline > a').forEach(link => {
+  link.setAttribute('target', '_blank')
+})
+
+function GM_addStyle(css) {
   const style = document.createElement('style')
   style.type = 'text/css'
   style.textContent = css
