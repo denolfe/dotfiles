@@ -21,3 +21,7 @@ alias lad='lerna add --dev'
 
 alias cpj='cat package.json'
 alias cpjs='cat package.json | jq -r ".scripts"'
+
+# Reverse pnpm aliases set by pnpm plugin
+alias pi='pnpm install'
+alias pin='pnpm init'
