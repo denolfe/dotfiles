@@ -77,7 +77,8 @@ if type bat > /dev/null 2>&1; then
   alias cat="bat"
 fi
 
-alias CDD='cd $(ls -v1td */ | head -1)'
+# cd into the most recently modified directory
+alias cdd='cd $(ls -v1td */ | head -1)'
 alias to_lower="tr '[:upper:]' '[:lower:]'"
 alias to_upper="tr '[:lower:]' '[:upper:]'"
 
