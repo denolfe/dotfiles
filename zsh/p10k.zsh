@@ -78,7 +78,7 @@
     # terraform               # terraform workspace (https://www.terraform.io)
     aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
     # work_aws                # custom segment that includes checking of role_arn in ~/.aws/config file
-    yarn_link                 # show current yarn links
+    node_link                 # show current node links
     # aws_eb_env              # aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/)
     # azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)
     # gcloud                  # google cloud cli account and project (https://cloud.google.com/)
@@ -99,7 +99,7 @@
     # todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
     # timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     # taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
-    time                    # current time
+    # time                    # current time
     newline
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
@@ -1650,8 +1650,12 @@
   typeset -g POWERLEVEL9K_YARN_LINK_BACKGROUND=1
 
   # Show if packages are linked in current node_modules
-  prompt_yarn_link() {
-    if [ ! -d "./node_modules" ] || [ -f "lerna.json" ] || [ -f "turbo.json" ]; then return; fi
+  prompt_node_link() {
+    if [ ! -d "./node_modules" ] || [ -f "lerna.json" ] || [ -f "turbo.json" ] || [ -f "pnpm-lock.yaml" ]; then return; fi
+
+    # Check if one directory up is named packages, handles turborepo
+    local parent_dir=$(basename $(dirname $(pwd)))
+    if [ $parent_dir = "packages" ]; then return; fi
 
     # remove prefixed .bin
     local links=$(find ./node_modules -type l -maxdepth 2 | sed 's/\.\/node_modules\///' | grep -v '\.bin')
