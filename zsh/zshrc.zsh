@@ -25,6 +25,7 @@ if ! zgenom saved; then
     zgenom ohmyzsh plugins/kubectl
     zgenom ohmyzsh plugins/docker
     zgenom ohmyzsh plugins/docker-compose
+    zgenom ohmyzsh plugins/aws
     zgenom load zsh-users/zsh-autosuggestions
     zgenom load michaelaquilina/zsh-autoswitch-virtualenv
     zgenom load jocelynmallon/zshmarks

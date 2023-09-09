@@ -1,9 +1,30 @@
 {
+  // Overrides
+  "constructor": {
+    "prefix": "ctor",
+    "body": [
+      "constructor() {",
+      "\t$0",
+      "}"
+    ],
+    "description": "simplified constructor"
+  },
   // Functions
   "arrow_func_body": {
-    "prefix": "arrowFuncBody",
+    "prefix": "af",
     "body": "($0) => {\n\t$1\n}",
     "description": "arrow function body"
+  },
+  "arrow_func_body_async": {
+    "prefix": "aaf",
+    "body": "async ($0) => {\n\t$1\n}",
+    "description": "async arrow function body"
+  },
+  // Console.log
+  "consoleLogObject": {
+    "prefix": "clo",
+    "body": "console.log('${1:object} :>> ', ${1:object});",
+    "description": "Displays an object in the console with its name"
   },
   // Jest
   "describe": {
@@ -58,11 +79,21 @@
   "beforeAll": {
     "prefix": "ba",
     "body": "beforeAll(() => {\n\t$0\n});",
+    "description": "beforeAll async function is called once before all specs"
+  },
+  "beforeAllAsync": {
+    "prefix": "baa",
+    "body": "beforeAll(async () => {\n\t$0\n});",
     "description": "beforeAll function is called once before all specs"
   },
   "beforeEach": {
     "prefix": "be",
     "body": "beforeEach(() => {\n\t$0\n});",
+    "description": "beforeEach function is called once before each spec"
+  },
+  "beforeEachAsync": {
+    "prefix": "bea",
+    "body": "beforeEach(async () => {\n\t$0\n});",
     "description": "beforeEach function is called once before each spec"
   },
 }

@@ -17,6 +17,11 @@ matches:
       Feel free to submit a feature request, so we can discuss/prioritize with everyone.
 
       https://github.com/payloadcms/payload/discussions
+  - trigger: "docs:components"
+    replace: |
+      Docs for swapping the components: https://payloadcms.com/docs/admin/components#collections
+      Docs for a cell component: https://payloadcms.com/docs/admin/components#cell-component
+      Docs for ui fields: https://payloadcms.com/docs/fields/ui#ui-field
 
 
   # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!

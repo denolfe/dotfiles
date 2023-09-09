@@ -89,3 +89,5 @@ fi
 
 alias jwt_from_clip="pbpaste | jwt decode -j - | jq -r '.payload'"
 alias jqkeys="jq -r 'select(objects)|=[.] | map( paths(scalars) ) | map( map(select(numbers)=\"[]\") | join(\".\")) | unique | .[]' | sed 's/.\[\]/[]/g' | xargs printf -- '.%s\n'"
+
+alias yay="repeat 3 { open raycast://confetti } && afplay -v 0.5 ~/.dotfiles/sounds/kids_cheering.mp3 &"

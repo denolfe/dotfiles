@@ -279,13 +279,26 @@
   },
   // Snippets
   {
+    "key": "cmd+k cmd+;",
+    "command": "editor.action.insertSnippet",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
     "key": "cmd+shift+9",
     "command": "editor.action.insertSnippet",
     "args": {
       "name": "arrow_func_body"
-    }
+    },
+    "when": "editorTextFocus && !editorReadonly"
   },
-
+  {
+    "key": "cmd+shift+8",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "name": "consoleLogObject"
+    },
+    "when": "editorTextFocus && !editorReadonly"
+  },
   // Group Go To Symbol by default
   {
     "key": "shift+cmd+o",
@@ -300,7 +313,6 @@
     "key": "shift+cmd+o",
     "command": "-workbench.action.gotoSymbol"
   },
-
   // Jest Runner
   {
     "key": "cmd+k cmd+f",
@@ -363,4 +375,17 @@
     "key": "cmd+shift+0",
     "command": "settings.cycle.livestream"
   },
+  {
+    "key": "tab", // This might cause issues if editing within peek editor
+    "command": "togglePeekWidgetFocus",
+    "when": "inReferenceSearchEditor || referenceSearchVisible"
+  },
+  {
+    "key": "alt+k",
+    "command": "bookmarks.listFromAllFiles"
+  },
+  {
+    "key": "alt+j",
+    "command": "workbench.action.toggleAuxiliaryBar"
+  }
 ]

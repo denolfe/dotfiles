@@ -10,7 +10,7 @@
         },
     },
     "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -35,6 +35,9 @@
         ]
     },
     "[shellscript]": {
+        "editor.inlineSuggest.enabled": true,
+    },
+    "[yaml]": {
         "editor.inlineSuggest.enabled": true,
     },
     "auto-rename-tag.activationOnLanguage": [
@@ -79,7 +82,7 @@
                 "scope": [
                     "keyword.control.flow.ts",
                     "keyword.control.flow.tsx",
-                    "keyword.control.export.ts"
+                    "keyword.control.export.ts",
                 ],
                 "settings": {
                     "fontStyle": "italic"
@@ -211,7 +214,6 @@
         ],
         "smartStep": true
     },
-
     // Git Decorators
     "scm.diffDecorationsGutterPattern": {
         "modified": false
@@ -236,7 +238,6 @@
     ],
     "typescript.updateImportsOnFileMove.enabled": "always",
     "window.title": "${rootName}${separator}${activeEditorShort}",
-    "window.zoomLevel": -0.5,
     "window.confirmBeforeClose": "keyboardOnly",
     "workbench.colorCustomizations": {
         "editorInlayHint.foreground": "#909090",
@@ -340,6 +341,11 @@
             "text": "NOTE:",
             "backgroundColor": "#d7ba7d",
             "overviewRulerColor": "grey"
+        },
+        {
+            "text": "Q: ",
+            "backgroundColor": "#d7ba7d",
+            "overviewRulerColor": "d7ba7d"
         },
         {
             "text": "TODO:",
@@ -560,6 +566,7 @@
             "values": [
                 {
                     "editor.cursorBlinking": "solid",
+                    "editor.cursorStyle": "line",
                     "scm.diffDecorations": "none",
                     "window.zoomLevel": 1,
                     "workbench.activityBar.visible": false,
@@ -568,6 +575,7 @@
                 // My Defaults
                 {
                     "editor.cursorBlinking": "smooth",
+                    "editor.cursorStyle": "block",
                     "editor.fontSize": 13,
                     "scm.diffDecorations": "all",
                     "terminal.integrated.fontSize": 11,
@@ -627,7 +635,7 @@
     "editor.minimap.enabled": true,
     "scm.diffDecorations": "all",
     "workbench.statusBar.visible": true,
-    "workbench.editor.labelFormat": "default",
+    "workbench.editor.labelFormat": "short",
     "markdown-preview-github-styles.colorTheme": "system",
     "yaml.customTags": [
         "!And",
@@ -659,7 +667,6 @@
         "!Split sequence"
     ],
     "yaml.validate": false,
-    "vsicons.dontShowNewVersionMessage": true,
     "files.exclude": {
         "**/node_modules": false,
         "**/dist": false,
@@ -669,9 +676,8 @@
     "plantuml.java": "/usr/bin/java",
     "workbench.editor.enablePreview": false,
     "githubPullRequests.pullBranch": "never",
-    "typescript.inlayHints.parameterTypes.enabled": true,
     "workbench.tree.renderIndentGuides": "always",
-    "typescript.tsserver.log": "verbose",
+    "typescript.tsserver.log": "off",
     "explorer.autoReveal": true,
     // "editor.experimental.stickyScroll.enabled": true,
     "deno.enable": false,
@@ -680,7 +686,6 @@
         "info",
         "error"
     ],
-    "window.zoomLevel": -0.5,
     "zenMode.fullScreen": false,
     "tailwind-fold.unfoldIfLineSelected": true,
     "tailwind-fold.foldStyle": "QUOTES",
@@ -688,4 +693,20 @@
     "tailwind-fold.foldedTextBackgroundColor": "#2F2F2F",
     "tailwind-fold.autoFold": false,
     "tailwind-fold.showTailwindImage": false,
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "debug.autoExpandLazyVariables": true,
+    "window.zoomLevel": -0.5,
+    "workbench.activityBar.visible": true,
+    "errorLens.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false
+    },
 }
