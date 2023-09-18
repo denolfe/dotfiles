@@ -11,7 +11,7 @@ import {
   centeredWindowPositions as centered,
   gridPositions,
 } from './window-grid'
-import { getMainDisplay, initScreens } from './screen'
+import { getMainDisplay, initScreens, setMaxBrightnessOnDocking } from './screen'
 import { showToast, titleModal } from './modal'
 import { hyperCmd, hyper, HYPER } from './hyper'
 import { getClipboard, setClipboard } from './utils/clipboard'
@@ -26,6 +26,7 @@ initWindowCaching()
 
 Event.on('screensDidChange', () => {
   initScreens()
+  setMaxBrightnessOnDocking()
 })
 
 hyperCmd('r', () => Phoenix.reload())

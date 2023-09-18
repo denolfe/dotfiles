@@ -1,3 +1,5 @@
+import { osascript } from './utils/osascript'
+
 const screenCache: Record<string, Screen> = {}
 const screenCount: number = Screen.all().length
 
@@ -23,4 +25,16 @@ export function initScreens() {
   )
 
   console.log('Screen count:', screenCount)
+}
+
+export function setMaxBrightnessOnDocking() {
+  if (getScreenCount() < 2) return
+
+  osascript([
+    'tell application "System Events"',
+    'repeat 10 times',
+    'key code 144',
+    'end repeat',
+    'end tell',
+  ])
 }
