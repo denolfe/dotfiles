@@ -12,7 +12,7 @@ export function initScreens() {
   screenCache['main'] = allScreens[0]
 
   allScreens.forEach(screen => {
-    if (screen.flippedFrame().width === 1792) {
+    if (screen.flippedFrame().width === 1728) {
       screenCache['internal'] = screen
     } else {
       screenCache['secondary'] = screen
@@ -21,7 +21,7 @@ export function initScreens() {
 
   // Debug
   Object.entries(screenCache).forEach(([name, screen]) =>
-    console.log(name, screen.flippedVisibleFrame().width),
+    console.log(name + ':', screen.flippedVisibleFrame().width),
   )
 
   console.log('Screen count:', screenCount)

@@ -119,14 +119,9 @@ hyperCmd('tab', () => {
   moveToInternalDisplay()
 })
 
-// TODO: Add chording and bind to HYPER_CMD + w
-hyper('t', () => {
-  swapAllWindowsBetweenDisplays()
-  titleModal('All windows swapped', { screen: getMainDisplay() })
-})
-
 hyperCmd('t', () => {
   gatherAllWindows()
+  // swapAllWindowsBetweenDisplays()
   titleModal('Gathered all windows')
 })
 

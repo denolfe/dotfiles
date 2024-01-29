@@ -168,6 +168,7 @@ export function moveToNextScreen() {
   if (!win.isNormal() && win.app().name() === 'Google Chrome') {
     win = Window.recent()[1]
   }
+
   const currentScreen = win.screen()
   let newScreen = currentScreen.next()
 
@@ -175,7 +176,7 @@ export function moveToNextScreen() {
 
   if (getScreenCount() >= 3) {
     // Avoid internal display in triple
-    if (newScreen.flippedVisibleFrame().width === 1792) {
+    if (newScreen.isEqual(getInternalDisplay())) {
       newScreen = newScreen.next()
     }
 
