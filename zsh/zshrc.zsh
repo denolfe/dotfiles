@@ -90,8 +90,8 @@ setopt pushd_ignore_dups
 #setopt pushd_silent
 
 # Increase history size
-HISTSIZE=1000000000
-SAVEHIST=1000000000
+HISTSIZE=1000000000000000000
+SAVEHIST=1000000000000000000
 HISTFILE=~/.zsh_history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
