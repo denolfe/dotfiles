@@ -86,6 +86,26 @@ group() {
   open "$url"
 }
 
+# Open current branch's GitHub actions
+gac() {
+  remote_url=$(git config --get remote.origin.url)
+  __construct_repo_url "$remote_url"
+
+  url="$__repo_url/actions?query=branch%3A$(git branch --show-current)"
+  echo Opening "$url"...
+  open "$url"
+}
+
+# Open PRs for current branch
+grop() {
+  remote_url=$(git config --get remote.origin.url)
+  __construct_repo_url "$remote_url"
+
+  url="$__repo_url/pulls?q=is%3Apr+is%3Aopen+head%3A$(git branch --show-current)"
+  echo Opening "$url"...
+  open "$url"
+}
+
 __construct_repo_url() {
   if [[ $1 =~ ^git@(.*):(.*)/(.*).git$ ]]; then
     __repo_url=https://${match[1]}/${match[2]}/${match[3]}
