@@ -105,6 +105,11 @@
     global: latest
     versions:
       - latest
+  - plugin: pnpm
+    url: https://github.com/jonathanmorley/asdf-pnpm
+    global: latest
+    versions:
+      - latest
   - plugin: golang
     url: https://github.com/kennyp/asdf-golang
 
