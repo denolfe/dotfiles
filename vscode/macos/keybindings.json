@@ -129,7 +129,6 @@
     "command": "workbench.action.editor.previousChange"
   },
 
-
   // Settings remap
   {
     "key": "cmd+,",
@@ -175,6 +174,14 @@
     "key": "cmd+k k",
     "command": "editor.action.peekTypeDefinition"
   },
+
+  // Toggle Fold
+  {
+    "key": "cmd+k l",
+    "command": "editor.toggleFold",
+    "when": "editorTextFocus && foldingEnabled"
+  },
+
   // Go to next error in tab
   {
     "key": "cmd+k cmd+p",
@@ -237,6 +244,10 @@
     "command": "workbench.view.scm",
     "when": "workbench.scm.active"
   },
+  {
+    "key": "cmd+k cmd+d",
+    "command": "workbench.view.debug"
+  },
 
   // Change tabs left/right
   {
@@ -279,11 +290,24 @@
   },
   // Snippets
   {
+    "key": "cmd+shift+8",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "name": "consoleLogObject"
+    },
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
     "key": "cmd+shift+9",
     "command": "editor.action.insertSnippet",
     "args": {
       "name": "arrow_func_body"
     }
+  },
+  {
+    "key": "tab", // This might cause issues if editing within the peek editor
+    "command": "togglePeekWidgetFocus",
+    "when": "inReferenceSearchEditor || referenceSearchVisible"
   },
 
   // Group Go To Symbol by default
@@ -324,14 +348,14 @@
     "command": "extension.multiCommand.execute",
     "args": {
       "command": "multiCommand.makeSpace"
-    },
+    }
   },
   {
     "key": "cmd+k cmd+w",
     "command": "extension.multiCommand.execute",
     "args": {
       "command": "multiCommand.closeAllTabsExceptCurrent"
-    },
+    }
   },
   {
     "key": "cmd+k cmd+w",
@@ -339,11 +363,11 @@
   },
   // Settings Cycler
   {
-    "key": "cmd+0",
+    "key": "cmd+shift+0",
     "command": "settings.cycle.screenshare"
   },
   {
-    "key": "cmd+k cmd+m",
+    "key": "cmd+k cmd+.",
     "command": "settings.cycle",
     "when": "editorTextFocus && editorLangId =~ /^typescript|^javascript/",
     "args": {
@@ -351,16 +375,16 @@
       "overrideWorkspaceSettings": true,
       "values": [
         {
-          "editor.inlayHints.enabled": "off",
+          "editor.inlayHints.enabled": "off"
         },
         {
-          "editor.inlayHints.enabled": "on",
+          "editor.inlayHints.enabled": "on"
         }
       ]
     }
-  },
-  {
-    "key": "cmd+shift+0",
-    "command": "settings.cycle.livestream"
-  },
+  }
+  // {
+  //   "key": "cmd+shift+0",
+  //   "command": "settings.cycle.livestream"
+  // },
 ]
