@@ -96,4 +96,4 @@ alias jwt_from_clip="pbpaste | jwt decode -j - | jq -r '.payload'"
 alias jqkeys="jq -r 'select(objects)|=[.] | map( paths(scalars) ) | map( map(select(numbers)=\"[]\") | join(\".\")) | unique | .[]' | sed 's/.\[\]/[]/g' | xargs printf -- '.%s\n'"
 
 # Bounce Flux
-alias reflux='osascript -e "tell application \"Flux\" to quit" && open -a Flux'
+alias reflux='osascript -e "tell application \"Flux\" to quit" && sleep 1 && open -a Flux'
