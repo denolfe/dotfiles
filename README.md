@@ -1,4 +1,4 @@
-# Dotfiles
+# denolfe's dotfiles
 
 [![Actions Status](https://github.com/denolfe/dotfiles/workflows/Dotfiles%20Install/badge.svg)](https://github.com/denolfe/dotfiles/actions)
 [![Powered by dotbot][dbshield]][dblink]
