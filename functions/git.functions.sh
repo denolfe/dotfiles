@@ -101,7 +101,14 @@ grop() {
   remote_url=$(git config --get remote.origin.url)
   __construct_repo_url "$remote_url"
 
-  url="$__repo_url/pulls?q=is%3Apr+is%3Aopen+head%3A$(git branch --show-current)"
+  pr_number=$(git config --get branch."$(git branch --show-current)".github-pr-owner-number | awk -F "#" '{print $3}')
+
+  if [ -z "$pr_number" ]; then
+    url="$__repo_url/pulls?q=is%3Apr+is%3Aopen+head%3A$(git branch --show-current)"
+  else
+    url="$__repo_url/pull/$pr_number"
+  fi
+
   echo Opening "$url"...
   open "$url"
 }
