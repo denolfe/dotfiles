@@ -27,6 +27,7 @@ if ! zgenom saved; then
     zgenom ohmyzsh plugins/kubectl
     zgenom ohmyzsh plugins/docker
     zgenom ohmyzsh plugins/docker-compose
+    zgenom ohmyzsh plugins/z
     zgenom load zsh-users/zsh-autosuggestions
     zgenom load jocelynmallon/zshmarks
     zgenom load denolfe/git-it-on.zsh
@@ -35,7 +36,6 @@ if ! zgenom saved; then
     zgenom load caarlos0/zsh-add-upstream
     zgenom load denolfe/zsh-prepend
 
-    zgenom load agkozak/zsh-z
     zgenom load andrewferrier/fzf-z
     zgenom load reegnz/jq-zsh-plugin
 
