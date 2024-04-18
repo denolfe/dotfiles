@@ -36,6 +36,8 @@ git config --global alias.fzau '!git ls-files -m --exclude-standard | fzf -m --p
 git config --global alias.fza '!git ls-files -m -o --exclude-standard | fzf -m --print0 --preview-window down,90% --preview "git diff $@ -- {-1} | delta" | xargs -0 -o -t git add -p'
 git config --global alias.authors 'shortlog -s -n -e --all --no-merges'
 
+## Find most recent common ancestor between HEAD and another branch
+git config --global alias.find-base '!f() { git merge-base HEAD $1 | xargs git l3; }; f'
 
 # Fancy Logs
 git config --global alias.l 'log --oneline --graph --decorate --all'
