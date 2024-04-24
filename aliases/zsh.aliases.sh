@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-alias rl='source ~/.zshrc; echo ".zshrc reloaded"'
+# https://github.com/ohmyzsh/ohmyzsh/issues/5243#issuecomment-253649851
+alias rl='exec zsh'
 alias regen='zgenom reset;source ~/.zshrc'
 
 # Main directories
