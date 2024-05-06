@@ -35,6 +35,7 @@
     # status                  # exit code of the last command
     # os_icon                 # os identifier
     dir                     # current directory
+    pr_number                # Show the current pull request number
     vcs                     # git status
     newline                # \n
     prompt_char           # prompt symbol
@@ -1622,6 +1623,21 @@
   # Type `p10k help segment` for documentation and a more sophisticated example.
   function prompt_example() {
     p10k segment -b 1 -f 3 -i '⭐' -t 'hello, %n'
+  }
+
+  #####################################[ pr_number: custom pr number segment ]#########################
+
+  typeset -g POWERLEVEL9K_PR_NUMBER_FOREGROUND=0
+  typeset -g POWERLEVEL9K_PR_NUMBER_BACKGROUND=208
+
+  # Show remaining time on AWS token, based upon credentials file modified date
+  prompt_pr_number() {
+
+    local pr_number=$(git config --get branch."$(git branch --show-current)".github-pr-owner-number | awk -F "#" '{print $3}')
+
+    if [ -z "$pr_number" ]; then return; fi
+
+    _p9k_prompt_segment "$0$state" 208 016 '' 0 '' "#$pr_number"
   }
 
   #####################################[ work_aws: custom aws segment ]#########################
