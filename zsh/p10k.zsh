@@ -1630,7 +1630,7 @@
   typeset -g POWERLEVEL9K_PR_NUMBER_FOREGROUND=0
   typeset -g POWERLEVEL9K_PR_NUMBER_BACKGROUND=208
 
-  # Show remaining time on AWS token, based upon credentials file modified date
+  # Shows the PR number as hyperlink
   prompt_pr_number() {
     if [[ ! -d .git ]]; then return; fi
 
@@ -1638,7 +1638,9 @@
 
     if [ -z "$pr_number" ]; then return; fi
 
-    _p9k_prompt_segment "$0$state" 208 016 '' 0 '' "#$pr_number"
+    # source: https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
+    local pr_link=$(echo "\e]8;;https://github.com/payloadcms/payload/pull/$pr_number\e\\#$pr_number\e]8;;\e\\")
+    _p9k_prompt_segment "$0$state" 208 016 '' 0 '' "$pr_link"
   }
 
   #####################################[ work_aws: custom aws segment ]#########################
