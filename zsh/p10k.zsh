@@ -1632,7 +1632,7 @@
 
   # Shows the PR number as hyperlink
   prompt_pr_number() {
-    if [[ ! -d .git ]]; then return; fi
+    if ! git rev-parse --is-inside-work-tree &>/dev/null; then return; fi
 
     local pr_number=$(git config --get branch."$(git branch --show-current)".github-pr-owner-number | awk -F "#" '{print $3}')
 
