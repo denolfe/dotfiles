@@ -37,6 +37,8 @@ alias mv='mv -i'
 
 hs(){ history | grep -i "$1" ;}
 
+# VS Code
+alias c.='code .'
 alias ca='code -a'
 
 # Detect the platform (similar to $OSTYPE)
