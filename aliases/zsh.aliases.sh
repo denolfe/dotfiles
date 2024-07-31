@@ -102,3 +102,7 @@ alias jqkeys="jq -r 'select(objects)|=[.] | map( paths(scalars) ) | map( map(sel
 
 # Bounce Flux
 alias reflux='osascript -e "tell application \"Flux\" to quit" && sleep 1 && open -a Flux'
+
+function pg_connections() {
+  while true; do echo "$(date '+%H:%M:%S') - Active connections: $(psql -c 'SELECT COUNT(*) FROM pg_stat_activity;' -t -A)"; sleep 0.5; done
+}
