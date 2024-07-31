@@ -1,23 +1,36 @@
 name: Dotfiles Install
+
 on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   tests:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-13, ubuntu-latest]
+        os:
+          - macos-13
+          - ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Checkout submodules
       shell: bash
       run: |
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive
+
     - uses: bahmutov/npm-install@v1
       with:
         working-directory: phoenix
+
     - run: cd phoenix && yarn
+
     - run: make phoenix
+
     - name: Install dotfiles
       run: ./install --except asdf
