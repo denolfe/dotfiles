@@ -72,6 +72,20 @@ gro() {
   open "$url"
 }
 
+# Open Brnach Url
+gbo() {
+  remote_url=$(git config --get remote.origin.url)
+  __construct_repo_url "$remote_url"
+
+  if [ -z "$1" ]; then
+    url="$__repo_url/tree/$(git branch --show-current)"
+  else
+    url="$__repo_url/tree/$1"
+  fi
+  echo Opening "$url"...
+  open "$url"
+}
+
 # Open Upstream Url
 group() {
   remote_url=$(git config --get remote."$(git config branch.master.remote)".url)
