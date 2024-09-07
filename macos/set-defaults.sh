@@ -163,6 +163,9 @@ echo "› Dock"
 echo "  › Setting the icon size of Dock items to 48 pixels for optimal size/screen-realestate"
 defaults write com.apple.dock tilesize -int 48
 
+echo "  › Don't show recent applications in Dock"
+defaults write com.apple.dock show-recents -bool false
+
 echo "  › Speeding up Mission Control animations and grouping windows by application"
 defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock showAppExposeGestureEnabled -int 1
