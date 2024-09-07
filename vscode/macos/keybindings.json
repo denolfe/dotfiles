@@ -83,7 +83,7 @@
   {
     "key": "shift+cmd+=",
     "command": "workbench.action.increaseViewSize",
-    "when": "!editorFocus"
+    "when": "sideBarFocus || panelFocus"
   },
   {
     "key": "shift+cmd+-",
@@ -93,7 +93,7 @@
   {
     "key": "shift+cmd+-",
     "command": "workbench.action.decreaseViewSize",
-    "when": "!editorFocus"
+    "when": "sideBarFocus || panelFocus"
   },
   {
     "key": "cmd+[",
