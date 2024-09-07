@@ -12,9 +12,7 @@ if command -v code >/dev/null 2>&1; then
       cat $DOTFILES/vscode/extensions.txt | xargs -L 1 code --install-extension
       ;;
     *)
-      # Prevent additional vs code icon in dock
-      # https://github.com/microsoft/vscode/issues/60579#issuecomment-434583718
-      open -b com.microsoft.VSCode "$@"
+      command code "$@"
       ;;
     esac
   }
