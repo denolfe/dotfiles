@@ -67,9 +67,6 @@ case $OS in
   *) ;;
 esac
 
-# Other bash stuff
-alias t="touch"
-
 # tree w/ .gitignore - https://unix.stackexchange.com/a/632196
 alias tr1='rg --files | tree --fromfile -L 1 -C'
 alias tr2='rg --files | tree --fromfile -L 2 -C'
