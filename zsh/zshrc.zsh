@@ -130,6 +130,8 @@ export BAT_THEME='Visual Studio Dark+'
 
 export AWS_PAGER='bat -p'
 
+export ZSH_PLUGINS_ALIAS_TIPS_REVEAL_TEXT="❯ "
+
 # Needed for Crystal on mac - openss + pkg-config
 if [ `uname` = Darwin ]; then
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig
