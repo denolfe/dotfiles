@@ -175,6 +175,12 @@
     "command": "editor.action.peekTypeDefinition"
   },
 
+  // Restart TS Server
+  {
+    "key": "cmd+shift+r",
+    "command": "typescript.restartTsServer"
+  },
+
   // Toggle Fold
   {
     "key": "cmd+k l",
