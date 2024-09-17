@@ -19,8 +19,8 @@ alias ynuke='rm -f yarn.lock && rm -rf node_modules && yarn'
 alias la='lerna add'
 alias lad='lerna add --dev'
 
-alias cpj='cat package.json | jq'
-alias cpjs='cat package.json | jq -r ".scripts"'
+alias cpj='cat package.json | jless'
+alias cpjs='cat package.json | jq -r ".scripts" | jless'
 alias cpjv='cat package.json | jq -r ".version"'
 
 # Reverse pnpm aliases set by pnpm plugin
