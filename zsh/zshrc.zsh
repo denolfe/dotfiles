@@ -57,6 +57,9 @@ if ! zgenom saved; then
     # Warn you when you run a command that you've got an alias for
     zgenom load djui/alias-tips
 
+    # Modified globalias plugin
+    zgenom load $DOTFILES/zsh/globalias.plugin.zsh
+
     # Completion-only repos
     zgenom load zsh-users/zsh-completions src
 
