@@ -100,6 +100,7 @@
     # todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
     # timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     # taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
+    alias_reveal            # show eyes emoji when aliases log out their expansions
     time                    # current time
     newline
     # ip                    # ip address and bandwidth usage for a specified network interface
@@ -1624,6 +1625,19 @@
   # Type `p10k help segment` for documentation and a more sophisticated example.
   function prompt_example() {
     p10k segment -b 1 -f 3 -i '⭐' -t 'hello, %n'
+  }
+
+  #####################################[ alias_reveal: custom pr number segment ]#########################
+
+  typeset -g POWERLEVEL9K_ALIAS_REVEAL_FOREGROUND=0
+  typeset -g POWERLEVEL9K_ALIAS_REVEAL_BACKGROUND=0
+
+  # Shows 👀 in the prompt when the ZSH_PLUGINS_ALIAS_TIPS_REVEAL is set to 1
+  prompt_alias_reveal() {
+
+    if [ -z "$ZSH_PLUGINS_ALIAS_TIPS_REVEAL" ] || [ "$ZSH_PLUGINS_ALIAS_TIPS_REVEAL" -ne 1 ]; then return; fi
+
+    _p9k_prompt_segment "$0$state" 208 016 '' 0 '' "👀"
   }
 
   #####################################[ pr_number: custom pr number segment ]#########################
