@@ -67,6 +67,8 @@ case $OS in
   *) ;;
 esac
 
+alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+
 # tree w/ .gitignore - https://unix.stackexchange.com/a/632196
 alias tr1='rg --files | tree --fromfile -L 1 -C'
 alias tr2='rg --files | tree --fromfile -L 2 -C'
