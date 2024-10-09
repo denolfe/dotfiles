@@ -283,6 +283,7 @@
   "gitlens.showWhatsNewAfterUpgrades": false,
   "redhat.telemetry.enabled": false,
   "shellcheck.disableVersionCheck": true,
+  "workbench.activityBar.location": "top",
   "workbench.welcomePage.walkthroughs.openOnInstall": false,
   "workbench.editor.historyBasedLanguageDetection": true,
   // Experimental
