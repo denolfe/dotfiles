@@ -1,58 +1,41 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.rulers": [
-    100
-  ],
+  "editor.rulers": [100],
   "[json][jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features",
-    "editor.stickyScroll.enabled": true,
+    "editor.stickyScroll.enabled": true
+  },
+  "[yaml]": {
+    "editor.stickyScroll.enabled": true
   },
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one",
-    "editor.codeActionsOnSave": {
-      "source.fixAll.markdownlint": "explicit",
-    },
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    // "editor.codeActionsOnSave": {
-    //   "source.fixAll": true,
-    // },
-    // "editor.codeActionsOnSave": {
-    //   "source.fixAll.eslint": true,
-    // },
     "editor.formatOnSave": true,
-    "togglequotes.chars": [
-      "'",
-      "`"
-    ]
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit",
+      "source.fixAll.markdownlint": "explicit"
+    }
+  },
+  "[typescript][typescriptreact][javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
     },
-    "togglequotes.chars": [
-      "\"",
-      "'",
-      "`",
-    ],
+    "togglequotes.chars": ["'", "`"]
+  },
+  "[sql]": {
+    "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
   },
   "[shellscript]": {
     "editor.inlineSuggest.enabled": true,
-    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "auto-rename-tag.activationOnLanguage": [
-    "javascriptreact"
-  ],
+  "auto-rename-tag.activationOnLanguage": ["javascriptreact"],
   "breadcrumbs.symbolPath": "off",
   "cfnLint.validateUsingJsonSchema": false,
   "comment-ts.includeDescriptionTag": true,
   "crystal-lang.server": "/usr/local/bin/crystalline",
-  "debug.inlineValues": "off",
+  "debug.inlineValues": "on",
   "debug.showBreakpointsInOverviewRuler": true,
   "editor.codeLens": true,
   "editor.codeLensFontSize": 10,
@@ -171,10 +154,7 @@
       }
     ]
   },
-  "eslint.validate": [
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["typescript", "typescriptreact"],
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   // File nesting config
@@ -198,12 +178,21 @@
     "package.json": ".browserslist*, .circleci*, .commitlint*, .cz-config.js, .czrc, .dlint.json, .dprint.json, .editorconfig, .eslint*, .firebase*, .flowconfig, .github*, .gitlab*, .gitpod*, .huskyrc*, .jslint*, .lintstagedrc*, .markdownlint*, .node-version, .nodemon*, .npm*, .nvmrc, .pm2*, .pnp.*, .pnpm*, .prettier*, .releaserc*, .sentry*, .simple-git-hooks*, .stackblitz*, .styleci*, .stylelint*, .tazerc*, .textlint*, .tool-versions, .travis*, .versionrc*, .vscode*, .watchman*, .xo-config*, .yamllint*, .yarnrc*, Procfile, apollo.config.*, appveyor*, azure-pipelines*, bower.json, build.config.*, commitlint*, crowdin*, dangerfile*, dlint.json, dprint.json, electron-builder.*, eslint*, firebase.json, grunt*, gulp*, jenkins*, lerna*, lint-staged*, nest-cli.*, netlify*, nodemon*, npm-shrinkwrap.json, nx.*, package-lock.json, package.nls*.json, phpcs.xml, pm2.*, pnpm*, prettier*, pullapprove*, pyrightconfig.json, release-tasks.sh, release.config.*, renovate*, rollup.config.*, rspack*, simple-git-hooks*, stylelint*, tslint*, tsup.config.*, turbo*, typedoc*, unlighthouse*, vercel*, vetur.config.*, webpack*, workspace.json, xo.config.*, yarn*",
     "readme*": "authors, backers*, changelog.md, citation*, code_of_conduct*, codeowners, contributing*, contributors, copying, credits, governance.md, history.md, license*, maintainers, readme*, security.md, sponsors*",
     "jest.config.js": "jest*config.js",
-    "playwright.config.ts": "playwright*config.ts",
+    "playwright.config.ts": "playwright*config.ts"
+  },
+  "files.associations": {
+    "*.mdx": "markdown"
   },
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "files.watcherExclude": {
-    "**/node_modules/**": false
+    "**/.git/**": true,
+    "**/.next/**": true,
+    "**/.turbo/**": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/cdk.out": true,
+    "**/node_modules/**": true
   },
   "gitHistory.showEditorTitleMenuBarIcons": false,
   "gitlens.menus": false,
@@ -215,11 +204,9 @@
   //   "jestrunner.jestCommand": "export NODE_OPTIONS=--experimental-vm-modules && jest",
   "jestrunner.debugOptions": {
     "env": {
-      "NODE_OPTIONS": "--experimental-vm-modules",
+      "NODE_OPTIONS": "--experimental-vm-modules"
     },
-    "skipFiles": [
-      "<node_internals>/**"
-    ],
+    "skipFiles": ["<node_internals>/**"],
     "smartStep": true
   },
   // Git Decorators
@@ -227,6 +214,7 @@
     "modified": false
   },
   "scm.diffDecorations": "all",
+  "scm.experimental.showHistoryGraph": true,
   "scssFormatter.singleQuote": true,
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "terminal.integrated.fontSize": 11,
@@ -241,13 +229,9 @@
   "typescript.referencesCodeLens.showOnAllFunctions": true,
   "typescript.suggest.autoImports": true,
   "typescript.suggest.completeFunctionCalls": true,
-  "typescript.tsserver.pluginPaths": [
-    "typescript-plugin-css-modules"
-  ],
+  "typescript.tsserver.pluginPaths": ["typescript-plugin-css-modules"],
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.preferences.autoImportFileExcludePatterns": [
-    "@payloadcms/*",
-  ],
+  "typescript.preferences.autoImportFileExcludePatterns": ["@payloadcms/*"],
   "window.commandCenter": false,
   "window.title": "${rootName}${separator}${activeEditorShort}",
   "window.confirmBeforeClose": "keyboardOnly",
@@ -273,8 +257,8 @@
     "editor.lineHighlightBorder": "#383B3D",
     "editorStickyScroll.background": "#383B3D",
     "[Default Dark Modern]": {
-      "editorSuggestWidget.selectedBackground": "#01395e",
-    },
+      "editorSuggestWidget.selectedBackground": "#01395e"
+    }
   },
   // Remove unnecessary extension notifications and telemetry
   "telemetry.telemetryLevel": "error",
@@ -302,7 +286,7 @@
     "^Missing trailing comma",
     "^Missing semicolon",
     "^Insert `",
-    "^Replace `",
+    "^Replace `"
   ],
   "deno.codeLens.references": true,
   "deno.codeLens.referencesAllFunctions": true,
@@ -334,9 +318,7 @@
   // Suppress trailing comma warnings in settings.json
   "json.schemas": [
     {
-      "fileMatch": [
-        "settings.json"
-      ],
+      "fileMatch": ["settings.json"],
       "schema": {
         "allowTrailingCommas": true
       }
@@ -373,7 +355,7 @@
     {
       "text": "TODO:",
       "color": "#fff",
-      "backgroundColor": "#608b4e",
+      "backgroundColor": "#608b4e"
     },
     {
       "text": "FIXME:",
@@ -389,40 +371,21 @@
       "text": "WHY:",
       "color": "#fff",
       "backgroundColor": "#d16969",
-      "overviewRulerColor": "#d16969",
+      "overviewRulerColor": "#d16969"
     },
     "DEBUG:",
     "REVIEW:",
     "ISSUE:",
     "BUG:"
   ],
-  "todohighlight.include": [
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.ts",
-    "**/*.tsx",
-  ],
+  "todohighlight.include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
   "todohighlight.exclude": [
     "**/node_modules/**",
     "**/dist/**",
     "**/build/**",
-    "**/*.json",
+    "**/*.json"
   ],
   "peacock.favoriteColors": [
-    // Custom
-    {
-      "name": "Firebase Amber",
-      "value": "#FFA000"
-    },
-    {
-      "name": "Firebase Orange",
-      "value": "#F57C00"
-    },
-    {
-      "name": "Firebase Yellow",
-      "value": "#FFCA28"
-    },
-    // Standard
     {
       "name": "Angular Red",
       "value": "#dd0531"
@@ -459,7 +422,18 @@
       "name": "Vue Green",
       "value": "#42b883"
     },
-    // VS Dark
+    {
+      "name": "Firebase Amber",
+      "value": "#FFA000"
+    },
+    {
+      "name": "Firebase Orange",
+      "value": "#F57C00"
+    },
+    {
+      "name": "Firebase Yellow",
+      "value": "#FFCA28"
+    },
     {
       "name": "VS Dark Gray 1",
       "value": "#d4d4d4"
@@ -542,7 +516,7 @@
       "label": "Make Space",
       "sequence": [
         "workbench.action.toggleActivityBarVisibility",
-        "workbench.action.toggleSidebarVisibility",
+        "workbench.action.toggleSidebarVisibility"
       ]
     },
     "multiCommand.commentThenDuplicate": {
@@ -550,7 +524,7 @@
       "sequence": [
         "editor.action.commentLine",
         "editor.action.copyLinesDownAction",
-        "editor.action.commentLine",
+        "editor.action.commentLine"
       ]
     },
     "multiCommand.closeAllTabsExceptCurrent": {
@@ -563,6 +537,15 @@
         "workbench.files.action.showActiveFileInExplorer"
       ]
     },
+    "multiCommand.deletePairedBrackets": {
+      "label": "Delete Paired Brackets",
+      // removeBrackets, deleteLines, then format
+      "sequence": [
+        "editor.action.removeBrackets",
+        "editor.action.deleteLines",
+        "editor.action.formatDocument"
+      ]
+    }
   },
   "settings.cycle": [
     {
@@ -571,15 +554,15 @@
       "values": [
         {
           "window.zoomLevel": 0.25,
-          "editor.minimap.enabled": false,
+          "editor.minimap.enabled": false
         },
         {
           "window.zoomLevel": -0.5,
-          "editor.minimap.enabled": true,
+          "editor.minimap.enabled": true
         },
         {
           "window.zoomLevel": -1.0,
-          "editor.minimap.enabled": true,
+          "editor.minimap.enabled": true
         }
       ]
     },
@@ -611,23 +594,23 @@
     "GitHub CoPilot": {
       "on": {
         "_label": "Enable",
-        "editor.inlineSuggest.enabled": true,
+        "editor.inlineSuggest.enabled": true
       },
       "off": {
         "_label": "Disable",
-        "editor.inlineSuggest.enabled": false,
+        "editor.inlineSuggest.enabled": false
       }
     },
     "Screen Share Mode": {
       "on": {
         "_label": "Enable",
         "window.zoomLevel": 1,
-        "editor.minimap.enabled": false,
+        "editor.minimap.enabled": false
       },
       "off": {
         "_label": "Disable",
         "window.zoomLevel": -0.25,
-        "editor.minimap.enabled": true,
+        "editor.minimap.enabled": true
       }
     },
     "Internals / Artifacts": {
@@ -638,6 +621,7 @@
           "**/dist": true,
           "**/build": true,
           "**/cdk.out": true,
+          "**/.turbo": true
         }
       },
       "off": {
@@ -647,6 +631,7 @@
           "**/dist": false,
           "**/build": false,
           "**/cdk.out": false,
+          "**/.turbo": false
         }
       }
     }
@@ -656,56 +641,24 @@
   "editor.minimap.enabled": true, // Trial
   "workbench.editor.labelFormat": "short",
   "markdown-preview-github-styles.colorTheme": "system",
-  "yaml.customTags": [
-    "!And",
-    "!And sequence",
-    "!If",
-    "!If sequence",
-    "!Not",
-    "!Not sequence",
-    "!Equals",
-    "!Equals sequence",
-    "!Or",
-    "!Or sequence",
-    "!FindInMap",
-    "!FindInMap sequence",
-    "!Base64",
-    "!Join",
-    "!Join sequence",
-    "!Cidr",
-    "!Ref",
-    "!Sub",
-    "!Sub sequence",
-    "!GetAtt",
-    "!GetAZs",
-    "!ImportValue",
-    "!ImportValue sequence",
-    "!Select",
-    "!Select sequence",
-    "!Split",
-    "!Split sequence"
-  ],
   "yaml.validate": false,
   "vsicons.dontShowNewVersionMessage": true,
   "files.exclude": {
     "**/node_modules": false,
     "**/dist": false,
     "**/cdk.out": false,
-    "**/build": false
+    "**/build": false,
+    "**/.turbo": false
   },
   "plantuml.java": "/usr/bin/java",
-  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreview": true,
   "githubPullRequests.pullBranch": "never",
   "workbench.tree.renderIndentGuides": "always",
   "typescript.tsserver.log": "off",
   "explorer.autoReveal": true,
   // "editor.experimental.stickyScroll.enabled": true,
   "deno.enable": true,
-  "errorLens.enabledDiagnosticLevels": [
-    "warning",
-    "info",
-    "error"
-  ],
+  "errorLens.enabledDiagnosticLevels": ["info", "error", "warning"],
   "zenMode.fullScreen": false,
   "tailwind-fold.unfoldIfLineSelected": true,
   "tailwind-fold.foldStyle": "QUOTES",
@@ -729,7 +682,14 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "window.zoomLevel": -0.5,
-  "[sql]": {
-    "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+  "jestrunner.changeDirectoryToWorkspaceRoot": false,
+  "prisma.showPrismaDataPlatformNotification": false,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "todo-tree.highlights.enabled": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "diffEditor.renderSideBySide": true,
+  "workbench.editor.customLabels.patterns": {
+    "**/app/**/{layout,page,template}.{ts,tsx,js,jsx}": "${dirname(1)}/${dirname} <${filename}>",
+    "**/packages/*/src/**/*.{ts,tsx,js,jsx}": "${filename}.${extname} [${dirname(-3)}]"
   }
 }
