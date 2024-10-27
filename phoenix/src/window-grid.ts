@@ -27,8 +27,24 @@ type SplitWindowGridPosition =
   | 'right50'
   | 'right60'
   | 'right66'
+  | 'top33'
+  | 'top40'
+  | 'top50'
+  | 'bottom50'
+  | 'bottom60'
+  | 'bottom66'
 
-type CenteredGridPosition = 'full' | 'big' | 'med' | 'sm' | 'xs'
+type CenteredGridPosition =
+  | 'full'
+  | 'big'
+  | 'med'
+  | 'sm'
+  | 'xs'
+  | 'topHalf'
+  | 'bottomHalf'
+  | 'narrowLg'
+  | 'narrowMd'
+  | 'narrowSm'
 
 export const gridPositions: Record<SplitWindowGridPosition, GridPosition> = {
   left66: { x: 0, y: 0, w: 0.67, h: 1 },
@@ -41,6 +57,12 @@ export const gridPositions: Record<SplitWindowGridPosition, GridPosition> = {
   right50: { x: 0.5, y: 0, w: 0.5, h: 1 },
   right60: { x: 0.42, y: 0, w: 0.58, h: 1 },
   right66: { x: 0.33, y: 0, w: 0.67, h: 1 },
+  top33: { x: 0, y: 0, w: 1, h: 0.33 },
+  top40: { x: 0, y: 0, w: 1, h: 0.4 },
+  top50: { x: 0, y: 0, w: 1, h: 0.5 },
+  bottom50: { x: 0, y: 0.5, w: 1, h: 0.5 },
+  bottom60: { x: 0, y: 0.4, w: 1, h: 0.6 },
+  bottom66: { x: 0, y: 0.33, w: 1, h: 0.67 },
 }
 
 /**
@@ -58,6 +80,21 @@ export const splitWindowLayout: Record<SplitWindowGridPosition, SplitWindowLayou
     right50: { primary: gridPositions.right50, secondary: gridPositions.left50 },
     right60: { primary: gridPositions.right60, secondary: gridPositions.left40 },
     right66: { primary: gridPositions.right66, secondary: gridPositions.left33 },
+    top33: { primary: gridPositions.top33, secondary: gridPositions.bottom66 },
+    top40: { primary: gridPositions.top40, secondary: gridPositions.bottom60 },
+    top50: { primary: gridPositions.top50, secondary: gridPositions.bottom50 },
+    bottom50: {
+      primary: gridPositions.bottom50,
+      secondary: gridPositions.top50,
+    },
+    bottom60: {
+      primary: gridPositions.bottom60,
+      secondary: gridPositions.top40,
+    },
+    bottom66: {
+      primary: gridPositions.bottom66,
+      secondary: gridPositions.top33,
+    },
   }
 
 export const centeredWindowPositions: Record<CenteredGridPosition, GridPosition> = {
@@ -66,6 +103,11 @@ export const centeredWindowPositions: Record<CenteredGridPosition, GridPosition>
   med: centeredWindow16x9(0.83),
   sm: { x: 0.21, y: 0.125, w: 0.58, h: 0.75 },
   xs: { x: 0.29, y: 0.21, w: 0.42, h: 0.58 },
+  topHalf: { x: 0, y: 0, w: 1, h: 0.5 },
+  bottomHalf: { x: 0, y: 0.5, w: 1, h: 0.5 },
+  narrowLg: narrowWindow(0.8),
+  narrowMd: narrowWindow(0.7),
+  narrowSm: narrowWindow(0.6),
 }
 
 // Share cache between cycle functions
@@ -312,4 +354,9 @@ function winIsInGridPos(win: Window, newGridPos: GridPosition): boolean {
 function centeredWindow16x9(percent: number): GridPosition {
   const leftXy = (1 - percent) / 2
   return { x: leftXy, y: leftXy, w: percent, h: percent }
+}
+
+function narrowWindow(percent: number): GridPosition {
+  const x = (1 - percent) / 2
+  return { x, y: 0, w: percent, h: 1 }
 }

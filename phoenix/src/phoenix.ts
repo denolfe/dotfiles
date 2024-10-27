@@ -37,6 +37,7 @@ bindApp(';', 'iTerm')
 bindApp('g', 'Google Chrome')
 bindApp('c', 'Visual Studio Code')
 bindApp('r', 'Notion')
+bindApp('t', 'ChatGPT')
 bindApp('v', 'Spotify')
 bindCycleApps('f', ['Slack', 'Discord'])
 
@@ -57,11 +58,17 @@ hyper(
     centered.med,
     centered.sm,
     centered.xs,
+    // centered.topHalf,
+    // centered.bottomHalf,
+    // centered.narrowLg,
+    // centered.narrowMd,
+    // centered.narrowSm,
   ]),
 )
 
-// 50 split, swap sides on subsequent presses
 hyperCmd('w', cycleWindowSplit([layout.left50, layout.right50]))
+
+hyper('1', cycleWindowSplit([layout.left33, layout.right66]))
 
 // Cycle 2-window split, left side primary
 hyper(
@@ -119,11 +126,11 @@ hyperCmd('tab', () => {
   moveToInternalDisplay()
 })
 
-hyperCmd('t', () => {
-  gatherAllWindows()
-  // swapAllWindowsBetweenDisplays()
-  titleModal('Gathered all windows')
-})
+// hyperCmd('t', () => {
+//   gatherAllWindows()
+//   // swapAllWindowsBetweenDisplays()
+//   titleModal('Gathered all windows')
+// })
 
 /**
  * Open https link from clipboard with proper protocol for desktop apps
