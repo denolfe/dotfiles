@@ -25,4 +25,5 @@ alias cpjv='cat package.json | jq -r ".version"'
 
 # Reverse pnpm aliases set by pnpm plugin
 alias pi='pnpm install'
+alias pii='pnpm install --ignore-workspace'
 alias pin='pnpm init'
