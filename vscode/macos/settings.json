@@ -58,6 +58,7 @@
   "editor.minimap.maxColumn": 40,
   "editor.minimap.showSlider": "always",
   "editor.linkedEditing": true,
+  "editor.occurrencesHighlight": "multiFile",
   "editor.renderLineHighlight": "all",
   "editor.snippetSuggestions": "bottom",
   // VS Intellicode
@@ -272,7 +273,6 @@
   "workbench.editor.historyBasedLanguageDetection": true,
   // Experimental
   "workbench.editor.doubleClickTabToToggleEditorGroupSizes": "maximize",
-  "editor.multiDocumentOccurrencesHighlight": true,
   // Experimental
   "workbench.iconTheme": "vscode-icons",
   "errorLens.exclude": [
