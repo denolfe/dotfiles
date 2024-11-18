@@ -219,6 +219,7 @@
   "scssFormatter.singleQuote": true,
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "terminal.integrated.fontSize": 11,
+  "terminal.integrated.shellIntegration.decorationsEnabled": "overviewRuler",
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.parameterNames.enabled": "literals",
