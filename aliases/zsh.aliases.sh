@@ -12,9 +12,9 @@ alias .d='cd ~/dev'
 # New keyboard blinks when CapsLock is enabled, so this is a quick way to fix.
 alias rk="launchctl stop org.pqrs.karabiner.karabiner_console_user_server;sleep 2;launchctl start org.pqrs.karabiner.karabiner_console_user_server"
 
-if type exa > /dev/null 2>&1; then
-  alias ll='exa -alF --icons --color=always --group-directories-first'
-  alias llt='exa -alF --icons --color=always -s=mod --reverse'
+if type eza > /dev/null 2>&1; then
+  alias ll='eza -alF --icons --color=always --group-directories-first'
+  alias llt='eza -alF --icons --color=always -s=mod --reverse'
 else
   alias ll='ls -la'
   alias llt='ls -lat'
