@@ -1,0 +1,39 @@
+# To view all options: ghostty +show-config --default --docs
+
+theme = Dark+
+
+# Font
+font-family = JetBrainsMonoNL Nerd Font Mono
+font-size = 12
+
+# Cursor
+cursor-style = block
+adjust-cursor-thickness = 15
+# Move characters a bit closer together, similar to the look of iTerm2
+adjust-cell-width = -4%
+
+# In order to disable cursor blink, you must disable the shell-integration-features
+# `cursor-style-blink = false` is not respected when shell integration is enabled (default)
+#
+# HOWEVER, this means losing things like mouse scrolling and possibly other features.
+# Will be leaving cursor blinking on for now until this is sorted.
+#
+# Discussion here: https://github.com/ghostty-org/ghostty/discussions/2812
+cursor-style-blink = false
+# shell-integration-features = no-cursor
+
+# Window
+title = " "
+macos-titlebar-proxy-icon = hidden
+window-save-state = always
+window-padding-color = background
+window-padding-balance = false
+window-padding-x = 4
+window-padding-y = 0
+
+# Keybindings
+
+# Mapped to hyper+i in karabiner
+keybind = page_up=goto_split:top
+# Mapped to hyper+u in karabiner
+keybind = page_down=goto_split:bottom

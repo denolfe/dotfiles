@@ -10,6 +10,7 @@ fi
 source ~/.zgenom/zgenom.zsh
 
 export DOTFILES="$HOME/.dotfiles"
+export XDG_CONFIG_HOME="$HOME/.config"
 export GPG_TTY=$TTY # https://unix.stackexchange.com/a/608921
 
 # Override compdump name: https://github.com/jandamm/zgenom/discussions/121

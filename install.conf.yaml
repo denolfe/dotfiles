@@ -43,6 +43,10 @@
       path: phoenix/dist/phoenix.js
       force: true
 
+    ~/.config/ghostty:
+      path: ghostty
+      force: true
+
     ~/bin:
       glob: true
       path: scripts/*
