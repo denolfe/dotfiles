@@ -15,12 +15,9 @@ adjust-cell-width = -4%
 # In order to disable cursor blink, you must disable the shell-integration-features
 # `cursor-style-blink = false` is not respected when shell integration is enabled (default)
 #
-# HOWEVER, this means losing things like mouse scrolling and possibly other features.
-# Will be leaving cursor blinking on for now until this is sorted.
-#
 # Discussion here: https://github.com/ghostty-org/ghostty/discussions/2812
 cursor-style-blink = false
-# shell-integration-features = no-cursor
+shell-integration-features = no-cursor
 
 # Window
 title = " "
