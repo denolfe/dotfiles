@@ -1,6 +1,10 @@
 {
   "search.exclude": {
-    "dotbot/**": true
+    "dotbot/**": true,
+    "dotbot-plugins/**": true,
+    "zsh/oh-my-zsh/**": true,
+    "vim/vim-plug/**": true,
+    "zsh/zgenom/**": true,
   },
   "gitlens.advanced.blame.customArguments": [
     "--ignore-revs-file",
