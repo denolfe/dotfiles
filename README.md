@@ -6,17 +6,18 @@
 [dblink]: https://github.com/anishathalye/dotbot
 [dbshield]: https://img.shields.io/badge/powered%20by-dotbot-blue?style=flat
 
-> Personal dotfiles configuration for Zsh, Git, Vim, and more to rapidly bootstrap a new system.
+> Personal dotfiles configuration
 
 ![Image](preview.png)
 
-| Component                     | Tool                                                      | Config                             |
-| ----------------------------- | --------------------------------------------------------- | ---------------------------------- |
-| Installation                  | [Dotbot](https://github.com/anishathalye/dotbot)          | [config](./install.conf.yaml)      |
-| Theme                         | [Powerlevel10k](https://github.com/romkatv/powerlevel10k) | [config](./zsh/p10k.zsh)           |
-| .zshrc                        | [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)    | [config](./zsh/zshrc.zsh)          |
-| Global Key Rebinds, Hyper Key | [Karabiner](https://karabiner-elements.pqrs.org/)         | [config](./karabiner/karabiner.ts) |
-| App Focus, Window Management  | [Phoenix](https://kasper.github.io/phoenix/)              | [config](./phoenix/src/phoenix.ts) |
+| Component                     | Tool                                                      | Config                                   |
+| ----------------------------- | --------------------------------------------------------- | ---------------------------------------- |
+| Installation                  | [Dotbot](https://github.com/anishathalye/dotbot)          | [install.conf.yaml](./install.conf.yaml) |
+| Terminal                      | [Ghostty](https://ghostty.org)                            | [config](./ghostty/config)               |
+| Theme                         | [Powerlevel10k](https://github.com/romkatv/powerlevel10k) | [p10k.zsh](./zsh/p10k.zsh)               |
+| .zshrc                        | [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)    | [.zshrc](./zsh/zshrc.zsh)                |
+| Global Key Rebinds, Hyper Key | [Karabiner](https://karabiner-elements.pqrs.org/)         | [karabiner.ts](./karabiner/karabiner.ts) |
+| App Focus, Window Management  | [Phoenix](https://kasper.github.io/phoenix/)              | [phoenix.ts](./phoenix/src/phoenix.ts)   |
 
 ## [Makefile](./Makefile)
 
@@ -59,7 +60,7 @@
 
 ### Window Launch or Focus
 
-- <kbd>CapsLock</kbd>+<kbd>;</kbd> - iTerm
+- <kbd>CapsLock</kbd>+<kbd>;</kbd> - Ghostty
 - <kbd>CapsLock</kbd>+<kbd>g</kbd> - Google Chrome
 - <kbd>CapsLock</kbd>+<kbd>c</kbd> - Visual Studio Code
 - <kbd>CapsLock</kbd>+<kbd>f</kbd> - Slack
