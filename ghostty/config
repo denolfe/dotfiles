@@ -20,8 +20,8 @@ cursor-style-blink = false
 shell-integration-features = no-cursor
 
 # Window
-title = " "
 macos-titlebar-proxy-icon = hidden
+macos-titlebar-style = tabs
 window-save-state = always
 window-padding-color = background
 window-padding-balance = false
