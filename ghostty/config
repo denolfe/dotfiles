@@ -6,11 +6,12 @@ theme = Dark+
 font-family = JetBrainsMonoNL Nerd Font Mono
 font-size = 12
 
+# Move characters a bit closer together, similar to the look of iTerm2
+adjust-cell-width = -4%
+
 # Cursor
 cursor-style = block
 adjust-cursor-thickness = 15
-# Move characters a bit closer together, similar to the look of iTerm2
-adjust-cell-width = -4%
 
 # In order to disable cursor blink, you must disable the shell-integration-features
 # `cursor-style-blink = false` is not respected when shell integration is enabled (default)
@@ -20,6 +21,7 @@ cursor-style-blink = false
 shell-integration-features = no-cursor
 
 # Window
+# title = " "
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = tabs
 window-save-state = always
@@ -34,3 +36,9 @@ window-padding-y = 0
 keybind = page_up=goto_split:top
 # Mapped to hyper+u in karabiner
 keybind = page_down=goto_split:bottom
+
+# Switch this to cmd+period once https://github.com/ghostty-org/ghostty/discussions/2881
+# is addressed
+keybind = cmd+shift+period=esc:.
+
+keybind = global:shift+cmd+ctrl+alt+semicolon=toggle_quick_terminal
