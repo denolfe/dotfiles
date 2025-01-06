@@ -137,12 +137,6 @@ mods.addRule({
       { key_code: 'y', modifiers: ['left_command'] },
       [ifApp('chrome')],
     ),
-    // Cmd+J Downloads
-    remap(
-      { key_code: 'j', modifiers: { mandatory: ['left_command'] } },
-      { key_code: 'l', modifiers: ['left_command', 'left_option'] },
-      [ifApp('chrome')],
-    ),
 
     // Cmd+Shift+D Duplicate Tab
     remap(
