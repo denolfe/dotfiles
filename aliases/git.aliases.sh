@@ -18,7 +18,6 @@ alias gct="git checkout -t"
 alias gdc="git diff --cached"
 alias gdlast="git diff HEAD~1..HEAD"
 alias gdno="git diff --name-only"
-alias gl="git l3"
 alias gltags="gl --no-walk --tags"
 alias glast="git log -1 HEAD"
 alias ggpushfwl="ggpush --force-with-lease"
@@ -35,3 +34,6 @@ alias gundo="git reset HEAD~1"
 alias guns="git reset HEAD --"
 
 alias gstl="git stash list --pretty=format:'%C(blue)%gd%C(reset): %<(100,trunc)%s %C(green)(%cr)%C(reset)'"
+
+# Remove 'gl' alias from zsh plugin
+unalias gl

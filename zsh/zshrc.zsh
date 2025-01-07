@@ -109,11 +109,12 @@ test -f ~/.zshrc.local && source ~/.zshrc.local
 # Place to stash environment variables
 test -f ~/.secrets && source ~/.secrets
 
+# Load aliases
+for f in $DOTFILES/aliases/*.aliases.*sh; do source $f; done
+
 # Load functions
 for f in $DOTFILES/functions/*; do source $f; done
 
-# Load aliases
-for f in $DOTFILES/aliases/*.aliases.*sh; do source $f; done
 
 # Load all path files
 for f in $DOTFILES/path/*.path.sh; do source $f; done
