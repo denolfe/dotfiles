@@ -24,14 +24,7 @@ jobs:
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive
 
-    - name: Install dotfiles
-      run: ./install --except asdf
-
-  phoenix:
-    runs-on: macos-14
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node@${{ inputs.node-version }}
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22.6.0
@@ -42,8 +35,12 @@ jobs:
           version: 9.7.1
           run_install: false
 
-      - name: Run pnpm install
-        run: |
-          pnpm -C phoenix install
-          pnpm -C phoenix run typecheck
-          pnpm -C phoenix run build
+    - name: Install dotfiles
+      run: ./install --except asdf
+
+    - name: Build phoenix
+      run: |
+        pnpm -C phoenix install
+        pnpm -C phoenix run typecheck
+        pnpm -C phoenix run build
+
