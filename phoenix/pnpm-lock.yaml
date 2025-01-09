@@ -1,0 +1,68 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@types/lodash':
+        specifier: ^4.14.183
+        version: 4.14.183
+      '@types/phoenix':
+        specifier: github:mafredri/phoenix-typings#main
+        version: https://codeload.github.com/mafredri/phoenix-typings/tar.gz/3121b498d95d7838e86fa65dacd1fc768ba161a2
+      '@vercel/ncc':
+        specifier: ^0.38.3
+        version: 0.38.3
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: ^4.7.4
+        version: 4.7.4
+
+packages:
+
+  '@types/lodash@4.14.183':
+    resolution: {integrity: sha512-UXavyuxzXKMqJPEpFPri6Ku5F9af6ZJXUneHhvQJxavrEjuHkFp2YnDWHcxJiG7hk8ZkWqjcyNeW1s/smZv5cw==}
+
+  '@types/phoenix@https://codeload.github.com/mafredri/phoenix-typings/tar.gz/3121b498d95d7838e86fa65dacd1fc768ba161a2':
+    resolution: {tarball: https://codeload.github.com/mafredri/phoenix-typings/tar.gz/3121b498d95d7838e86fa65dacd1fc768ba161a2}
+    version: 3.0.0
+
+  '@vercel/ncc@0.38.3':
+    resolution: {integrity: sha512-rnK6hJBS6mwc+Bkab+PGPs9OiS0i/3kdTO+CkI8V0/VrW3vmz7O2Pxjw/owOlmo6PKEIxRSeZKv/kuL9itnpYA==}
+    hasBin: true
+
+  prettier@2.7.1:
+    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+
+  typescript@4.7.4:
+    resolution: {integrity: sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+
+  utility-types@3.10.0:
+    resolution: {integrity: sha512-O11mqxmi7wMKCo6HKFt5AhO4BwY3VV68YU07tgxfz8zJTIxr4BpsezN49Ffwy9j3ZpwwJp4fkRwjRzq3uWE6Rg==}
+    engines: {node: '>= 4'}
+
+snapshots:
+
+  '@types/lodash@4.14.183': {}
+
+  '@types/phoenix@https://codeload.github.com/mafredri/phoenix-typings/tar.gz/3121b498d95d7838e86fa65dacd1fc768ba161a2':
+    dependencies:
+      utility-types: 3.10.0
+
+  '@vercel/ncc@0.38.3': {}
+
+  prettier@2.7.1: {}
+
+  typescript@4.7.4: {}
+
+  utility-types@3.10.0: {}

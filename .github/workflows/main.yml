@@ -7,7 +7,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  tests:
+  install:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -16,21 +16,31 @@ jobs:
           - ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Checkout submodules
-      shell: bash
-      run: |
-        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-        git submodule sync --recursive
-        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive
+      - uses: actions/checkout@v4
+      - name: Checkout submodules
+        shell: bash
+        run: |
+          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+          git submodule sync --recursive
+          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive
 
-    - uses: bahmutov/npm-install@v1
-      with:
-        working-directory: phoenix
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.6.0
 
-    - run: cd phoenix && yarn
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.7.1
+          run_install: false
 
-    - run: make phoenix
+      - name: Build phoenix
+        run: |
+          pnpm -C phoenix install
+          pnpm -C phoenix run typecheck
+          pnpm -C phoenix run build
 
-    - name: Install dotfiles
-      run: ./install --except asdf
+      - name: Install dotfiles
+        run: ./install --except asdf
+

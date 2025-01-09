@@ -16,11 +16,7 @@ karabiner-dev:
 
 # Build and output phoenix config
 phoenix:
-	yarn --cwd phoenix run build
-
-# Watch and build phoenix config
-phoenix-dev:
-	yarn --cwd phoenix run dev
+	pnpm -C phoenix run build
 
 # Install extensions from vscode/extensions.txt
 vscode-install:

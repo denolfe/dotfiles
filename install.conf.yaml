@@ -40,7 +40,7 @@
       path: node/prettierrc.js
 
     ~/.phoenix.js:
-      path: phoenix/dist/phoenix.js
+      path: phoenix/dist/index.js
       force: true
 
     ~/.config/ghostty:
