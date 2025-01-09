@@ -5,7 +5,7 @@
     "target": "ES2021",
     "strict": true,
     "noEmit": true,
-    "types": ["phoenix", "@types/lodash"],
+    "types": ["phoenix"],
     "typeRoots": ["node_modules/@types"],
     "lib": ["ES2021"],
     "rootDir": "./src",

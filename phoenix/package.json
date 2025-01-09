@@ -1,20 +1,17 @@
 {
-  "name": "parcel",
+  "name": "denolfe-phoenix-config",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
     "build": "ncc build src/phoenix.ts -t",
-    "dev": "parcel watch src/phoenix.ts",
     "typecheck": "tsc"
   },
-  "module": "dist/phoenix.js",
   "devDependencies": {
     "@types/lodash": "^4.14.183",
     "@types/phoenix": "github:mafredri/phoenix-typings#main",
     "@vercel/ncc": "^0.38.3",
-    "prettier": "^2.7.1",
-    "typescript": "^4.7.4"
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
   },
   "prettier": {
     "printWidth": 85,

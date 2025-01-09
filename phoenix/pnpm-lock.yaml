@@ -18,11 +18,11 @@ importers:
         specifier: ^0.38.3
         version: 0.38.3
       prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
+        specifier: ^3.4.2
+        version: 3.4.2
       typescript:
-        specifier: ^4.7.4
-        version: 4.7.4
+        specifier: ^5.7.3
+        version: 5.7.3
 
 packages:
 
@@ -37,14 +37,14 @@ packages:
     resolution: {integrity: sha512-rnK6hJBS6mwc+Bkab+PGPs9OiS0i/3kdTO+CkI8V0/VrW3vmz7O2Pxjw/owOlmo6PKEIxRSeZKv/kuL9itnpYA==}
     hasBin: true
 
-  prettier@2.7.1:
-    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
-    engines: {node: '>=10.13.0'}
+  prettier@3.4.2:
+    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
+    engines: {node: '>=14'}
     hasBin: true
 
-  typescript@4.7.4:
-    resolution: {integrity: sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==}
-    engines: {node: '>=4.2.0'}
+  typescript@5.7.3:
+    resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
+    engines: {node: '>=14.17'}
     hasBin: true
 
   utility-types@3.10.0:
@@ -61,8 +61,8 @@ snapshots:
 
   '@vercel/ncc@0.38.3': {}
 
-  prettier@2.7.1: {}
+  prettier@3.4.2: {}
 
-  typescript@4.7.4: {}
+  typescript@5.7.3: {}
 
   utility-types@3.10.0: {}
