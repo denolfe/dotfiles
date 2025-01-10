@@ -30,15 +30,20 @@ gswpr() {
 }
 
 # Show previously used conventional commit scopes
+# Optional -n flag to sort numerically
 gscopes() {
-  local output=$(git log --pretty=oneline --abbrev-commit --no-merges | grep "):" | cut -d "(" -f2 | cut -d ")" -f1)
-  if [[ "$1" == "-c" ]];then
-    output=$(echo $output | sort | uniq -c | sort -rn | sed "s/^/  /")
+  local output
+  output=$(git log --pretty=oneline --abbrev-commit --no-merges | grep "):" | cut -d "(" -f2 | cut -d ")" -f1)
+
+  # Check for the -n flag to sort numerically
+  if [[ "$1" == "-n" ]]; then
+    output=$(echo "$output" | sort | uniq -c | sort -rn | sed "s/^/  /")
   else
-    output=$(echo $output | sort | uniq | sed "s/^/  /")
+    output=$(echo "$output" | sort | uniq -c | sort -k2 | sed "s/^/  /")
   fi
+
   echo -e "\033[96m\033[1mPrevious commit scopes:\033[0m\n"
-  echo $output
+  echo "$output"
 }
 
 # Diff commits with tracked remote branch
