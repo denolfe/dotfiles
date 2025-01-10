@@ -9,6 +9,11 @@ grau() {
   git branch -u upstream/"$(command git branch --show-current)"
 }
 
+# Annotated tag convenience function
+gtag() {
+  git tag -a "$1" -m "$1"
+}
+
 # Stash changes, get latest master, re-apply
 getlatest() {
   local stash_string=$(LC_CTYPE=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32 | xargs)
