@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec 'pnpm run build'",
     "build": "ncc build src/phoenix.ts -t",
     "typecheck": "tsc"
   },
@@ -10,6 +11,7 @@
     "@types/lodash": "^4.14.183",
     "@types/phoenix": "github:mafredri/phoenix-typings#main",
     "@vercel/ncc": "^0.38.3",
+    "nodemon": "^3.1.9",
     "prettier": "^3.4.2",
     "typescript": "^5.7.3"
   },

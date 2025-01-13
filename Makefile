@@ -18,6 +18,9 @@ karabiner-dev:
 phoenix:
 	pnpm -C phoenix run build
 
+phoenix-dev:
+	pnpm -C phoenix run dev
+
 # Install extensions from vscode/extensions.txt
 vscode-install:
 	cat ${DOTFILES}/vscode/extensions.txt | xargs -L 1 code --install-extension
