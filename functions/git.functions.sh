@@ -16,7 +16,8 @@ gtag() {
 
 # Stash changes, get latest master, re-apply
 getlatest() {
-  local stash_string=$(LC_CTYPE=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32 | xargs)
+  local stash_string
+  stash_string=$(LC_CTYPE=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 32 | xargs)
   git stash push -m $stash_string
   git checkout master
   git pull
@@ -66,6 +67,34 @@ glmaster() {
   git log master..HEAD --format='%C(bold cyan)%h%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset%C(yellow)%d%Creset'
 }
 
+# Git Diff with FZF preview
+gdf() {
+  git ls-files -m --exclude-standard | fzf --preview-window down,80% --preview "git diff {} | delta" | xargs -o -t git diff
+}
+
+gltagl() {
+  tag_pattern="v3*"
+  if [ -n "$1" ]; then
+    tag_pattern="$1"
+  fi
+
+  git describe --match "$tag_pattern" --abbrev=0 --tags "$(git rev-list --tags --max-count=1)"
+}
+
+# Diff between latest tag and HEAD
+gltagd() {
+  if [ -n "$1" ]; then
+    tag=$1
+  else
+    tag=$(gltagl "$@")
+  fi
+
+  echo "Diff: $tag..HEAD"
+  echo
+
+  git l3 "$tag"..HEAD
+}
+
 __repo_url=''
 
 # Open Origin Url
@@ -112,12 +141,23 @@ group() {
 
 # Open current branch's GitHub actions
 gac() {
-  remote_url=$(git config --get remote.origin.url)
-  __construct_repo_url "$remote_url"
+  __construct_repo_url "$(git config --get remote.origin.url || true)"
 
   url="$__repo_url/actions?query=branch%3A$(git branch --show-current)"
   echo Opening "$url"...
   open "$url"
+}
+
+# Open latest GitHub action run for current branch
+gaco() {
+  open "$(gh run list --workflow main.yml --branch "$(git branch --show-current)" --json url --jq '.[0].url')"
+}
+
+# Get status of current action run for current branch
+gacstat() {
+  local actions_status
+  actions_status=$(gh run list --workflow main.yml --branch "$(git branch --show-current)" --json status --jq '.[0].status')
+  echo "Actions status: $actions_status"
 }
 
 # Open PRs for current branch
@@ -137,6 +177,68 @@ grop() {
   open "$url"
 }
 
+# Open current branch on GitHub
+grob() {
+  remote_url=$(git config --get remote.origin.url)
+  __construct_repo_url "$remote_url"
+
+  url="$__repo_url/tree/$(git branch --show-current)"
+  echo Opening "$url"...
+  open "$url"
+}
+
+# Open settings in GitHub for current repo
+gros() {
+  remote_url=$(git config --get remote.origin.url)
+  __construct_repo_url "$remote_url"
+
+  url="$__repo_url/settings"
+  echo Opening "$url"...
+  open "$url"
+}
+
+# Open specific commit hash or tag on GitHub
+groc() {
+  remote_url=$(git config --get remote.origin.url)
+  __construct_repo_url "$remote_url"
+
+  url="$__repo_url/commit/$1"
+  echo Opening "$url"...
+  open "$url"
+}
+
+# Create new PR for current branch, format title for conventional commits
+#
+# Usage: ghprc main|beta
+ghprc() {
+  local base=$1
+
+  if [[ -z ${base} ]]; then
+    base='main'
+  fi
+
+  url=$(gh pr create --fill-first --body="" --base="$base")
+  echo "$url"
+
+  pr_number=$(echo "$url" | awk -F "/" '{print $7}')
+  gsetpr "$pr_number"
+  open "$url"
+}
+
+gsetpr() {
+  local pr_number=$1
+
+  if [ -z "$pr_number" ]; then
+    echo "PR number required"
+    return 1
+  fi
+
+  local owner_repo
+  owner_repo=$(git config --get remote.origin.url | awk -F ":" '{print $2}' | awk -F ".git" '{print $1}' | tr '/' '#')
+
+  git config branch."$(git branch --show-current)".github-pr-owner-number "$owner_repo#$pr_number"
+}
+
 __construct_repo_url() {
   if [[ $1 =~ ^git@(.*):(.*)/(.*).git$ ]]; then
     __repo_url=https://${match[1]}/${match[2]}/${match[3]}
@@ -146,4 +248,15 @@ __construct_repo_url() {
     echo "Unable to find remote url"
     return 1
   fi
+}
+
+# Use llm cli to generate a commit message
+# Work in progress
+gcmsgpt() {
+  if [ -n "$1" ]; then
+    commit_msg=$(git diff "$1" | llm prompt "$(cat ~/.dotfiles/llm/prompts/commit-msg.txt)")
+  else
+    commit_msg=$(git diff | llm prompt "$(cat ~/.dotfiles/llm/prompts/commit-msg.txt)")
+  fi
+  echo "$commit_msg"
 }
