@@ -29,6 +29,8 @@ window-padding-color = background
 window-padding-balance = false
 window-padding-x = 4
 window-padding-y = 0
+background-opacity = 0.85
+background-blur-radius = 40
 
 # Keybindings
 
