@@ -29,8 +29,10 @@ window-padding-color = background
 window-padding-balance = false
 window-padding-x = 4
 window-padding-y = 0
-background-opacity = 0.85
-background-blur-radius = 40
+
+# v1.1.0 caused inconsistent borders, this is a workaround
+background-opacity = 0.999999999
+# background-blur-radius = 40
 
 # Keybindings
 
