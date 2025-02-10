@@ -43,6 +43,10 @@
       path: phoenix/dist/index.js
       force: true
 
+    ~/.config/fastfetch:
+      path: fastfetch
+      force: true
+
     ~/.config/ghostty:
       path: ghostty
       force: true
