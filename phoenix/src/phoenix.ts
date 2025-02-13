@@ -33,11 +33,11 @@ hyperCmd('r', () => Phoenix.reload())
 
 // App binds
 
-bindApp(';', 'iTerm')
+bindApp(';', 'Ghostty')
 bindApp('g', 'Google Chrome')
 bindApp('c', 'Visual Studio Code')
 bindApp('r', 'Notion')
-bindApp('t', 'ChatGPT')
+bindApp('t', 'Raycast')
 bindApp('v', 'Spotify')
 bindCycleApps('f', ['Slack', 'Discord'])
 
