@@ -14,6 +14,8 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'jeffkreeftmeijer/neovim-sensible'
 
+Plug 'tomasiser/vim-code-dark'
+
 call plug#end()
 
 
@@ -26,3 +28,4 @@ set showmode                    " Show current mode.
 set autoread
 set ignorecase
 
+colorscheme codedark
