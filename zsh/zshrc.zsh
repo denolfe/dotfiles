@@ -126,15 +126,19 @@ fi
 # FZF config and theme
 export FZF_DEFAULT_OPTS="--reverse \
 --bind 'ctrl-l:cancel' \
+--bind 'ctrl-/:toggle-preview' \
 --height=90% \
 --info inline-right \
 --highlight-line \
---pointer ▌ \
+--pointer ▓ \
 --prompt '▌ ' \
 --marker ▏ \
 --padding 1,2"
 
 source $DOTFILES/zsh/fzf-theme-dark-plus.sh
+
+export FZF_CTRL_R_OPTS="--preview 'echo {} | bat --color=always --style=snip --language=zsh' --preview-window up:5:hidden:wrap"
+
 export FZF_TMUX_HEIGHT=80%
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
