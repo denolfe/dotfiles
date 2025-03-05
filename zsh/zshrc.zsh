@@ -123,22 +123,32 @@ if type fd > /dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='fd --type f'
 fi
 
+export FZF_SHARED_OPTS="\
+  --bind 'ctrl-l:cancel' \
+  --bind 'ctrl-p:toggle-preview' \
+  --bind 'ctrl-z:toggle-wrap' \
+  --preview-window up:5:hidden:wrap \
+  --wrap-sign '↳ '"
+
 # FZF config and theme
-export FZF_DEFAULT_OPTS="--reverse \
---bind 'ctrl-l:cancel' \
---bind 'ctrl-p:toggle-preview' \
---height=90% \
---info inline-right \
---highlight-line \
---pointer ▌ \
---prompt '▌ ' \
---marker ▏ \
---padding 1,2 \
---wrap-sign '↳ '"
+export FZF_DEFAULT_OPTS="\
+  --reverse \
+  --height=90% \
+  --info inline-right \
+  --highlight-line \
+  --pointer ▌ \
+  --prompt '▌ ' \
+  --scrollbar='▌' \
+  --marker ▏ \
+  --padding 1,2 \
+  --ellipsis='…' \
+  $FZF_SHARED_OPTS"
 
 source $DOTFILES/zsh/fzf-theme-dark-plus.sh
 
-export FZF_CTRL_R_OPTS="--preview 'echo {} | bat --color=always --style=snip --language=zsh' --wrap-sign '↳ ' --preview-window up:5:hidden:wrap --bind 'ctrl-p:toggle-preview'"
+export FZF_CTRL_R_OPTS="\
+  --preview 'echo {} | bat --color=always --style=snip --language=zsh' \
+  $FZF_SHARED_OPTS"
 
 export FZF_TMUX_HEIGHT=80%
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
