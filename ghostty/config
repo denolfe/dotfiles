@@ -33,6 +33,7 @@ window-padding-y = 0
 # v1.1.0 caused inconsistent borders, this is a workaround
 background-opacity = 0.999999999
 # background-blur-radius = 40
+split-divider-color=#2471C8
 
 # Keybindings
 
