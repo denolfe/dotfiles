@@ -173,14 +173,9 @@ export ASDF_DOWNLOAD_PATH=bin/install
 source /opt/homebrew/opt/asdf/libexec/asdf.sh
 source /opt/homebrew/share/zsh/site-functions
 
-# pnpm
-export PNPM_HOME="/Users/elliot/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+# To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/p10k.zsh.
+[[ ! -f ~/.dotfiles/zsh/p10k.zsh ]] || source ~/.dotfiles/zsh/p10k.zsh

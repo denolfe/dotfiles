@@ -39,30 +39,14 @@
     ~/.prettierrc.js:
       path: node/prettierrc.js
 
-    ~/.phoenix.js:
-      if: '[ `uname` = Darwin ]'
-      path: phoenix/dist/index.js
-      force: true
-
     ~/.config/fastfetch:
       path: fastfetch
-      force: true
-
-    ~/.config/ghostty:
-      path: ghostty
       force: true
 
     ~/bin:
       glob: true
       path: scripts/*
       relink: true
-
-    # VS Code Linux
-    ~/.config/Code/User:
-      if: '[[ `uname` = Linux ]]'
-      glob: true
-      path: vscode/linux/*.json
-      force: true
 
     # VS Code MacOS
     ~/Library/Application Support/Code/User:
@@ -76,49 +60,29 @@
       path: vscode/snippets
       force: true
 
-    # VS Code MacOS Insiders
-    ~/Library/Application Support/Code - Insiders/User:
-      if: '[ `uname` = Darwin ]'
-      glob: true
-      path: vscode/macos/*.json
-      force: true
-
-    ~/.config/zellij:
-      path: zellij
-
-    ~/Library/Application Support/com.colliderli.iina/input_conf/YouTube.conf:
-      if: '[ `uname` = Darwin ]'
-      path: iina/YouTube.conf
-      force: true
-
-    ~/Library/Application Support/espanso:
-      if: '[ `uname` = Darwin ]'
-      path: espanso
-      force: true
-
-- asdf:
-  - plugin: nodejs
-    url: https://github.com/asdf-vm/asdf-nodejs
-    global: lts-gallium
-    versions:
-      - lts-carbon
-      - lts-dubnium
-      - lts-erbium
-      - lts-fermium
-      - lts-gallium
-      - latest
-  - plugin: yarn
-    url: https://github.com/twuni/asdf-yarn
-    global: latest
-    versions:
-      - latest
-  - plugin: pnpm
-    url: https://github.com/jonathanmorley/asdf-pnpm
-    global: latest
-    versions:
-      - latest
-  - plugin: golang
-    url: https://github.com/kennyp/asdf-golang
+# - asdf:
+#   - plugin: nodejs
+#     url: https://github.com/asdf-vm/asdf-nodejs
+#     global: lts-gallium
+#     versions:
+#       - lts-carbon
+#       - lts-dubnium
+#       - lts-erbium
+#       - lts-fermium
+#       - lts-gallium
+#       - latest
+#   - plugin: yarn
+#     url: https://github.com/twuni/asdf-yarn
+#     global: latest
+#     versions:
+#       - latest
+#   - plugin: pnpm
+#     url: https://github.com/jonathanmorley/asdf-pnpm
+#     global: latest
+#     versions:
+#       - latest
+#   - plugin: golang
+#     url: https://github.com/kennyp/asdf-golang
 
 - shell:
   -
