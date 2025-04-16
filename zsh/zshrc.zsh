@@ -97,7 +97,7 @@ setopt pushd_ignore_dups
 HISTSIZE=1000000000000000000
 SAVEHIST=1000000000000000000
 HISTFILE=~/.zsh_history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help:gl:gst:gd:gro"
 
 # Return time on long running processes
 REPORTTIME=2
