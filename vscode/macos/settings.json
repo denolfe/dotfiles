@@ -1,6 +1,9 @@
 {
+  "glassit.alpha": 150,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.rulers": [100],
+  "editor.rulers": [
+    100
+  ],
   "[json][jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features",
     "editor.stickyScroll.enabled": true
@@ -15,13 +18,38 @@
       "source.fixAll.markdownlint": "explicit"
     }
   },
-  "[typescript][typescriptreact][javascript]": {
+  "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit"
     },
-    "togglequotes.chars": ["'", "`"]
+    "togglequotes.chars": [
+      "`",
+      "'"
+    ]
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "togglequotes.chars": [
+      "`",
+      "'"
+    ]
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "togglequotes.chars": [
+      "`",
+      "'"
+    ]
   },
   "[sql]": {
     "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
@@ -30,7 +58,12 @@
     "editor.inlineSuggest.enabled": true,
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "auto-rename-tag.activationOnLanguage": ["javascriptreact"],
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "auto-rename-tag.activationOnLanguage": [
+    "javascriptreact"
+  ],
   "breadcrumbs.symbolPath": "off",
   "cfnLint.validateUsingJsonSchema": false,
   "comment-ts.includeDescriptionTag": true,
@@ -42,7 +75,7 @@
   "editor.colorDecorators": false,
   "editor.cursorBlinking": "smooth",
   "editor.cursorStyle": "block",
-  "editor.cursorSurroundingLines": 5,
+  "editor.cursorSurroundingLines": 8,
   "editor.dragAndDrop": false,
   "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "editor.fontSize": 13,
@@ -155,7 +188,10 @@
       }
     ]
   },
-  "eslint.validate": ["typescript", "typescriptreact"],
+  "eslint.validate": [
+    "typescript",
+    "typescriptreact"
+  ],
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   // File nesting config
@@ -207,7 +243,9 @@
     "env": {
       "NODE_OPTIONS": "--experimental-vm-modules"
     },
-    "skipFiles": ["<node_internals>/**"],
+    "skipFiles": [
+      "<node_internals>/**"
+    ],
     "smartStep": true
   },
   // Git Decorators
@@ -231,9 +269,13 @@
   "typescript.referencesCodeLens.showOnAllFunctions": true,
   "typescript.suggest.autoImports": true,
   "typescript.suggest.completeFunctionCalls": true,
-  "typescript.tsserver.pluginPaths": ["typescript-plugin-css-modules"],
+  "typescript.tsserver.pluginPaths": [
+    "typescript-plugin-css-modules"
+  ],
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.preferences.autoImportFileExcludePatterns": ["@payloadcms/*"],
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "@payloadcms/*"
+  ],
   "window.commandCenter": false,
   "window.title": "${rootName}${separator}${activeEditorShort}",
   "window.confirmBeforeClose": "keyboardOnly",
@@ -245,7 +287,6 @@
     "editorInlayHint.typeForeground": "#909090",
     "editorInlayHint.typeBackground": "#2F2F2F",
     "editorRuler.foreground": "#2F2F2F",
-    // Inline debugger values
     "editor.inlineValuesForeground": "#5d5d5d",
     "editor.inlineValuesBackground": "#1e1e1e",
     "editorWhitespace.foreground": "#1e1e1e",
@@ -260,7 +301,8 @@
     "editorStickyScroll.background": "#383B3D",
     "[Default Dark Modern]": {
       "editorSuggestWidget.selectedBackground": "#01395e"
-    }
+    },
+    "terminal.background": "#00000000"
   },
   // Remove unnecessary extension notifications and telemetry
   "telemetry.telemetryLevel": "error",
@@ -319,7 +361,9 @@
   // Suppress trailing comma warnings in settings.json
   "json.schemas": [
     {
-      "fileMatch": ["settings.json"],
+      "fileMatch": [
+        "settings.json"
+      ],
       "schema": {
         "allowTrailingCommas": true
       }
@@ -333,11 +377,6 @@
     "isWholeLine": false
   },
   "todohighlight.keywords": [
-    // {
-    //   "text": ".js'",
-    //   "color": "#494949",
-    //   "backgroundColor": "#1F1F1F",
-    // },
     {
       "text": "HACK:",
       "backgroundColor": "#808080",
@@ -384,7 +423,12 @@
     "ISSUE:",
     "BUG:"
   ],
-  "todohighlight.include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
+  "todohighlight.include": [
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "todohighlight.exclude": [
     "**/node_modules/**",
     "**/dist/**",
@@ -650,7 +694,7 @@
   "yaml.validate": false,
   "vsicons.dontShowNewVersionMessage": true,
   "files.exclude": {
-    "**/node_modules": false,
+    // "**/node_modules": false,
     "**/dist": false,
     "**/cdk.out": false,
     "**/build": false,
@@ -664,7 +708,11 @@
   "explorer.autoReveal": true,
   // "editor.experimental.stickyScroll.enabled": true,
   "deno.enable": true,
-  "errorLens.enabledDiagnosticLevels": ["info", "error", "warning"],
+  "errorLens.enabledDiagnosticLevels": [
+    "info",
+    "error",
+    "warning"
+  ],
   "zenMode.fullScreen": false,
   "tailwind-fold.unfoldIfLineSelected": true,
   "tailwind-fold.foldStyle": "QUOTES",
@@ -687,7 +735,7 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "window.zoomLevel": -0.5,
+  "window.zoomLevel": -1,
   "jestrunner.changeDirectoryToWorkspaceRoot": false,
   "prisma.showPrismaDataPlatformNotification": false,
   "github.copilot.editor.enableAutoCompletions": true,
@@ -695,7 +743,24 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "diffEditor.renderSideBySide": true,
   "workbench.editor.customLabels.patterns": {
-    "**/app/**/{layout,page,template}.{ts,tsx,js,jsx}": "${dirname(1)}/${dirname} <${filename}>",
-    "**/packages/*/src/**/*.{ts,tsx,js,jsx}": "${filename}.${extname} [${dirname(-3)}]"
-  }
+    "**/app/**/{layout,page,template}.{ts,tsx,js,jsx}": "${dirname(1)}/${dirname} [${filename}]",
+    // handle page_client.tsx
+    "**/app/**/{layout,page,template}_client.{ts,tsx,js,jsx}": "${dirname(1)}/${dirname} [${filename}]",
+    "**/{templates,examples}/**/*.{ts,tsx,js,jsx}": "${filename}.${extname} [${dirname(-3)}]",
+    "**/{packages,tools}/*/src/**/*.{ts,tsx,js,jsx}": "${filename}.${extname} [${dirname(-3)}]",
+    "**/{packages,tools}/*/package.json": "${filename}.${extname} [${dirname}]"
+  },
+  "errorLens.enabled": true,
+  "chat.editing.alwaysSaveWithGeneratedChanges": true,
+  "vscode-pokemon.pokemonSize": "small",
+  "glassit.force_sway": true,
+  "workbench.settings.applyToAllProfiles": [
+    "workbench.colorCustomizations"
+  ],
+  "vscode_vibrancy.opacity": 0.8,
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "*.mp3": "vscode.audioPreview"
+  },
+  "vitest.commandLine": "npx vitest --api.host 127.0.0.1",
 }

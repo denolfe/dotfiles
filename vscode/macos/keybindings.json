@@ -42,6 +42,11 @@
   },
   {
     "key": "cmd+shift+k",
+    "command": "-editor.action.deleteLines",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "cmd+shift+k",
     "command": "editor.action.insertCursorAtEndOfEachLineSelected",
     "when": "editorTextFocus"
   },
@@ -118,7 +123,6 @@
     "command": "-markdown.extension.onOutdentLines",
     "when": "editorTextFocus && !suggestWidgetVisible && editorLangId == 'markdown'"
   },
-
   // Next/Prev change in current file
   {
     "key": "cmd+alt+]",
@@ -128,7 +132,6 @@
     "key": "cmd+alt+[",
     "command": "workbench.action.editor.previousChange"
   },
-
   // Settings remap
   {
     "key": "cmd+,",
@@ -142,7 +145,6 @@
     "key": "cmd+,",
     "command": "-workbench.action.openSettings"
   },
-
   // Keybindings
   {
     "key": "alt+cmd+,",
@@ -154,7 +156,6 @@
     "command": "editor.action.selectHighlights",
     "when": "editorFocus"
   },
-
   // Go to references, definition, type
   {
     "key": "cmd+k cmd+j",
@@ -174,20 +175,22 @@
     "key": "cmd+k k",
     "command": "editor.action.peekTypeDefinition"
   },
-
+  // {
+  //   "key": "cmd+k cmd+h",
+  //   "command": "editor.action.goToImplementation",
+  //   "when": "editorHasImplementationProvider && editorTextFocus"
+  // },
   // Restart TS Server
   {
     "key": "cmd+shift+r",
     "command": "typescript.restartTsServer"
   },
-
   // Toggle Fold
   {
     "key": "cmd+k l",
     "command": "editor.toggleFold",
     "when": "editorTextFocus && foldingEnabled"
   },
-
   // Go to next error in tab
   {
     "key": "cmd+k cmd+p",
@@ -200,7 +203,6 @@
     "command": "editor.action.rename",
     "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
   },
-
   // Emmet
   {
     "key": "cmd+m cmd+o",
@@ -226,7 +228,6 @@
     "key": "cmd+m cmd+w",
     "command": "editor.emmet.action.wrapWithAbbreviation"
   },
-
   // ctrl+tab -> alt+tab
   {
     "key": "alt+p",
@@ -238,7 +239,6 @@
     "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
     "when": "inEditorsPicker && inQuickOpen"
   },
-
   // Other interface nav
   {
     "key": "cmd+k cmd+e",
@@ -254,7 +254,6 @@
     "key": "cmd+k cmd+d",
     "command": "workbench.view.debug"
   },
-
   // Change tabs left/right
   {
     "key": "cmd+shift+[",
@@ -264,7 +263,6 @@
     "key": "cmd+shift+]",
     "command": "workbench.action.nextEditor"
   },
-
   // Change tabs in workbench
   {
     "key": "shift+cmd+]",
@@ -276,7 +274,6 @@
     "command": "workbench.action.previousPanelView",
     "when": "panelFocus"
   },
-
   // New File/Folder when explorer focus
   {
     "key": "cmd+n",
@@ -315,7 +312,6 @@
     "command": "togglePeekWidgetFocus",
     "when": "inReferenceSearchEditor || referenceSearchVisible"
   },
-
   // Group Go To Symbol by default
   {
     "key": "shift+cmd+o",
@@ -330,22 +326,29 @@
     "key": "shift+cmd+o",
     "command": "-workbench.action.gotoSymbol"
   },
-
   // Jest Runner
   {
     "key": "cmd+k cmd+f",
     "command": "extension.runJestFile"
   },
-  {
-    "key": "cmd+k cmd+r",
-    "command": "extension.runPrevJest"
-  },
+  // {
+  //   "key": "cmd+k cmd+r",
+  //   "command": "extension.runPrevJest"
+  // },
   // Multi-Command
   {
     "key": "shift+alt+/",
     "command": "extension.multiCommand.execute",
     "args": {
       "command": "multiCommand.commentThenDuplicate"
+    },
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "extension.multiCommand.execute",
+    "args": {
+      "command": "multiCommand.deletePairedBrackets"
     },
     "when": "editorTextFocus && !editorReadonly"
   },
@@ -388,9 +391,34 @@
         }
       ]
     }
-  }
+  },
+  {
+    "key": "cmd+i",
+    "command": "editor.action.smartSelect.expand",
+    "when": "editorTextFocus && editorLangId != 'markdown'"
+  },
+  {
+    "key": "ctrl+shift+cmd+right",
+    "command": "-editor.action.smartSelect.expand",
+    "when": "editorTextFocus && editorLangId != 'markdown'"
+  },
+  {
+    "key": "cmd+g cmd+d",
+    "command": "git.openChange",
+    "when": "editorTextFocus"
+  },
+  // Vitest
+  {
+    "key": "cmd+k cmd+f",
+    "command": "testing.runCurrentFile",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+k cmd+r",
+    "command": "testing.reRunLastRun",
+  },
   // {
-  //   "key": "cmd+shift+0",
-  //   "command": "settings.cycle.livestream"
+  //   "key": "cmd+k cmd+r",
+  //   "command": "-workbench.action.keybindingsReference"
   // },
 ]
