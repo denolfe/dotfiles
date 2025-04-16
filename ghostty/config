@@ -34,15 +34,55 @@ window-padding-y = 0
 background-opacity = 0.999999999
 # background-blur-radius = 40
 split-divider-color=#2471C8
+unfocused-split-fill=#2d2d30
 
 # Keybindings
 
 # Mapped to hyper+i in karabiner
-keybind = page_up=goto_split:top
+keybind = page_up=goto_split:next
 # Mapped to hyper+u in karabiner
-keybind = page_down=goto_split:bottom
+keybind = page_down=goto_split:previous
 
 # Yank last argument
 keybind = cmd+.=esc:.
+# Equalize splits
+keybind = cmd+shift+equal=equalize_splits
 
 keybind = global:shift+cmd+ctrl+alt+semicolon=toggle_quick_terminal
+
+# Icon
+# macos-icon = custom-style
+# macos-icon-frame = aluminum
+# macos-icon-ghost-color = white
+# macos-icon-screen-color = green
+
+# custom-shader = shaders/animated-gradient-shader.glsl
+# custom-shader = shaders/bettercrt.glsl
+# custom-shader = shaders/bloom.glsl
+# custom-shader = shaders/crt.glsl
+# custom-shader = shaders/cubes.glsl
+# custom-shader = shaders/dither.glsl
+# custom-shader = shaders/drunkard.glsl
+# custom-shader = shaders/fireworks-rockets.glsl
+# custom-shader = shaders/fireworks.glsl
+# custom-shader = shaders/gears-and-belts.glsl
+# custom-shader = shaders/glitchy.glsl
+# custom-shader = shaders/glow-rgbsplit-twitchy.glsl
+# custom-shader = shaders/gradient-background.glsl
+# custom-shader = shaders/inside-the-matrix.glsl
+# custom-shader = shaders/just-snow.glsl
+# custom-shader = shaders/matrix-hallway.glsl
+# custom-shader = shaders/negative.glsl
+# custom-shader = shaders/retro-terminal.glsl
+# custom-shader = shaders/smoke-and-ghost.glsl
+# custom-shader = shaders/sparks-from-fire.glsl
+# custom-shader = shaders/spotlight.glsl
+# custom-shader = shaders/starfield-colors.glsl
+# custom-shader = shaders/starfield.glsl
+# custom-shader = shaders/tft.glsl
+# custom-shader = shaders/underwater.glsl
+# custom-shader = shaders/water.glsl
+
+
+# quick-terminal-position = "center"
+quick-terminal-animation-duration = 0.05
