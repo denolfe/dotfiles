@@ -151,7 +151,7 @@ export FZF_CTRL_R_OPTS="\
   $FZF_SHARED_OPTS"
 
 export FZF_TMUX_HEIGHT=80%
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 export EXA_ICON_SPACING=2
 
