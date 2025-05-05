@@ -51,6 +51,7 @@
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)
     asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
+    mise                    # custom segment for mise
     # virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     # anaconda                # conda environment (https://conda.io/)
     # pyenv                   # python environment (https://github.com/pyenv/pyenv)
@@ -1710,6 +1711,61 @@
     if [ $links ]; then
       p10k segment -f 208 -i '🔗' -t $(echo $links | tr '\n' ',' | sed 's/,$//')
     fi
+  }
+
+  #####################################[ mise: custom mise segment ]#########################
+
+  typeset -g POWERLEVEL9K_MISE_BACKGROUND=1
+
+  # Colors
+  typeset -g POWERLEVEL9K_MISE_DOTNET_CORE_BACKGROUND=93
+  typeset -g POWERLEVEL9K_MISE_ELIXIR_BACKGROUND=129
+  typeset -g POWERLEVEL9K_MISE_ERLANG_BACKGROUND=160
+  typeset -g POWERLEVEL9K_MISE_FLUTTER_BACKGROUND=33
+  typeset -g POWERLEVEL9K_MISE_GO_BACKGROUND=81
+  typeset -g POWERLEVEL9K_MISE_HASKELL_BACKGROUND=99
+  typeset -g POWERLEVEL9K_MISE_JAVA_BACKGROUND=196
+  typeset -g POWERLEVEL9K_MISE_JULIA_BACKGROUND=34
+  typeset -g POWERLEVEL9K_MISE_LUA_BACKGROUND=33
+  typeset -g POWERLEVEL9K_MISE_NODE_FOREGROUND=0
+  typeset -g POWERLEVEL9K_MISE_NODE_BACKGROUND=2
+  typeset -g POWERLEVEL9K_MISE_PNPM_FOREGROUND=0
+  typeset -g POWERLEVEL9K_MISE_PNPM_BACKGROUND=214
+  typeset -g POWERLEVEL9K_MISE_PERL_BACKGROUND=33
+  typeset -g POWERLEVEL9K_MISE_PHP_BACKGROUND=93
+  typeset -g POWERLEVEL9K_MISE_POSTGRES_BACKGROUND=33
+  typeset -g POWERLEVEL9K_MISE_PYTHON_BACKGROUND=33
+  typeset -g POWERLEVEL9K_MISE_RUBY_BACKGROUND=196
+  typeset -g POWERLEVEL9K_MISE_RUST_BACKGROUND=208
+  # Icons
+  typeset -g POWERLEVEL9K_MISE_PNPM_VISUAL_IDENTIFIER_EXPANSION=$'\ue865' # pnpm icon
+
+  # Modified from: https://github.com/2KAbhishek/dots2k/blob/main/config/zsh/prompt/p10k.mise.zsh
+  # [Feature request: add segment for mise](https://github.com/romkatv/powerlevel10k/issues/2212)
+  prompt_mise() {
+    if (( ! $+commands[mise] )); then
+      return
+    fi
+
+    local plugins=("${(@f)$(mise ls --current --offline 2>/dev/null | awk '!/\(symlink\)/ && $3!="~/.tool-versions" && $3!="~/.config/mise/config.toml" {print $1, $2}')}")
+    local plugin
+
+    # Only load if tool is in whitelist
+    local tool_whitelist=(
+      NODE
+      PNPM
+    )
+
+    for plugin in ${(k)plugins}; do
+      local parts=("${(@s/ /)plugin}")
+      local tool=${(U)parts[1]}
+
+      if [[ "${tool_whitelist[@]}" =~ "${tool}" ]]; then
+        local version=${parts[2]}
+        p10k segment -r -i "${tool}_ICON" -s $tool -t "$version"
+      fi
+
+    done
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
