@@ -184,3 +184,8 @@ esac
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+# if mise is installed, activate it
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
