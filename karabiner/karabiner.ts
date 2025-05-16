@@ -182,6 +182,14 @@ mods.addRule({
       { key_code: 'h', modifiers: ['left_option', 'left_shift'] },
       [ifApp('spotify')],
     ),
+
+    // Search
+    remap(
+      { key_code: 'k', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'l', modifiers: ['left_command'] },
+      [ifApp('spotify')],
+    ),
+
     // Currently Playing
     remap(
       { key_code: 'j', modifiers: { mandatory: ['left_command'] } },
@@ -190,7 +198,7 @@ mods.addRule({
     ),
     // Queue
     remap(
-      { key_code: 'k', modifiers: { mandatory: ['left_command'] } },
+      { key_code: 'l', modifiers: { mandatory: ['left_command'] } },
       { key_code: 'q', modifiers: ['left_option', 'left_shift'] },
       [ifApp('spotify')],
     ),
