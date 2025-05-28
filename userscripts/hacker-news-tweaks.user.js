@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name            Hacker News Tweaks
-// @version         0.0.2
+// @namespace       denolfe
+// @version         0.0.3
 // @description     Misc HN tweaks
 // @homepage        https://github.com/denolfe/dotfiles
 // @include         https://news.ycombinator.com/*
@@ -13,6 +14,10 @@
 document.querySelectorAll('.titleline > a').forEach(link => {
   link.setAttribute('target', '_blank')
 })
+
+// Set the zoom level
+const zoomLevel = 1.1
+document.body.style.zoom = zoomLevel
 
 function GM_addStyle(css) {
   const style = document.createElement('style')
