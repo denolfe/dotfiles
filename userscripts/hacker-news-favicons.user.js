@@ -22,7 +22,7 @@
     item.style.alignItems = 'center'
     const link = item.querySelector('a')
     const domain = new URL(link.href).hostname
-    const imageUrl = `https://www.google.com/s2/favicons?sz=16&domain_url=${domain}`
+    const imageUrl = `https://www.google.com/s2/favicons?sz=64&domain_url=${domain}`
 
     const container = document.createElement('span')
     container.style.paddingRight = '0.25em'

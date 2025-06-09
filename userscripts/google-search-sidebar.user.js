@@ -3,6 +3,7 @@
 // @namespace       jmln.tw
 // @version         0.4.3
 // @description     A user script and user style to move Google search tools to sidebar.
+// @icon            https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @author          Jimmy Lin
 // @license         MIT
 // @homepageURL     https://github.com/jmlntw/google-search-sidebar

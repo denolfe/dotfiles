@@ -3,6 +3,7 @@
 // @namespace       denolfe
 // @version         0.0.3
 // @description     Misc HN tweaks
+// @icon            https://www.google.com/s2/favicons?sz=64&domain=news.ycombinator.com
 // @homepage        https://github.com/denolfe/dotfiles
 // @include         https://news.ycombinator.com/*
 // @author          Elliot DeNolf
@@ -34,7 +35,7 @@ body > center {
 }
 
 body > center > table {
-  max-width: 1280px;
+  max-width: 796px;
 }
 
 #hnes-comments .replies {
@@ -43,6 +44,11 @@ body > center > table {
 
 .hnes-comment section.body {
   margin-left: 10px;
+}
+
+.default {
+    border-left: 2px solid #ccc; /* Adjust the width and color as needed */
+    padding-left: 10px; /* Optional: Add padding for better spacing */
 }
 
 `)

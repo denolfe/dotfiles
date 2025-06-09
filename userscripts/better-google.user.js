@@ -3,15 +3,16 @@
 // @namespace    google
 // @version      0.1.16.10
 // @description  Restore google search results to older style with green link below title instead of link above title.  Just tweaks the CSS and does some dynamic JS reordering of the DIVs.
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @author       aligo, adambh, tejaslodaya, drwonky, yut23
 // @license      MIT
-// @homepageURL   https://github.com/aligo/better-google
+// @homepageURL  https://github.com/aligo/better-google
 // @match        https://*.google.com/search?*
 // @include      /^https?://(?:www|encrypted|ipv[46])\.google\.[^/]+/(?:$|[#?]|search|webhp)/
 // @grant        none
 // @run-at       document-start
-// @downloadURL https://update.greasyfork.org/scripts/395257/Better%20Google.user.js
-// @updateURL https://update.greasyfork.org/scripts/395257/Better%20Google.meta.js
+// @downloadURL  https://update.greasyfork.org/scripts/395257/Better%20Google.user.js
+// @updateURL    https://update.greasyfork.org/scripts/395257/Better%20Google.meta.js
 // ==/UserScript==
 
 ;(function () {
