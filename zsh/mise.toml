@@ -1,0 +1,6 @@
+[tools]
+node = "23.11.0"
+pnpm = "9.7.1"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]

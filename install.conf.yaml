@@ -30,6 +30,7 @@
     ~/.oh-my-zsh: zsh/oh-my-zsh
     ~/.zgenom: zsh/zgenom
     ~/.asdfrc: zsh/asdfrc
+    ~/.config/mise/config.toml: zsh/mise.toml
     ~/.hushlogin: zsh/hushlogin
 
     ~/.bashrc:
