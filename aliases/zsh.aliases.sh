@@ -88,7 +88,7 @@ case $OS in
   *) ;;
 esac
 
-alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias ip="curl -s ifconfig.me | awk '{gsub(/%/,\"\"); print}'"
 
 # tree w/ .gitignore - https://unix.stackexchange.com/a/632196
 alias tr1='rg --files | tree --fromfile -L 1 -C'
