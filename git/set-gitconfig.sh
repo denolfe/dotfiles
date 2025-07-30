@@ -77,4 +77,7 @@ git config --global delta.navigate true
 git config --global delta.syntax-theme 'Solarized (dark)'
 git config --global delta.line-numbers true
 
+git config --global delta.hyperlinks true
+git config --global delta.hyperlinks-file-link-format 'vscode://file/{path}:{line}'
+
 git config --global interactive.diffFilter 'delta --color-only'
