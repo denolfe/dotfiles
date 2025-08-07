@@ -1,4 +1,17 @@
 {
+  "dirname-esm": {
+    "prefix": "dirname-esm",
+    "body": [
+      "import path from 'path'",
+      "import { fileURLToPath } from 'url'",
+      "",
+      "const filename = fileURLToPath(import.meta.url)",
+      "const dirname = path.dirname(filename)",
+      "$0"
+    ],
+    "description": "Get dirname in ES modules"
+  },
+
   // Functions
   "arrow_func_body": {
     "prefix": "arrowFuncBody",
