@@ -84,17 +84,9 @@
       path: vscode/macos/*.json
       force: true
 
-    ~/.config/zellij:
-      path: zellij
-
     ~/Library/Application Support/com.colliderli.iina/input_conf/YouTube.conf:
       if: '[ `uname` = Darwin ]'
       path: iina/YouTube.conf
-      force: true
-
-    ~/Library/Application Support/espanso:
-      if: '[ `uname` = Darwin ]'
-      path: espanso
       force: true
 
 - asdf:
