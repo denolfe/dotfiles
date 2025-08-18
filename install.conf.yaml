@@ -33,10 +33,6 @@
     ~/.config/mise/config.toml: zsh/mise.toml
     ~/.hushlogin: zsh/hushlogin
 
-    ~/.bashrc:
-      path: bash/bashrc
-      force: true
-
     ~/.prettierrc.js:
       path: node/prettierrc.js
 
