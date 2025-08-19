@@ -318,18 +318,27 @@
   "workbench.editor.doubleClickTabToToggleEditorGroupSizes": "maximize",
   // Experimental
   "workbench.iconTheme": "vscode-icons",
-  "errorLens.exclude": [
-    "^Delete",
-    "^MD",
-    "^Expected 'this' to be used by class method",
+  "errorLens.excludeByMessage": [
+    "Expected 'this' to be used by class method",
+    {
+      "regex": "^Delete",
+    },
+    {
+      "regex": "^MD", // Markdownlint
+    },
+
     // Formatting related
-    "^Expected indentation",
-    "^Trailing spaces not allowed",
-    "^Block must not be padded",
-    "^Missing trailing comma",
-    "^Missing semicolon",
-    "^Insert `",
-    "^Replace `"
+    {
+      "regex": "^Insert `",
+    },
+    {
+      "regex": "^Replace `",
+    },
+    "Expected indentation",
+    "Trailing spaces not allowed",
+    "Block must not be padded",
+    "Missing trailing comma",
+    "Missing semicolon",
   ],
   "deno.codeLens.references": true,
   "deno.codeLens.referencesAllFunctions": true,
