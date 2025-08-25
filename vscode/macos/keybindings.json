@@ -132,6 +132,17 @@
     "key": "cmd+alt+[",
     "command": "workbench.action.editor.previousChange"
   },
+  // Next/Prev change in compare editor
+  {
+    "key": "cmd+alt+]",
+    "command": "workbench.action.compareEditor.nextChange",
+    "when": "textCompareEditorVisible"
+  },
+  {
+    "key": "cmd+alt+[",
+    "command": "workbench.action.compareEditor.previousChange",
+    "when": "textCompareEditorVisible"
+  },
   // Settings remap
   {
     "key": "cmd+,",
