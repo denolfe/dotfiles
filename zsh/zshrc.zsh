@@ -41,6 +41,7 @@ if ! zgenom saved; then
     zgenom load reegnz/jq-zsh-plugin
 
     zgenom ohmyzsh plugins/asdf
+    zgenom ohmyzsh plugins/mise
 
     zgenom load ntnyq/omz-plugin-pnpm
 
