@@ -1,5 +1,5 @@
 import { ifApp, isDropAltKeyboard, notApp } from './lib/conditions.ts'
-import { hyper, hyperCmd } from './lib/hyper.ts'
+import { hyper, hyperCmd, hyperFocusApp } from './lib/hyper.ts'
 import { KarabinerComplexModifications } from './lib/karabiner-complex-modifications.ts'
 import { remap, unmap } from './lib/remap.ts'
 
@@ -82,6 +82,18 @@ mods.addRule({
     // Start/End of page
     hyperCmd('u', 'down_arrow', { modifiers: ['left_command'] }),
     hyperCmd('i', 'up_arrow', { modifiers: ['left_command'] }),
+  ],
+})
+
+mods.addRule({
+  description: 'Launch, focus, cycle windows of apps with Hyper+Key',
+  manipulators: [
+    ...hyperFocusApp('g', 'chrome'),
+    ...hyperFocusApp('c', 'vscode'),
+    ...hyperFocusApp('semicolon', 'ghostty'),
+    ...hyperFocusApp('f', 'slack'),
+    ...hyperFocusApp('v', 'spotify'),
+    ...hyperFocusApp('r', 'notion'),
   ],
 })
 
