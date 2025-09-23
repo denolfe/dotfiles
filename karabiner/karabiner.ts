@@ -1,5 +1,5 @@
 import { ifApp, isDropAltKeyboard, notApp } from './lib/conditions.ts'
-import { hyper, hyperCmd, hyperFocusApp } from './lib/hyper.ts'
+import { hyper, HYPER_MODS, hyperCmd, hyperFocusApp } from './lib/hyper.ts'
 import { KarabinerComplexModifications } from './lib/karabiner-complex-modifications.ts'
 import { remap, unmap } from './lib/remap.ts'
 
@@ -30,6 +30,31 @@ mods.addRule({
   manipulators: [
     remap({ key_code: 'left_command' }, { key_code: 'left_option' }),
     remap({ key_code: 'left_option' }, { key_code: 'left_command' }),
+  ],
+})
+
+mods.addRule({
+  description: 'Clipboard manipulations',
+  manipulators: [
+    // Wrap current clipboard content in ```, then paste
+    {
+      type: 'basic',
+      from: { key_code: 'grave_accent_and_tilde', modifiers: { mandatory: HYPER_MODS } },
+      to: [
+        {
+          shell_command: "(echo '```'; pbpaste; echo '\n```\n') | pbcopy",
+        },
+        {
+          // Delay to ensure clipboard is updated
+          key_code: 'vk_none',
+          hold_down_milliseconds: 100,
+        },
+        {
+          key_code: 'v',
+          modifiers: ['left_command'],
+        },
+      ],
+    },
   ],
 })
 

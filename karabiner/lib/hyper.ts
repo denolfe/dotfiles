@@ -2,8 +2,8 @@ import { appMap, AppName } from './apps.ts'
 import { ifApp, notApp } from './conditions.ts'
 import { Condition, Key, KeyPressTo, Manipulator } from './types.ts'
 
-const HYPER_MODS: Key[] = ['left_control', 'left_shift', 'left_option']
-const HYPER_CMD_MODS: Key[] = ['left_control', 'left_shift', 'left_option', 'left_command']
+export const HYPER_MODS: Key[] = ['left_control', 'left_shift', 'left_option']
+export const HYPER_CMD_MODS: Key[] = ['left_control', 'left_shift', 'left_option', 'left_command']
 
 type HyperBindOptions = {
   modifiers?: Key[]

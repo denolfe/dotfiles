@@ -42,6 +42,7 @@ export type Key =
   | 'page_down'
   | 'scroll_lock'
   | 'print_screen'
+  | 'vk_none'
   | '1'
   | '2'
   | '3'
@@ -134,6 +135,7 @@ export interface KeyPressTo {
   modifiers?: Key[]
   lazy?: boolean
   halt?: boolean
+  hold_down_milliseconds?: number
   set_variable?: {
     name: string
     value: number | string
