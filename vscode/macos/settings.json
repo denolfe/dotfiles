@@ -306,10 +306,10 @@
     "peekViewEditor.background": "#2F2F2F",
     "editor.lineHighlightBorder": "#383B3D",
     "editorStickyScroll.background": "#383B3D",
+    "editorStickyScrollGutter.background": "#383B3D",
     "[Default Dark Modern]": {
       "editorSuggestWidget.selectedBackground": "#01395e"
     },
-    "terminal.background": "#00000000"
   },
   // Remove unnecessary extension notifications and telemetry
   "telemetry.telemetryLevel": "error",
