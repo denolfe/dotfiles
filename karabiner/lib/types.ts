@@ -140,6 +140,21 @@ export interface KeyPressTo {
     name: string
     value: number | string
   }
+  software_function?: {
+    /**
+     * @link https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/to/software_function/open_application/
+     */
+    open_application:
+      | {
+          bundle_identifier: string
+        }
+      | {
+          frontmost_application_history_index: number
+        }
+      | {
+          file_path: string
+        }
+  }
 }
 
 /**

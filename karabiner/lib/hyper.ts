@@ -40,7 +40,9 @@ export function hyperFocusApp(from: Key, appName: AppName): Manipulator[] {
       from: fromWithMods,
       to: [
         {
-          shell_command: `open -a "${appMap[appName].name}"`,
+          software_function: {
+            open_application: { bundle_identifier: appMap[appName].bundle },
+          },
         },
       ],
       conditions: [notApp(appName)],
