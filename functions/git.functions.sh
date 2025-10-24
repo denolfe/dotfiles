@@ -210,16 +210,30 @@ groc() {
 # Create new PR for current branch, format title for conventional commits
 #
 # Usage: ghprc main|beta
-ghprc() {
-  local base=$1
+ghprc () {
+  local base=""
+  local draft_flag=""
+
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      -d)
+        draft_flag="--draft"
+        shift
+        ;;
+      *)
+        base=$1
+        shift
+        ;;
+    esac
+  done
 
   if [[ -z ${base} ]]; then
     base='main'
   fi
 
-  url=$(gh pr create --fill-first --body="" --base="$base")
+  url=$(gh pr create --fill-first --body="" --base="$base" $draft_flag)
   echo "$url"
-
   pr_number=$(echo "$url" | awk -F "/" '{print $7}')
   gsetpr "$pr_number"
   open "$url"
