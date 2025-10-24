@@ -54,6 +54,10 @@
       path: scripts/*
       relink: true
 
+    ~/.claude/skills:
+      path: claude/skills
+      relink: true
+
     # VS Code Linux
     ~/.config/Code/User:
       if: '[[ `uname` = Linux ]]'
