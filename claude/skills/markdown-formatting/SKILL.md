@@ -1,6 +1,6 @@
 ---
 name: markdown-formatting
-description: Format and lint markdown files using markdownlint with comprehensive rule knowledge for automated and manual fixes. Use when working with .md files, formatting documentation, linting markdown, or when user mentions markdown issues, formatting problems, or documentation standards.
+description: Format and lint markdown and MDX files using markdownlint with comprehensive rule knowledge for automated and manual fixes. Use when working with .md or .mdx files, formatting documentation, linting markdown/MDX, or when user mentions markdown issues, formatting problems, or documentation standards.
 allowed-tools:
   - Read
   - Edit
@@ -9,27 +9,26 @@ allowed-tools:
   - Glob
 ---
 
-# Markdown Formatting & Linting
+# Markdown & MDX Formatting & Linting
 
-Format and lint markdown files using markdownlint CLI tools with comprehensive understanding of all markdown rules.
+Format and lint markdown and MDX files using markdownlint CLI tools with comprehensive understanding of all markdown rules.
 
 ## Quick Start
 
 ```bash
 # Check if markdownlint is available
-which markdownlint-cli2 || which markdownlint
+which markdownlint || which markdownlint
 
 # Install if needed
-pnpm add -D markdownlint-cli2
+pnpm add -D markdownlint
 # or
-npm install -g markdownlint-cli
+npm install -g markdownlint
 
-# Auto-fix files
-markdownlint --fix "**/*.md"
-markdownlint-cli2 --fix "**/*.md"
+# Auto-fix files (markdown and MDX)
+markdownlint --fix "**/*.{md,mdx}"
 
 # Check specific files
-markdownlint README.md docs/**/*.md
+markdownlint README.md docs/**/*.md content/**/*.mdx
 ```
 
 ## Configuration Detection
@@ -118,23 +117,23 @@ Text after
 ## CLI Commands
 
 ```bash
-# Fix all markdown files
-markdownlint --fix "**/*.md"
+# Fix all markdown and MDX files
+markdownlint --fix "**/*.{md,mdx}"
 
 # Fix specific files
-markdownlint --fix README.md CHANGELOG.md
+markdownlint --fix README.md CHANGELOG.md content/blog.mdx
 
 # Check without fixing
-markdownlint "**/*.md"
+markdownlint "**/*.{md,mdx}"
 
 # Use specific config
-markdownlint --config .markdownlint.json "**/*.md"
+markdownlint --config .markdownlint.json "**/*.{md,mdx}"
 
 # Ignore specific rules
-markdownlint --disable MD013 MD033 "**/*.md"
+markdownlint --disable MD013 MD033 "**/*.{md,mdx}"
 
 # Output JSON for parsing
-markdownlint --json "**/*.md"
+markdownlint --json "**/*.{md,mdx}"
 ```
 
 ## Common Patterns
@@ -145,7 +144,7 @@ markdownlint --json "**/*.md"
 <!-- Before -->
 #Title
 Some text with trailing spaces
-	Tab indented line
+ Tab indented line
 
 - Item 1
 * Item 2
@@ -168,8 +167,8 @@ Visit <http://example.com>
 ```json
 {
   "scripts": {
-    "lint:md": "markdownlint \"**/*.md\" --ignore node_modules",
-    "lint:md:fix": "markdownlint \"**/*.md\" --ignore node_modules --fix"
+    "lint:md": "markdownlint \"**/*.{md,mdx}\" --ignore node_modules",
+    "lint:md:fix": "markdownlint \"**/*.{md,mdx}\" --ignore node_modules --fix"
   }
 }
 ```
@@ -182,4 +181,3 @@ For comprehensive documentation of all markdown rules with examples and fixes, s
 
 - [markdownlint GitHub](https://github.com/DavidAnson/markdownlint)
 - [markdownlint Rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
-- [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2)
