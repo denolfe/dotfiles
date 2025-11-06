@@ -98,23 +98,74 @@ prompt_alias_reveal() {
 
 ## Custom Segment: pr_number - show PR number if on a branch with a PR associated
 
-typeset -g POWERLEVEL9K_PR_NUMBER_FOREGROUND=0
-typeset -g POWERLEVEL9K_PR_NUMBER_BACKGROUND=208
+# Removed static color definitions - colors are now set dynamically in prompt_pr_number()
+# typeset -g POWERLEVEL9K_PR_NUMBER_FOREGROUND=0
+# typeset -g POWERLEVEL9K_PR_NUMBER_BACKGROUND=208
 
 # Shows the PR number as hyperlink
+# Color: orange (208) for open PRs, purple (135) for merged PRs
 prompt_pr_number() {
   if ! git rev-parse --is-inside-work-tree &>/dev/null; then return; fi
 
-  local pr_number=$(git config --get branch."$(git branch --show-current)".github-pr-owner-number | awk -F "#" '{print $3}')
+  local pr_info=$(git config --get branch."$(git branch --show-current)".github-pr-owner-number)
+
+  if [ -z "$pr_info" ]; then return; fi
+
+  local pr_number=$(echo "$pr_info" | awk -F "#" '{print $3}')
+  local repo=$(echo "$pr_info" | awk -F "#" '{print $1 "/" $2}')
 
   if [ -z "$pr_number" ]; then return; fi
+
+  # TTL cache configuration
+  local ttl=600  # 10 minutes - adjust if needed for your workflow
+  local current_time=$(date +%s)
+  local bg_color=208  # Default to orange (open PR color)
+
+  # Check cache: format is "STATE:TIMESTAMP"
+  local cache=$(git config --get branch."$(git branch --show-current)".github-pr-state-cache)
+
+  if [[ -n "$cache" ]]; then
+    local cached_state=$(echo "$cache" | cut -d: -f1)
+    local cached_timestamp=$(echo "$cache" | cut -d: -f2)
+
+    # MERGED PRs never expire - use cached value forever
+    if [[ "$cached_state" == "MERGED" ]]; then
+      bg_color=135  # Purple
+      _p9k_prompt_segment "$0$state" "$bg_color" 016 '' 0 '' "#$pr_number"
+      return
+    fi
+
+    # Check if OPEN cache is still valid (within TTL)
+    if [[ "$cached_state" == "OPEN" ]]; then
+      local age=$((current_time - cached_timestamp))
+      if (( age < ttl )); then
+        bg_color=208  # Orange (from cache)
+        _p9k_prompt_segment "$0$state" "$bg_color" 016 '' 0 '' "#$pr_number"
+        return
+      fi
+      # Cache expired, fall through to re-check
+    fi
+  fi
+
+  # Cache miss or expired - query API and update cache
+  if (( $+commands[gh] )); then
+    local pr_state=$(gh pr view "$pr_number" -R "$repo" --json state -q .state 2>&1)
+    if [[ "$pr_state" == "MERGED" ]]; then
+      bg_color=135  # Purple
+      git config branch."$(git branch --show-current)".github-pr-state-cache "MERGED:$current_time"
+    else
+      # OPEN, CLOSED, DRAFT, or error - all treated as OPEN with TTL
+      bg_color=208  # Orange
+      git config branch."$(git branch --show-current)".github-pr-state-cache "OPEN:$current_time"
+    fi
+  fi
 
   # Disable this for now, it wipes out the right prompt because of hidden char length
   # source: https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
   # local pr_link=$(echo "\e]8;;https://github.com/payloadcms/payload/pull/$pr_number\e\\#$pr_number\e]8;;\e\\")
-  # _p9k_prompt_segment "$0$state" 208 016 '' 0 '' "$pr_link"
+  # _p9k_prompt_segment "$0$state" "$bg_color" 016 '' 0 '' "$pr_link"
 
-  _p9k_prompt_segment "$0$state" 208 016 '' 0 '' "#$pr_number"
+  _p9k_prompt_segment "$0$state" "$bg_color" 016 '' 0 '' "#$pr_number"
 }
 
 ## Custom Segment: mise - show current versions of tools managed by mise
@@ -195,4 +246,34 @@ prompt_work_aws() {
   fi
 
   _p9k_prompt_segment "$0$state" 208 016 'AWS_ICON' 0 '' "${aws_details//\%/%%}"
+}
+
+## Custom Segment: claude_usage - show Claude Code usage for today
+
+typeset -g POWERLEVEL9K_CLAUDE_USAGE_FOREGROUND=0
+typeset -g POWERLEVEL9K_CLAUDE_USAGE_BACKGROUND=208
+
+# Show today's Claude Code cost
+prompt_claude_usage() {
+  if (( ! $+commands[bunx] )); then
+    return
+  fi
+
+  local today=$(date +%Y-%m-%d)
+  local usage_json=$(bunx ccusage --json 2>/dev/null)
+
+  if [[ -z "$usage_json" ]]; then
+    return
+  fi
+
+  local today_cost=$(echo "$usage_json" | jq -r --arg today "$today" '.daily[] | select(.date == $today) | .totalCost')
+
+  if [[ -z "$today_cost" ]] || [[ "$today_cost" == "null" ]]; then
+    return
+  fi
+
+  # Format cost with 2 decimal places
+  local formatted_cost=$(printf "%.2f" "$today_cost")
+
+  _p9k_prompt_segment "$0$state" 208 016 '' 0 '' "\$$formatted_cost 🤖"
 }
