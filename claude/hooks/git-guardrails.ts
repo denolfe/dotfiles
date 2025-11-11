@@ -24,37 +24,48 @@
  *   Run: bun test git-guardrails.test.ts
  */
 
-import type { PreToolUseInput, PreToolUseOutput, BashToolInput } from './types'
+import type { BashToolInput, PreToolUseHandler } from './types'
+import { runHook } from './utils'
 
-// Read JSON from stdin
-const input = await Bun.stdin.text()
-const data: PreToolUseInput<BashToolInput> = JSON.parse(input) // Bash matcher in settings.json
-const { command } = data.tool_input
+/**
+ * Main hook handler for git guardrails
+ *
+ * Enforces git workflow by blocking dangerous commands and cleaning commit messages.
+ *
+ * @param data - PreToolUse hook input with Bash tool parameters
+ * @returns PreToolUseOutput to deny/allow/modify, or void to allow unchanged
+ */
+const handler: PreToolUseHandler<BashToolInput> = data => {
+  const { command } = data.tool_input
 
-// Block git add -A or --all (anywhere in command)
-if (/git\s+add\b.*(\s|^)(-A|--all)/.test(command)) {
-  outputAndExit({
-    hookSpecificOutput: {
-      hookEventName: 'PreToolUse',
-      permissionDecision: 'deny',
-      permissionDecisionReason:
-        "Use targeted 'git add <files>' instead of 'git add -A' or '--all' for more intentional commits.",
-    },
-  })
-}
+  // Block git add -A or --all (anywhere in command)
+  if (/git\s+add\b.*(\s|^)(-A|--all)/.test(command)) {
+    return {
+      hookSpecificOutput: {
+        hookEventName: 'PreToolUse',
+        permissionDecision: 'deny',
+        permissionDecisionReason:
+          "Use targeted 'git add <files>' instead of 'git add -A' or '--all' for more intentional commits.",
+      },
+    }
+  }
 
-// Strip Claude attribution from commits
-if (/git\s+commit/.test(command)) {
-  const lines = command.split('\n')
-  const filtered = lines.filter(line => !/generated/i.test(line) && !/co-authored-by/i.test(line))
+  // Strip Claude attribution from commits
+  if (/git\s+commit/.test(command)) {
+    const lines = command.split('\n')
+    const filtered = lines.filter(line => !/generated/i.test(line) && !/co-authored-by/i.test(line))
 
-  const cleaned = filtered
-    .join('\n')
-    .replace(/\n{3,}/g, '\n\n') // Collapse 3+ consecutive newlines to 2
-    .replace(/\n+$/, '') // Remove trailing newlines
+    const cleaned = filtered
+      .join('\n')
+      .replace(/\n{3,}/g, '\n\n') // Collapse 3+ consecutive newlines to 2
+      .replace(/\n+$/, '') // Remove trailing newlines
 
-  if (cleaned !== command) {
-    outputAndExit({
+    // No changes made, allow original command
+    if (cleaned === command) {
+      return
+    }
+
+    return {
       hookSpecificOutput: {
         hookEventName: 'PreToolUse',
         permissionDecision: 'allow',
@@ -62,13 +73,9 @@ if (/git\s+commit/.test(command)) {
           command: cleaned,
         },
       },
-    })
+    }
   }
 }
 
-process.exit(0)
-
-function outputAndExit(output: PreToolUseOutput) {
-  console.log(JSON.stringify(output))
-  process.exit(0)
-}
+// Entry point
+runHook(handler)
