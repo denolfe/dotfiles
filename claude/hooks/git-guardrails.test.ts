@@ -2,7 +2,7 @@ import { test, expect, describe } from 'bun:test'
 import { spawnSync } from 'child_process'
 import type { PreToolUseInput, PreToolUseOutput, BashToolInput } from './types'
 
-const hookPath = new URL('./git-customizations.ts', import.meta.url).pathname
+const hookPath = new URL('./git-guardrails.ts', import.meta.url).pathname
 
 function runHook(input: PreToolUseInput<BashToolInput>): {
   output: PreToolUseOutput | null

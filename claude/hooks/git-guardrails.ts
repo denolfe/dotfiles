@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 /**
- * Claude Code PreToolUse Hook - Git Customizations
+ * Claude Code PreToolUse Hook - Git Guardrails
  *
  * Enforces git workflow preferences by intercepting git commands before execution.
  *
@@ -21,7 +21,7 @@
  *   - Returns JSON response with permissionDecision
  *
  * Testing:
- *   Run: bun test git-customizations.test.ts
+ *   Run: bun test git-guardrails.test.ts
  */
 
 import type { PreToolUseInput, PreToolUseOutput, BashToolInput } from './types'
