@@ -54,8 +54,10 @@
       path: scripts/*
       relink: true
 
-    ~/.claude/skills:
-      path: claude/skills
+    ~/.claude:
+      glob: true
+      path: claude/*
+      exclude: ['node_modules']
       relink: true
 
     # VS Code Linux
