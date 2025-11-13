@@ -91,6 +91,51 @@ describe('git add blocking', () => {
   })
 })
 
+describe('amend prompting', () => {
+  test('prompts for git commit --amend --no-edit', () => {
+    const { output, exitCode } = runHook(createInput('git commit --amend --no-edit'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+    expect(output?.hookSpecificOutput?.permissionDecisionReason).toContain('Amending')
+  })
+
+  test('prompts for git commit --no-edit --amend (reversed order)', () => {
+    const { output, exitCode } = runHook(createInput('git commit --no-edit --amend'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+
+  test('prompts for git commit with other flags and --amend', () => {
+    const { output, exitCode } = runHook(createInput('git commit -a --amend --no-edit'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+
+  test('prompts for git commit --amend with message', () => {
+    const { output, exitCode } = runHook(createInput('git commit --amend -m "Updated message"'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+
+  test('allows git commit --no-edit without --amend', () => {
+    const { output, exitCode } = runHook(createInput('git commit --no-edit'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).not.toBe('ask')
+  })
+
+  test('allows regular git commit', () => {
+    const { output, exitCode } = runHook(createInput('git commit -m "Regular commit"'))
+
+    expect(exitCode).toBe(0)
+    expect(output).toBeNull()
+  })
+})
+
 describe('attribution stripping', () => {
   test('strips "Generated with Claude Code" line', () => {
     const command = `git commit -m "Test commit

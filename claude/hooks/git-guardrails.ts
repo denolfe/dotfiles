@@ -10,7 +10,11 @@
  *      - Encourages targeted file additions for more intentional commits
  *      - Returns deny decision with helpful error message
  *
- *   2. Strips Claude attribution from git commit messages
+ *   2. Prompts for approval on `git commit --amend`
+ *      - Requires explicit confirmation before amending commits
+ *      - Returns ask decision to prompt user
+ *
+ *   3. Strips Claude attribution from git commit messages
  *      - Removes lines containing "generated" (case-insensitive)
  *      - Removes lines containing "co-authored-by" (case-insensitive)
  *      - Allows commits to proceed with cleaned messages
@@ -46,6 +50,18 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
         permissionDecision: 'deny',
         permissionDecisionReason:
           "Use targeted 'git add <files>' instead of 'git add -A' or '--all' for more intentional commits.",
+      },
+    }
+  }
+
+  // Prompt for approval on git commit --amend
+  if (/git\s+commit/.test(command) && /--amend/.test(command)) {
+    return {
+      hookSpecificOutput: {
+        hookEventName: 'PreToolUse',
+        permissionDecision: 'ask',
+        permissionDecisionReason:
+          'Amending commit. Confirm you want to proceed with --amend?',
       },
     }
   }
