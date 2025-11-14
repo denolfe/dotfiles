@@ -36,7 +36,7 @@ function formatPowerline(segments: Segment[]): string {
   }
 
   // Right gradient coming out of last segment (replaces final separator)
-  result += reset + fg(segments[segments.length - 1].bg) + rightGradient + reset
+  result += reset + fg(segments[segments.length - 1]?.bg as number) + rightGradient + reset
 
   return result
 }
@@ -83,7 +83,6 @@ const output = await new Response(ccusage.stdout).text()
 // Parse and compact metrics
 const parts = output.split('|').map(s => s.trim())
 const costMatch = parts[1]?.match(/(💰[^|]+)/)
-const rateMatch = parts[2]?.match(/(🔥[^|]+)/)
 const contextMatch = parts[3]?.match(/(🧠[^|]+)/)
 
 const costSection =
@@ -93,8 +92,10 @@ const costSection =
     ?.replace(/(\$[\d.]+)\s+today/g, '📅 $1')
     ?.trim() || ''
 
-const rateSection = rateMatch?.[1]?.trim() || ''
-const contextSection = contextMatch?.[1]?.trim() || ''
+// Extract just the percentage from context (e.g., "🧠 100k/200k (50%)" -> "🧠 50%")
+const contextRaw = contextMatch?.[1]?.trim() || ''
+const percentMatch = contextRaw.match(/(\d+(?:\.\d+)?%)/)
+const contextSection = percentMatch ? `🧠 ${percentMatch[1]}` : contextRaw
 
 const dirSection = data.cwd.replace(process.env.HOME || '', '~')
 const branchSection = branch ? `  ${branch} ` : ''
@@ -105,7 +106,6 @@ const segments: Segment[] = [
   { text: ` ${dirSection} `, ...colors.dir },
   ...(branch ? [{ text: branchSection, ...colors.branch }] : []),
   { text: ` ${costSection} `, ...colors.costs },
-  { text: ` ${rateSection} `, ...colors.rate },
   { text: ` ${contextSection} `, ...colors.context },
 ]
 
