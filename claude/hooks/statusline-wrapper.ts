@@ -1,10 +1,60 @@
 #!/usr/bin/env bun
 
-import { basename } from 'path'
+// Powerline formatting utilities
+type Segment = { text: string; fg: number; bg: number }
+
+const reset = '\x1b[0m'
+const fg = (code: number) => `\x1b[38;5;${code}m`
+const bg = (code: number) => `\x1b[48;5;${code}m`
+const segmentSep = '\uE0B0' //  (chevron)
+const roundedLeft = '\uE0B6' //
+const rightGradient = '▓▒░'
+
+function formatPowerline(segments: Segment[]): string {
+  if (segments.length === 0 || !segments[0]) return ''
+
+  let result = ''
+
+  // Rounded left edge
+  result += fg(segments[0].bg) + roundedLeft + reset
+
+  for (let i = 0; i < segments.length; i++) {
+    const seg = segments[i]
+    if (!seg) continue
+    const nextSeg = segments[i + 1]
+
+    // Segment content: bg=current segment color, fg=current segment text color
+    result += bg(seg.bg) + fg(seg.fg) + seg.text
+
+    // Separator between segments (not at the end)
+    if (nextSeg) {
+      // Between segments:
+      // bg = next segment's background color (area behind separator)
+      // fg = current segment's background color (the separator character itself)
+      result += bg(nextSeg.bg) + fg(seg.bg) + segmentSep
+    }
+  }
+
+  // Right gradient coming out of last segment (replaces final separator)
+  result += reset + fg(segments[segments.length - 1].bg) + rightGradient + reset
+
+  return result
+}
+
+// Segment colors (terminal 256 colors)
+const colors = {
+  dir: { fg: 0, bg: 4 }, // blue
+  branch: { fg: 0, bg: 6 }, // lighter teal
+  costs: { fg: 0, bg: 214 }, // orange
+  rate: { fg: 0, bg: 4 }, // blue
+  context: { fg: 0, bg: 2 }, // green
+}
+
+// ========== Data Extraction ==========
 
 const input = await Bun.stdin.text()
 const data = JSON.parse(input)
-const cwd = data.cwd
+const cwd = data.cwd.replace(/^~/, process.env.HOME || '~')
 
 // Get git branch
 let branch = ''
@@ -30,17 +80,34 @@ const output = await new Response(ccusage.stdout).text()
 
 // Default: 🤖 Sonnet 4.5 | 💰 $0.00 session / $0.35 today / $0.59 block (3h 43m left) | 🔥 $0.69/hr | 🧠 N/A
 
-// Compact output
-const compacted = output
-  .replace(/^🤖[^|]+\|\s*/, '') // Remove model section
-  .replace(/\s*\/\s*\$[\d.]+\s+block[^|]*/, '') // Remove block cost
-  .replace(/\s+session/g, '') // Remove "session" label
-  .replace(/(\$[\d.]+)\s+today/g, '📅 $1 ') // Replace with calendar emoji at front
-  .trim()
+// Parse and compact metrics
+const parts = output.split('|').map(s => s.trim())
+const costMatch = parts[1]?.match(/(💰[^|]+)/)
+const rateMatch = parts[2]?.match(/(🔥[^|]+)/)
+const contextMatch = parts[3]?.match(/(🧠[^|]+)/)
 
-// Add directory and branch
-const dir = basename(cwd)
-const branchInfo = branch ? ` (${branch})` : ''
-const result = `${compacted} | 📁 ${dir}${branchInfo}`
+const costSection =
+  costMatch?.[1]
+    ?.replace(/\s+session/g, '')
+    ?.replace(/\s*\/\s*\$[\d.]+\s+block[^|]*/, '')
+    ?.replace(/(\$[\d.]+)\s+today/g, '📅 $1')
+    ?.trim() || ''
 
+const rateSection = rateMatch?.[1]?.trim() || ''
+const contextSection = contextMatch?.[1]?.trim() || ''
+
+const dirSection = data.cwd.replace(process.env.HOME || '', '~')
+const branchSection = branch ? `  ${branch} ` : ''
+
+// ========== Format Output ==========
+
+const segments: Segment[] = [
+  { text: ` ${dirSection} `, ...colors.dir },
+  ...(branch ? [{ text: branchSection, ...colors.branch }] : []),
+  { text: ` ${costSection} `, ...colors.costs },
+  { text: ` ${rateSection} `, ...colors.rate },
+  { text: ` ${contextSection} `, ...colors.context },
+]
+
+const result = formatPowerline(segments)
 process.stdout.write(result)
