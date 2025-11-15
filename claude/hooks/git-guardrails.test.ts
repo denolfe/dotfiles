@@ -76,8 +76,57 @@ describe('git add blocking', () => {
     expect(output).toBeNull()
   })
 
-  test('allows git add . (current directory)', () => {
+  test('blocks git add .', () => {
     const { output, exitCode } = runHook(createInput('git add .'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('deny')
+  })
+
+  test('blocks git add . with trailing space', () => {
+    const { output, exitCode } = runHook(createInput('git add . '))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('deny')
+  })
+
+  test('blocks git add . file.txt', () => {
+    const { output, exitCode } = runHook(createInput('git add . file.txt'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('deny')
+  })
+
+  test('blocks git add file.txt .', () => {
+    const { output, exitCode } = runHook(createInput('git add file.txt .'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('deny')
+  })
+
+  test('allows git add .gitignore', () => {
+    const { output, exitCode } = runHook(createInput('git add .gitignore'))
+
+    expect(exitCode).toBe(0)
+    expect(output).toBeNull()
+  })
+
+  test('allows git add ./src', () => {
+    const { output, exitCode } = runHook(createInput('git add ./src'))
+
+    expect(exitCode).toBe(0)
+    expect(output).toBeNull()
+  })
+
+  test('allows git add ./src/file.ts', () => {
+    const { output, exitCode } = runHook(createInput('git add ./src/file.ts'))
+
+    expect(exitCode).toBe(0)
+    expect(output).toBeNull()
+  })
+
+  test('allows git add .env.local', () => {
+    const { output, exitCode } = runHook(createInput('git add .env.local'))
 
     expect(exitCode).toBe(0)
     expect(output).toBeNull()

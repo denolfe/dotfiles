@@ -6,7 +6,7 @@
  * Enforces git workflow preferences by intercepting git commands before execution.
  *
  * What it does:
- *   1. Blocks `git add -A` and `git add --all` commands
+ *   1. Blocks `git add -A`, `git add --all`, and `git add .` commands
  *      - Encourages targeted file additions for more intentional commits
  *      - Returns deny decision with helpful error message
  *
@@ -42,14 +42,17 @@ import { runHook } from './utils'
 const handler: PreToolUseHandler<BashToolInput> = data => {
   const { command } = data.tool_input
 
-  // Block git add -A or --all (anywhere in command)
-  if (/git\s+add\b.*(\s|^)(-A|--all)/.test(command)) {
+  // Block git add -A, --all, or . (anywhere in command)
+  if (
+    /git\s+add\b.*(\s|^)(-A|--all)/.test(command) ||
+    /git\s+add\b(\s+\S+)*\s+\.(\s|$)/.test(command)
+  ) {
     return {
       hookSpecificOutput: {
         hookEventName: 'PreToolUse',
         permissionDecision: 'deny',
         permissionDecisionReason:
-          "Use targeted 'git add <files>' instead of 'git add -A' or '--all' for more intentional commits.",
+          "Use targeted 'git add <files>' instead of 'git add -A', '--all', or '.' for more intentional commits.",
       },
     }
   }
