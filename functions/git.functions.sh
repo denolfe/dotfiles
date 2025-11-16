@@ -35,6 +35,21 @@ gswpr() {
   git switch "$1"
 }
 
+# Navigate between git worktrees with fzf, ordered by last commit date
+cdwt() {
+  local worktree_info last_commit_date
+
+  worktree_info=$(git worktree list --porcelain | grep "worktree " | awk '{print $2}' | while read -r wt; do
+    last_commit_date=$(cd "$wt" && git log -1 --format="%ct")
+    echo "$last_commit_date $wt"
+  done | sort -nr | awk '{print $2}' | fzf --height 40% --prompt="Select Worktree > ")
+
+  if [ -n "$worktree_info" ]; then
+    cd "$worktree_info" || return 1
+  fi
+}
+
+
 # Show previously used conventional commit scopes
 # Optional -n flag to sort numerically
 gscopes() {
