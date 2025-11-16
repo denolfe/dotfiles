@@ -263,6 +263,7 @@
   "scssFormatter.singleQuote": true,
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'RobotoMono Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "terminal.integrated.fontSize": 11,
+  "terminal.integrated.minimumContrastRatio": 1, // Fixes p10k foreground colors
   "terminal.integrated.shellIntegration.decorationsEnabled": "overviewRuler",
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
