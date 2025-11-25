@@ -14,7 +14,11 @@
  *      - Requires explicit confirmation before amending commits
  *      - Returns ask decision to prompt user
  *
- *   3. Strips Claude attribution from git commit messages
+ *   3. Prompts for approval on `git commit --no-verify`
+ *      - Requires explicit confirmation before bypassing repository git hooks
+ *      - Returns ask decision to prompt user
+ *
+ *   4. Strips Claude attribution from git commit messages
  *      - Removes lines containing "generated" (case-insensitive)
  *      - Removes lines containing "co-authored-by" (case-insensitive)
  *      - Allows commits to proceed with cleaned messages
@@ -65,6 +69,18 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
         permissionDecision: 'ask',
         permissionDecisionReason:
           'Amending commit. Confirm you want to proceed with --amend?',
+      },
+    }
+  }
+
+  // Prompt for approval on git commit --no-verify
+  if (/git\s+commit/.test(command) && /--no-verify/.test(command)) {
+    return {
+      hookSpecificOutput: {
+        hookEventName: 'PreToolUse',
+        permissionDecision: 'ask',
+        permissionDecisionReason:
+          'Using --no-verify to bypass repository git hooks. Confirm you want to skip pre-commit checks?',
       },
     }
   }

@@ -185,6 +185,49 @@ describe('amend prompting', () => {
   })
 })
 
+describe('no-verify prompting', () => {
+  test('prompts for git commit --no-verify', () => {
+    const { output, exitCode } = runHook(createInput('git commit --no-verify -m "Skip hooks"'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+    expect(output?.hookSpecificOutput?.permissionDecisionReason).toContain('bypass')
+  })
+
+  test('prompts for git commit with --no-verify and other flags', () => {
+    const { output, exitCode } = runHook(createInput('git commit -a --no-verify -m "Message"'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+
+  test('prompts for git commit --no-verify without message', () => {
+    const { output, exitCode } = runHook(createInput('git commit --no-verify'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+
+  test('prompts for git commit --no-verify with heredoc', () => {
+    const command = `git commit --no-verify -m "$(cat <<'EOF'
+Test commit message
+EOF
+)"`
+
+    const { output, exitCode } = runHook(createInput(command))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+
+  test('allows regular git commit without --no-verify', () => {
+    const { output, exitCode } = runHook(createInput('git commit -m "Regular commit"'))
+
+    expect(exitCode).toBe(0)
+    expect(output).toBeNull()
+  })
+})
+
 describe('attribution stripping', () => {
   test('strips "Generated with Claude Code" line', () => {
     const command = `git commit -m "Test commit
