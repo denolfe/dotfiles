@@ -31,3 +31,7 @@ set ignorecase
 
 set timeoutlen=1000
 set ttimeoutlen=0
+
+" Option+Backspace to delete whole words.
+nnoremap <A-BS> db
+inoremap <A-BS> <C-w>
