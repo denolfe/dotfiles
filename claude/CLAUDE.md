@@ -5,6 +5,7 @@ Be extremely concise. Sacrifice grammar for the sake of concision.
 - Prefer single object parameters (improves backwards-compatibility)
 - Prefer types over interfaces (except when extending external types)
 - Prefer functions over classes (classes only for errors/adapters)
+- Prefer pure functions; when mutation is unavoidable, return the mutated object instead of void.
 - Organize functions top-down: exports before helpers
 - Use JSDoc for complex functions; add tags only when justified beyond type signature
 - Use `import type` for types, regular `import` for values, separate statements even from same module
