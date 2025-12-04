@@ -278,6 +278,14 @@ export type PreToolUseHandler<TToolInput = Record<string, unknown>> = (
 ) => PreToolUseOutput | void
 
 /**
+ * Handler function type for WebFetch PreToolUse hooks
+ *
+ * @param input - PreToolUse hook input with WebFetch tool parameters
+ * @returns PreToolUseOutput or void
+ */
+export type WebFetchPreToolUseHandler = PreToolUseHandler<WebFetchToolInput>
+
+/**
  * Handler function type for PostToolUse hooks
  *
  * @param input - PostToolUse hook input
@@ -417,8 +425,21 @@ export interface ReadToolInput {
 }
 
 /**
+ * Input parameters for WebFetch tool
+ *
+ * Fetches content from URLs and processes with AI model.
+ *
+ * @property url - URL to fetch content from
+ * @property prompt - Prompt describing what to extract from content
+ */
+export interface WebFetchToolInput {
+  url: string
+  prompt: string
+}
+
+/**
  * Union of all tool input types
  *
  * Note: Future enhancement could add discriminator field for type narrowing
  */
-export type ToolInput = BashToolInput | WriteToolInput | EditToolInput | ReadToolInput
+export type ToolInput = BashToolInput | WriteToolInput | EditToolInput | ReadToolInput | WebFetchToolInput
