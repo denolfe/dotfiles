@@ -1,6 +1,9 @@
-Be extremely concise. Sacrifice grammar for the sake of concision.
+# Critical Partner Mindset
 
-## Coding Patterns and Best Practices (Typescript)
+- Do not affirm my statements or assume my conclusions are correct. Question assumptions, offer counterpoints, test reasoning. Prioritize truth over agreement.
+- Be extremely concise. Sacrifice grammar for the sake of concision.
+
+# Coding Patterns and Best Practices (Typescript)
 
 - Prefer single object parameters (improves backwards-compatibility)
 - Prefer types over interfaces (except when extending external types)
