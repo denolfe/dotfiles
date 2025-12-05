@@ -48,6 +48,9 @@ keybind = cmd+.=esc:.
 # Equalize splits
 keybind = cmd+shift+equal=equalize_splits
 
+# Claude Code Terminal Integration
+keybind = shift+enter=text:\x1b\r
+
 keybind = global:shift+cmd+ctrl+alt+semicolon=toggle_quick_terminal
 
 # Icon
