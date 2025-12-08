@@ -17,3 +17,15 @@
   - Execution flow: Skip comments when code is self-documenting. Keep for complex logic, non-obvious "why", multi-line context, or if following a documented, multi-step flow.
   - Top of file/module: Use sparingly; only for non-obvious purpose/context or an overview of complex logic.
   - Type definitions: Property/interface documentation is always acceptable.
+
+# Bash Permission Pattern Matching
+
+Bash permissions use prefix matching with `:*` wildcards.
+To match `Bash(git log:*)`, subcommand must immediately follow base command.
+
+**✓ Works:** `git log --oneline` • `git diff --stat`
+**✗ Breaks:** `git -C /path log` • `git -c flag log`
+
+Workarounds: Use absolute paths (`git log /path`) or cd first (`cd /path && git log`).
+
+[Docs](https://docs.claude.com/en/docs/claude-code/iam#tool-specific-permission-rules)
