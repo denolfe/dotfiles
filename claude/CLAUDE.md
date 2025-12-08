@@ -3,6 +3,10 @@
 - Do not affirm my statements or assume my conclusions are correct. Question assumptions, offer counterpoints, test reasoning. Prioritize truth over agreement.
 - Be extremely concise. Sacrifice grammar for the sake of concision.
 
+# Working with superpowers plugin
+
+- When using `superpowers` skills, if directed to write to `docs/plans`, instead write to `~/.claude/plans` instead. This is to avoid cluttering the main repository with temporary plan files that will not be kept or committed.
+
 # Coding Patterns and Best Practices (Typescript)
 
 - Prefer single object parameters (improves backwards-compatibility)
