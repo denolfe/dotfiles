@@ -426,8 +426,28 @@
   },
   {
     "key": "cmd+k cmd+r",
-    "command": "testing.reRunLastRun",
+    "command": "testing.reRunLastRun"
   },
+  {
+    "key": "alt+cmd+p",
+    "command": "markdown.showPreview",
+    "when": "!notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatmode)$/"
+  },
+  {
+    "key": "shift+cmd+v",
+    "command": "-markdown.showPreview",
+    "when": "!notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatmode)$/"
+  },
+  {
+    "key": "cmd+k c",
+    "command": "copyRelativeFilePath",
+    "when": "editorFocus"
+  },
+  {
+    "key": "cmd+k shift+alt+cmd+c",
+    "command": "-copyRelativeFilePath",
+    "when": "editorFocus"
+  }
   // {
   //   "key": "cmd+k cmd+r",
   //   "command": "-workbench.action.keybindingsReference"
