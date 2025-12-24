@@ -5,7 +5,27 @@
 
 # Working with superpowers plugin
 
-- When using `superpowers` skills, if directed to write to `docs/plans`, instead write to `~/.claude/plans` instead. This is to avoid cluttering the main repository with temporary plan files that will not be kept or committed.
+- When using `superpowers` skills, if directed to write to `docs/plans`, instead write to `~/.claude/plans`. This is to avoid cluttering the main repository with temporary plan files that will not be kept or committed.
+- The files should be written in the following tree structure:
+
+  ```
+  ~/.claude/plans/
+    ├── `{timestamp}-{task-name}`/ # Each task in its own timestamped folder
+    │     ├── 1-TASK.md # This is the main task description or details provided to brainstorming skill
+    │     ├── 2-DESIGN.md # This is the resulting design file from the `superpowers:brainstorming` skill
+    │     ├── 3-PLAN.md # This is the output of `superpowers:writing-plans` skill
+    │     └── ...
+    └── another-task/
+          ├── 3-PLAN.md
+          └── ...
+  ```
+
+- `superpowers:brainstorming` skill should:
+  - Write the provided prompt and context to `1-TASK.md`
+  - Generate a structured plan and write to `2-DESIGN.md`. Add all clarifying questions asked during brainstorming to the end of the `2-DESIGN.md` file.
+- `superpowers:writing-plans` skill should:
+  - Read the `2-DESIGN.md` file from the respective plan folder
+  - Write the resulting implementation details to `3-PLAN.md` in the same folder.
 
 # Coding Patterns and Best Practices (Typescript)
 
