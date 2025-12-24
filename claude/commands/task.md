@@ -26,5 +26,6 @@ Once created:
 
 - Present the 1-TASK.md contents
 - AskUserQuestion:
-  - Add details to task?
-  - Brainstorm design using `superpowers:brainstorming`?
+  - Add more details to 1-TASK.md now before proceeding
+  - Brainstorm design using `superpowers:brainstorming`
+  - Just implement directly
