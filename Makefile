@@ -1,4 +1,4 @@
-.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos
+.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude
 
 # Run dotbot install script
 install:
@@ -46,3 +46,7 @@ brew-restore:
 # Set MacOS defaults
 macos:
 	./macos/set-defaults.sh
+
+# Set Claude Code defaults
+claude:
+	./claude/set-defaults.sh
