@@ -10,13 +10,14 @@
 
 ![Image](preview.png)
 
-| Component                                | Tool                                                      | Config                                                                    |
-| ---------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Installation                             | [Dotbot](https://github.com/anishathalye/dotbot)          | [install.conf.yaml](./install.conf.yaml)                                  |
-| Terminal                                 | [Ghostty](https://ghostty.org)                            | [config](./ghostty/config)                                                |
-| Prompt                                   | [Powerlevel10k](https://github.com/romkatv/powerlevel10k) | [customizations](./zsh/p10k.customizations.zsh), [config](./zsh/p10k.zsh) |
-| .zshrc                                   | [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)    | [.zshrc](./zsh/zshrc.zsh)                                                 |
-| Global Key Rebinds, Hyper Key, App Focus | [Karabiner](https://karabiner-elements.pqrs.org/)         | [karabiner.ts](./karabiner/karabiner.ts)                                  |
+| Component                                | Tool                                                          | Config                                                                    |
+| ---------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Installation                             | [Dotbot](https://github.com/anishathalye/dotbot)              | [install.conf.yaml](./install.conf.yaml)                                  |
+| Terminal                                 | [Ghostty](https://ghostty.org)                                | [config](./ghostty/config)                                                |
+| Prompt                                   | [Powerlevel10k](https://github.com/romkatv/powerlevel10k)     | [customizations](./zsh/p10k.customizations.zsh), [config](./zsh/p10k.zsh) |
+| .zshrc                                   | [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)        | [.zshrc](./zsh/zshrc.zsh)                                                 |
+| Global Key Rebinds, Hyper Key, App Focus | [Karabiner](https://karabiner-elements.pqrs.org/)             | [karabiner.ts](./karabiner/karabiner.ts)                                  |
+| AI Coding Assistant                      | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | [claude/](./claude/)                                                      |
 
 ## [Makefile](./Makefile)
 
@@ -25,6 +26,41 @@
 - VS Code extension save/restore
 - Karabiner config compilation
 - Install MacOS defaults
+
+## Claude Code
+
+Configuration: [`claude/`](./claude/).
+
+### Project Instructions ([CLAUDE.md](./claude/CLAUDE.md))
+
+- **Critical partner mindset** - Question assumptions, prioritize truth over agreement
+- **Superpowers plan workflow** - Plans in `~/.claude/plans/{timestamp}-{task}/` (`1-TASK.md`, `2-DESIGN.md`, `3-PLAN.md`)
+- **TypeScript patterns** - Single object params, types over interfaces, functions over classes, pure functions
+- **Bash permission matching** - Never use `git -C`, always `cd /path && git <cmd>`
+
+### Slash Commands
+
+| Command           | Description                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| `/task`           | Create task file for feature development, uses `superpowers:brainstorming` to create `DESIGN.md` |
+| `/implement-plan` | Execute a `PLAN.md` with subagent-driven dev, uses `superpowers:subagent-driven-development`     |
+| `/pr-description` | Generate PR description                                                                          |
+
+### Hooks (TypeScript)
+
+| Hook                                                                    | Purpose                                                                       |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [git-guardrails.ts](./claude/hooks/git-guardrails.ts)                   | Blocks `git add -A/.`, prompts for `--amend` and `--no-verify`                |
+| [statusline-wrapper.ts](./claude/hooks/statusline-wrapper.ts)           | Custom statusline mirroring Powerlevel10k (dir, branch, PR#, model, context%) |
+| [pure-md-prompt-rewriter.ts](./claude/hooks/pure-md-prompt-rewriter.ts) | Rewrites prompts for Pure.md integration                                      |
+
+### Skills
+
+- **markdown-formatting** - Format/lint markdown files with markdownlint
+
+### Custom Statusline ([statusline-command.sh](./claude/statusline-command.sh))
+
+Mirrors Powerlevel10k prompt style with: directory, git branch, PR#, staged/modified/untracked counts, model name, context %.
 
 ## Keyboard Mappings
 
