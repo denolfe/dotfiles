@@ -32,6 +32,11 @@ Reference any design documents or branch commits for deeper context instead of i
 ## Overall Flow
 
 [Include any relevant architecture diagrams or flowcharts that illustrate the changes made. Written in mermaid syntax; use sequence diagram unless another format is more appropriate.]
+
+## References / Links
+
+[Links to any _external_ resources provided during the brainstorming, design, or implementation phases, such as external library docs, blog posts, etc. If none, omit this section.]
+
 ```
 
 - Ask me for feedback on the generated description before finalizing it.

@@ -20,16 +20,22 @@
 - Commenting Guidelines
   - Execution flow: Skip comments when code is self-documenting. Keep for complex logic, non-obvious "why", multi-line context, or if following a documented, multi-step flow.
   - Top of file/module: Use sparingly; only for non-obvious purpose/context or an overview of complex logic.
-  - Type definitions: Property/interface documentation is always acceptable.
+  - Type definitions: Property/interface JSDoc is encouraged and always acceptable.
 
 # Bash Permission Pattern Matching
 
-Bash permissions use prefix matching with `:*` wildcards.
-To match `Bash(git log:*)`, subcommand must immediately follow base command.
+**NEVER use flags before git subcommands.** This breaks permission matching.
 
-**✓ Works:** `git log --oneline` • `git diff --stat`
-**✗ Breaks:** `git -C /path log` • `git -c flag log`
+Forbidden patterns:
 
-Workarounds: Use absolute paths (`git log /path`) or cd first (`cd /path && git log`).
+- `git -C /path <cmd>` ← NEVER USE
+- `git -c config.key=value <cmd>` ← NEVER USE
+
+Required patterns:
+
+- `cd /path && git <cmd>` ← ALWAYS USE THIS
+- `git <cmd> /path` ← or this when command supports it
+
+Why: Permissions match `git log:*`, `git diff:*` etc. Flags before the subcommand break the prefix match.
 
 [Docs](https://docs.claude.com/en/docs/claude-code/iam#tool-specific-permission-rules)
