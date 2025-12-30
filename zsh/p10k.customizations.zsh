@@ -16,7 +16,6 @@ typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   command_execution_time  # duration of the last command
   background_jobs         # presence of background jobs
-  asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
   mise                    # custom segment for mise
   kubecontext             # current kubernetes context (https://kubernetes.io/)
   aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)

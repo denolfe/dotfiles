@@ -40,7 +40,6 @@ if ! zgenom saved; then
     zgenom load andrewferrier/fzf-z
     zgenom load reegnz/jq-zsh-plugin
 
-    zgenom ohmyzsh plugins/asdf
     zgenom ohmyzsh plugins/mise
 
     zgenom load ntnyq/omz-plugin-pnpm
@@ -171,8 +170,6 @@ fi
 export ITERM2_SHOULD_DECORATE_PROMPT=0
 source $DOTFILES/iterm2/iterm2_shell_integration.zsh
 
-export ASDF_DOWNLOAD_PATH=bin/install
-source /opt/homebrew/opt/asdf/libexec/asdf.sh
 source /opt/homebrew/share/zsh/site-functions
 
 # pnpm
