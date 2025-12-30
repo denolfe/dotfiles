@@ -17,13 +17,12 @@ jq '
 
 echo "Claude Code defaults applied to $SETTINGS_FILE"
 
-# Install superpowers plugin for Claude Code
-
-# Add marketplace (ignore if exists)
+# Superpowers plugin
 claude plugin marketplace add obra/superpowers 2>/dev/null || true
-
-# Install plugin
 claude plugin install superpowers@superpowers-dev
-
-# Enable plugin (ignore if already enabled)
 claude plugin enable superpowers@superpowers-dev 2>/dev/null || true
+
+# TypeScript LSP plugin
+claude plugin install typescript-lsp
+claude plugin enable typescript-lsp 2>/dev/null || true
+
