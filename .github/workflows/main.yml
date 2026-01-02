@@ -35,13 +35,6 @@ jobs:
           version: 9.7.1
           run_install: false
 
-      - name: Build phoenix
-        run: |
-          pnpm -C phoenix install
-          pnpm -C phoenix run typecheck
-          pnpm -C phoenix run build
-        if: startsWith(matrix.os, 'macos')
-
       - name: Install dotfiles
         run: ./install
 
