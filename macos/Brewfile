@@ -18,7 +18,6 @@ tap "supabase/tap"
 brew "ack"
 brew "act", args: ["HEAD"]
 brew "actionlint"
-brew "asdf"
 brew "pycparser"
 brew "cffi"
 brew "cryptography"
