@@ -35,11 +35,6 @@
     ~/.prettierrc.js:
       path: node/prettierrc.js
 
-    ~/.phoenix.js:
-      if: '[ `uname` = Darwin ]'
-      path: phoenix/dist/index.js
-      force: true
-
     ~/.config/fastfetch:
       path: fastfetch
       force: true
