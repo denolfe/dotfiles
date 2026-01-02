@@ -60,6 +60,17 @@
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "terminalFocus"
   },
+  // Focus sidebar when in editor AND focus editor when in sidebar
+  {
+    "key": "cmd+0",
+    "command": "workbench.action.focusSideBar",
+    "when": "editorFocus"
+  },
+  {
+    "key": "cmd+0",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "sideBarFocus"
+  },
   {
     "key": "cmd+\\",
     "command": "-workbench.action.splitEditor"
