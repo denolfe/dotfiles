@@ -21,13 +21,6 @@ make karabiner-dev   # Watch mode with auto-rebuild
 # Direct: deno run --allow-env --allow-read --allow-write karabiner/karabiner.ts
 ```
 
-### Phoenix (Window Manager)
-```bash
-make phoenix         # Build ~/.phoenix.js from TypeScript
-make phoenix-dev     # Watch mode with auto-rebuild
-# Direct: pnpm -C phoenix run build
-```
-
 ### VS Code Extensions
 ```bash
 make vscode-install  # Install extensions from vscode/extensions.txt
@@ -64,25 +57,6 @@ TypeScript-based Karabiner-Elements config using Deno and [deno_karabiner](https
 - CapsLock+Cmd → `left_shift + left_control + left_option + left_command`
 
 **Architecture pattern:** Export rule builders from `lib/`, compose in main `karabiner.ts` using `KarabinerComplexModifications` class.
-
-### Phoenix Configuration (deprecated) (`phoenix/`)
-TypeScript window manager config compiled with `@vercel/ncc` to single-file `~/.phoenix.js`.
-
-**Key files:**
-- `src/phoenix.ts`: Main config with all keybindings
-- `src/window-grid.ts`: Window positioning system (GridPosition 0-1 based)
-- `src/window-cache.ts`: Window history tracking
-- `src/screen.ts`: Multi-display management
-- `src/hyper.ts`: Key binding helpers matching Karabiner's hyper key
-- `src/utils/yabai.ts`: Yabai integration helpers
-
-**Grid system:** All window positions defined as `GridPosition` with x/y/w/h on 0-1 scale. Supports split layouts (left66, right50, etc.) and centered positions (full, big, med, sm, xs).
-
-**Binding pattern:**
-```typescript
-hyper('key', callback)      // CapsLock+key
-hyperCmd('key', callback)   // CapsLock+Cmd+key
-```
 
 ### ZSH Configuration (`zsh/`)
 **Main file:** `zshrc.zsh` (symlinked to `~/.zshrc`)
@@ -137,5 +111,3 @@ deno test claude/hooks/pure-md-prompt-rewriter.test.ts
 
 **Karabiner:** Deno with no deps → single `karabiner.json` output
 **Claude hooks:** Deno with TypeScript → no compilation needed (executed directly)
-
-Both Karabiner and Phoenix use function composition over classes. Export small utilities from `lib/`/`utils/` and compose in main file.
