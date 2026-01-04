@@ -27,6 +27,11 @@
   - Read the `2-DESIGN.md` file from the respective plan folder
   - Write the resulting implementation details to `3-PLAN.md` in the same folder.
 
+# Node.js Preferences
+
+- Always use pnpm for package management.
+- Always use vitest for testing.
+
 # Coding Patterns and Best Practices (Typescript)
 
 - Prefer single object parameters (improves backwards-compatibility)
