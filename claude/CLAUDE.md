@@ -5,7 +5,7 @@
 
 # Working with superpowers plugin
 
-- When using `superpowers` skills, if directed to write to `docs/plans`, instead write to `~/.claude/plans`. This is to avoid cluttering the main repository with temporary plan files that will not be kept or committed.
+- When using `superpowers` skills, if directed to write to `docs/plans`, instead write to `~/.claude/plans` or the project's `./docs/plans` directory. This is to avoid cluttering the main repository with temporary plan files that will not be kept or committed.
 - The files should be written in the following tree structure:
 
   ```
