@@ -34,7 +34,18 @@
 
 # Coding Patterns and Best Practices (Typescript)
 
-- Prefer single object parameters (improves backwards-compatibility)
+- Prefer function object parameter over multiple parameters. Better readability, easier to extend, clearer intent at call site.
+  ```ts
+  // Correct
+  function createUser(params: { name: string; email: string; role: string }) {
+    // ...
+  }
+
+  // Avoid
+  function createUser(name: string, email: string, role: string) {
+    // ...
+  }
+  ```
 - Prefer types over interfaces (except when extending external types)
 - Prefer functions over classes (classes only for errors/adapters)
 - Prefer pure functions; when mutation is unavoidable, return the mutated object instead of void.
