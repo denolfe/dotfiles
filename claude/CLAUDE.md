@@ -57,6 +57,7 @@
   - Execution flow: Skip comments when code is self-documenting. Keep for complex logic, non-obvious "why", multi-line context, or if following a documented, multi-step flow.
   - Top of file/module: Use sparingly; only for non-obvious purpose/context or an overview of complex logic.
   - Type definitions: Property/interface JSDoc is encouraged and always acceptable.
+  - No fossil comments about previous implementations, migrations, or refactors. If code is gone, comment is gone. Git tracks "what changed".
 
 # Bash Permission Pattern Matching
 
