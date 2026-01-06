@@ -18,6 +18,11 @@
  *      - Requires explicit confirmation before bypassing repository git hooks
  *      - Returns ask decision to prompt user
  *
+ *   4. Strips Claude attribution from git commit messages
+ *      - Removes lines containing "generated" (case-insensitive)
+ *      - Removes lines containing "co-authored-by" (case-insensitive)
+ *      - Allows commits to proceed with cleaned messages
+ *
  * Configuration:
  *   - Configured in ~/.claude/settings.json as PreToolUse hook with Bash matcher
  *   - Receives tool input via stdin as JSON
@@ -62,7 +67,8 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
       hookSpecificOutput: {
         hookEventName: 'PreToolUse',
         permissionDecision: 'ask',
-        permissionDecisionReason: 'Amending commit. Confirm you want to proceed with --amend?',
+        permissionDecisionReason:
+          'Amending commit. Confirm you want to proceed with --amend?',
       },
     }
   }
@@ -75,6 +81,32 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
         permissionDecision: 'ask',
         permissionDecisionReason:
           'Using --no-verify to bypass repository git hooks. Confirm you want to skip pre-commit checks?',
+      },
+    }
+  }
+
+  // Strip Claude attribution from commits
+  if (/git\s+commit/.test(command)) {
+    const lines = command.split('\n')
+    const filtered = lines.filter(line => !/generated/i.test(line) && !/co-authored-by/i.test(line))
+
+    const cleaned = filtered
+      .join('\n')
+      .replace(/\n{3,}/g, '\n\n') // Collapse 3+ consecutive newlines to 2
+      .replace(/\n+$/, '') // Remove trailing newlines
+
+    // No changes made, allow original command
+    if (cleaned === command) {
+      return
+    }
+
+    return {
+      hookSpecificOutput: {
+        hookEventName: 'PreToolUse',
+        permissionDecision: 'allow',
+        updatedInput: {
+          command: cleaned,
+        },
       },
     }
   }
