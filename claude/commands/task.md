@@ -1,7 +1,7 @@
 ---
 description: Create a new task file for a specific task or feature development
 argument-hint: <task-name-or-desc>
-allowed-commands: Write, Bash(mkdir:*), Bash(mkdir -p:*)
+allowed-tools: Write, Bash(mkdir:*), Bash(date:*)
 ---
 
 # New Task
