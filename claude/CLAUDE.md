@@ -32,6 +32,11 @@
 - Always use pnpm for package management.
 - Always use vitest for testing.
 
+# Commit Guidelines
+
+- Always use Conventional Commits. Match repo's existing style (types, scope usage, etc).
+- First commit on branch: include scope (often becomes PR title). Subsequent commits: bias toward `chore` (no scope) since they'll be squashed.
+
 # Coding Patterns and Best Practices (Typescript)
 
 - Prefer function object parameter over multiple parameters. Better readability, easier to extend, clearer intent at call site.
