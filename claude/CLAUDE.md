@@ -22,7 +22,21 @@
 
 - `superpowers:brainstorming` skill should:
   - Write the provided prompt and context to `1-TASK.md`
-  - Generate a structured plan and write to `2-DESIGN.md`. Add all clarifying questions asked during brainstorming and _all_ options considered to the end of the `2-DESIGN.md` file.
+  - Generate a structured plan and write to `2-DESIGN.md`.
+    - Add all clarifying questions asked during brainstorming and _all_ options considered to the end of the `2-DESIGN.md` file in format:
+
+      ```markdown
+      ## Clarifying Questions Asked During Brainstorming
+
+      1. **Q: [Question text]?**
+         **A:** [User's answer or "No answer provided."]
+
+         Other Options Considered:
+         - [Other 1]
+         - [Other 2]
+         - ...
+      ```
+
 - `superpowers:writing-plans` skill should:
   - Read the `2-DESIGN.md` file from the respective plan folder
   - Write the resulting implementation details to `3-PLAN.md` in the same folder.
