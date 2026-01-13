@@ -67,7 +67,9 @@
   ```
 - Prefer types over interfaces (except when extending external types)
 - Prefer functions over classes (classes only for errors/adapters)
+- Prefer simple conditionals over nested ternary operators
 - Prefer pure functions; when mutation is unavoidable, return the mutated object instead of void.
+- Use early returns to reduce nesting
 - Organize functions top-down: exports before helpers
 - Use JSDoc for complex functions; add tags only when justified beyond type signature
 - Use `import type` for types, regular `import` for values, separate statements even from same module
