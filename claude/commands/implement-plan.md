@@ -8,4 +8,4 @@ Implement the plan:
 - Dispatch a fresh subagent per task
 - Do code review between tasks using `superpowers:code-reviewer`
 - Quickly iterate until done
-- Group tasks if it makes sense for code review purposes
+- Group tasks if it changes are small and related
