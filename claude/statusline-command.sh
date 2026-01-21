@@ -137,6 +137,26 @@ if [[ "$usage" != "null" ]]; then
   fi
 fi
 
+# Session cost & duration
+cost=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
+duration_ms=$(echo "$input" | jq -r '.cost.total_duration_ms // 0')
+if [[ "$cost" != "0" ]] && [[ "$cost" != "null" ]]; then
+  cost_str=$(printf '$%.2f' "$cost")
+  if [[ "$duration_ms" != "0" ]] && [[ "$duration_ms" != "null" ]]; then
+    duration_sec=$((duration_ms / 1000))
+    if [[ $duration_sec -ge 60 ]]; then
+      mins=$((duration_sec / 60))
+      secs=$((duration_sec % 60))
+      duration_str="${mins}m${secs}s"
+    else
+      duration_str="${duration_sec}s"
+    fi
+    segments+=("$(printf '\033[90m%s %s\033[0m' "$cost_str" "$duration_str")")
+  else
+    segments+=("$(printf '\033[90m%s\033[0m' "$cost_str")")
+  fi
+fi
+
 # Join with separator
 sep=" \033[2m│\033[0m "
 output=""
