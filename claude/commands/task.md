@@ -1,32 +1,22 @@
 ---
 description: Create a new task file for a specific task or feature development
 argument-hint: <task-name-or-desc>
-allowed-tools: Write, Bash(mkdir:*), Bash(date:*)
+allowed-tools: Bash(~/.claude/commands/task.sh:*), Read
 ---
 
 # New Task
 
-- Create the following structure in `~/.claude/plans/`:
+Run `~/.claude/commands/task.sh <task-name> "<task-title>"` where:
 
-  ```
-  ~/.claude/plans/
-    ├── `{timestamp}-{task-name}`/ # Each task in its own timestamped folder
-    │     ├── 1-TASK.md # This is the main task description or details provided to brainstorming skill
-    │     └── ...
-    └── another-task/
-          ├── 1-TASK.md
-          └── ...
-  ```
+- `task-name`: hyphenated, lowercase, 2-4 words summarizing the argument
+- `task-title`: the original argument text (for the H1 header)
 
-- The task-name should be a short, hyphenated version of the provided task name or description argument (e.g., "implement-authentication", "refactor-database-layer"). Be concise and summarize if necessary.
-- Find the <plans-directory>, if the project has an existing `./docs/plans` directory, use that instead of `~/.claude/plans/`.
-- Create the directory with `mkdir -p <plans-directory>/$(date +%Y-%m-%d)-task-name` but replace `task-name` with the hyphenated version of the provided task name or description.
-- 1-TASK.md should contain a single H1 header with the provided task name or description.
+The script outputs the created directory path.
 
 Once created:
 
-- Present the 1-TASK.md contents
+- Read and present the 1-TASK.md contents
 - AskUserQuestion:
-  - Add more details to 1-TASK.md now before proceeding
   - Brainstorm design using `superpowers:brainstorming`
+  - Add more details to 1-TASK.md now before proceeding
   - Just implement directly
