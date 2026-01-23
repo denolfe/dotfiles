@@ -96,6 +96,7 @@ fi
 
 # cd into the most recently modified directory
 alias cdd='cd $(ls -v1td */ | head -1)'
+alias pwdc="pwd | tr -d '\n' | pbcopy"
 alias to_lower="tr '[:upper:]' '[:lower:]'"
 alias to_upper="tr '[:lower:]' '[:upper:]'"
 
