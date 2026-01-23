@@ -1,6 +1,11 @@
+---
+description: Create a new PR for the current branch from template
+argument-hint: <draft>
+---
+
 # Create PR
 
-- Create a PR for the current branch focusing on architecture over implementation details.
+- Create a PR for the current branch focusing on architecture over implementation details. If "draft" is specified in the argument, create a draft PR.
 - Consolidate related details under fewer sections and emphasize high-level decisions rather than exhaustive details.
 - Reference any design/plan documents or branch commits for deeper context instead of including all details in the description.
 - DO NOT include anything related to test coverage
