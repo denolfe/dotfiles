@@ -24,9 +24,6 @@ if ! zgenom saved; then
     zgenom ohmyzsh plugins/github
     zgenom ohmyzsh plugins/sudo
     zgenom ohmyzsh plugins/command-not-found
-    zgenom ohmyzsh plugins/kubectl
-    zgenom ohmyzsh plugins/docker
-    zgenom ohmyzsh plugins/docker-compose
     zgenom ohmyzsh plugins/z
     zgenom load zsh-users/zsh-autosuggestions
     zgenom load jocelynmallon/zshmarks
@@ -54,8 +51,7 @@ if ! zgenom saved; then
     bindkey "^k" history-substring-search-up
     bindkey "^j" history-substring-search-down
 
-    # Warn you when you run a command that you've got an alias for
-    zgenom load djui/alias-tips
+    zgenom load MichaelAquilina/zsh-you-should-use
 
     # Modified globalias plugin
     zgenom load $DOTFILES/zsh/globalias.plugin.zsh
@@ -165,6 +161,10 @@ export BAT_THEME='Visual Studio Dark+'
 export AWS_PAGER='bat -p'
 
 export ZSH_PLUGINS_ALIAS_TIPS_REVEAL_TEXT="❯ "
+
+export ZSH_DISABLE_COMPFIX=true
+
+export YSU_MESSAGE_FORMAT="$(tput bold)$(tput setaf 4)Alias tip: %alias$(tput sgr0)"
 
 # Needed for Crystal on mac - openss + pkg-config
 if [ `uname` = Darwin ]; then
