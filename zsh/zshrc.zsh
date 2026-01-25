@@ -93,6 +93,11 @@ setopt share_history
 setopt pushd_ignore_dups
 #setopt pushd_silent
 
+# Experimental setopt
+setopt auto_cd
+setopt complete_in_word
+setopt interactive_comments
+
 # Increase history size
 HISTSIZE=1000000000000000000
 SAVEHIST=1000000000000000000
