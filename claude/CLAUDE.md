@@ -70,7 +70,7 @@
 - Prefer simple conditionals over nested ternary operators
 - Prefer pure functions; when mutation is unavoidable, return the mutated object instead of void.
 - Use early returns to reduce nesting
-- Organize functions top-down: exports and entry points before helpers
+- **Always** organize functions top-down: exports and entry points before helpers
 - Use JSDoc for complex functions; add tags only when justified beyond type signature
 - Use `import type` for types, regular `import` for values, separate statements even from same module
 - Prefix booleans with `is`/`has`/`can`/`should` (e.g., `isValid`, `hasData`) for clarity
