@@ -171,9 +171,6 @@ if [ `uname` = Darwin ]; then
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig
 fi
 
-export ITERM2_SHOULD_DECORATE_PROMPT=0
-source $DOTFILES/iterm2/iterm2_shell_integration.zsh
-
 source /opt/homebrew/share/zsh/site-functions
 
 # pnpm
