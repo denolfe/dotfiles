@@ -5,7 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-#!/usr/bin/env bash
 # Get zgen
 source ~/.zgenom/zgenom.zsh
 
@@ -98,7 +97,7 @@ setopt pushd_ignore_dups
 HISTSIZE=1000000000000000000
 SAVEHIST=1000000000000000000
 HISTFILE=~/.zsh_history
-export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help:gl:gst:gd:gro"
+export HISTORY_IGNORE="ls:cd:cd -:pwd:exit:date:* --help:gl:gst:gd:gro"
 
 # Return time on long running processes
 REPORTTIME=2
@@ -114,7 +113,7 @@ test -f ~/.secrets && source ~/.secrets
 for f in $DOTFILES/aliases/*.aliases.*sh; do source $f; done
 
 # Load functions
-for f in $DOTFILES/functions/*; do source $f; done
+for f in $DOTFILES/functions/*.sh; do source $f; done
 
 
 # Load all path files
@@ -154,7 +153,7 @@ export FZF_CTRL_R_OPTS="\
 export FZF_TMUX_HEIGHT=80%
 source <(fzf --zsh)
 
-export EXA_ICON_SPACING=2
+export EZA_ICON_SPACING=2
 
 export BAT_THEME='Visual Studio Dark+'
 
