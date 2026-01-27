@@ -10,18 +10,19 @@
 
   ```
   ~/.claude/plans/
-    ├── `{timestamp}-{task-name}`/ # Each task in its own timestamped folder
-    │     ├── 1-TASK.md # This is the main task description or details provided to brainstorming skill
-    │     ├── 2-DESIGN.md # This is the resulting design file from the `superpowers:brainstorming` skill
-    │     ├── 3-PLAN.md # This is the output of `superpowers:writing-plans` skill
+    ├── `{timestamp}-{issue-number}-{task-name}`/ # Each task in its own timestamped folder
+    │     ├── 1-TASK.md
+    │     ├── 2-DESIGN.md
+    │     ├── 3-PLAN.md
     │     └── ...
-    └── another-task/
-          ├── 3-PLAN.md
+    └── `{timestamp}-{issue-number}-{another-task}/
+          ├── 1-TASK.md
           └── ...
   ```
 
 - `superpowers:brainstorming` skill should:
   - Write the provided prompt and context to `1-TASK.md`
+  - When presenting the design sections, state how many total sections there are.
   - Generate a structured plan and write to `2-DESIGN.md`.
     - Add all clarifying questions asked during brainstorming and _all_ options considered to the end of the `2-DESIGN.md` file in format:
 
@@ -37,9 +38,16 @@
          - ...
       ```
 
+  - Do not commit plan files if they reside outside the project folder.
+
 - `superpowers:writing-plans` skill should:
   - Read the `2-DESIGN.md` file from the respective plan folder
   - Write the resulting implementation details to `3-PLAN.md` in the same folder.
+
+- `superpowers:implementing-plan` skill should:
+  - Instead use my `implement-plan.md` command.
+
+- `superpowers:finishing-a-development-branch`: NEVER use this skill.
 
 # Node.js Preferences
 
