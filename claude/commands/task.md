@@ -8,15 +8,21 @@ allowed-tools: Bash(~/.claude/commands/task.sh:*), Read
 
 Run `~/.claude/commands/task.sh <task-name> "<task-title>"` where:
 
-- `task-name`: hyphenated, lowercase, 2-4 words summarizing the argument
-- `task-title`: the original argument text (for the H1 header)
+- `task-name`: hyphenated, lowercase, 2-4 words summarizing the argument. Prefixed with issue number if applicable, e.g. `PREFIX-1234-add-user-authentication`.
+- `task-title`: the original argument text (for the H1 header).
 
 The script outputs the created directory path.
 
 Once created:
 
-- Read and present the 1-TASK.md contents
-- AskUserQuestion:
-  - Brainstorm design using `superpowers:brainstorming`
-  - Add more details to 1-TASK.md now before proceeding
-  - Just implement directly
+1. Read and present 1-TASK.md contents
+2. AskUserQuestion with options:
+   - Research web
+   - Brainstorm design
+   - Add details manually
+   - Implement directly
+3. Handle choice:
+   - Research → Ask topic, fetch, return to step 2
+   - Brainstorm → Run `superpowers:brainstorming`, present 1-TASK.md + 2-DESIGN.md
+   - Add details → User edits, return to step 2
+   - Implement → Skip to step 4
