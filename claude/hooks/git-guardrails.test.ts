@@ -228,6 +228,44 @@ EOF
   })
 })
 
+describe('push prompting', () => {
+  test('prompts for git push', () => {
+    const { output, exitCode } = runHook(createInput('git push'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+    expect(output?.hookSpecificOutput?.permissionDecisionReason).toContain('Pushing')
+  })
+
+  test('prompts for git push origin main', () => {
+    const { output, exitCode } = runHook(createInput('git push origin main'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+
+  test('prompts for git push with -u flag', () => {
+    const { output, exitCode } = runHook(createInput('git push -u origin feature-branch'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+
+  test('prompts for git push --force', () => {
+    const { output, exitCode } = runHook(createInput('git push --force'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+
+  test('prompts for git push --force-with-lease', () => {
+    const { output, exitCode } = runHook(createInput('git push --force-with-lease origin main'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
+  })
+})
+
 describe('attribution stripping', () => {
   test('strips "Generated with Claude Code" line', () => {
     const command = `git commit -m "Test commit
@@ -348,10 +386,11 @@ describe('non-git commands', () => {
     expect(output).toBeNull()
   })
 
-  test('allows git push', () => {
+  test('git push is handled separately', () => {
     const { output, exitCode } = runHook(createInput('git push origin main'))
 
     expect(exitCode).toBe(0)
-    expect(output).toBeNull()
+    // git push prompts for approval (tested in 'push prompting' describe block)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
   })
 })

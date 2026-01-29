@@ -18,7 +18,11 @@
  *      - Requires explicit confirmation before bypassing repository git hooks
  *      - Returns ask decision to prompt user
  *
- *   4. Strips Claude attribution from git commit messages
+ *   4. Prompts for approval on `git push`
+ *      - Requires explicit confirmation before pushing to remote
+ *      - Returns ask decision to prompt user
+ *
+ *   5. Strips Claude attribution from git commit messages
  *      - Removes lines containing "generated" (case-insensitive)
  *      - Removes lines containing "co-authored-by" (case-insensitive)
  *      - Allows commits to proceed with cleaned messages
@@ -81,6 +85,17 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
         permissionDecision: 'ask',
         permissionDecisionReason:
           'Using --no-verify to bypass repository git hooks. Confirm you want to skip pre-commit checks?',
+      },
+    }
+  }
+
+  // Prompt for approval on git push
+  if (/git\s+push\b/.test(command)) {
+    return {
+      hookSpecificOutput: {
+        hookEventName: 'PreToolUse',
+        permissionDecision: 'ask',
+        permissionDecisionReason: 'Pushing to remote. Confirm?',
       },
     }
   }
