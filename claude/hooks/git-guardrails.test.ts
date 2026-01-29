@@ -385,12 +385,4 @@ describe('non-git commands', () => {
     expect(exitCode).toBe(0)
     expect(output).toBeNull()
   })
-
-  test('git push is handled separately', () => {
-    const { output, exitCode } = runHook(createInput('git push origin main'))
-
-    expect(exitCode).toBe(0)
-    // git push prompts for approval (tested in 'push prompting' describe block)
-    expect(output?.hookSpecificOutput?.permissionDecision).toBe('ask')
-  })
 })
