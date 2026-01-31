@@ -202,10 +202,13 @@
   //   "command": "editor.action.goToImplementation",
   //   "when": "editorHasImplementationProvider && editorTextFocus"
   // },
-  // Restart TS Server
+  // Restart TS Server and ESLint
   {
     "key": "cmd+shift+r",
-    "command": "typescript.restartTsServer"
+    "command": "extension.multiCommand.execute",
+    "args": {
+      "command": "multiCommand.restartTSAndESLint"
+    }
   },
   // Toggle Fold
   {

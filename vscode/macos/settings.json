@@ -579,6 +579,13 @@
     }
   ],
   "multiCommand.commands": {
+    "multiCommand.restartTSAndESLint": {
+      "label": "Restart TS and ESLint Servers",
+      "sequence": [
+        "typescript.restartTsServer",
+        "eslint.restart"
+      ]
+    },
     "multiCommand.makeSpace": {
       "label": "Make Space",
       "sequence": [
