@@ -37,5 +37,8 @@ alias guns="git reset HEAD --"
 
 alias gstl="git stash list --pretty=format:'%C(blue)%gd%C(reset): %<(100,trunc)%s %C(green)(%cr)%C(reset)'"
 
+# Remove 'gcm' alias, replaced by custom function
+unalias gcm
+
 # Remove 'gl' alias from zsh plugin
 unalias gl

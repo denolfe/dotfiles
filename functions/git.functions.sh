@@ -2,6 +2,26 @@
 #
 # Git helper functions
 
+gcm() {
+  local main_branch output worktree_path
+  main_branch=$(git_main_branch)
+
+  if output=$(git checkout "$main_branch" 2>&1); then
+    echo "$output"
+    return 0
+  fi
+
+  # If in worktree and main is checked out elsewhere, cd there
+  if [[ "$output" =~ "already used by worktree at" ]]; then
+    worktree_path=$(echo "$output" | grep -oE "at '.*'" | sed "s/at '//;s/'$//")
+    echo "Navingating to main at $worktree_path"
+    cd "$worktree_path" || return 1
+  else
+    echo "$output"
+    return 1
+  fi
+}
+
 # Add upstream remote and set tracking of master
 grau() {
   git remote add upstream "$1" || return 1
