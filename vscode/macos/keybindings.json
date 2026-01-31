@@ -432,6 +432,11 @@
     "command": "git.openChange",
     "when": "editorTextFocus"
   },
+  {
+    "key": "cmd+g d",
+    "command": "git.viewChanges",
+    "when": "editorTextFocus"
+  },
   // Vitest
   {
     "key": "cmd+k cmd+f",
