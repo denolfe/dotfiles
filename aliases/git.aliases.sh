@@ -42,3 +42,6 @@ unalias gcm
 
 # Remove 'gl' alias from zsh plugin
 unalias gl
+
+# git-worktree-runner
+alias gw='git-gtr'
