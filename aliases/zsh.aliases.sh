@@ -106,6 +106,12 @@ if type rg > /dev/null 2>&1; then
   alias rgp="rg --passthrough"
 fi
 
+if type zellij > /dev/null 2>&1; then
+  alias zj="zellij"
+  alias zja="zellij attach"
+  alias zjl="zellij list-sessions"
+fi
+
 if type terminal-notifier > /dev/null 2>&1; then
   # notify alias with iterm2 icon
   alias notify="terminal-notifier -title 'ZSH' -sound funk -message"

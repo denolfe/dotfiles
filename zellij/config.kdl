@@ -2,7 +2,7 @@
 // Uses native keybinds (Ctrl+p pane, Ctrl+t tab, Ctrl+n resize, Ctrl+s scroll, Ctrl+o session)
 
 // Appearance
-pane_frames false
+pane_frames true
 theme "vscode-dark"
 
 // Session persistence
@@ -34,6 +34,13 @@ themes {
 
 // Keybind additions (extend defaults, don't replace)
 keybinds {
+    // Rebind modes for ergonomics (Ctrl+o conflicts with Claude)
+    shared_except "locked" {
+        unbind "Ctrl o"
+        unbind "Ctrl t"
+        bind "Ctrl b" { SwitchToMode "Session"; }  // was Ctrl+o
+        bind "Ctrl ." { SwitchToMode "Tab"; }      // was Ctrl+t
+    }
     // Launch zellij-forgot with Ctrl+y for keybind hints
     shared_except "locked" {
         bind "Ctrl y" {
