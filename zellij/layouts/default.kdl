@@ -1,9 +1,36 @@
 layout {
     default_tab_template {
+        // Pill-style tab bar using zjstatus
         pane size=1 borderless=true {
-            plugin location="zellij:tab-bar"
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+                format_left  "{mode}{tabs}"
+                format_right "{session}"
+                format_space "#[bg=#1e1e1e]"
+
+                hide_frame_for_single_pane "false"
+
+                // Text labels - normal mode hidden
+                mode_normal        ""
+                mode_locked        "#[fg=#f44747,bg=#1e1e1e]#[fg=#1e1e1e,bg=#f44747,bold] LOCKED #[fg=#f44747,bg=#1e1e1e] "
+                mode_pane          "#[fg=#c586c0,bg=#1e1e1e]#[fg=#1e1e1e,bg=#c586c0,bold] PANE #[fg=#c586c0,bg=#1e1e1e] "
+                mode_tab           "#[fg=#4ec9b0,bg=#1e1e1e]#[fg=#1e1e1e,bg=#4ec9b0,bold] TAB #[fg=#4ec9b0,bg=#1e1e1e] "
+                mode_resize        "#[fg=#dcdcaa,bg=#1e1e1e]#[fg=#1e1e1e,bg=#dcdcaa,bold] RESIZE #[fg=#dcdcaa,bg=#1e1e1e] "
+                mode_scroll        "#[fg=#ce9178,bg=#1e1e1e]#[fg=#1e1e1e,bg=#ce9178,bold] SCROLL #[fg=#ce9178,bg=#1e1e1e] "
+                mode_session       "#[fg=#6a9955,bg=#1e1e1e]#[fg=#1e1e1e,bg=#6a9955,bold] SESSION #[fg=#6a9955,bg=#1e1e1e] "
+                mode_default_to_mode "normal"
+
+                // Pill tabs
+                tab_normal              "#[fg=#4C4C59,bg=#1e1e1e]#[fg=#d4d4d4,bg=#4C4C59] {name} #[fg=#4C4C59,bg=#1e1e1e] "
+                tab_active              "#[fg=#569cd6,bg=#1e1e1e]#[fg=#1e1e1e,bg=#569cd6,bold] {name} #[fg=#569cd6,bg=#1e1e1e] "
+                tab_fullscreen_indicator "□"
+                tab_sync_indicator       ""
+                tab_floating_indicator   "󰉈"
+
+                session "#[fg=#6a9955,bg=#1e1e1e]#[fg=#1e1e1e,bg=#6a9955,bold] {name} #[fg=#6a9955,bg=#1e1e1e]"
+            }
         }
         children
+        // Default status bar at bottom
         pane size=2 borderless=true {
             plugin location="zellij:status-bar"
         }

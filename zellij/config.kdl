@@ -4,6 +4,11 @@
 // Appearance
 pane_frames true
 theme "vscode-dark"
+ui {
+    pane_frames {
+        rounded_corners true
+    }
+}
 
 // Session persistence
 session_serialization true
