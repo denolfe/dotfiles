@@ -1,0 +1,56 @@
+// Zellij Configuration
+// Uses native keybinds (Ctrl+p pane, Ctrl+t tab, Ctrl+n resize, Ctrl+s scroll, Ctrl+o session)
+
+// Appearance
+pane_frames false
+theme "vscode-dark"
+
+// Session persistence
+session_serialization true
+serialize_pane_viewport true
+
+// Behavior
+default_mode "normal"
+mouse_mode true
+copy_on_select true
+scrollback_editor "nvim"
+
+// Theme: VS Code Dark+
+themes {
+    vscode-dark {
+        fg "#d4d4d4"
+        bg "#1e1e1e"
+        black "#000000"
+        red "#f44747"
+        green "#6a9955"
+        yellow "#dcdcaa"
+        blue "#569cd6"
+        magenta "#c586c0"
+        cyan "#4ec9b0"
+        white "#e5e5e5"
+        orange "#ce9178"
+    }
+}
+
+// Keybind additions (extend defaults, don't replace)
+keybinds {
+    // Launch zellij-forgot with Ctrl+y for keybind hints
+    shared_except "locked" {
+        bind "Ctrl y" {
+            LaunchOrFocusPlugin "https://github.com/karimould/zellij-forgot/releases/latest/download/zellij_forgot.wasm" {
+                floating true
+                "LOAD_ZELLIJ_BINDINGS" "true"
+            }
+        }
+    }
+    // Launch room with Ctrl+Space for tab switching
+    shared_except "locked" {
+        bind "Ctrl Space" {
+            LaunchOrFocusPlugin "https://github.com/rvcas/room/releases/latest/download/room.wasm" {
+                floating true
+                ignore_case true
+                quick_jump true
+            }
+        }
+    }
+}
