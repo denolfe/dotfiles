@@ -59,8 +59,10 @@ keybinds {
     shared_except "locked" {
         unbind "Ctrl o"
         unbind "Ctrl t"
+        unbind "Alt f"  // Allow Opt+Right (forward-word) to pass through
         bind "Ctrl b" { SwitchToMode "Session"; }  // was Ctrl+o
         bind "Ctrl ." { SwitchToMode "Tab"; }      // was Ctrl+t
+        bind "Alt ;" { ToggleFloatingPanes; }
     }
     // Launch zellij-forgot with Ctrl+y for keybind hints
     shared_except "locked" {
