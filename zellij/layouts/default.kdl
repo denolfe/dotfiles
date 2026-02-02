@@ -11,22 +11,22 @@ layout {
 
                 // Text labels - normal mode hidden
                 mode_normal        ""
-                mode_locked        "#[fg=#f44747,bg=#1e1e1e]#[fg=#1e1e1e,bg=#f44747,bold] LOCKED #[fg=#f44747,bg=#1e1e1e] "
-                mode_pane          "#[fg=#c586c0,bg=#1e1e1e]#[fg=#1e1e1e,bg=#c586c0,bold] PANE #[fg=#c586c0,bg=#1e1e1e] "
-                mode_tab           "#[fg=#4ec9b0,bg=#1e1e1e]#[fg=#1e1e1e,bg=#4ec9b0,bold] TAB #[fg=#4ec9b0,bg=#1e1e1e] "
-                mode_resize        "#[fg=#dcdcaa,bg=#1e1e1e]#[fg=#1e1e1e,bg=#dcdcaa,bold] RESIZE #[fg=#dcdcaa,bg=#1e1e1e] "
-                mode_scroll        "#[fg=#ce9178,bg=#1e1e1e]#[fg=#1e1e1e,bg=#ce9178,bold] SCROLL #[fg=#ce9178,bg=#1e1e1e] "
-                mode_session       "#[fg=#6a9955,bg=#1e1e1e]#[fg=#1e1e1e,bg=#6a9955,bold] SESSION #[fg=#6a9955,bg=#1e1e1e] "
+                mode_locked        "#[fg=#f14c4c,bg=#1e1e1e]#[fg=#1e1e1e,bg=#f14c4c,bold] LOCKED #[fg=#f14c4c,bg=#1e1e1e] "
+                mode_pane          "#[fg=#d670d6,bg=#1e1e1e]#[fg=#1e1e1e,bg=#d670d6,bold] PANE #[fg=#d670d6,bg=#1e1e1e] "
+                mode_tab           "#[fg=#29b8db,bg=#1e1e1e]#[fg=#1e1e1e,bg=#29b8db,bold] TAB #[fg=#29b8db,bg=#1e1e1e] "
+                mode_resize        "#[fg=#f5f543,bg=#1e1e1e]#[fg=#1e1e1e,bg=#f5f543,bold] RESIZE #[fg=#f5f543,bg=#1e1e1e] "
+                mode_scroll        "#[fg=#11a8cd,bg=#1e1e1e]#[fg=#1e1e1e,bg=#11a8cd,bold] SCROLL #[fg=#11a8cd,bg=#1e1e1e] "
+                mode_session       "#[fg=#23d18b,bg=#1e1e1e]#[fg=#1e1e1e,bg=#23d18b,bold] SESSION #[fg=#23d18b,bg=#1e1e1e] "
                 mode_default_to_mode "normal"
 
-                // Pill tabs
-                tab_normal              "#[fg=#4C4C59,bg=#1e1e1e]#[fg=#d4d4d4,bg=#4C4C59] {name} #[fg=#4C4C59,bg=#1e1e1e] "
-                tab_active              "#[fg=#569cd6,bg=#1e1e1e]#[fg=#1e1e1e,bg=#569cd6,bold] {name} #[fg=#569cd6,bg=#1e1e1e] "
+                // Two-tone pill tabs: ( index | name )
+                tab_normal              "#[fg=#3a3d41,bg=#1e1e1e]#[fg=#cccccc,bg=#3a3d41,bold] {index} #[fg=#3a3d41,bg=#2d2d2d]#[fg=#999999,bg=#2d2d2d] {name} #[fg=#2d2d2d,bg=#1e1e1e] "
+                tab_active              "#[fg=#3b8eea,bg=#1e1e1e]#[fg=#1e1e1e,bg=#3b8eea,bold] {index} #[fg=#3b8eea,bg=#3a3d41]#[fg=#e5e5e5,bg=#3a3d41,bold] {name} #[fg=#3a3d41,bg=#1e1e1e] "
                 tab_fullscreen_indicator "□"
                 tab_sync_indicator       ""
                 tab_floating_indicator   "󰉈"
 
-                session "#[fg=#6a9955,bg=#1e1e1e]#[fg=#1e1e1e,bg=#6a9955,bold] {name} #[fg=#6a9955,bg=#1e1e1e]"
+                session "#[fg=#23d18b,bg=#1e1e1e]#[fg=#1e1e1e,bg=#23d18b,bold] {name} #[fg=#23d18b,bg=#1e1e1e]"
             }
         }
         children

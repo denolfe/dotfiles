@@ -20,20 +20,36 @@ mouse_mode true
 copy_on_select true
 scrollback_editor "nvim"
 
-// Theme: VS Code Dark+
+// Theme: VS Code Dark+ (bright colors from iTerm2-Color-Schemes)
 themes {
     vscode-dark {
-        fg "#d4d4d4"
+        fg "#cccccc"
         bg "#1e1e1e"
-        black "#000000"
-        red "#f44747"
-        green "#6a9955"
-        yellow "#dcdcaa"
-        blue "#569cd6"
-        magenta "#c586c0"
-        cyan "#4ec9b0"
+        black "#666666"
+        red "#f14c4c"
+        green "#23d18b"
+        yellow "#f5f543"
+        blue "#3b8eea"
+        magenta "#d670d6"
+        cyan "#29b8db"
         white "#e5e5e5"
-        orange "#ce9178"
+        orange "#f14c4c"
+        frame_unselected {
+            base 102 102 102
+            background 30 30 30
+            emphasis_0 102 102 102
+            emphasis_1 102 102 102
+            emphasis_2 102 102 102
+            emphasis_3 102 102 102
+        }
+        frame_selected {
+            base 35 209 139
+            background 30 30 30
+            emphasis_0 35 209 139
+            emphasis_1 35 209 139
+            emphasis_2 35 209 139
+            emphasis_3 35 209 139
+        }
     }
 }
 
