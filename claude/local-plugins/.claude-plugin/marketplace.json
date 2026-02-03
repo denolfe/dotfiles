@@ -1,0 +1,28 @@
+{
+  "name": "local",
+  "description": "Local plugin development marketplace",
+  "owner": {
+    "name": "Local",
+    "email": "local@localhost"
+  },
+  "plugins": [
+    {
+      "name": "sounds",
+      "description": "Audio notifications for Claude Code events",
+      "version": "0.0.1",
+      "source": "./sounds"
+    },
+    {
+      "name": "zellij-activity",
+      "description": "Displays Claude Code activity status in Zellij tab name",
+      "version": "0.0.1",
+      "source": "./zellij-activity"
+    },
+    {
+      "name": "git-guardrails",
+      "description": "Enforces git workflow preferences by intercepting git commands",
+      "version": "0.0.1",
+      "source": "./git-guardrails"
+    }
+  ]
+}

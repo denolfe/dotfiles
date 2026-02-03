@@ -1,0 +1,16 @@
+{
+  "description": "Git workflow guardrails - blocks dangerous commands, prompts for risky ones",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/git-guardrails.ts"
+          }
+        ]
+      }
+    ]
+  }
+}

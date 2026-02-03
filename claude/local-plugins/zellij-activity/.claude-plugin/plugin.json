@@ -1,0 +1,5 @@
+{
+  "name": "zellij-activity",
+  "description": "Displays Claude Code activity status in Zellij tab name",
+  "version": "0.0.1"
+}

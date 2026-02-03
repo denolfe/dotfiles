@@ -1,0 +1,5 @@
+{
+  "name": "git-guardrails",
+  "description": "Enforces git workflow preferences by intercepting git commands",
+  "version": "0.0.1"
+}

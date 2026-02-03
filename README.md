@@ -46,13 +46,13 @@ Configuration: [`claude/`](./claude/).
 | `/implement-plan` | Execute a `PLAN.md` with subagent-driven dev, uses `superpowers:subagent-driven-development`     |
 | `/pr-description` | Generate PR description                                                                          |
 
-### Hooks (TypeScript)
+### Local Plugins ([local-plugins/](./claude/local-plugins/))
 
-| Hook                                                                    | Purpose                                                                       |
-| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [git-guardrails.ts](./claude/hooks/git-guardrails.ts)                   | Blocks `git add -A/.`, prompts for `--amend` and `--no-verify`                |
-| [statusline-wrapper.ts](./claude/hooks/statusline-wrapper.ts)           | Custom statusline mirroring Powerlevel10k (dir, branch, PR#, model, context%) |
-| [pure-md-prompt-rewriter.ts](./claude/hooks/pure-md-prompt-rewriter.ts) | Rewrites prompts for Pure.md integration                                      |
+| Plugin                                                     | Purpose                                                        |
+| ---------------------------------------------------------- | -------------------------------------------------------------- |
+| [git-guardrails](./claude/local-plugins/git-guardrails/)   | Blocks `git add -A/.`, prompts for `--amend` and `--no-verify` |
+| [sounds](./claude/local-plugins/sounds/)                   | Audio notifications (PermissionRequest, Stop)                  |
+| [zellij-activity](./claude/local-plugins/zellij-activity/) | Zellij tab status updates (6 events)                           |
 
 ### Skills
 
