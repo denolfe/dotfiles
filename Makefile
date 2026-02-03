@@ -1,4 +1,4 @@
-.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude
+.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins
 
 # Run dotbot install script
 install:
@@ -50,3 +50,11 @@ macos:
 # Set Claude Code defaults
 claude:
 	./claude/set-defaults.sh
+
+# Update and install Claude Code local plugins
+claude-plugins:
+	./claude/update-local-plugins.sh
+
+gitleaks-history:
+	gitleaks detect --no-git --log-level fatal -f json --no-color --no-banner --redact --source ~/.zsh_history -r ~/.report_gitleaks.json
+	code -a ~/.report_gitleaks.json
