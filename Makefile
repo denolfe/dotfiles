@@ -47,11 +47,11 @@ brew-restore:
 macos:
 	./macos/set-defaults.sh
 
-# Set Claude Code defaults
+# Installs and enables Claude Code settings and plugins
 claude:
 	./claude/set-defaults.sh
 
-# Update and install Claude Code local plugins
+# Sync Claude Code local plugins
 claude-plugins:
 	./claude/update-local-plugins.sh
 
