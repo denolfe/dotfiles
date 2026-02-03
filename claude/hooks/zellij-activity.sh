@@ -4,11 +4,12 @@
 # Required ~/.claude/settings.json hooks configuration:
 #
 #   "hooks": {
-#     "SessionStart": [{ "matcher": "", "hooks": ["/path/to/zellij-activity.sh"] }],
-#     "PreToolUse": [{ "matcher": "", "hooks": ["/path/to/zellij-activity.sh"] }],
-#     "PermissionRequest": [{ "matcher": "", "hooks": ["/path/to/zellij-activity.sh"] }],
-#     "Stop": [{ "matcher": "", "hooks": ["/path/to/zellij-activity.sh"] }],
-#     "SessionEnd": [{ "matcher": "", "hooks": ["/path/to/zellij-activity.sh"] }]
+#     "SessionStart": { "hooks": [{ "type": "command", "command": ["~/.claude/hooks/zellij-activity.sh"] }],
+#     "PreToolUse": { "hooks": [{ "type": "command", "command": ["~/.claude/hooks/zellij-activity.sh"] }],
+#     "PermissionRequest": { "hooks": [{ "type": "command", "command": ["~/.claude/hooks/zellij-activity.sh"] }],
+#     "Stop": { "hooks": [{ "type": "command", "command": ["~/.claude/hooks/zellij-activity.sh"] }],
+#     "SessionEnd": { "hooks": [{ "type": "command", "command": ["~/.claude/hooks/zellij-activity.sh"] }],
+#     "UserPromptSubmit": { "hooks": [{ "type": "command", "command": ["~/.claude/hooks/zellij-activity.sh"] }]
 #   }
 
 [[ -z "$ZELLIJ" ]] && exit 0
@@ -69,6 +70,10 @@ case "$hook_type" in
     [[ "$tool_name" == "AskUserQuestion" ]] && exit 0
     base_name=$(get_base_name)
     rename_tab "🔴 $base_name"
+    ;;
+  UserPromptSubmit)
+    base_name=$(get_base_name)
+    rename_tab "$base_name"
     ;;
   Stop)
     base_name=$(get_base_name)
