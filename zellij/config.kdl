@@ -20,6 +20,11 @@ mouse_mode true
 copy_on_select true
 scrollback_editor "nvim"
 
+// Plugins (loaded at startup)
+load_plugins {
+    "https://github.com/Cynary/zellij-tab-name/releases/download/v0.4.1/zellij-tab-name.wasm"
+}
+
 // Theme: VS Code Dark+ (bright colors from iTerm2-Color-Schemes)
 themes {
     vscode-dark {

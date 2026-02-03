@@ -48,7 +48,8 @@ get_base_name() {
 
 rename_tab() {
   local name="$1"
-  zellij action rename-tab "$name" 2>/dev/null
+  local payload="{\"pane_id\": \"$ZELLIJ_PANE_ID\", \"name\": \"$name\", \"use_stable_ids\": true}"
+  zellij pipe --name change-tab-name -- "$payload" 2>/dev/null
 }
 
 case "$hook_type" in
