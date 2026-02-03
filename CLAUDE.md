@@ -37,6 +37,7 @@ make brew-restore   # Install Homebrew and restore from Brewfile
 ```bash
 make macos          # Apply macOS defaults from macos/set-defaults.sh
 make claude         # Apply Claude Code defaults from claude/set-defaults.sh
+make claude-plugins # Sync Claude Code local plugins
 ```
 
 ## Architecture
@@ -85,10 +86,26 @@ Dotbot handles:
 2. Homebrew setup via `macos/setup-homebrew.sh`
 3. vim-plug download
 4. Symlink creation (supports glob patterns, platform conditionals)
-5. asdf plugin installation
+5. mise activation (version manager for node, pnpm, bun, go)
 6. Git config via `git/set-gitconfig.sh`
 
 **Symlink pattern:** Uses `path:` for single files, `glob: true` for directories. `force: true` overwrites existing.
+
+**Before adding symlinks:** Check `install.conf.yaml` for existing glob patterns that may already cover the path (e.g., `claude/*` covers all subdirectories).
+
+### Zellij Configuration (`zellij/`)
+Terminal multiplexer config using KDL format.
+
+**Key files:**
+- `config.kdl`: Main config (VS Code Dark theme, session persistence, keybinds)
+- `layouts/default.kdl`: Custom layout with zjstatus plugin for pill-style tab bar
+
+**Keybind overrides:**
+- `Ctrl+b` → Session mode (was Ctrl+o, conflicts with Claude)
+- `Ctrl+.` → Tab mode (was Ctrl+t)
+- `Ctrl+y` → zellij-forgot plugin (keybind hints)
+- `Ctrl+Space` → room plugin (tab switcher)
+- `Alt+;` → Toggle floating panes
 
 ### macOS Defaults (`macos/set-defaults.sh`)
 Bash script setting macOS preferences via `defaults write`. Categories:
