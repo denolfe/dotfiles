@@ -68,6 +68,7 @@ fi
 
 source $DOTFILES/zsh/p10k.zsh
 source $DOTFILES/zsh/p10k.customizations.zsh
+source $DOTFILES/zellij/zellij.zsh
 
 # History Options
 setopt append_history
