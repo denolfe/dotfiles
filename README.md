@@ -44,6 +44,7 @@ Configuration: [`claude/`](./claude/).
 | ----------------- | ------------------------------------------------------------------------------------------------ |
 | `/task`           | Create task file for feature development, uses `superpowers:brainstorming` to create `DESIGN.md` |
 | `/implement-plan` | Execute a `PLAN.md` with subagent-driven dev, uses `superpowers:subagent-driven-development`     |
+| `/create-pr`      | Create PR from template, architecture-focused with mermaid diagrams                              |
 | `/pr-description` | Generate PR description                                                                          |
 
 ### Local Plugins ([local-plugins/](./claude/local-plugins/))
