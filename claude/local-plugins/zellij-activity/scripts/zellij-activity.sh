@@ -72,9 +72,9 @@ case "$hook_type" in
     base_name=$(get_base_name)
     rename_tab "🔴 $base_name"
     ;;
-  UserPromptSubmit)
+  UserPromptSubmit|PostToolUse)
     base_name=$(get_base_name)
-    rename_tab "$base_name"
+    rename_tab "🔄 $base_name"
     ;;
   Stop)
     base_name=$(get_base_name)
