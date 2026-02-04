@@ -102,68 +102,53 @@ prompt_alias_reveal() {
 # typeset -g POWERLEVEL9K_PR_NUMBER_FOREGROUND=0
 # typeset -g POWERLEVEL9K_PR_NUMBER_BACKGROUND=208
 
-# Shows the PR number as hyperlink
+# Shows the PR number with different colors based on state.
 # Color: orange (208) for open PRs, purple (135) for merged PRs
 prompt_pr_number() {
   if ! git rev-parse --is-inside-work-tree &>/dev/null; then return; fi
 
+  # Format: "owner#repo#123" - set by gh pr checkout
   local pr_info=$(git config --get branch."$(git branch --show-current)".github-pr-owner-number)
+  [[ -z "$pr_info" ]] && return
 
-  if [ -z "$pr_info" ]; then return; fi
+  # Split on # delimiter: (s:#:) is zsh string splitting syntax
+  local parts=(${(s:#:)pr_info})
+  local pr_number=$parts[3]
+  local repo="$parts[1]/$parts[2]"
 
-  local pr_number=$(echo "$pr_info" | awk -F "#" '{print $3}')
-  local repo=$(echo "$pr_info" | awk -F "#" '{print $1 "/" $2}')
+  [[ -z "$pr_number" ]] && return
 
-  if [ -z "$pr_number" ]; then return; fi
-
-  # TTL cache configuration
-  local ttl=600  # 10 minutes - adjust if needed for your workflow
-  local current_time=$(date +%s)
-  local bg_color=208  # Default to orange (open PR color)
-
-  # Check cache: format is "STATE:TIMESTAMP"
+  # Cache format: "MERGED" (permanent) or "OPEN:TIMESTAMP" (10-min TTL)
   local cache=$(git config --get branch."$(git branch --show-current)".github-pr-state-cache)
 
-  if [[ -n "$cache" ]]; then
-    local cached_state=$(echo "$cache" | cut -d: -f1)
-    local cached_timestamp=$(echo "$cache" | cut -d: -f2)
+  # MERGED never expires - skip API call forever
+  if [[ "$cache" == MERGED ]]; then
+    _p9k_prompt_segment "$0$state" 135 016 '' 0 '' "#$pr_number"  # purple
+    return
+  fi
 
-    # MERGED PRs never expire - use cached value forever
-    if [[ "$cached_state" == "MERGED" ]]; then
-      bg_color=135  # Purple
-      _p9k_prompt_segment "$0$state" "$bg_color" 016 '' 0 '' "#$pr_number"
+  # OPEN expires after 10 minutes
+  if [[ "$cache" == OPEN:* ]]; then
+    local cached_timestamp=${cache#OPEN:}  # strip "OPEN:" prefix
+    local current_time=$(date +%s)
+    if (( current_time - cached_timestamp < 600 )); then
+      _p9k_prompt_segment "$0$state" 208 016 '' 0 '' "#$pr_number"  # orange
       return
-    fi
-
-    # Check if OPEN cache is still valid (within TTL)
-    if [[ "$cached_state" == "OPEN" ]]; then
-      local age=$((current_time - cached_timestamp))
-      if (( age < ttl )); then
-        bg_color=208  # Orange (from cache)
-        _p9k_prompt_segment "$0$state" "$bg_color" 016 '' 0 '' "#$pr_number"
-        return
-      fi
-      # Cache expired, fall through to re-check
     fi
   fi
 
-  # Cache miss or expired - query API and update cache
+  # Cache miss or expired - query GitHub API
+  local bg_color=208  # orange default
   if (( $+commands[gh] )); then
     local pr_state=$(gh pr view "$pr_number" -R "$repo" --json state -q .state 2>&1)
     if [[ "$pr_state" == "MERGED" ]]; then
-      bg_color=135  # Purple
-      git config branch."$(git branch --show-current)".github-pr-state-cache "MERGED:$current_time"
+      bg_color=135  # purple
+      git config branch."$(git branch --show-current)".github-pr-state-cache "MERGED"
     else
-      # OPEN, CLOSED, DRAFT, or error - all treated as OPEN with TTL
-      bg_color=208  # Orange
-      git config branch."$(git branch --show-current)".github-pr-state-cache "OPEN:$current_time"
+      # OPEN, CLOSED, DRAFT, or error - all use TTL
+      git config branch."$(git branch --show-current)".github-pr-state-cache "OPEN:$(date +%s)"
     fi
   fi
-
-  # Disable this for now, it wipes out the right prompt because of hidden char length
-  # source: https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
-  # local pr_link=$(echo "\e]8;;https://github.com/payloadcms/payload/pull/$pr_number\e\\#$pr_number\e]8;;\e\\")
-  # _p9k_prompt_segment "$0$state" "$bg_color" 016 '' 0 '' "$pr_link"
 
   _p9k_prompt_segment "$0$state" "$bg_color" 016 '' 0 '' "#$pr_number"
 }
