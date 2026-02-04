@@ -299,6 +299,18 @@ __construct_repo_url() {
   fi
 }
 
+# Git diff with fzf commit picker
+gdz() {
+  local commit
+  commit=$(git log --oneline --format='%h %s (%cr)' | \
+    fzf --ansi --height 50% --prompt="Diff commit > " \
+        --preview 'git show --stat --color=always {1}' \
+        --preview-window right,60% | \
+    awk '{print $1}')
+
+  [[ -n "$commit" ]] && git diff "$commit^" "$commit"
+}
+
 # Use llm cli to generate a commit message
 # Work in progress
 gcmsgpt() {
