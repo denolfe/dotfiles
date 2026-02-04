@@ -31,10 +31,6 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias ~='cd ~/'
 
-# Prompt if overwriting
-alias cp='cp -i'
-alias mv='mv -i'
-
 hs(){ history | grep -i "$1" ;}
 
 # Zsh global aliases
