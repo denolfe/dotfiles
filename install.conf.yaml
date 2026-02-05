@@ -43,6 +43,11 @@
       path: ghostty
       force: true
 
+    ~/Library/Preferences/glow:
+      if: '[ `uname` = Darwin ]'
+      path: glow
+      force: true
+
     ~/bin:
       glob: true
       path: scripts/*
