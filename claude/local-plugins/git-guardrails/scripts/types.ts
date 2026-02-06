@@ -1,23 +1,91 @@
 /**
  * Claude Code Hook Type Definitions
  *
- * Modified version of https://gist.github.com/FrancisBourre/50dca37124ecc43eaf08328cdcccdb34
+ * TypeScript types for building Claude Code hooks. Hooks are user-defined shell
+ * commands or LLM prompts that execute at specific points in Claude Code's lifecycle.
+ *
+ * ## Hook Lifecycle (execution order)
+ *
+ * ```
+ * SessionStart ──► UserPromptSubmit ──► [Agentic Loop] ──► Stop ──► SessionEnd
+ *                                              │
+ *                                              ▼
+ *                        ┌─────────────────────────────────────────┐
+ *                        │  PreToolUse ──► PermissionRequest       │
+ *                        │       │                                 │
+ *                        │       ▼                                 │
+ *                        │  [Tool Executes]                        │
+ *                        │       │                                 │
+ *                        │       ├──► PostToolUse (success)        │
+ *                        │       └──► PostToolUseFailure (error)   │
+ *                        │                                         │
+ *                        │  SubagentStart ──► SubagentStop         │
+ *                        │  Notification, PreCompact               │
+ *                        └─────────────────────────────────────────┘
+ * ```
+ *
+ * ## Hook Events Summary
+ *
+ * | Event              | Fires When                          | Can Block? |
+ * |--------------------|-------------------------------------|------------|
+ * | SessionStart       | Session begins/resumes              | No         |
+ * | UserPromptSubmit   | User submits prompt                 | Yes        |
+ * | PreToolUse         | Before tool executes                | Yes        |
+ * | PermissionRequest  | Permission dialog appears           | Yes        |
+ * | PostToolUse        | After tool succeeds                 | No*        |
+ * | PostToolUseFailure | After tool fails                    | No         |
+ * | SubagentStart      | Subagent spawned                    | No         |
+ * | SubagentStop       | Subagent finishes                   | Yes        |
+ * | Stop               | Claude finishes responding          | Yes        |
+ * | Notification       | System notification sent            | No         |
+ * | PreCompact         | Before context compaction           | No         |
+ * | SessionEnd         | Session terminates                  | No         |
+ * | Setup              | Repository init/maintenance         | No         |
+ *
+ * *PostToolUse can provide feedback to Claude but cannot undo the tool execution.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * import type { BashToolInput, PreToolUseHandler } from './types'
+ * import { runHook } from './utils'
+ *
+ * const handler: PreToolUseHandler<BashToolInput> = data => {
+ *   // Return void to allow, or { hookSpecificOutput: { permissionDecision, ... } }
+ * }
+ *
+ * runHook(handler) // Handles stdin parsing and stdout serialization
+ * ```
+ *
+ * @example See `local-plugins/git-guardrails/scripts/git-guardrails.ts`
+ *
+ * ## Exit Codes
+ *
+ * - Exit 0: Success. Claude Code parses stdout for JSON output.
+ * - Exit 2: Blocking error. stderr fed to Claude, action blocked (if blockable).
+ * - Other: Non-blocking error. stderr shown in verbose mode, execution continues.
  *
  * @see https://code.claude.com/docs/en/hooks - Hook reference documentation
  * @see https://code.claude.com/docs/en/hooks-guide - Getting started guide
+ * @see https://www.schemastore.org/claude-code-settings.json - Settings schema
+ *
+ * Based on https://gist.github.com/FrancisBourre/50dca37124ecc43eaf08328cdcccdb34
  */
 
 /**
  * All available hook event types in Claude Code
- *
- * @see https://code.claude.com/docs/en/hooks
  */
 export type HookEventName =
   | 'PreToolUse'
   | 'PostToolUse'
+  | 'PostToolUseFailure'
+  | 'PermissionRequest'
   | 'UserPromptSubmit'
   | 'SessionStart'
+  | 'SessionEnd'
+  | 'Setup'
   | 'Stop'
+  | 'SubagentStart'
   | 'SubagentStop'
   | 'Notification'
   | 'PreCompact'
@@ -33,6 +101,7 @@ export interface BaseHookOutput {
   continue?: boolean
   suppressOutput?: boolean
   stopReason?: string
+  systemMessage?: string
 }
 
 /**
@@ -56,10 +125,26 @@ export interface BlockableHookOutput extends BaseHookOutput {
  * @property cwd - Current working directory
  * @property hook_event_name - The specific hook event being triggered
  */
+/**
+ * Permission modes available in Claude Code
+ */
+export type PermissionMode = 'default' | 'plan' | 'acceptEdits' | 'dontAsk' | 'bypassPermissions'
+
+/**
+ * Generic hook input with event name constraint
+ *
+ * @template TEventName - Specific hook event name for type safety
+ * @property session_id - Unique session identifier
+ * @property transcript_path - Path to conversation transcript
+ * @property cwd - Current working directory
+ * @property permission_mode - Current permission mode
+ * @property hook_event_name - The specific hook event being triggered
+ */
 export interface HookInput<TEventName extends HookEventName = HookEventName> {
   session_id: string
   transcript_path: string
   cwd: string
+  permission_mode: PermissionMode
   hook_event_name: TEventName
 }
 
@@ -73,10 +158,12 @@ export interface HookInput<TEventName extends HookEventName = HookEventName> {
  * @property tool_input - Parameters being passed to the tool
  * @see https://code.claude.com/docs/en/hooks#pretooluse
  */
-export interface PreToolUseInput<TToolInput = Record<string, unknown>>
-  extends HookInput<'PreToolUse'> {
+export interface PreToolUseInput<
+  TToolInput = Record<string, unknown>,
+> extends HookInput<'PreToolUse'> {
   tool_name: string
   tool_input: TToolInput
+  tool_use_id: string
 }
 
 /**
@@ -93,6 +180,7 @@ export interface PreToolUseOutput extends BaseHookOutput {
     permissionDecision: 'allow' | 'deny' | 'ask'
     permissionDecisionReason?: string
     updatedInput?: Record<string, unknown>
+    additionalContext?: string
   }
 }
 
@@ -110,14 +198,116 @@ export interface PostToolUseInput extends HookInput<'PostToolUse'> {
   tool_name: string
   tool_input: Record<string, unknown>
   tool_response: Record<string, unknown>
+  tool_use_id: string
 }
 
 /**
  * Output for PostToolUse hook
  *
+ * @property hookSpecificOutput.additionalContext - Additional context for Claude
+ * @property hookSpecificOutput.updatedMCPToolOutput - For MCP tools, replaces tool output
  * @see https://code.claude.com/docs/en/hooks#posttooluse
  */
-export interface PostToolUseOutput extends BlockableHookOutput {}
+export interface PostToolUseOutput extends BlockableHookOutput {
+  hookSpecificOutput?: {
+    hookEventName: 'PostToolUse'
+    additionalContext?: string
+    updatedMCPToolOutput?: unknown
+  }
+}
+
+/**
+ * Input for PostToolUseFailure hook - runs after a tool fails
+ *
+ * Allows handling or logging tool failures.
+ *
+ * @property tool_name - Name of the tool that failed
+ * @property tool_input - Parameters that were passed to the tool
+ * @property tool_use_id - Unique identifier for the tool call
+ * @property error - Error message describing what went wrong
+ * @property is_interrupt - Whether the failure was caused by user interruption
+ * @see https://code.claude.com/docs/en/hooks#posttoolusefailure
+ */
+export interface PostToolUseFailureInput extends HookInput<'PostToolUseFailure'> {
+  tool_name: string
+  tool_input: Record<string, unknown>
+  tool_use_id: string
+  error: string
+  is_interrupt?: boolean
+}
+
+/**
+ * Output for PostToolUseFailure hook
+ *
+ * @property hookSpecificOutput.additionalContext - Additional context about the failure for Claude
+ * @see https://code.claude.com/docs/en/hooks#posttoolusefailure
+ */
+export interface PostToolUseFailureOutput extends BaseHookOutput {
+  hookSpecificOutput?: {
+    hookEventName: 'PostToolUseFailure'
+    additionalContext?: string
+  }
+}
+
+/**
+ * Permission suggestion shown in the permission dialog
+ */
+export interface PermissionSuggestion {
+  type: string
+  tool?: string
+  [key: string]: unknown
+}
+
+/**
+ * Input for PermissionRequest hook - triggers when permission dialogs appear
+ *
+ * Allows auto-approving or denying permission requests.
+ *
+ * @property tool_name - Name of the tool requesting permission
+ * @property tool_input - Parameters for the tool requesting permission
+ * @property permission_suggestions - "Always allow" options user would see in dialog
+ * @see https://code.claude.com/docs/en/hooks#permissionrequest
+ */
+export interface PermissionRequestInput extends HookInput<'PermissionRequest'> {
+  tool_name: string
+  tool_input: Record<string, unknown>
+  permission_suggestions?: PermissionSuggestion[]
+}
+
+/**
+ * Decision for allowing a permission request
+ */
+export interface PermissionRequestAllowDecision {
+  behavior: 'allow'
+  /** Modified tool input parameters */
+  updatedInput?: Record<string, unknown>
+  /** Permission rule updates (equivalent to "always allow" options) */
+  updatedPermissions?: PermissionSuggestion[]
+}
+
+/**
+ * Decision for denying a permission request
+ */
+export interface PermissionRequestDenyDecision {
+  behavior: 'deny'
+  /** Message telling Claude why permission was denied */
+  message?: string
+  /** If true, stops Claude */
+  interrupt?: boolean
+}
+
+/**
+ * Output for PermissionRequest hook
+ *
+ * @property hookSpecificOutput.decision - Allow or deny decision with associated options
+ * @see https://code.claude.com/docs/en/hooks#permissionrequest
+ */
+export interface PermissionRequestOutput extends BaseHookOutput {
+  hookSpecificOutput?: {
+    hookEventName: 'PermissionRequest'
+    decision: PermissionRequestAllowDecision | PermissionRequestDenyDecision
+  }
+}
 
 /**
  * Input for UserPromptSubmit hook - runs before processing user input
@@ -149,11 +339,15 @@ export interface UserPromptSubmitOutput extends BlockableHookOutput {
  *
  * Inject context at session start, initialize state, or perform setup tasks.
  *
- * @property source - How the session started: 'startup', 'resume', or 'clear'
+ * @property source - How the session started
+ * @property model - The model identifier being used
+ * @property agent_type - Agent name if started with --agent flag
  * @see https://code.claude.com/docs/en/hooks#sessionstart
  */
 export interface SessionStartInput extends HookInput<'SessionStart'> {
-  source: 'startup' | 'resume' | 'clear'
+  source: 'startup' | 'resume' | 'clear' | 'compact'
+  model: string
+  agent_type?: string
 }
 
 /**
@@ -168,6 +362,53 @@ export interface SessionStartOutput extends BaseHookOutput {
     additionalContext: string
   }
 }
+
+/**
+ * Reasons why a session ended
+ */
+export type SessionEndReason =
+  | 'clear'
+  | 'logout'
+  | 'prompt_input_exit'
+  | 'bypass_permissions_disabled'
+  | 'other'
+
+/**
+ * Input for SessionEnd hook - runs when session concludes
+ *
+ * Perform cleanup or logging when a session ends.
+ *
+ * @property reason - Why the session ended
+ * @see https://code.claude.com/docs/en/hooks#sessionend
+ */
+export interface SessionEndInput extends HookInput<'SessionEnd'> {
+  reason: SessionEndReason
+}
+
+/**
+ * Output for SessionEnd hook
+ *
+ * @see https://code.claude.com/docs/en/hooks#sessionend
+ */
+export interface SessionEndOutput extends BaseHookOutput {}
+
+/**
+ * Input for Setup hook - runs during repository initialization or maintenance
+ *
+ * Perform setup tasks when initializing or maintaining a repository.
+ *
+ * Note: This hook is defined in the settings schema but not yet documented
+ * in the official hooks reference.
+ */
+export interface SetupInput extends HookInput<'Setup'> {}
+
+/**
+ * Output for Setup hook
+ *
+ * Note: This hook is defined in the settings schema but not yet documented
+ * in the official hooks reference.
+ */
+export interface SetupOutput extends BaseHookOutput {}
 
 /**
  * Input for Stop hook - decides whether Claude should continue working
@@ -191,15 +432,48 @@ export interface StopInput extends HookInput<'Stop'> {
 export interface StopOutput extends BlockableHookOutput {}
 
 /**
+ * Input for SubagentStart hook - runs when a subagent is spawned
+ *
+ * Allows injecting context into subagent execution.
+ *
+ * @property agent_id - Unique identifier for the subagent
+ * @property agent_type - Type of agent (Bash, Explore, Plan, or custom agent name)
+ * @see https://code.claude.com/docs/en/hooks#subagentstart
+ */
+export interface SubagentStartInput extends HookInput<'SubagentStart'> {
+  agent_id: string
+  agent_type: string
+}
+
+/**
+ * Output for SubagentStart hook
+ *
+ * @property hookSpecificOutput.additionalContext - Context injected into the subagent
+ * @see https://code.claude.com/docs/en/hooks#subagentstart
+ */
+export interface SubagentStartOutput extends BaseHookOutput {
+  hookSpecificOutput?: {
+    hookEventName: 'SubagentStart'
+    additionalContext?: string
+  }
+}
+
+/**
  * Input for SubagentStop hook - decides whether subagent should continue
  *
  * Similar to Stop hook but for subagent execution control.
  *
  * @property stop_hook_active - Whether the stop hook is currently active
+ * @property agent_id - Unique identifier for the subagent
+ * @property agent_type - Type of agent (used for matcher filtering)
+ * @property agent_transcript_path - Path to the subagent's transcript
  * @see https://code.claude.com/docs/en/hooks#subagentstop
  */
 export interface SubagentStopInput extends HookInput<'SubagentStop'> {
   stop_hook_active: boolean
+  agent_id: string
+  agent_type: string
+  agent_transcript_path: string
 }
 
 /**
@@ -210,23 +484,42 @@ export interface SubagentStopInput extends HookInput<'SubagentStop'> {
 export type SubagentStopOutput = StopOutput
 
 /**
+ * Notification types that can trigger notification hooks
+ */
+export type NotificationType =
+  | 'permission_prompt'
+  | 'idle_prompt'
+  | 'auth_success'
+  | 'elicitation_dialog'
+
+/**
  * Input for Notification hook - responds to system notifications
  *
  * Customize notification behavior when Claude awaits user input.
  *
  * @property message - The notification message text
+ * @property title - Optional notification title
+ * @property notification_type - Type of notification that fired
  * @see https://code.claude.com/docs/en/hooks#notification
  */
 export interface NotificationInput extends HookInput<'Notification'> {
   message: string
+  title?: string
+  notification_type: NotificationType
 }
 
 /**
  * Output for Notification hook
  *
+ * @property hookSpecificOutput.additionalContext - Context added to the conversation
  * @see https://code.claude.com/docs/en/hooks#notification
  */
-export interface NotificationOutput extends BaseHookOutput {}
+export interface NotificationOutput extends BaseHookOutput {
+  hookSpecificOutput?: {
+    hookEventName: 'Notification'
+    additionalContext?: string
+  }
+}
 
 /**
  * Input for PreCompact hook - runs before transcript compaction
@@ -274,7 +567,7 @@ export interface PreCompactOutput extends BaseHookOutput {}
  * }
  */
 export type PreToolUseHandler<TToolInput = Record<string, unknown>> = (
-  input: PreToolUseInput<TToolInput>
+  input: PreToolUseInput<TToolInput>,
 ) => PreToolUseOutput | void
 
 /**
@@ -292,9 +585,29 @@ export type WebFetchPreToolUseHandler = PreToolUseHandler<WebFetchToolInput>
  * @returns PostToolUseOutput or void
  * @see https://code.claude.com/docs/en/hooks#posttooluse
  */
-export type PostToolUseHandler = (
-  input: PostToolUseInput
-) => PostToolUseOutput | void
+export type PostToolUseHandler = (input: PostToolUseInput) => PostToolUseOutput | void
+
+/**
+ * Handler function type for PostToolUseFailure hooks
+ *
+ * @param input - PostToolUseFailure hook input
+ * @returns PostToolUseFailureOutput or void
+ * @see https://code.claude.com/docs/en/hooks#posttoolusefailure
+ */
+export type PostToolUseFailureHandler = (
+  input: PostToolUseFailureInput,
+) => PostToolUseFailureOutput | void
+
+/**
+ * Handler function type for PermissionRequest hooks
+ *
+ * @param input - PermissionRequest hook input
+ * @returns PermissionRequestOutput or void
+ * @see https://code.claude.com/docs/en/hooks#permissionrequest
+ */
+export type PermissionRequestHandler = (
+  input: PermissionRequestInput,
+) => PermissionRequestOutput | void
 
 /**
  * Handler function type for UserPromptSubmit hooks
@@ -304,7 +617,7 @@ export type PostToolUseHandler = (
  * @see https://code.claude.com/docs/en/hooks#userpromptsubmit
  */
 export type UserPromptSubmitHandler = (
-  input: UserPromptSubmitInput
+  input: UserPromptSubmitInput,
 ) => UserPromptSubmitOutput | void
 
 /**
@@ -314,9 +627,25 @@ export type UserPromptSubmitHandler = (
  * @returns SessionStartOutput or void
  * @see https://code.claude.com/docs/en/hooks#sessionstart
  */
-export type SessionStartHandler = (
-  input: SessionStartInput
-) => SessionStartOutput | void
+export type SessionStartHandler = (input: SessionStartInput) => SessionStartOutput | void
+
+/**
+ * Handler function type for SessionEnd hooks
+ *
+ * @param input - SessionEnd hook input
+ * @returns SessionEndOutput or void
+ * @see https://code.claude.com/docs/en/hooks#sessionend
+ */
+export type SessionEndHandler = (input: SessionEndInput) => SessionEndOutput | void
+
+/**
+ * Handler function type for Setup hooks
+ *
+ * @param input - Setup hook input
+ * @returns SetupOutput or void
+ * @see https://code.claude.com/docs/en/hooks#setup
+ */
+export type SetupHandler = (input: SetupInput) => SetupOutput | void
 
 /**
  * Handler function type for Stop hooks
@@ -325,9 +654,16 @@ export type SessionStartHandler = (
  * @returns StopOutput or void (void = allow stopping)
  * @see https://code.claude.com/docs/en/hooks#stop
  */
-export type StopHandler = (
-  input: StopInput
-) => StopOutput | void
+export type StopHandler = (input: StopInput) => StopOutput | void
+
+/**
+ * Handler function type for SubagentStart hooks
+ *
+ * @param input - SubagentStart hook input
+ * @returns SubagentStartOutput or void
+ * @see https://code.claude.com/docs/en/hooks#subagentstart
+ */
+export type SubagentStartHandler = (input: SubagentStartInput) => SubagentStartOutput | void
 
 /**
  * Handler function type for SubagentStop hooks
@@ -336,9 +672,7 @@ export type StopHandler = (
  * @returns StopOutput or void (void = allow stopping)
  * @see https://code.claude.com/docs/en/hooks#subagentstop
  */
-export type SubagentStopHandler = (
-  input: SubagentStopInput
-) => StopOutput | void
+export type SubagentStopHandler = (input: SubagentStopInput) => StopOutput | void
 
 /**
  * Handler function type for Notification hooks
@@ -347,9 +681,7 @@ export type SubagentStopHandler = (
  * @returns NotificationOutput or void
  * @see https://code.claude.com/docs/en/hooks#notification
  */
-export type NotificationHandler = (
-  input: NotificationInput
-) => NotificationOutput | void
+export type NotificationHandler = (input: NotificationInput) => NotificationOutput | void
 
 /**
  * Handler function type for PreCompact hooks
@@ -358,9 +690,7 @@ export type NotificationHandler = (
  * @returns PreCompactOutput or void
  * @see https://code.claude.com/docs/en/hooks#precompact
  */
-export type PreCompactHandler = (
-  input: PreCompactInput
-) => PreCompactOutput | void
+export type PreCompactHandler = (input: PreCompactInput) => PreCompactOutput | void
 
 /**
  * Input parameters for Bash tool
@@ -442,4 +772,9 @@ export interface WebFetchToolInput {
  *
  * Note: Future enhancement could add discriminator field for type narrowing
  */
-export type ToolInput = BashToolInput | WriteToolInput | EditToolInput | ReadToolInput | WebFetchToolInput
+export type ToolInput =
+  | BashToolInput
+  | WriteToolInput
+  | EditToolInput
+  | ReadToolInput
+  | WebFetchToolInput
