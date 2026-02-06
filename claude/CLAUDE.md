@@ -111,13 +111,3 @@ Required patterns:
 Why: Permissions match `git log:*`, `git diff:*` etc. Flags before the subcommand break the prefix match.
 
 [Docs](https://docs.claude.com/en/docs/claude-code/iam#tool-specific-permission-rules)
-
-# Self Improvement
-
-- When a repeated correction or better approach is found, you're encouraged to codify your new found knowledge and learnings by modifying your section of ~/.claude/CLAUDE.md. Notify the user of the change by saying "INTERNAL INSTRUCTIONS UPDATED: [brief description of change]."
-- You can modify ~/.claude/CLAUDE.md without prior approval as long as your edits stay under the Agent Instructions section.
-- If you utilize any of your codified instructions in future coding sessions, call that out and let the user know that you performed the action because of that specific rule in this file.
-
-# Agent Instructions
-
-<!-- This section is for your own internal use. You can modify it as needed to improve your performance. -->
