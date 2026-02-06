@@ -4,7 +4,10 @@ layout {
         pane size=1 borderless=true {
             plugin location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
                 format_left  "{mode}{tabs}"
-                format_right "{session}"
+                format_right "{datetime}{session}"
+                datetime          "#[fg=#666666,bg=#1e1e1e] {format} "
+                datetime_format   "%I:%M %p"
+                datetime_timezone "America/New_York"
                 format_space "#[bg=#1e1e1e]"
 
                 hide_frame_for_single_pane "false"
