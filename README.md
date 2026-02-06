@@ -27,27 +27,31 @@
 - Karabiner config compilation
 - Install MacOS defaults
 
-## Claude Code
+## [Claude Code](./claude/)
 
-Configuration: [`claude/`](./claude/).
+### [CLAUDE.md](./claude/CLAUDE.md)
 
-### Project Instructions ([CLAUDE.md](./claude/CLAUDE.md))
-
-- **Critical partner mindset** - Question assumptions, prioritize truth over agreement
-- **Superpowers plan workflow** - Plans in `~/.claude/plans/{timestamp}-{task}/` (`1-TASK.md`, `2-DESIGN.md`, `3-PLAN.md`)
+- **Critical partner mindset** - Question assumptions, prioritize truth over agreement, be extremely concise
+- **Superpowers plan workflow** - Plans in `~/.claude/plans/{timestamp}-{issue-number}-{task-name}/` (`1-TASK.md`, `2-DESIGN.md`, `3-PLAN.md`)
 - **TypeScript patterns** - Single object params, types over interfaces, functions over classes, pure functions
 - **Bash permission matching** - Never use `git -C`, always `cd /path && git <cmd>`
 
 ### Slash Commands
 
-| Command           | Description                                                                                      |
-| ----------------- | ------------------------------------------------------------------------------------------------ |
-| `/task`           | Create task file for feature development, uses `superpowers:brainstorming` to create `DESIGN.md` |
-| `/implement-plan` | Execute a `PLAN.md` with subagent-driven dev, uses `superpowers:subagent-driven-development`     |
-| `/create-pr`      | Create PR from template, architecture-focused with mermaid diagrams                              |
-| `/pr-description` | Generate PR description                                                                          |
+| Command           | Description                                                              |
+| ----------------- | ------------------------------------------------------------------------ |
+| `/task`           | Create task folder with `1-TASK.md`, option to brainstorm `2-DESIGN.md`  |
+| `/implement-plan` | Execute `PLAN.md` with subagent-driven dev and code review between tasks |
+| `/create-pr`      | Create PR from template, architecture-focused with mermaid diagrams      |
 
-### Local Plugins ([local-plugins/](./claude/local-plugins/))
+### Plugins
+
+**External** (via `set-defaults.sh`):
+- **superpowers** - Skills for brainstorming, TDD, debugging, code review workflows
+- **payload** - Payload CMS development helpers
+- **typescript-lsp** - TypeScript language server integration
+
+**[Local](./claude/local-plugins/)**
 
 | Plugin                                                     | Purpose                                                        |
 | ---------------------------------------------------------- | -------------------------------------------------------------- |
@@ -57,7 +61,17 @@ Configuration: [`claude/`](./claude/).
 
 ### Skills
 
-- **markdown-formatting** - Format/lint markdown files with markdownlint
+| Skill               | Description                                            |
+| ------------------- | ------------------------------------------------------ |
+| ghostty-config      | Configure Ghostty terminal, lookup settings and themes |
+| zellij              | Read from and write to other zellij panes              |
+| markdown-formatting | Format/lint markdown files with markdownlint           |
+
+### Spinner Verbs
+
+Custom spinner verb themes (`make claude-verbs THEME=scifi`):
+- **scifi** - "Beaming up", "Jumping to lightspeed", "Quantum leaping"...
+- **peanut** - Peanuts-themed verbs
 
 ### Custom Statusline ([statusline-command.sh](./claude/statusline-command.sh))
 
