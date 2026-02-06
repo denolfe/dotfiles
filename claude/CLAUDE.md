@@ -61,32 +61,38 @@
 
 # Coding Patterns and Best Practices (Typescript)
 
-- Prefer function object parameter over multiple parameters. Better readability, easier to extend, clearer intent at call site.
-  ```ts
-  // Correct
-  function createUser(params: { name: string; email: string; role: string }) {
-    // ...
-  }
+## Structure
 
-  // Avoid
-  function createUser(name: string, email: string, role: string) {
-    // ...
-  }
-  ```
-- Prefer types over interfaces (except when extending external types)
-- Prefer functions over classes (classes only for errors/adapters)
-- Prefer simple conditionals over nested ternary operators
-- Prefer pure functions; when mutation is unavoidable, return the mutated object instead of void.
-- Use early returns to reduce nesting
 - **Always** organize functions top-down: exports and entry points before helpers
+- Use early returns to reduce nesting
+- Prefer simple conditionals over nested ternary operators
+
+## Functions
+
+- Prefer functions over classes (classes only for errors/adapters)
+- Prefer pure functions; when mutation is unavoidable, return the mutated object instead of void
+- Prefer object parameter over positional args for 3+ params: `fn(params: { name: string; email: string })` not `fn(name: string, email: string)`
+- Self-describing names over generic names with explanatory comments
 - Use JSDoc for complex functions; add tags only when justified beyond type signature
-- Use `import type` for types, regular `import` for values, separate statements even from same module
-- Prefix booleans with `is`/`has`/`can`/`should` (e.g., `isValid`, `hasData`) for clarity
-- Commenting Guidelines
-  - Execution flow: Skip comments when code is self-documenting. Keep for complex logic, non-obvious "why", multi-line context, or if following a documented, multi-step flow.
-  - Top of file/module: Use sparingly; only for non-obvious purpose/context or an overview of complex logic.
-  - Type definitions: Property/interface JSDoc is encouraged and always acceptable.
-  - No fossil comments or comparisons to alternatives. Don't reference previous implementations, what code "used to do", or approaches you're NOT using. Explain WHY the current code exists, not what it replaced or avoided. Git tracks history.
+
+## Types
+
+- Prefer `type` over `interface` (except when extending external types)
+- Avoid type assertions (`as`); fix types at the source
+- Use Utility types (`Partial<T>`, `Pick<T, K>`, `Omit<T, K>`, `Record<K, T>`, `ReturnType<T>`) over custom inline types when subsetting
+- Prefix booleans with `is`/`has`/`can`/`should` (e.g., `isValid`, `hasData`)
+
+## Imports
+
+- Use `import type` for types, regular `import` for values, separate statements _even from same module_
+- Check if equivalent utility already exists before implementing; reuse over duplicate
+
+## Commenting
+
+- Execution flow: Skip when self-documenting. Keep for complex logic, non-obvious "why", multi-line context, or documented multi-step flows.
+- Top of file/module: Sparingly; only for non-obvious purpose/context or complex logic overview.
+- Type definitions: Property/interface JSDoc always acceptable.
+- No fossil comments. Don't reference previous implementations or approaches NOT used. Explain WHY current code exists. Git tracks history.
 
 # Bash Permission Pattern Matching
 
