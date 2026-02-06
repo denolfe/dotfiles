@@ -1,4 +1,4 @@
-.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins
+.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-verbs
 
 # Run dotbot install script
 install:
@@ -58,3 +58,13 @@ claude-plugins:
 gitleaks-history:
 	gitleaks detect --no-git --log-level fatal -f json --no-color --no-banner --redact --source ~/.zsh_history -r ~/.report_gitleaks.json
 	code -a ~/.report_gitleaks.json
+
+# Set Claude spinner verbs (usage: make claude-verbs THEME=scifi or THEME=peanut)
+claude-verbs:
+ifndef THEME
+	$(error THEME required: make claude-verbs THEME=scifi or THEME=peanut)
+endif
+ifeq ($(filter $(THEME),scifi peanut),)
+	$(error THEME must be 'scifi' or 'peanut')
+endif
+	jq --slurpfile verbs ${DOTFILES}/claude/verbs-$(THEME).json '.spinnerVerbs.verbs = $$verbs[0]' ~/.claude/settings.json > ~/.claude/settings.json.tmp && mv ~/.claude/settings.json.tmp ~/.claude/settings.json
