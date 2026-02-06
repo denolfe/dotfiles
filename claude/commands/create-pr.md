@@ -9,6 +9,7 @@ argument-hint: <draft>
 - Consolidate related details under fewer sections and emphasize high-level decisions rather than exhaustive details.
 - Reference any design/plan documents or branch commits for deeper context instead of including all details in the description.
 - DO NOT include anything related to test coverage
+- DO NOT reference specific lines numbers
 
 After PR is created, say "PR Created: [PR URL]".
 
@@ -39,7 +40,7 @@ After PR is created, say "PR Created: [PR URL]".
 
 ## Overall Flow
 
-[Include any relevant architecture diagrams or flowcharts that illustrate the changes made. Written in mermaid syntax; use sequence diagram unless another format is more appropriate.]
+[Include any relevant architecture diagrams or flowcharts that illustrate the changes made. Written in mermaid syntax; use sequence diagram unless another format is more appropriate. Clearly note the changes from the previous flow if any.]
 
 ## References / Links
 
