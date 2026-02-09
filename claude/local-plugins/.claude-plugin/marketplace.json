@@ -23,6 +23,12 @@
       "description": "Enforces git workflow preferences by intercepting git commands",
       "version": "0.0.1",
       "source": "./git-guardrails"
+    },
+    {
+      "name": "superpowers",
+      "description": "Core skills library for Claude Code",
+      "version": "4.2.0",
+      "source": "./superpowers"
     }
   ]
 }
