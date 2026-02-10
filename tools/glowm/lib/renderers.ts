@@ -167,6 +167,16 @@ export function addCodeBlockBox(ext: TerminalExtension): void {
   }
 }
 
+/** Renders images as "Image: alt → path" instead of raw markdown syntax. */
+export function styleImage(ext: TerminalExtension): void {
+  ext.renderer.image = function (token: Tokens.Image) {
+    const alt = token.text || 'Image'
+    const label = colors.imageLabel(`${alt} →`)
+    const path = colors.imagePath(token.href)
+    return `${label} ${path}`
+  }
+}
+
 // --- Helpers ---
 
 function getRenderer<K extends RendererKey>(ext: TerminalExtension, key: K): RendererFn<K> {

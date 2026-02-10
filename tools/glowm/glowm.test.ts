@@ -3,6 +3,9 @@ import chalk from 'chalk'
 import { Marked } from 'marked'
 import { markedTerminal } from 'marked-terminal'
 
+// Force colors in test environment (chalk auto-detects no TTY)
+chalk.level = 3
+
 import {
   addBlockquotePipe,
   addCodeBlockBox,
@@ -10,6 +13,7 @@ import {
   fixCheckboxSpacing,
   fixListInlineTokens,
   replaceMermaidBlocks,
+  styleImage,
 } from './glowm'
 
 // Styling options for tests (subset of terminalColors)
@@ -52,6 +56,14 @@ function renderMarkdownWithCheckboxFix(md: string): string {
   const instance = new Marked()
   const extension = markedTerminal({ width: 80, tab: 2 })
   fixCheckboxSpacing(extension)
+  instance.use(extension)
+  return instance.parse(md) as string
+}
+
+function renderMarkdownWithImageStyle(md: string): string {
+  const instance = new Marked()
+  const extension = markedTerminal({ width: 80, tab: 2 })
+  styleImage(extension)
   instance.use(extension)
   return instance.parse(md) as string
 }
@@ -369,5 +381,32 @@ describe('fixCheckboxSpacing', () => {
     // Count occurrences of "] " followed by non-space
     const matches = plain.match(/\] \S/g)
     expect(matches?.length).toBe(3)
+  })
+})
+
+describe('styleImage', () => {
+  test('renders image with alt text', () => {
+    const output = renderMarkdownWithImageStyle('![Screenshot](./shot.png)')
+    const plain = stripAnsi(output)
+
+    expect(plain).toContain('Screenshot →')
+    expect(plain).toContain('./shot.png')
+    expect(plain).not.toContain('![')
+  })
+
+  test('uses "Image" as default when alt is empty', () => {
+    const output = renderMarkdownWithImageStyle('![](./image.png)')
+    const plain = stripAnsi(output)
+
+    expect(plain).toContain('Image →')
+    expect(plain).toContain('./image.png')
+  })
+
+  test('handles URL paths', () => {
+    const output = renderMarkdownWithImageStyle('![Badge](https://example.com/badge.svg)')
+    const plain = stripAnsi(output)
+
+    expect(plain).toContain('Badge →')
+    expect(plain).toContain('https://example.com/badge.svg')
   })
 })

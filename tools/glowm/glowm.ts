@@ -14,6 +14,7 @@ import {
   MERMAID_BLOCK_REGEX,
   replaceMermaidBlocks,
   styleH1,
+  styleImage,
   useCheckmark,
 } from './lib/renderers'
 import type { TerminalExtension } from './lib/renderers'
@@ -27,6 +28,7 @@ export {
   fixCheckboxSpacing,
   fixListInlineTokens,
   styleH1,
+  styleImage,
   useCheckmark,
 }
 export type { TerminalExtension }
@@ -47,6 +49,7 @@ async function main(): Promise<void> {
   addCodeBlockBox(ext)
   fixCheckboxSpacing(ext)
   useCheckmark(ext)
+  styleImage(ext)
   marked.use(ext)
 
   process.stdout.write('\n\n' + (marked(processed) as string))

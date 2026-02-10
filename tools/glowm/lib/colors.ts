@@ -23,6 +23,8 @@ type RendererColors = {
   blockquoteText: ChalkInstance
   dim: ChalkInstance
   h1: ChalkInstance
+  imageLabel: ChalkInstance
+  imagePath: ChalkInstance
 }
 
 /** VS Code Dark+ terminal theme */
@@ -60,4 +62,6 @@ export const colors: RendererColors = {
   blockquoteText: chalk.hex(theme.foregroundMuted).italic,
   dim: chalk.dim,
   h1: chalk.hex('#000000').bold.bgHex(theme.blue),
+  imageLabel: chalk.hex(theme.foregroundMuted),
+  imagePath: chalk.hex(theme.foregroundMuted).italic,
 }
