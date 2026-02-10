@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test"
+import chalk from "chalk"
 import { Marked } from "marked"
 import { markedTerminal } from "marked-terminal"
 
@@ -10,6 +11,12 @@ import {
   fixListInlineTokens,
   replaceMermaidBlocks,
 } from "./index"
+
+// Styling options for tests (subset of terminalColors)
+const testColors = {
+  strong: chalk.bold,
+  codespan: chalk.red,
+}
 
 function hasAnsiBold(s: string): boolean {
   return s.includes("\x1b[1m")
@@ -25,7 +32,7 @@ function stripAnsi(s: string): string {
 
 function renderMarkdown(md: string): string {
   const instance = new Marked()
-  const extension = markedTerminal({ width: 80, tab: 2 })
+  const extension = markedTerminal({ width: 80, tab: 2, ...testColors })
   fixListInlineTokens(extension)
   addIndent(extension)
   addBlockquotePipe(extension)
@@ -58,7 +65,7 @@ describe("replaceMermaidBlocks", () => {
     expect(result).toContain("```text")
     expect(result).toContain("A")
     expect(result).toContain("B")
-    expect(result).toMatch(/[┌─┐│└┘►]/)
+    expect(result).toMatch(/[┌─┐▌└┘►]/)
   })
 
   test("replaces multiple mermaid blocks", () => {
@@ -269,14 +276,14 @@ describe("addBlockquotePipe", () => {
 
     const quoteLine = plain.split("\n").find(l => l.includes("Quote text"))
     expect(quoteLine).toBeTruthy()
-    expect(quoteLine).toContain("│")
+    expect(quoteLine).toContain("▌")
   })
 
   test("multiline blockquote has pipe on each line", () => {
     const output = renderMarkdown("> Line one\n> Line two")
     const plain = stripAnsi(output)
 
-    const pipeLines = plain.split("\n").filter(l => l.includes("│"))
+    const pipeLines = plain.split("\n").filter(l => l.includes("▌"))
     expect(pipeLines.length).toBeGreaterThanOrEqual(2)
   })
 
@@ -286,7 +293,7 @@ describe("addBlockquotePipe", () => {
 
     const quoteLine = plain.split("\n").find(l => l.includes("Short"))
     // Should not have excessive whitespace (library's 4-space indent removed)
-    expect(quoteLine).toMatch(/│\s{1,3}\S/)
+    expect(quoteLine).toMatch(/▌\s{1,3}\S/)
   })
 })
 

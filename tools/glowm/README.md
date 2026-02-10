@@ -28,7 +28,7 @@ graph LR
 
 ### Syntax Highlighting
 
-Code blocks with language tags are wrapped in box-drawing borders. Uses VS Code Dark+ terminal colors.
+Code blocks with language tags are wrapped in box-drawing borders with language label. Uses VS Code Dark+ terminal colors.
 
 ````markdown
 ```typescript
@@ -39,7 +39,7 @@ const x = 1
 Renders as:
 
 ```
-┌───────────────┐
+┌─ typescript ──┐
 │               │
 │  const x = 1  │
 │               │
@@ -57,7 +57,7 @@ Checkboxes render with `[✓]` for completed items:
 
 ### Blockquotes
 
-Blockquotes display with a colored vertical pipe:
+Blockquotes display with a left half block pipe and dimmed italic text:
 
 ```markdown
 > This is a quote
@@ -66,45 +66,21 @@ Blockquotes display with a colored vertical pipe:
 Renders as:
 
 ```
-│  This is a quote
+▌  This is a quote
 ```
 
 ### Inline Formatting
 
-- **Bold** text renders with ANSI bold
+- **Bold** renders with ANSI bold
+- *Italic* renders with ANSI italic
+- ~~Strikethrough~~ renders with muted color
 - `code` renders with red on dark background
 - [Links](url) render in blue
-- *Italic* text renders with ANSI italic
+
+### Headings
+
+H1 headings render as pill-style labels (black text on blue background, padded, no `#` prefix). Other headings render in cyan bold.
 
 ### Indentation
 
 Paragraphs and headings are indented for better readability.
-
-## Installation
-
-```bash
-# Clone and link
-cd ~/.dotfiles/tools/glowm
-bun install
-bun link
-```
-
-## Development
-
-```bash
-bun run start         # Run CLI
-bun run test          # Run tests
-bun run typecheck     # Type check
-```
-
-## Theme
-
-Uses VS Code Dark+ terminal colors:
-
-| Element     | Color   |
-|-------------|---------|
-| Heading     | Green   |
-| Code        | Red     |
-| Link        | Blue    |
-| Blockquote  | Cyan    |
-| First H1    | Magenta background |
