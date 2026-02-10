@@ -13,6 +13,7 @@ type TerminalRendererOptions = {
   href?: ChalkInstance
   strong?: ChalkInstance
   em?: ChalkInstance
+  del?: ChalkInstance
 }
 
 type TerminalExtension = MarkedExtension & {
