@@ -108,10 +108,7 @@ export function styleH1(ext: TerminalExtension): void {
     const withoutHash = result.replace(/^(\s*(?:\x1b\[[0-9;]*m)*)#\s+/, '$1')
 
     // Add themed spaces around the text
-    return withoutHash.replace(
-      /((?:\x1b\[[0-9;]*m)+)(\S.*?\S|\S)((?:\x1b\[[0-9;]*m)+)/,
-      '$1 $2 $3'
-    )
+    return withoutHash.replace(/((?:\x1b\[[0-9;]*m)+)(\S.*?\S|\S)((?:\x1b\[[0-9;]*m)+)/, '$1 $2 $3')
   }
 }
 

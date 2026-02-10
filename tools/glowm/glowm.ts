@@ -20,7 +20,15 @@ import type { TerminalExtension } from './lib/renderers'
 import { readInput } from './lib/utils'
 
 export { MERMAID_BLOCK_REGEX, replaceMermaidBlocks }
-export { addBlockquotePipe, addCodeBlockBox, addIndent, fixCheckboxSpacing, fixListInlineTokens, styleH1, useCheckmark }
+export {
+  addBlockquotePipe,
+  addCodeBlockBox,
+  addIndent,
+  fixCheckboxSpacing,
+  fixListInlineTokens,
+  styleH1,
+  useCheckmark,
+}
 export type { TerminalExtension }
 
 async function main(): Promise<void> {
