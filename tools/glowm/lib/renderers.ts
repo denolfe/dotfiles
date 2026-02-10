@@ -97,10 +97,28 @@ export function addIndent(ext: TerminalExtension): void {
   }
 }
 
+/** Styles h1: removes "# " prefix and adds themed padding. */
+export function styleH1(ext: TerminalExtension): void {
+  const orig = getRenderer(ext, 'heading')
+  ext.renderer.heading = function (token: Tokens.Heading) {
+    const result = orig.call(this, token)
+    if (!result || token.depth !== 1) return result
+
+    // Remove "# " prefix (may have ANSI codes before it)
+    const withoutHash = result.replace(/^(\s*(?:\x1b\[[0-9;]*m)*)#\s+/, '$1')
+
+    // Add themed spaces around the text
+    return withoutHash.replace(
+      /((?:\x1b\[[0-9;]*m)+)(\S.*?\S|\S)((?:\x1b\[[0-9;]*m)+)/,
+      '$1 $2 $3'
+    )
+  }
+}
+
 /** Adds a colored vertical pipe to blockquote lines. */
 export function addBlockquotePipe(ext: TerminalExtension): void {
   const orig = getRenderer(ext, 'blockquote')
-  const pipe = colors.blockquotePipe('│')
+  const pipe = colors.blockquotePipe('▌')
   ext.renderer.blockquote = function (token: Tokens.Blockquote) {
     const result = orig.call(this, token)
     if (!result) return result
@@ -109,14 +127,17 @@ export function addBlockquotePipe(ext: TerminalExtension): void {
       result
         .trim()
         .split('\n')
-        .map(line => `  ${pipe}  ${line.replace(/^(\x1b\[[0-9;]*m)*\s+/, '$1')}`)
+        .map(line => {
+          const stripped = line.replace(/^(\x1b\[[0-9;]*m)*\s+/, '').replace(ANSI_REGEX, '')
+          return `  ${pipe}  ${colors.blockquoteText(stripped)}`
+        })
         .join('\n') +
       '\n\n'
     )
   }
 }
 
-/** Wraps code blocks (except `text`) in a box-drawing border. */
+/** Wraps code blocks (except `text`) in a box-drawing border with language label. */
 export function addCodeBlockBox(ext: TerminalExtension): void {
   const orig = getRenderer(ext, 'code')
   ext.renderer.code = function (token: Tokens.Code) {
@@ -130,7 +151,12 @@ export function addCodeBlockBox(ext: TerminalExtension): void {
     const sp = ' '.repeat(pad)
     const inner = width + pad * 2
 
-    const border = (l: string, r: string) => colors.dim(`${TAB}${l}${'─'.repeat(inner)}${r}`)
+    const lang = token.lang
+    const labelLen = lang.length + 2 // space before and after
+    const remaining = Math.max(0, inner - labelLen - 1) // -1 for the ─ after ┌
+    const topBorder = colors.dim(`${TAB}┌─ ${lang} ${'─'.repeat(remaining)}┐`)
+    const bottomBorder = colors.dim(`${TAB}└${'─'.repeat(inner)}┘`)
+
     const row = (content: string, vis: number) =>
       `${colors.dim(`${TAB}│`)}${sp}${content}${' '.repeat(width - vis)}${sp}${colors.dim('│')}`
     const empty = row('', 0)
@@ -140,7 +166,7 @@ export function addCodeBlockBox(ext: TerminalExtension): void {
       return row(content, visibleLen(content))
     })
 
-    return `\n${border('┌', '┐')}\n${empty}\n${boxed.join('\n')}\n${empty}\n${border('└', '┘')}\n\n`
+    return `\n${topBorder}\n${empty}\n${boxed.join('\n')}\n${empty}\n${bottomBorder}\n\n`
   }
 }
 

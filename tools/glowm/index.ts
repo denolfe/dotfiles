@@ -13,13 +13,14 @@ import {
   INDENT,
   MERMAID_BLOCK_REGEX,
   replaceMermaidBlocks,
+  styleH1,
   useCheckmark,
 } from './lib/renderers'
 import type { TerminalExtension } from './lib/renderers'
 import { readInput } from './lib/utils'
 
 export { MERMAID_BLOCK_REGEX, replaceMermaidBlocks }
-export { addBlockquotePipe, addCodeBlockBox, addIndent, fixCheckboxSpacing, fixListInlineTokens, useCheckmark }
+export { addBlockquotePipe, addCodeBlockBox, addIndent, fixCheckboxSpacing, fixListInlineTokens, styleH1, useCheckmark }
 export type { TerminalExtension }
 
 async function main(): Promise<void> {
@@ -33,6 +34,7 @@ async function main(): Promise<void> {
   })
   fixListInlineTokens(ext)
   addIndent(ext)
+  styleH1(ext)
   addBlockquotePipe(ext)
   addCodeBlockBox(ext)
   fixCheckboxSpacing(ext)
