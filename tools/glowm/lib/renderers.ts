@@ -65,6 +65,15 @@ export function fixCheckboxSpacing(ext: TerminalExtension): void {
   }
 }
 
+/** Replaces [X] with [✓] for completed checkboxes. */
+export function useCheckmark(ext: TerminalExtension): void {
+  const orig = getRenderer(ext, 'list')
+  ext.renderer.list = function (token: Tokens.List) {
+    const result = orig.call(this, token)
+    return result ? result.replace(/\[X\]/g, '[✓]') : result
+  }
+}
+
 /** Adds left indent to paragraphs and headings. */
 export function addIndent(ext: TerminalExtension): void {
   const origParagraph = getRenderer(ext, 'paragraph')
