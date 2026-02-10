@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+FORCE_COLOR=3 exec bun "$(dirname "$0")/index.ts" "$@"
