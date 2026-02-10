@@ -2,6 +2,8 @@
 
 Terminal markdown renderer with mermaid diagram support.
 
+![preview](preview.png)
+
 ## Usage
 
 ```bash
