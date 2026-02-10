@@ -1,12 +1,12 @@
 import { describe, expect, test } from "bun:test"
 import { Marked } from "marked"
-// @ts-expect-error no type declarations
 import { markedTerminal } from "marked-terminal"
 
 import {
   addBlockquotePipe,
   addCodeBlockBox,
   addIndent,
+  fixCheckboxSpacing,
   fixListInlineTokens,
   replaceMermaidBlocks,
 } from "./index"
@@ -36,7 +36,16 @@ function renderMarkdown(md: string): string {
 
 function renderMarkdownWithoutFix(md: string): string {
   const instance = new Marked()
-  instance.use(markedTerminal({ width: 80 }))
+  const extension = markedTerminal({ width: 80 })
+  instance.use(extension)
+  return instance.parse(md) as string
+}
+
+function renderMarkdownWithCheckboxFix(md: string): string {
+  const instance = new Marked()
+  const extension = markedTerminal({ width: 80, tab: 2 })
+  fixCheckboxSpacing(extension)
+  instance.use(extension)
   return instance.parse(md) as string
 }
 
@@ -325,5 +334,33 @@ describe("addCodeBlockBox", () => {
     const beforeBottom = lines[bottomIdx - 1]
     expect(afterTop).toMatch(/│\s+│/)
     expect(beforeBottom).toMatch(/│\s+│/)
+  })
+})
+
+describe("fixCheckboxSpacing", () => {
+  test("collapses double space after checkbox to single space", () => {
+    const output = renderMarkdownWithCheckboxFix("- [x] done task")
+    const plain = stripAnsi(output)
+
+    // Should have single space after bracket, not double
+    expect(plain).toMatch(/\] \S/)
+    expect(plain).not.toMatch(/\] {2,}/)
+  })
+
+  test("works with unchecked checkboxes", () => {
+    const output = renderMarkdownWithCheckboxFix("- [ ] pending task")
+    const plain = stripAnsi(output)
+
+    expect(plain).toMatch(/\] \S/)
+    expect(plain).not.toMatch(/\] {2,}/)
+  })
+
+  test("works with multiple task items", () => {
+    const output = renderMarkdownWithCheckboxFix("- [x] first\n- [ ] second\n- [x] third")
+    const plain = stripAnsi(output)
+
+    // Count occurrences of "] " followed by non-space
+    const matches = plain.match(/\] \S/g)
+    expect(matches?.length).toBe(3)
   })
 })
