@@ -22,13 +22,13 @@ The script creates the directory and 1-TASK.md, then outputs the path.
 Once created:
 
 1. Read and present 1-TASK.md contents
-2. AskUserQuestion with options, also note which is '(recommended)' based upon the details provided:
+2. AskUserQuestion with options, also note which is '(recommended)' based upon the details provided and task complexity:
    - Research web
    - Brainstorm design
-   - Add details manually
+   - Add more detail
    - Implement directly
 3. Handle choice, also note which is '(recommended)' based upon task complexity:
-   - Research → Ask topic, fetch, return to step 2
    - Brainstorm → Run `superpowers:brainstorming`, present 1-TASK.md + 2-DESIGN.md
-   - Add details → User edits, return to step 2
-   - Implement → Skip to step 4
+   - Add details → Accept more input, merge into 1-TASK.md, return to step 2
+   - Implement directly → Implement directly
+   - Research → Ask topic, fetch, return to step 2
