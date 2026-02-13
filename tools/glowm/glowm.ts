@@ -8,6 +8,7 @@ import {
   addBlockquotePipe,
   addCodeBlockBox,
   addIndent,
+  collapseNestedListBlanks,
   fixCheckboxSpacing,
   fixListInlineTokens,
   INDENT,
@@ -25,6 +26,7 @@ export {
   addBlockquotePipe,
   addCodeBlockBox,
   addIndent,
+  collapseNestedListBlanks,
   fixCheckboxSpacing,
   fixListInlineTokens,
   styleH1,
@@ -49,6 +51,7 @@ async function main(): Promise<void> {
   addCodeBlockBox(ext)
   fixCheckboxSpacing(ext)
   useCheckmark(ext)
+  collapseNestedListBlanks(ext)
   styleImage(ext)
   marked.use(ext)
 

@@ -65,6 +65,24 @@ export function fixCheckboxSpacing(ext: TerminalExtension): void {
   }
 }
 
+/**
+ * Collapses extra blank lines in nested list output. marked-terminal's
+ * section() appends \n\n after each block, including nested sub-lists.
+ * Lines with only whitespace + ANSI codes survive bulletPointLines'
+ * filter(identity) since they're truthy strings.
+ */
+export function collapseNestedListBlanks(ext: TerminalExtension): void {
+  const orig = getRenderer(ext, 'list')
+  ext.renderer.list = function (token: Tokens.List) {
+    const result = orig.call(this, token)
+    if (!result) return result
+    return result
+      .split('\n')
+      .filter(line => !!line.replace(ANSI_REGEX, '').trim())
+      .join('\n') + '\n\n'
+  }
+}
+
 /** Replaces [X] with [✓] for completed checkboxes. */
 export function useCheckmark(ext: TerminalExtension): void {
   const orig = getRenderer(ext, 'list')

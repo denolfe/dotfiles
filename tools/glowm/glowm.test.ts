@@ -10,6 +10,7 @@ import {
   addBlockquotePipe,
   addCodeBlockBox,
   addIndent,
+  collapseNestedListBlanks,
   fixCheckboxSpacing,
   fixListInlineTokens,
   replaceMermaidBlocks,
@@ -66,6 +67,31 @@ function renderMarkdownWithImageStyle(md: string): string {
   styleImage(extension)
   instance.use(extension)
   return instance.parse(md) as string
+}
+
+function renderMarkdownWithNestedListFix(md: string): string {
+  const instance = new Marked()
+  const extension = markedTerminal({ width: 80, tab: 2 })
+  collapseNestedListBlanks(extension)
+  instance.use(extension)
+  return instance.parse(md) as string
+}
+
+function countBlankLines(output: string): number {
+  const lines = output.split('\n')
+  return lines.filter(l => !l.replace(/\x1b\[[0-9;]*m/g, '').trim()).length
+}
+
+function countBlankLinesBetween(output: string, textA: string, textB: string): number {
+  const lines = output.split('\n')
+  const idxA = lines.findIndex(l => stripAnsi(l).includes(textA))
+  const idxB = lines.findIndex(l => stripAnsi(l).includes(textB))
+  if (idxA === -1 || idxB === -1) return -1
+  let blanks = 0
+  for (let i = idxA + 1; i < idxB; i++) {
+    if (!lines[i]!.replace(/\x1b\[[0-9;]*m/g, '').trim()) blanks++
+  }
+  return blanks
 }
 
 describe('replaceMermaidBlocks', () => {
@@ -408,5 +434,71 @@ describe('styleImage', () => {
 
     expect(plain).toContain('Badge →')
     expect(plain).toContain('https://example.com/badge.svg')
+  })
+})
+
+describe('collapseNestedListBlanks', () => {
+  test('no blank lines between parent and sub-items', () => {
+    const output = renderMarkdownWithNestedListFix('- Parent\n  - Child one\n  - Child two')
+    const blanks = countBlankLinesBetween(output, 'Parent', 'Child one')
+
+    expect(blanks).toBe(0)
+  })
+
+  test('no blank lines between sibling sub-items', () => {
+    const output = renderMarkdownWithNestedListFix('- Parent\n  - Child one\n  - Child two')
+    const blanks = countBlankLinesBetween(output, 'Child one', 'Child two')
+
+    expect(blanks).toBe(0)
+  })
+
+  test('no blank lines with deeply nested lists', () => {
+    const md = '- A\n  - B\n    - C'
+    const output = renderMarkdownWithNestedListFix(md)
+
+    expect(countBlankLinesBetween(output, 'A', 'B')).toBe(0)
+    expect(countBlankLinesBetween(output, 'B', 'C')).toBe(0)
+  })
+
+  test('fewer blank lines than unfixed output', () => {
+    const md = '- Parent\n  - Child one\n  - Child two\n- Another\n  - Sub A'
+    const instance = new Marked()
+    const ext = markedTerminal({ width: 80, tab: 2 })
+    instance.use(ext)
+    const unfixed = instance.parse(md) as string
+    const fixed = renderMarkdownWithNestedListFix(md)
+
+    expect(countBlankLines(fixed)).toBeLessThan(countBlankLines(unfixed))
+  })
+
+  test('flat lists are unaffected', () => {
+    const md = '- One\n- Two\n- Three'
+    const fixed = renderMarkdownWithNestedListFix(md)
+    const plain = stripAnsi(fixed)
+
+    expect(plain).toContain('One')
+    expect(plain).toContain('Two')
+    expect(plain).toContain('Three')
+    expect(countBlankLinesBetween(fixed, 'One', 'Two')).toBe(0)
+  })
+
+  test('preserves trailing newlines for inter-block spacing', () => {
+    const md = '- Item one\n- Item two'
+    const output = renderMarkdownWithNestedListFix(md)
+
+    // List output should end with \n\n for block separation
+    expect(output).toMatch(/\n\n$/)
+  })
+
+  test('all list content is preserved', () => {
+    const md = '- Parent\n  - Child A\n  - Child B\n    - Deep\n- Sibling'
+    const output = renderMarkdownWithNestedListFix(md)
+    const plain = stripAnsi(output)
+
+    expect(plain).toContain('Parent')
+    expect(plain).toContain('Child A')
+    expect(plain).toContain('Child B')
+    expect(plain).toContain('Deep')
+    expect(plain).toContain('Sibling')
   })
 })
