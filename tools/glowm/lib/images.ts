@@ -211,6 +211,10 @@ function parseImageMatches(markdown: string): ImageMatch[] {
   const matchedRanges: Array<[number, number]> = []
   let match: RegExpExecArray | null
 
+  // Reset regex state (global regexes maintain lastIndex across calls)
+  LINKED_IMAGE_REGEX.lastIndex = 0
+  IMAGE_REGEX.lastIndex = 0
+
   // First, find linked images [![alt](img)](url)
   while ((match = LINKED_IMAGE_REGEX.exec(markdown)) !== null) {
     matches.push({
@@ -247,6 +251,9 @@ function resolveReferenceImages(markdown: string): string {
   // Parse reference definitions [ref]: url
   const refs = new Map<string, string>()
   let match: RegExpExecArray | null
+
+  // Reset regex state (global regexes maintain lastIndex across calls)
+  REF_DEFINITION_REGEX.lastIndex = 0
 
   while ((match = REF_DEFINITION_REGEX.exec(markdown)) !== null) {
     refs.set(match[1].toLowerCase(), match[2].trim())
