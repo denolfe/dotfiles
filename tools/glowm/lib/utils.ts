@@ -1,7 +1,5 @@
-/** Reads markdown from file path argument or stdin. */
-export async function readInput(): Promise<string> {
-  const filePath = process.argv[2]
-
+/** Reads markdown from file path or stdin. */
+export async function readInput(filePath?: string): Promise<string> {
   if (filePath) {
     const file = Bun.file(filePath)
     if (!(await file.exists())) {
