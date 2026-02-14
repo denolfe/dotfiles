@@ -1,9 +1,12 @@
 #!/usr/bin/env bun
 
+import path from 'node:path'
+
 import { marked } from 'marked'
 import { markedTerminal } from 'marked-terminal'
 
 import { terminalColors } from './lib/colors'
+import { outputWithImages, prepareImages, replaceImageBlocks } from './lib/images'
 import {
   addBlockquotePipe,
   addCodeBlockBox,
@@ -15,13 +18,18 @@ import {
   MERMAID_BLOCK_REGEX,
   replaceMermaidBlocks,
   styleH1,
-  styleImage,
   useCheckmark,
 } from './lib/renderers'
 import type { TerminalExtension } from './lib/renderers'
 import { readInput } from './lib/utils'
 
-export { MERMAID_BLOCK_REGEX, replaceMermaidBlocks }
+export {
+  MERMAID_BLOCK_REGEX,
+  replaceMermaidBlocks,
+  replaceImageBlocks,
+  prepareImages,
+  outputWithImages,
+}
 export {
   addBlockquotePipe,
   addCodeBlockBox,
@@ -30,14 +38,17 @@ export {
   fixCheckboxSpacing,
   fixListInlineTokens,
   styleH1,
-  styleImage,
   useCheckmark,
 }
 export type { TerminalExtension }
 
 async function main(): Promise<void> {
+  const filePath = process.argv[2]
+  const basePath = filePath ? path.dirname(path.resolve(filePath)) : undefined
+
   const markdown = await readInput()
-  const processed = replaceMermaidBlocks(markdown)
+  const withMermaid = replaceMermaidBlocks(markdown)
+  const { markdown: withPlaceholders, images } = await prepareImages(withMermaid, basePath)
 
   const ext = markedTerminal({
     width: process.stdout.columns || 80,
@@ -52,10 +63,10 @@ async function main(): Promise<void> {
   fixCheckboxSpacing(ext)
   useCheckmark(ext)
   collapseNestedListBlanks(ext)
-  styleImage(ext)
   marked.use(ext)
 
-  process.stdout.write('\n\n' + (marked(processed) as string))
+  const rendered = '\n\n' + (marked(withPlaceholders) as string)
+  await outputWithImages(rendered, images)
 }
 
 if (import.meta.main) {
