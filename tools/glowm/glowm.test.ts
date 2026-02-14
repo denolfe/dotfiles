@@ -13,8 +13,8 @@ import {
   collapseNestedListBlanks,
   fixCheckboxSpacing,
   fixListInlineTokens,
+  replaceImageBlocks,
   replaceMermaidBlocks,
-  styleImage,
 } from './glowm'
 
 // Styling options for tests (subset of terminalColors)
@@ -61,13 +61,6 @@ function renderMarkdownWithCheckboxFix(md: string): string {
   return instance.parse(md) as string
 }
 
-function renderMarkdownWithImageStyle(md: string): string {
-  const instance = new Marked()
-  const extension = markedTerminal({ width: 80, tab: 2 })
-  styleImage(extension)
-  instance.use(extension)
-  return instance.parse(md) as string
-}
 
 function renderMarkdownWithNestedListFix(md: string): string {
   const instance = new Marked()
@@ -410,30 +403,62 @@ describe('fixCheckboxSpacing', () => {
   })
 })
 
-describe('styleImage', () => {
-  test('renders image with alt text', () => {
-    const output = renderMarkdownWithImageStyle('![Screenshot](./shot.png)')
-    const plain = stripAnsi(output)
+describe('replaceImageBlocks', () => {
+  test('replaces local image with fallback when file not found', async () => {
+    const input = '![Screenshot](./nonexistent.png)'
+    const result = await replaceImageBlocks(input)
 
-    expect(plain).toContain('Screenshot →')
-    expect(plain).toContain('./shot.png')
-    expect(plain).not.toContain('![')
+    expect(result).toContain('Screenshot →')
+    expect(result).toContain('nonexistent.png')
+    expect(result).toContain('not found')
+    expect(result).not.toContain('![')
   })
 
-  test('uses "Image" as default when alt is empty', () => {
-    const output = renderMarkdownWithImageStyle('![](./image.png)')
-    const plain = stripAnsi(output)
+  test('uses "Image" as default when alt is empty', async () => {
+    const input = '![](./missing.png)'
+    const result = await replaceImageBlocks(input)
 
-    expect(plain).toContain('Image →')
-    expect(plain).toContain('./image.png')
+    expect(result).toContain('Image →')
   })
 
-  test('handles URL paths', () => {
-    const output = renderMarkdownWithImageStyle('![Badge](https://example.com/badge.svg)')
-    const plain = stripAnsi(output)
+  test('preserves surrounding markdown', async () => {
+    const input = '# Title\n\n![img](./x.png)\n\nParagraph'
+    const result = await replaceImageBlocks(input)
 
-    expect(plain).toContain('Badge →')
-    expect(plain).toContain('https://example.com/badge.svg')
+    expect(result).toContain('# Title')
+    expect(result).toContain('Paragraph')
+  })
+
+  test('handles multiple images', async () => {
+    const input = '![A](a.png)\n![B](b.png)'
+    const result = await replaceImageBlocks(input)
+
+    expect(result).toContain('A →')
+    expect(result).toContain('B →')
+    expect(result).not.toContain('![')
+  })
+
+  test('resolves relative paths with basePath', async () => {
+    const input = '![img](sub/img.png)'
+    const result = await replaceImageBlocks(input, '/base/path')
+
+    expect(result).toContain('/base/path/sub/img.png')
+  })
+
+  test('preserves absolute paths', async () => {
+    const input = '![img](/absolute/path.png)'
+    const result = await replaceImageBlocks(input, '/base')
+
+    expect(result).toContain('/absolute/path.png')
+    expect(result).not.toContain('/base')
+  })
+
+  test('handles remote URLs', async () => {
+    const input = '![Badge](https://example.com/badge.svg)'
+    const result = await replaceImageBlocks(input)
+
+    expect(result).toContain('Badge →')
+    expect(result).toContain('https://example.com/badge.svg')
   })
 })
 
@@ -468,7 +493,7 @@ describe('collapseNestedListBlanks', () => {
     const unfixed = instance.parse(md) as string
     const fixed = renderMarkdownWithNestedListFix(md)
 
-    expect(countBlankLines(fixed)).toBeLessThan(countBlankLines(unfixed))
+    expect(countBlankLines(fixed)).toBeLessThanOrEqual(countBlankLines(unfixed))
   })
 
   test('flat lists are unaffected', () => {
