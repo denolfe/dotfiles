@@ -21,6 +21,7 @@ type Theme = {
 type RendererColors = {
   blockquotePipe: ChalkInstance
   blockquoteText: ChalkInstance
+  caption: ChalkInstance
   dim: ChalkInstance
   h1: ChalkInstance
   imageLabel: ChalkInstance
@@ -60,8 +61,9 @@ export const terminalColors: MarkedTerminalOptions = {
 export const colors: RendererColors = {
   blockquotePipe: chalk.hex(theme.foreground),
   blockquoteText: chalk.hex(theme.foregroundMuted).italic,
+  caption: chalk.dim.italic,
   dim: chalk.dim,
   h1: chalk.hex('#000000').bold.bgHex(theme.blue),
   imageLabel: chalk.hex(theme.foregroundMuted),
-  imagePath: chalk.hex(theme.foregroundMuted).italic,
+  imagePath: chalk.hex(theme.foregroundMuted).underline,
 }

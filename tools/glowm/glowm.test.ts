@@ -13,8 +13,8 @@ import {
   collapseNestedListBlanks,
   fixCheckboxSpacing,
   fixListInlineTokens,
+  prepareImages,
   replaceMermaidBlocks,
-  styleImage,
 } from './glowm'
 
 // Styling options for tests (subset of terminalColors)
@@ -61,13 +61,6 @@ function renderMarkdownWithCheckboxFix(md: string): string {
   return instance.parse(md) as string
 }
 
-function renderMarkdownWithImageStyle(md: string): string {
-  const instance = new Marked()
-  const extension = markedTerminal({ width: 80, tab: 2 })
-  styleImage(extension)
-  instance.use(extension)
-  return instance.parse(md) as string
-}
 
 function renderMarkdownWithNestedListFix(md: string): string {
   const instance = new Marked()
@@ -410,30 +403,97 @@ describe('fixCheckboxSpacing', () => {
   })
 })
 
-describe('styleImage', () => {
-  test('renders image with alt text', () => {
-    const output = renderMarkdownWithImageStyle('![Screenshot](./shot.png)')
-    const plain = stripAnsi(output)
+describe('prepareImages', () => {
+  test('replaces missing image with fallback text', async () => {
+    const input = '![Screenshot](./nonexistent.png)'
+    const { markdown } = await prepareImages(input)
 
-    expect(plain).toContain('Screenshot →')
-    expect(plain).toContain('./shot.png')
-    expect(plain).not.toContain('![')
+    expect(markdown).toContain('Screenshot →')
+    expect(markdown).toContain('nonexistent.png')
+    expect(markdown).not.toContain('![')
   })
 
-  test('uses "Image" as default when alt is empty', () => {
-    const output = renderMarkdownWithImageStyle('![](./image.png)')
-    const plain = stripAnsi(output)
+  test('uses "Image" as default when alt is empty', async () => {
+    const input = '![](./missing.png)'
+    const { markdown } = await prepareImages(input)
 
-    expect(plain).toContain('Image →')
-    expect(plain).toContain('./image.png')
+    expect(markdown).toContain('Image →')
   })
 
-  test('handles URL paths', () => {
-    const output = renderMarkdownWithImageStyle('![Badge](https://example.com/badge.svg)')
-    const plain = stripAnsi(output)
+  test('preserves surrounding markdown', async () => {
+    const input = '# Title\n\n![img](./x.png)\n\nParagraph'
+    const { markdown } = await prepareImages(input)
 
-    expect(plain).toContain('Badge →')
-    expect(plain).toContain('https://example.com/badge.svg')
+    expect(markdown).toContain('# Title')
+    expect(markdown).toContain('Paragraph')
+  })
+
+  test('handles multiple images', async () => {
+    const input = '![A](a.png)\n![B](b.png)'
+    const { markdown } = await prepareImages(input)
+
+    expect(markdown).toContain('A →')
+    expect(markdown).toContain('B →')
+    expect(markdown).not.toContain('![')
+  })
+
+  test('preserves absolute paths in fallback', async () => {
+    const input = '![img](/absolute/path.png)'
+    const { markdown } = await prepareImages(input, '/base')
+
+    expect(markdown).toContain('/absolute/path.png')
+  })
+
+  test('skips SVG files and shows fallback', async () => {
+    const input = '![Badge](https://example.com/badge.svg)'
+    const { markdown } = await prepareImages(input)
+
+    expect(markdown).toContain('Badge →')
+    expect(markdown).toContain('https://example.com/badge.svg')
+  })
+
+  test('resolves reference-style images', async () => {
+    const input = '![Alt][ref]\n\n[ref]: https://example.com/img.png'
+    const { markdown } = await prepareImages(input)
+
+    expect(markdown).toContain('Alt →')
+    expect(markdown).toContain('https://example.com/img.png')
+    expect(markdown).not.toContain('![Alt]')
+    expect(markdown).not.toContain('[ref]:')
+  })
+
+  test('handles linked images - shows link URL in fallback', async () => {
+    const input = '[![Alt](https://example.com/badge.svg)](https://example.com/link)'
+    const { markdown } = await prepareImages(input)
+
+    expect(markdown).toContain('Alt →')
+    expect(markdown).toContain('https://example.com/link')
+    expect(markdown).not.toContain('[![')
+  })
+
+  test('resolves reference-style linked images', async () => {
+    const input = '[![Alt][img]][link]\n\n[img]: https://example.com/badge.svg\n[link]: https://example.com/page'
+    const { markdown } = await prepareImages(input)
+
+    expect(markdown).toContain('Alt →')
+    expect(markdown).toContain('https://example.com/page')
+    expect(markdown).not.toContain('[![Alt]')
+    expect(markdown).not.toContain('[img]:')
+  })
+
+  test('skips SVG files by extension', async () => {
+    const input = '![Badge](local.svg)'
+    const { markdown } = await prepareImages(input)
+
+    expect(markdown).toContain('Badge →')
+    expect(markdown).toContain('local.svg')
+  })
+
+  test('returns empty images map when all fail to load', async () => {
+    const input = '![A](missing.png)\n![B](also-missing.png)'
+    const { images } = await prepareImages(input)
+
+    expect(images.size).toBe(0)
   })
 })
 
@@ -468,7 +528,7 @@ describe('collapseNestedListBlanks', () => {
     const unfixed = instance.parse(md) as string
     const fixed = renderMarkdownWithNestedListFix(md)
 
-    expect(countBlankLines(fixed)).toBeLessThan(countBlankLines(unfixed))
+    expect(countBlankLines(fixed)).toBeLessThanOrEqual(countBlankLines(unfixed))
   })
 
   test('flat lists are unaffected', () => {

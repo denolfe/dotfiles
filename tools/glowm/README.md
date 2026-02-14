@@ -21,6 +21,18 @@ echo "# Hello **world**" | glowm
 
 Converts mermaid code blocks to ASCII art using [beautiful-mermaid](https://github.com/nicober/beautiful-mermaid).
 
+### Inline Images
+
+Renders images directly in the terminal using [terminal-image](https://github.com/sindresorhus/terminal-image). Uses native terminal protocols (iTerm2, Kitty, Sixel) when available, falls back to ANSI block characters.
+
+```markdown
+![Screenshot](./preview.png)
+```
+
+- Local files: resolved relative to markdown file location
+- Remote URLs: fetched and rendered inline
+- Fallback: displays "alt → path (reason)" when rendering fails
+
 ````markdown
 ```mermaid
 graph LR
