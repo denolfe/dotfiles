@@ -90,6 +90,10 @@ export function renderViewport(state: PagerState): string {
 
 /** Format info line for = command. */
 export function formatInfo(state: PagerState): string {
+  if (state.lines.length === 0) {
+    return 'lines 0-0/0 (0%)'
+  }
+
   const viewportHeight = state.termHeight - 1
   const endLine = Math.min(state.topLine + viewportHeight, state.lines.length)
   const percent = Math.round((endLine / state.lines.length) * 100)
