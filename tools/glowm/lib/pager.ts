@@ -124,14 +124,24 @@ export async function runPager(
     // Preserve relative position
     const relativePos = state.topLine / Math.max(1, state.lines.length)
 
-    // Preserve search state
-    const { searchPattern, searchMatches, searchIndex } = state
+    // Preserve search pattern
+    const { searchPattern, searchIndex } = state
 
     state = createPagerState(lines, images, termHeight, termWidth)
-    state.topLine = Math.floor(relativePos * state.lines.length)
+
+    // Restore position with bounds checking
+    const targetLine = Math.floor(relativePos * state.lines.length)
+    goTo(state, targetLine)
+
+    // Recalculate search matches for new line structure
     state.searchPattern = searchPattern
-    state.searchMatches = searchMatches
-    state.searchIndex = searchIndex
+    if (searchPattern) {
+      state.searchMatches = findMatches(state.lines, searchPattern)
+      state.searchIndex = Math.min(searchIndex, Math.max(0, state.searchMatches.length - 1))
+    } else {
+      state.searchMatches = []
+      state.searchIndex = -1
+    }
 
     render(state)
   }
