@@ -107,11 +107,36 @@ export async function runPager(
   content: string,
   images: Map<string, ImageData>
 ): Promise<void> {
-  const termHeight = process.stdout.rows || 24
-  const termWidth = process.stdout.columns || 80
+  let termHeight = process.stdout.rows || 24
+  let termWidth = process.stdout.columns || 80
 
-  const lines = splitIntoLines(content, termWidth)
-  const state = createPagerState(lines, images, termHeight, termWidth)
+  let lines = splitIntoLines(content, termWidth)
+  let state = createPagerState(lines, images, termHeight, termWidth)
+
+  // Handle terminal resize
+  const handleResize = () => {
+    termHeight = process.stdout.rows || 24
+    termWidth = process.stdout.columns || 80
+
+    // Re-split lines for new width
+    lines = splitIntoLines(content, termWidth)
+
+    // Preserve relative position
+    const relativePos = state.topLine / Math.max(1, state.lines.length)
+
+    // Preserve search state
+    const { searchPattern, searchMatches, searchIndex } = state
+
+    state = createPagerState(lines, images, termHeight, termWidth)
+    state.topLine = Math.floor(relativePos * state.lines.length)
+    state.searchPattern = searchPattern
+    state.searchMatches = searchMatches
+    state.searchIndex = searchIndex
+
+    render(state)
+  }
+
+  process.stdout.on('resize', handleResize)
 
   // Set up raw mode
   if (process.stdin.isTTY) {
@@ -179,6 +204,7 @@ export async function runPager(
     }
 
     const cleanup = () => {
+      process.stdout.removeListener('resize', handleResize)
       process.stdin.removeListener('data', handleKey)
       process.stdin.pause()
       if (process.stdin.isTTY) {
