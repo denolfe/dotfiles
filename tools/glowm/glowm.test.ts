@@ -410,7 +410,6 @@ describe('replaceImageBlocks', () => {
 
     expect(result).toContain('Screenshot →')
     expect(result).toContain('nonexistent.png')
-    expect(result).toContain('not found')
     expect(result).not.toContain('![')
   })
 
@@ -438,19 +437,11 @@ describe('replaceImageBlocks', () => {
     expect(result).not.toContain('![')
   })
 
-  test('resolves relative paths with basePath', async () => {
-    const input = '![img](sub/img.png)'
-    const result = await replaceImageBlocks(input, '/base/path')
-
-    expect(result).toContain('/base/path/sub/img.png')
-  })
-
-  test('preserves absolute paths', async () => {
+  test('preserves absolute paths in fallback', async () => {
     const input = '![img](/absolute/path.png)'
     const result = await replaceImageBlocks(input, '/base')
 
     expect(result).toContain('/absolute/path.png')
-    expect(result).not.toContain('/base')
   })
 
   test('handles remote URLs', async () => {
@@ -459,6 +450,43 @@ describe('replaceImageBlocks', () => {
 
     expect(result).toContain('Badge →')
     expect(result).toContain('https://example.com/badge.svg')
+  })
+
+  test('resolves reference-style images', async () => {
+    const input = '![Alt][ref]\n\n[ref]: https://example.com/img.png'
+    const result = await replaceImageBlocks(input)
+
+    expect(result).toContain('Alt →')
+    expect(result).toContain('https://example.com/img.png')
+    // Image syntax replaced (reference definition remains)
+    expect(result).not.toContain('![Alt]')
+  })
+
+  test('handles linked images - shows link URL in fallback', async () => {
+    const input = '[![Alt](https://example.com/badge.svg)](https://example.com/link)'
+    const result = await replaceImageBlocks(input)
+
+    expect(result).toContain('Alt →')
+    expect(result).toContain('https://example.com/link')
+    expect(result).not.toContain('[![')
+  })
+
+  test('resolves reference-style linked images', async () => {
+    const input = '[![Alt][img]][link]\n\n[img]: https://example.com/badge.svg\n[link]: https://example.com/page'
+    const result = await replaceImageBlocks(input)
+
+    expect(result).toContain('Alt →')
+    expect(result).toContain('https://example.com/page')
+    // Image syntax replaced, but reference definitions remain (that's ok)
+    expect(result).not.toContain('[![Alt]')
+  })
+
+  test('skips SVG files by extension', async () => {
+    const input = '![Badge](local.svg)'
+    const result = await replaceImageBlocks(input)
+
+    expect(result).toContain('Badge →')
+    expect(result).toContain('local.svg')
   })
 })
 

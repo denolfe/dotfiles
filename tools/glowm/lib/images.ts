@@ -6,7 +6,11 @@ import terminalImage from 'terminal-image'
 
 import { colors } from './colors'
 
+// Linked image: [![alt](img)](url) - must match before plain image
+const LINKED_IMAGE_REGEX = /\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)/g
 const IMAGE_REGEX = /!\[([^\]]*)\]\(([^)]+)\)/g
+const REF_IMAGE_REGEX = /!\[([^\]]*)\]\[([^\]]+)\]/g
+const REF_DEFINITION_REGEX = /^\[([^\]]+)\]:\s*(.+)$/gm
 const IMAGE_WIDTH = '50%'
 const CHUNK_SIZE = 4096
 const IMAGE_PLACEHOLDER = '\x00IMG:'
@@ -17,6 +21,7 @@ type ImageMatch = {
   alt: string
   src: string
   index: number
+  link?: string // For linked images [![alt](img)](link)
 }
 
 type ImageData = {
@@ -42,14 +47,16 @@ export async function prepareImages(
   markdown: string,
   basePath?: string
 ): Promise<PreparedImages> {
-  const matches = parseImageMatches(markdown)
+  // Resolve reference-style images to inline syntax first
+  const resolved = resolveReferenceImages(markdown)
+  const matches = parseImageMatches(resolved)
   const images = new Map<string, ImageData>()
 
   if (matches.length === 0) {
-    return { markdown, images }
+    return { markdown: resolved, images }
   }
 
-  let result = markdown
+  let result = resolved
   // Process in reverse to preserve indices
   for (let i = matches.length - 1; i >= 0; i--) {
     const match = matches[i]
@@ -62,7 +69,7 @@ export async function prepareImages(
         result.slice(0, match.index) + id + result.slice(match.index + match.full.length)
     } else {
       // Failed to load - use fallback text
-      const fallback = formatFallback(match.alt, match.src, 'failed to load')
+      const fallback = formatFallback(match.alt, match.src, match.link)
       result =
         result.slice(0, match.index) +
         fallback +
@@ -178,14 +185,16 @@ export async function replaceImageBlocks(
   markdown: string,
   basePath?: string
 ): Promise<string> {
-  const matches = parseImageMatches(markdown)
-  if (matches.length === 0) return markdown
+  // Resolve reference-style images first
+  const resolved = resolveReferenceImages(markdown)
+  const matches = parseImageMatches(resolved)
+  if (matches.length === 0) return resolved
 
   const replacements = await Promise.all(
     matches.map(match => renderImageReplacement(match, basePath))
   )
 
-  let result = markdown
+  let result = resolved
   for (let i = matches.length - 1; i >= 0; i--) {
     const match = matches[i]
     result =
@@ -199,18 +208,70 @@ export async function replaceImageBlocks(
 
 function parseImageMatches(markdown: string): ImageMatch[] {
   const matches: ImageMatch[] = []
+  const matchedRanges: Array<[number, number]> = []
   let match: RegExpExecArray | null
 
-  while ((match = IMAGE_REGEX.exec(markdown)) !== null) {
+  // First, find linked images [![alt](img)](url)
+  while ((match = LINKED_IMAGE_REGEX.exec(markdown)) !== null) {
     matches.push({
       full: match[0],
       alt: match[1],
       src: match[2],
+      link: match[3],
       index: match.index,
     })
+    matchedRanges.push([match.index, match.index + match[0].length])
   }
 
-  return matches
+  // Then find plain images, excluding already matched ranges
+  while ((match = IMAGE_REGEX.exec(markdown)) !== null) {
+    const start = match.index
+    const end = start + match[0].length
+    const overlaps = matchedRanges.some(([s, e]) => start >= s && end <= e)
+    if (!overlaps) {
+      matches.push({
+        full: match[0],
+        alt: match[1],
+        src: match[2],
+        index: match.index,
+      })
+    }
+  }
+
+  // Sort by index for correct replacement order
+  return matches.sort((a, b) => a.index - b.index)
+}
+
+/** Resolve reference-style images and links to inline syntax */
+function resolveReferenceImages(markdown: string): string {
+  // Parse reference definitions [ref]: url
+  const refs = new Map<string, string>()
+  let match: RegExpExecArray | null
+
+  while ((match = REF_DEFINITION_REGEX.exec(markdown)) !== null) {
+    refs.set(match[1].toLowerCase(), match[2].trim())
+  }
+
+  if (refs.size === 0) return markdown
+
+  let result = markdown
+
+  // Resolve reference-style linked images: [![alt][imgref]][linkref]
+  const refLinkedImageRegex = /\[!\[([^\]]*)\]\[([^\]]+)\]\]\[([^\]]+)\]/g
+  result = result.replace(refLinkedImageRegex, (full, alt, imgRef, linkRef) => {
+    const imgUrl = refs.get(imgRef.toLowerCase())
+    const linkUrl = refs.get(linkRef.toLowerCase())
+    if (imgUrl && linkUrl) return `[![${alt}](${imgUrl})](${linkUrl})`
+    return full
+  })
+
+  // Resolve reference-style images: ![alt][ref]
+  result = result.replace(REF_IMAGE_REGEX, (full, alt, ref) => {
+    const url = refs.get(ref.toLowerCase())
+    return url ? `![${alt}](${url})` : full
+  })
+
+  return result
 }
 
 async function loadImage(
@@ -224,10 +285,17 @@ async function loadImage(
     imagePath = path.resolve(basePath, src)
   }
 
+  // Skip SVG files (can't be rendered by terminal-image)
+  if (isSvgPath(imagePath)) return null
+
   try {
     if (imagePath.startsWith('http')) {
       const response = await fetch(imagePath)
       if (!response.ok) return null
+
+      const contentType = response.headers.get('content-type') ?? ''
+      if (contentType.includes('svg')) return null
+
       const arrayBuffer = await response.arrayBuffer()
       return { buffer: Buffer.from(arrayBuffer), alt }
     }
@@ -239,13 +307,17 @@ async function loadImage(
   }
 }
 
+function isSvgPath(path: string): boolean {
+  return path.toLowerCase().endsWith('.svg')
+}
+
 async function renderImageReplacement(
   match: ImageMatch,
   basePath?: string
 ): Promise<string> {
   const imageData = await loadImage(match, basePath)
   if (!imageData) {
-    return formatFallback(match.alt, match.src, 'failed to load')
+    return formatFallback(match.alt, match.src, match.link)
   }
 
   const rendered = await terminalImage.buffer(imageData.buffer, {
@@ -265,9 +337,12 @@ function formatRenderedImage(rendered: string, alt: string): string {
   return `\n${indented}${caption}\n`
 }
 
-function formatFallback(alt: string, src: string, reason: string): string {
+function formatFallback(alt: string, src: string, link?: string): string {
   const label = colors.imageLabel(`${alt || 'Image'} →`)
   const styledPath = colors.imagePath(src)
-  const error = colors.dim(`(${reason})`)
-  return `${IMAGE_INDENT}${label} ${styledPath} ${error}`
+  if (link) {
+    const styledLink = colors.imagePath(link)
+    return `${IMAGE_INDENT}${label} ${styledLink}`
+  }
+  return `${IMAGE_INDENT}${label} ${styledPath}`
 }
