@@ -13,7 +13,7 @@ import {
   collapseNestedListBlanks,
   fixCheckboxSpacing,
   fixListInlineTokens,
-  replaceImageBlocks,
+  prepareImages,
   replaceMermaidBlocks,
 } from './glowm'
 
@@ -403,90 +403,97 @@ describe('fixCheckboxSpacing', () => {
   })
 })
 
-describe('replaceImageBlocks', () => {
-  test('replaces local image with fallback when file not found', async () => {
+describe('prepareImages', () => {
+  test('replaces missing image with fallback text', async () => {
     const input = '![Screenshot](./nonexistent.png)'
-    const result = await replaceImageBlocks(input)
+    const { markdown } = await prepareImages(input)
 
-    expect(result).toContain('Screenshot →')
-    expect(result).toContain('nonexistent.png')
-    expect(result).not.toContain('![')
+    expect(markdown).toContain('Screenshot →')
+    expect(markdown).toContain('nonexistent.png')
+    expect(markdown).not.toContain('![')
   })
 
   test('uses "Image" as default when alt is empty', async () => {
     const input = '![](./missing.png)'
-    const result = await replaceImageBlocks(input)
+    const { markdown } = await prepareImages(input)
 
-    expect(result).toContain('Image →')
+    expect(markdown).toContain('Image →')
   })
 
   test('preserves surrounding markdown', async () => {
     const input = '# Title\n\n![img](./x.png)\n\nParagraph'
-    const result = await replaceImageBlocks(input)
+    const { markdown } = await prepareImages(input)
 
-    expect(result).toContain('# Title')
-    expect(result).toContain('Paragraph')
+    expect(markdown).toContain('# Title')
+    expect(markdown).toContain('Paragraph')
   })
 
   test('handles multiple images', async () => {
     const input = '![A](a.png)\n![B](b.png)'
-    const result = await replaceImageBlocks(input)
+    const { markdown } = await prepareImages(input)
 
-    expect(result).toContain('A →')
-    expect(result).toContain('B →')
-    expect(result).not.toContain('![')
+    expect(markdown).toContain('A →')
+    expect(markdown).toContain('B →')
+    expect(markdown).not.toContain('![')
   })
 
   test('preserves absolute paths in fallback', async () => {
     const input = '![img](/absolute/path.png)'
-    const result = await replaceImageBlocks(input, '/base')
+    const { markdown } = await prepareImages(input, '/base')
 
-    expect(result).toContain('/absolute/path.png')
+    expect(markdown).toContain('/absolute/path.png')
   })
 
-  test('handles remote URLs', async () => {
+  test('skips SVG files and shows fallback', async () => {
     const input = '![Badge](https://example.com/badge.svg)'
-    const result = await replaceImageBlocks(input)
+    const { markdown } = await prepareImages(input)
 
-    expect(result).toContain('Badge →')
-    expect(result).toContain('https://example.com/badge.svg')
+    expect(markdown).toContain('Badge →')
+    expect(markdown).toContain('https://example.com/badge.svg')
   })
 
   test('resolves reference-style images', async () => {
     const input = '![Alt][ref]\n\n[ref]: https://example.com/img.png'
-    const result = await replaceImageBlocks(input)
+    const { markdown } = await prepareImages(input)
 
-    expect(result).toContain('Alt →')
-    expect(result).toContain('https://example.com/img.png')
-    // Image syntax replaced (reference definition remains)
-    expect(result).not.toContain('![Alt]')
+    expect(markdown).toContain('Alt →')
+    expect(markdown).toContain('https://example.com/img.png')
+    expect(markdown).not.toContain('![Alt]')
+    expect(markdown).not.toContain('[ref]:')
   })
 
   test('handles linked images - shows link URL in fallback', async () => {
     const input = '[![Alt](https://example.com/badge.svg)](https://example.com/link)'
-    const result = await replaceImageBlocks(input)
+    const { markdown } = await prepareImages(input)
 
-    expect(result).toContain('Alt →')
-    expect(result).toContain('https://example.com/link')
-    expect(result).not.toContain('[![')
+    expect(markdown).toContain('Alt →')
+    expect(markdown).toContain('https://example.com/link')
+    expect(markdown).not.toContain('[![')
   })
 
   test('resolves reference-style linked images', async () => {
     const input = '[![Alt][img]][link]\n\n[img]: https://example.com/badge.svg\n[link]: https://example.com/page'
-    const result = await replaceImageBlocks(input)
+    const { markdown } = await prepareImages(input)
 
-    expect(result).toContain('Alt →')
-    expect(result).toContain('https://example.com/page')
-    // Image syntax replaced, but reference definitions remain (that's ok)
-    expect(result).not.toContain('[![Alt]')
+    expect(markdown).toContain('Alt →')
+    expect(markdown).toContain('https://example.com/page')
+    expect(markdown).not.toContain('[![Alt]')
+    expect(markdown).not.toContain('[img]:')
   })
 
   test('skips SVG files by extension', async () => {
     const input = '![Badge](local.svg)'
-    const result = await replaceImageBlocks(input)
+    const { markdown } = await prepareImages(input)
 
-    expect(result).toContain('Badge →')
-    expect(result).toContain('local.svg')
+    expect(markdown).toContain('Badge →')
+    expect(markdown).toContain('local.svg')
+  })
+
+  test('returns empty images map when all fail to load', async () => {
+    const input = '![A](missing.png)\n![B](also-missing.png)'
+    const { images } = await prepareImages(input)
+
+    expect(images.size).toBe(0)
   })
 })
 

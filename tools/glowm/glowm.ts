@@ -6,7 +6,7 @@ import { marked } from 'marked'
 import { markedTerminal } from 'marked-terminal'
 
 import { terminalColors } from './lib/colors'
-import { outputWithImages, prepareImages, replaceImageBlocks } from './lib/images'
+import { outputWithImages, prepareImages } from './lib/images'
 import {
   addBlockquotePipe,
   addCodeBlockBox,
@@ -23,13 +23,7 @@ import {
 import type { TerminalExtension } from './lib/renderers'
 import { readInput } from './lib/utils'
 
-export {
-  MERMAID_BLOCK_REGEX,
-  replaceMermaidBlocks,
-  replaceImageBlocks,
-  prepareImages,
-  outputWithImages,
-}
+export { MERMAID_BLOCK_REGEX, replaceMermaidBlocks, prepareImages, outputWithImages }
 export {
   addBlockquotePipe,
   addCodeBlockBox,

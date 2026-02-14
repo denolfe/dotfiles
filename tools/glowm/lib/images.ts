@@ -180,32 +180,6 @@ function writeKittyImage(buffer: Buffer): void {
   }
 }
 
-// Legacy export for backwards compatibility
-export async function replaceImageBlocks(
-  markdown: string,
-  basePath?: string
-): Promise<string> {
-  // Resolve reference-style images first
-  const resolved = resolveReferenceImages(markdown)
-  const matches = parseImageMatches(resolved)
-  if (matches.length === 0) return resolved
-
-  const replacements = await Promise.all(
-    matches.map(match => renderImageReplacement(match, basePath))
-  )
-
-  let result = resolved
-  for (let i = matches.length - 1; i >= 0; i--) {
-    const match = matches[i]
-    result =
-      result.slice(0, match.index) +
-      replacements[i] +
-      result.slice(match.index + match.full.length)
-  }
-
-  return result
-}
-
 function parseImageMatches(markdown: string): ImageMatch[] {
   const matches: ImageMatch[] = []
   const matchedRanges: Array<[number, number]> = []
@@ -278,6 +252,10 @@ function resolveReferenceImages(markdown: string): string {
     return url ? `![${alt}](${url})` : full
   })
 
+  // Strip reference definition lines (they've been resolved)
+  REF_DEFINITION_REGEX.lastIndex = 0
+  result = result.replace(REF_DEFINITION_REGEX, '')
+
   return result
 }
 
@@ -297,7 +275,11 @@ async function loadImage(
 
   try {
     if (imagePath.startsWith('http')) {
-      const response = await fetch(imagePath)
+      const controller = new AbortController()
+      const timeout = setTimeout(() => controller.abort(), 5000)
+      const response = await fetch(imagePath, { signal: controller.signal })
+      clearTimeout(timeout)
+
       if (!response.ok) return null
 
       const contentType = response.headers.get('content-type') ?? ''
@@ -316,32 +298,6 @@ async function loadImage(
 
 function isSvgPath(path: string): boolean {
   return path.toLowerCase().endsWith('.svg')
-}
-
-async function renderImageReplacement(
-  match: ImageMatch,
-  basePath?: string
-): Promise<string> {
-  const imageData = await loadImage(match, basePath)
-  if (!imageData) {
-    return formatFallback(match.alt, match.src, match.link)
-  }
-
-  const rendered = await terminalImage.buffer(imageData.buffer, {
-    width: IMAGE_WIDTH,
-    preferNativeRender: false,
-  })
-  return formatRenderedImage(rendered, imageData.alt)
-}
-
-function formatRenderedImage(rendered: string, alt: string): string {
-  const caption = alt ? `\n${IMAGE_INDENT}${colors.dim(alt)}` : ''
-  // Indent each line
-  const indented = rendered
-    .split('\n')
-    .map(line => (line ? IMAGE_INDENT + line : line))
-    .join('\n')
-  return `\n${indented}${caption}\n`
 }
 
 function formatFallback(alt: string, src: string, link?: string): string {
