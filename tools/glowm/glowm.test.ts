@@ -16,6 +16,8 @@ import {
   prepareImages,
   replaceMermaidBlocks,
 } from './glowm'
+import { splitIntoLines } from './lib/lines'
+import { createPagerState, scroll, isAtEnd, formatInfo } from './lib/pager'
 
 // Styling options for tests (subset of terminalColors)
 const testColors = {
@@ -560,5 +562,42 @@ describe('collapseNestedListBlanks', () => {
     expect(plain).toContain('Child B')
     expect(plain).toContain('Deep')
     expect(plain).toContain('Sibling')
+  })
+})
+
+describe('pager integration', () => {
+  test('splitIntoLines handles typical markdown output', () => {
+    const content = '# Title\n\nParagraph text\n\n- List item'
+    const lines = splitIntoLines(content, 80)
+
+    expect(lines.length).toBeGreaterThan(0)
+    expect(lines.some(l => l.content.includes('Title'))).toBe(true)
+  })
+
+  test('pager state tracks position correctly', () => {
+    const lines = Array.from({ length: 100 }, (_, i) => ({
+      content: `Line ${i}`,
+      imageRef: undefined,
+    }))
+    const state = createPagerState(lines, new Map(), 24, 80)
+
+    expect(state.topLine).toBe(0)
+    expect(isAtEnd(state)).toBe(false)
+
+    scroll(state, 80)
+    expect(isAtEnd(state)).toBe(true)
+  })
+
+  test('formatInfo shows correct percentage', () => {
+    const lines = Array.from({ length: 100 }, (_, i) => ({
+      content: `Line ${i}`,
+      imageRef: undefined,
+    }))
+    const state = createPagerState(lines, new Map(), 24, 80)
+    state.topLine = 50
+
+    const info = formatInfo(state)
+    expect(info).toMatch(/lines 51-73\/100/)
+    expect(info).toMatch(/73%/)
   })
 })
