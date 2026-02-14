@@ -111,7 +111,7 @@ export async function outputWithImages(
 
 async function outputImage(imageData: ImageData, useKitty: boolean): Promise<void> {
   const { buffer, alt } = imageData
-  const caption = alt ? `\n${IMAGE_INDENT}${colors.dim(alt)}\n` : '\n'
+  const imageColumns = calculateImageColumns()
 
   process.stdout.write('\n')
 
@@ -131,7 +131,22 @@ async function outputImage(imageData: ImageData, useKitty: boolean): Promise<voi
     process.stdout.write(indented)
   }
 
-  process.stdout.write(caption)
+  process.stdout.write(formatCaption(alt, imageColumns))
+}
+
+function calculateImageColumns(): number {
+  const termWidth = process.stdout.columns || 80
+  const percentage = Number.parseFloat(IMAGE_WIDTH) / 100
+  return Math.floor((termWidth - 2) * percentage)
+}
+
+function formatCaption(alt: string, imageWidth: number): string {
+  if (!alt) return '\n'
+
+  // Center the caption within image width
+  const padding = Math.max(0, Math.floor((imageWidth - alt.length) / 2))
+  const centered = ' '.repeat(padding) + alt
+  return `\n${IMAGE_INDENT}${colors.caption(centered)}\n`
 }
 
 /** Write image using Kitty graphics protocol directly to stdout. */
