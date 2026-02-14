@@ -10,6 +10,7 @@ const IMAGE_REGEX = /!\[([^\]]*)\]\(([^)]+)\)/g
 const IMAGE_WIDTH = '50%'
 const CHUNK_SIZE = 4096
 const IMAGE_PLACEHOLDER = '\x00IMG:'
+const IMAGE_INDENT = '  '
 
 type ImageMatch = {
   full: string
@@ -110,18 +111,24 @@ export async function outputWithImages(
 
 async function outputImage(imageData: ImageData, useKitty: boolean): Promise<void> {
   const { buffer, alt } = imageData
-  const caption = alt ? `\n  ${colors.dim(alt)}\n` : '\n'
+  const caption = alt ? `\n${IMAGE_INDENT}${colors.dim(alt)}\n` : '\n'
 
   process.stdout.write('\n')
 
   if (useKitty) {
+    process.stdout.write(IMAGE_INDENT)
     writeKittyImage(buffer)
   } else {
     const rendered = await terminalImage.buffer(buffer, {
       width: IMAGE_WIDTH,
       preferNativeRender: false,
     })
-    process.stdout.write(rendered)
+    // Indent each line of ANSI block output
+    const indented = rendered
+      .split('\n')
+      .map(line => (line ? IMAGE_INDENT + line : line))
+      .join('\n')
+    process.stdout.write(indented)
   }
 
   process.stdout.write(caption)
@@ -234,13 +241,18 @@ async function renderImageReplacement(
 }
 
 function formatRenderedImage(rendered: string, alt: string): string {
-  const caption = alt ? `\n  ${colors.dim(alt)}` : ''
-  return `\n${rendered}${caption}\n`
+  const caption = alt ? `\n${IMAGE_INDENT}${colors.dim(alt)}` : ''
+  // Indent each line
+  const indented = rendered
+    .split('\n')
+    .map(line => (line ? IMAGE_INDENT + line : line))
+    .join('\n')
+  return `\n${indented}${caption}\n`
 }
 
 function formatFallback(alt: string, src: string, reason: string): string {
   const label = colors.imageLabel(`${alt || 'Image'} →`)
   const styledPath = colors.imagePath(src)
   const error = colors.dim(`(${reason})`)
-  return `${label} ${styledPath} ${error}`
+  return `${IMAGE_INDENT}${label} ${styledPath} ${error}`
 }
