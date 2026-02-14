@@ -89,7 +89,7 @@ export async function outputWithImages(
   rendered: string,
   images: Map<string, ImageData>
 ): Promise<void> {
-  const useKitty = useKittyProtocol()
+  const isKittySupported = useKittyProtocol()
 
   // Find all placeholders and split content
   const placeholderRegex = /\x00IMG:\d+\x00/g
@@ -105,7 +105,7 @@ export async function outputWithImages(
     const placeholder = match[0]
     const imageData = images.get(placeholder)
     if (imageData) {
-      await outputImage(imageData, useKitty)
+      await outputImage(imageData, isKittySupported)
     }
 
     lastIndex = match.index + placeholder.length
@@ -116,13 +116,13 @@ export async function outputWithImages(
   if (remaining) process.stdout.write(remaining)
 }
 
-async function outputImage(imageData: ImageData, useKitty: boolean): Promise<void> {
+async function outputImage(imageData: ImageData, isKittySupported: boolean): Promise<void> {
   const { buffer, alt } = imageData
   const imageColumns = calculateImageColumns()
 
   process.stdout.write('\n')
 
-  if (useKitty) {
+  if (isKittySupported) {
     process.stdout.write(IMAGE_INDENT)
     writeKittyImage(buffer)
   } else {
@@ -159,11 +159,7 @@ function formatCaption(alt: string, imageWidth: number): string {
 /** Write image using Kitty graphics protocol directly to stdout. */
 function writeKittyImage(buffer: Buffer): void {
   const base64 = buffer.toString('base64')
-
-  // Calculate columns
-  const termWidth = process.stdout.columns || 80
-  const percentage = Number.parseFloat(IMAGE_WIDTH) / 100
-  const columns = Math.floor((termWidth - 2) * percentage)
+  const columns = calculateImageColumns()
 
   // Send in chunks
   for (let i = 0; i < base64.length; i += CHUNK_SIZE) {
