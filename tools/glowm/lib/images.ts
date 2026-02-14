@@ -305,3 +305,40 @@ function formatFallback(alt: string, src: string, link?: string): string {
   }
   return `${IMAGE_INDENT}${label} ${styledPath}`
 }
+
+/**
+ * Render single image to stdout (for pager use).
+ * Returns approximate height in rows.
+ */
+export async function renderImage(
+  imageData: ImageData,
+  isKittySupported: boolean
+): Promise<number> {
+  const { buffer, alt } = imageData
+  const imageColumns = calculateImageColumns()
+
+  process.stdout.write('\n')
+
+  if (isKittySupported) {
+    process.stdout.write(IMAGE_INDENT)
+    writeKittyImage(buffer)
+  } else {
+    const rendered = await terminalImage.buffer(buffer, {
+      width: IMAGE_WIDTH,
+      preferNativeRender: false,
+    })
+    const indented = rendered
+      .split('\n')
+      .map(line => (line ? IMAGE_INDENT + line : line))
+      .join('\n')
+    process.stdout.write(indented)
+  }
+
+  process.stdout.write(formatCaption(alt, imageColumns))
+
+  // Return approximate height in rows (rough estimate)
+  // TODO: Calculate actual height from image dimensions
+  return 10
+}
+
+export type { ImageData }

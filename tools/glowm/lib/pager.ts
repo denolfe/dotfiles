@@ -1,14 +1,11 @@
 import { ANSI } from './ansi'
+import type { ImageData } from './images'
+import { renderImage, useKittyProtocol } from './images'
 import { parseKey, KEY } from './keys'
 import type { Line } from './lines'
 import { splitIntoLines } from './lines'
 import type { Match } from './search'
 import { findMatches, highlightLine } from './search'
-
-type ImageData = {
-  buffer: Buffer
-  alt: string
-}
 
 export type PagerState = {
   lines: Line[]
@@ -124,7 +121,7 @@ export async function runPager(
   process.stdout.write(ANSI.cursorHide)
 
   // Initial render
-  render(state)
+  await render(state)
 
   return new Promise<void>((resolve) => {
     const handleKey = async (data: Buffer) => {
@@ -178,7 +175,7 @@ export async function runPager(
           return
       }
 
-      render(state)
+      await render(state)
     }
 
     const cleanup = () => {
@@ -195,10 +192,58 @@ export async function runPager(
   })
 }
 
-/** Render current state to terminal. */
-function render(state: PagerState): void {
-  const output = renderViewport(state)
-  process.stdout.write(output)
+/** Estimated image height in terminal rows. */
+const IMAGE_HEIGHT_ESTIMATE = 10
+
+/** Render current state to terminal with image support. */
+async function render(state: PagerState): Promise<void> {
+  const viewportHeight = state.termHeight - 1
+  const isKitty = useKittyProtocol()
+
+  process.stdout.write(ANSI.clearScreen + ANSI.cursorHome)
+
+  let rowsUsed = 0
+  let lineIndex = state.topLine
+
+  while (rowsUsed < viewportHeight && lineIndex < state.lines.length) {
+    const line = state.lines[lineIndex]!
+
+    if (line.imageRef) {
+      const imageData = state.images.get(line.imageRef)
+      if (imageData) {
+        // Check if image fits in remaining viewport
+        const remainingRows = viewportHeight - rowsUsed
+        if (remainingRows < IMAGE_HEIGHT_ESTIMATE) {
+          process.stdout.write('[Image clipped]\n')
+          rowsUsed++
+        } else {
+          const heightUsed = await renderImage(imageData, isKitty)
+          rowsUsed += heightUsed
+        }
+      } else {
+        process.stdout.write('[Image]\n')
+        rowsUsed++
+      }
+    } else {
+      let content = line.content
+      if (state.searchMatches.length > 0) {
+        content = highlightLine(content, state.searchMatches, lineIndex)
+      }
+      process.stdout.write(content + '\n')
+      rowsUsed++
+    }
+
+    lineIndex++
+  }
+
+  // Fill remaining rows with ~ (vim style)
+  while (rowsUsed < viewportHeight) {
+    process.stdout.write('~\n')
+    rowsUsed++
+  }
+
+  // Prompt line
+  process.stdout.write(isAtEnd(state) ? '(END)' : ':')
 }
 
 /** Handle search input. */
