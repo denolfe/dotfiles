@@ -59,7 +59,7 @@ export async function prepareImages(
   let result = resolved
   // Process in reverse to preserve indices
   for (let i = matches.length - 1; i >= 0; i--) {
-    const match = matches[i]
+    const match = matches[i]!
     const imageData = await loadImage(match, basePath)
 
     if (imageData) {
@@ -193,9 +193,9 @@ function parseImageMatches(markdown: string): ImageMatch[] {
   while ((match = LINKED_IMAGE_REGEX.exec(markdown)) !== null) {
     matches.push({
       full: match[0],
-      alt: match[1],
-      src: match[2],
-      link: match[3],
+      alt: match[1]!,
+      src: match[2]!,
+      link: match[3]!,
       index: match.index,
     })
     matchedRanges.push([match.index, match.index + match[0].length])
@@ -209,8 +209,8 @@ function parseImageMatches(markdown: string): ImageMatch[] {
     if (!overlaps) {
       matches.push({
         full: match[0],
-        alt: match[1],
-        src: match[2],
+        alt: match[1]!,
+        src: match[2]!,
         index: match.index,
       })
     }
@@ -230,7 +230,7 @@ function resolveReferenceImages(markdown: string): string {
   REF_DEFINITION_REGEX.lastIndex = 0
 
   while ((match = REF_DEFINITION_REGEX.exec(markdown)) !== null) {
-    refs.set(match[1].toLowerCase(), match[2].trim())
+    refs.set(match[1]!.toLowerCase(), match[2]!.trim())
   }
 
   if (refs.size === 0) return markdown
