@@ -7,7 +7,8 @@ export type Line = {
   isHeader?: boolean
 }
 
-const IMAGE_PLACEHOLDER_REGEX = /^\x00IMG:\d+\x00$/
+// Match placeholder with optional surrounding ANSI codes/whitespace
+const IMAGE_PLACEHOLDER_REGEX = /^(?:\x1b\[[0-9;]*m|\s)*(\x00IMG:\d+\x00)(?:\x1b\[[0-9;]*m|\s)*$/
 
 /**
  * Wrap a single line to fit within width, preserving ANSI codes.
@@ -57,8 +58,9 @@ export function splitIntoLines(content: string, width: number): Line[] {
 
   for (let raw of rawLines) {
     // Check for image placeholder
-    if (IMAGE_PLACEHOLDER_REGEX.test(raw.trim())) {
-      result.push({ content: raw, imageRef: raw.trim() })
+    const imageMatch = raw.match(IMAGE_PLACEHOLDER_REGEX)
+    if (imageMatch) {
+      result.push({ content: raw, imageRef: imageMatch[1] })
       continue
     }
 

@@ -3,6 +3,8 @@
 export const KEY = {
   UP: 'up',
   DOWN: 'down',
+  SCROLL_UP: 'scroll_up',
+  SCROLL_DOWN: 'scroll_down',
   PAGE_UP: 'page_up',
   PAGE_DOWN: 'page_down',
   HALF_UP: 'half_up',
@@ -11,8 +13,6 @@ export const KEY = {
   BOTTOM: 'bottom',
   SEARCH: 'search',
   SEARCH_BACK: 'search_back',
-  NEXT_MATCH: 'next_match',
-  PREV_MATCH: 'prev_match',
   NEXT_HEADER: 'next_header',
   PREV_HEADER: 'prev_header',
   INFO: 'info',
@@ -60,8 +60,6 @@ const KEY_MAP: Record<string, KeyAction> = {
   // Search
   '/': KEY.SEARCH,
   '?': KEY.SEARCH_BACK,
-  '\x0e': KEY.NEXT_MATCH, // Ctrl+N
-  '\x10': KEY.PREV_MATCH, // Ctrl+P
 
   // Header navigation
   'n': KEY.NEXT_HEADER,
@@ -76,7 +74,15 @@ const KEY_MAP: Record<string, KeyAction> = {
   '\x03': KEY.QUIT, // Ctrl+C
 }
 
+// SGR mouse scroll: \x1b[<64;col;rowM (up) or \x1b[<65;col;rowM (down)
+const MOUSE_SCROLL_REGEX = /^\x1b\[<(64|65);\d+;\d+M$/
+
 /** Parse raw key input into action. */
 export function parseKey(data: string): KeyAction {
+  // Check for mouse scroll first
+  const mouseMatch = data.match(MOUSE_SCROLL_REGEX)
+  if (mouseMatch) {
+    return mouseMatch[1] === '64' ? KEY.SCROLL_UP : KEY.SCROLL_DOWN
+  }
   return KEY_MAP[data] ?? KEY.UNKNOWN
 }

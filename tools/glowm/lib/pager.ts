@@ -1,6 +1,6 @@
 import { ANSI } from './ansi'
+import { colors } from './colors'
 import type { ImageData } from './images'
-import { renderImage, useKittyProtocol } from './images'
 import { parseKey, KEY } from './keys'
 import type { Line } from './lines'
 import { splitIntoLines } from './lines'
@@ -148,12 +148,12 @@ export async function runPager(
 
   process.stdout.on('resize', handleResize)
 
-  // Set up raw mode
+  // Set up raw mode and mouse
   if (process.stdin.isTTY) {
     process.stdin.setRawMode(true)
   }
   process.stdin.resume()
-  process.stdout.write(ANSI.cursorHide)
+  process.stdout.write(ANSI.cursorHide + ANSI.mouseOn)
 
   // Initial render
   await render(state)
@@ -166,9 +166,11 @@ export async function runPager(
       switch (key) {
         case KEY.DOWN:
         case KEY.ENTER:
+        case KEY.SCROLL_DOWN:
           scroll(state, 1)
           break
         case KEY.UP:
+        case KEY.SCROLL_UP:
           scroll(state, -1)
           break
         case KEY.PAGE_DOWN:
@@ -195,12 +197,6 @@ export async function runPager(
         case KEY.SEARCH_BACK:
           await handleSearch(state, 'backward')
           break
-        case KEY.NEXT_MATCH:
-          jumpToMatch(state, 1)
-          break
-        case KEY.PREV_MATCH:
-          jumpToMatch(state, -1)
-          break
         case KEY.NEXT_HEADER:
           jumpToHeader(state, 1)
           break
@@ -226,7 +222,7 @@ export async function runPager(
       if (process.stdin.isTTY) {
         process.stdin.setRawMode(false)
       }
-      process.stdout.write(ANSI.cursorShow)
+      process.stdout.write(ANSI.mouseOff + ANSI.cursorShow)
       process.stdout.write(ANSI.clearScreen + ANSI.cursorHome)
     }
 
@@ -234,13 +230,9 @@ export async function runPager(
   })
 }
 
-/** Estimated image height in terminal rows. */
-const IMAGE_HEIGHT_ESTIMATE = 10
-
-/** Render current state to terminal with image support. */
+/** Render current viewport to terminal. */
 async function render(state: PagerState): Promise<void> {
   const viewportHeight = state.termHeight - 1
-  const isKitty = useKittyProtocol()
 
   process.stdout.write(ANSI.clearScreen + ANSI.cursorHome)
 
@@ -252,18 +244,13 @@ async function render(state: PagerState): Promise<void> {
 
     if (line.imageRef) {
       const imageData = state.images.get(line.imageRef)
-      if (imageData) {
-        // Check if image fits in remaining viewport
-        const remainingRows = viewportHeight - rowsUsed
-        if (remainingRows < IMAGE_HEIGHT_ESTIMATE) {
-          process.stdout.write('[Image clipped]\n')
-          rowsUsed++
-        } else {
-          const heightUsed = await renderImage(imageData, isKitty)
-          rowsUsed += heightUsed
-        }
+      const alt = imageData?.alt || 'Image'
+      const { output, rows } = formatImageBox(alt)
+      if (rowsUsed + rows <= viewportHeight) {
+        process.stdout.write(output)
+        rowsUsed += rows
       } else {
-        process.stdout.write('[Image]\n')
+        // Not enough space for box, skip
         rowsUsed++
       }
     } else {
@@ -387,7 +374,9 @@ function jumpToHeader(state: PagerState, direction: 1 | -1): void {
   if (headers.length === 0) return
 
   if (direction === 1) {
-    const next = headers.find(i => i > state.topLine)
+    // If at top, skip first header (already viewing it)
+    const candidates = state.topLine === 0 ? headers.slice(1) : headers
+    const next = candidates.find(i => i > state.topLine)
     if (next !== undefined) state.topLine = next
   } else {
     const prev = headers.findLast(i => i < state.topLine)
@@ -399,4 +388,26 @@ function jumpToHeader(state: PagerState, direction: 1 | -1): void {
 function showInfo(state: PagerState): void {
   const info = formatInfo(state)
   process.stdout.write(ANSI.cursorTo(state.termHeight, 1) + ANSI.eraseLine + info)
+}
+
+/** Format image placeholder as a framed box with title. */
+function formatImageBox(alt: string): { output: string; rows: number } {
+  const TAB = '  '
+  const pad = 2
+  const sp = ' '.repeat(pad)
+  const minWidth = 20
+  const contentWidth = Math.max(minWidth, alt.length)
+  const inner = contentWidth + pad * 2
+
+  const title = 'Image'
+  const titleLen = title.length + 2
+  const remaining = Math.max(0, inner - titleLen - 1)
+
+  const top = colors.dim(`${TAB}┌─ ${title} ${'─'.repeat(remaining)}┐`)
+  const bottom = colors.dim(`${TAB}└${'─'.repeat(inner)}┘`)
+  const empty = `${colors.dim(`${TAB}│`)}${' '.repeat(inner)}${colors.dim('│')}`
+  const content = `${colors.dim(`${TAB}│`)}${sp}${colors.imageLabel(alt)}${' '.repeat(contentWidth - alt.length)}${sp}${colors.dim('│')}`
+
+  const output = `${top}\n${empty}\n${content}\n${empty}\n${bottom}\n`
+  return { output, rows: 5 }
 }

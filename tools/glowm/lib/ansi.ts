@@ -10,6 +10,8 @@ export const ANSI = {
   eraseLine: '\x1b[2K',
   highlightStart: '\x1b[7m', // Inverse video
   highlightEnd: '\x1b[27m',
+  mouseOn: '\x1b[?1000h\x1b[?1006h', // Enable SGR mouse mode
+  mouseOff: '\x1b[?1000l\x1b[?1006l', // Disable SGR mouse mode
 } as const
 
 /** Strip ANSI escape codes from string. */

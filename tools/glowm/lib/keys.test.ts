@@ -43,14 +43,6 @@ describe('parseKey', () => {
     expect(parseKey('N')).toBe(KEY.PREV_HEADER)
   })
 
-  test('recognizes Ctrl+N as next match', () => {
-    expect(parseKey('\x0e')).toBe(KEY.NEXT_MATCH)
-  })
-
-  test('recognizes Ctrl+P as prev match', () => {
-    expect(parseKey('\x10')).toBe(KEY.PREV_MATCH)
-  })
-
   test('recognizes = as info', () => {
     expect(parseKey('=')).toBe(KEY.INFO)
   })
