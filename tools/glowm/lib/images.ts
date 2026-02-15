@@ -5,6 +5,7 @@ import supportsTerminalGraphics from 'supports-terminal-graphics'
 import terminalImage from 'terminal-image'
 
 import { colors } from './colors'
+import { HEADING_MARKER } from './renderers'
 
 // Linked image: [![alt](img)](url) - must match before plain image
 const LINKED_IMAGE_REGEX = /\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)/g
@@ -91,14 +92,17 @@ export async function outputWithImages(
 ): Promise<void> {
   const isKittySupported = useKittyProtocol()
 
+  // Strip heading markers (used by pager for navigation)
+  const content = rendered.replaceAll(HEADING_MARKER, '')
+
   // Find all placeholders and split content
   const placeholderRegex = /\x00IMG:\d+\x00/g
   let lastIndex = 0
   let match: RegExpExecArray | null
 
-  while ((match = placeholderRegex.exec(rendered)) !== null) {
+  while ((match = placeholderRegex.exec(content)) !== null) {
     // Output text before placeholder
-    const textBefore = rendered.slice(lastIndex, match.index)
+    const textBefore = content.slice(lastIndex, match.index)
     if (textBefore) process.stdout.write(textBefore)
 
     // Output image
@@ -112,7 +116,7 @@ export async function outputWithImages(
   }
 
   // Output remaining text
-  const remaining = rendered.slice(lastIndex)
+  const remaining = content.slice(lastIndex)
   if (remaining) process.stdout.write(remaining)
 }
 
@@ -305,3 +309,40 @@ function formatFallback(alt: string, src: string, link?: string): string {
   }
   return `${IMAGE_INDENT}${label} ${styledPath}`
 }
+
+/**
+ * Render single image to stdout (for pager use).
+ * Returns approximate height in rows.
+ */
+export async function renderImage(
+  imageData: ImageData,
+  isKittySupported: boolean
+): Promise<number> {
+  const { buffer, alt } = imageData
+  const imageColumns = calculateImageColumns()
+
+  process.stdout.write('\n')
+
+  if (isKittySupported) {
+    process.stdout.write(IMAGE_INDENT)
+    writeKittyImage(buffer)
+  } else {
+    const rendered = await terminalImage.buffer(buffer, {
+      width: IMAGE_WIDTH,
+      preferNativeRender: false,
+    })
+    const indented = rendered
+      .split('\n')
+      .map(line => (line ? IMAGE_INDENT + line : line))
+      .join('\n')
+    process.stdout.write(indented)
+  }
+
+  process.stdout.write(formatCaption(alt, imageColumns))
+
+  // Return approximate height in rows (rough estimate)
+  // TODO: Calculate actual height from image dimensions
+  return 10
+}
+
+export type { ImageData }

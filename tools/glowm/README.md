@@ -98,3 +98,38 @@ H1 headings render as pill-style labels (black text on blue background, padded, 
 ### Indentation
 
 Paragraphs and headings are indented for better readability.
+
+## Pager Mode
+
+For long documents, glowm automatically activates a `less`-like pager when:
+- Output is to a TTY (not piped)
+- Content exceeds terminal height
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `j` / `↓` | Scroll down one line |
+| `k` / `↑` | Scroll up one line |
+| `Space` / `f` | Page down |
+| `b` | Page up |
+| `d` | Half page down |
+| `u` | Half page up |
+| `g` | Go to top |
+| `G` | Go to bottom |
+| `/` | Search forward |
+| `?` | Search backward |
+| `n` | Next match |
+| `N` | Previous match |
+| `=` | Show position info |
+| `q` | Quit |
+
+### Bypassing the Pager
+
+```bash
+# Use --no-pager flag
+glowm --no-pager README.md
+
+# Piping always bypasses pager
+glowm README.md | head -50
+```
