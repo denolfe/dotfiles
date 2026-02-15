@@ -1,8 +1,10 @@
 import { visibleLength } from './ansi'
+import { HEADING_MARKER } from './renderers'
 
 export type Line = {
   content: string
   imageRef?: string
+  isHeader?: boolean
 }
 
 const IMAGE_PLACEHOLDER_REGEX = /^\x00IMG:\d+\x00$/
@@ -47,23 +49,29 @@ export function wrapLine(line: string, width: number): string[] {
 
 /**
  * Split rendered content into Line objects for pager display.
- * Handles newlines, word wrapping, and image placeholder detection.
+ * Handles newlines, word wrapping, image placeholder detection, and header markers.
  */
 export function splitIntoLines(content: string, width: number): Line[] {
   const rawLines = content.split('\n')
   const result: Line[] = []
 
-  for (const raw of rawLines) {
+  for (let raw of rawLines) {
     // Check for image placeholder
     if (IMAGE_PLACEHOLDER_REGEX.test(raw.trim())) {
       result.push({ content: raw, imageRef: raw.trim() })
       continue
     }
 
+    // Check for header marker
+    const isHeader = raw.startsWith(HEADING_MARKER)
+    if (isHeader) {
+      raw = raw.slice(HEADING_MARKER.length)
+    }
+
     // Wrap long lines
     const wrapped = wrapLine(raw, width)
     for (const segment of wrapped) {
-      result.push({ content: segment, imageRef: undefined })
+      result.push({ content: segment, isHeader })
     }
   }
 

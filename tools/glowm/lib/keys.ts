@@ -13,6 +13,8 @@ export const KEY = {
   SEARCH_BACK: 'search_back',
   NEXT_MATCH: 'next_match',
   PREV_MATCH: 'prev_match',
+  NEXT_HEADER: 'next_header',
+  PREV_HEADER: 'prev_header',
   INFO: 'info',
   QUIT: 'quit',
   ENTER: 'enter',
@@ -58,8 +60,12 @@ const KEY_MAP: Record<string, KeyAction> = {
   // Search
   '/': KEY.SEARCH,
   '?': KEY.SEARCH_BACK,
-  'n': KEY.NEXT_MATCH,
-  'N': KEY.PREV_MATCH,
+  '\x0e': KEY.NEXT_MATCH, // Ctrl+N
+  '\x10': KEY.PREV_MATCH, // Ctrl+P
+
+  // Header navigation
+  'n': KEY.NEXT_HEADER,
+  'N': KEY.PREV_HEADER,
 
   // Info
   '=': KEY.INFO,

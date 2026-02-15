@@ -35,12 +35,20 @@ describe('parseKey', () => {
     expect(parseKey('/')).toBe(KEY.SEARCH)
   })
 
-  test('recognizes n as next match', () => {
-    expect(parseKey('n')).toBe(KEY.NEXT_MATCH)
+  test('recognizes n as next header', () => {
+    expect(parseKey('n')).toBe(KEY.NEXT_HEADER)
   })
 
-  test('recognizes N as prev match', () => {
-    expect(parseKey('N')).toBe(KEY.PREV_MATCH)
+  test('recognizes N as prev header', () => {
+    expect(parseKey('N')).toBe(KEY.PREV_HEADER)
+  })
+
+  test('recognizes Ctrl+N as next match', () => {
+    expect(parseKey('\x0e')).toBe(KEY.NEXT_MATCH)
+  })
+
+  test('recognizes Ctrl+P as prev match', () => {
+    expect(parseKey('\x10')).toBe(KEY.PREV_MATCH)
   })
 
   test('recognizes = as info', () => {

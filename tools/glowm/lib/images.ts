@@ -5,6 +5,7 @@ import supportsTerminalGraphics from 'supports-terminal-graphics'
 import terminalImage from 'terminal-image'
 
 import { colors } from './colors'
+import { HEADING_MARKER } from './renderers'
 
 // Linked image: [![alt](img)](url) - must match before plain image
 const LINKED_IMAGE_REGEX = /\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)/g
@@ -91,14 +92,17 @@ export async function outputWithImages(
 ): Promise<void> {
   const isKittySupported = useKittyProtocol()
 
+  // Strip heading markers (used by pager for navigation)
+  const content = rendered.replaceAll(HEADING_MARKER, '')
+
   // Find all placeholders and split content
   const placeholderRegex = /\x00IMG:\d+\x00/g
   let lastIndex = 0
   let match: RegExpExecArray | null
 
-  while ((match = placeholderRegex.exec(rendered)) !== null) {
+  while ((match = placeholderRegex.exec(content)) !== null) {
     // Output text before placeholder
-    const textBefore = rendered.slice(lastIndex, match.index)
+    const textBefore = content.slice(lastIndex, match.index)
     if (textBefore) process.stdout.write(textBefore)
 
     // Output image
@@ -112,7 +116,7 @@ export async function outputWithImages(
   }
 
   // Output remaining text
-  const remaining = rendered.slice(lastIndex)
+  const remaining = content.slice(lastIndex)
   if (remaining) process.stdout.write(remaining)
 }
 

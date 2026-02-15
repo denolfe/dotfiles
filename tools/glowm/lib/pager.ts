@@ -201,6 +201,12 @@ export async function runPager(
         case KEY.PREV_MATCH:
           jumpToMatch(state, -1)
           break
+        case KEY.NEXT_HEADER:
+          jumpToHeader(state, 1)
+          break
+        case KEY.PREV_HEADER:
+          jumpToHeader(state, -1)
+          break
         case KEY.INFO:
           showInfo(state)
           return // Don't re-render, info shows on prompt line
@@ -362,6 +368,31 @@ function jumpToMatch(state: PagerState, direction: 1 | -1): void {
 
   const match = state.searchMatches[state.searchIndex]!
   goTo(state, match.lineIndex)
+}
+
+/** Get indices of all header lines. */
+function getHeaderIndices(state: PagerState): number[] {
+  const indices: number[] = []
+  for (let i = 0; i < state.lines.length; i++) {
+    if (state.lines[i]!.isHeader) {
+      indices.push(i)
+    }
+  }
+  return indices
+}
+
+/** Jump to next/prev header. */
+function jumpToHeader(state: PagerState, direction: 1 | -1): void {
+  const headers = getHeaderIndices(state)
+  if (headers.length === 0) return
+
+  if (direction === 1) {
+    const next = headers.find(i => i > state.topLine)
+    if (next !== undefined) state.topLine = next
+  } else {
+    const prev = headers.findLast(i => i < state.topLine)
+    if (prev !== undefined) state.topLine = prev
+  }
 }
 
 /** Show info on prompt line. */

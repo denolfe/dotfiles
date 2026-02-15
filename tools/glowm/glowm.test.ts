@@ -34,7 +34,7 @@ function hasAnsiColor(s: string): boolean {
 }
 
 function stripAnsi(s: string): string {
-  return s.replace(/\x1b\[[0-9;]*m/g, '')
+  return s.replace(/\x1b\[[0-9;]*m/g, '').replace(/\x01/g, '')
 }
 
 function renderMarkdown(md: string): string {
