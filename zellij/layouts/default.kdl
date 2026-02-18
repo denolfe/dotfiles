@@ -13,13 +13,13 @@ layout {
                 hide_frame_for_single_pane "false"
 
                 // Text labels - normal mode hidden
-                mode_normal        ""
-                mode_locked        "#[fg=#f14c4c,bg=#1e1e1e]#[fg=#1e1e1e,bg=#f14c4c,bold] LOCKED #[fg=#f14c4c,bg=#1e1e1e] "
-                mode_pane          "#[fg=#d670d6,bg=#1e1e1e]#[fg=#1e1e1e,bg=#d670d6,bold] PANE #[fg=#d670d6,bg=#1e1e1e] "
-                mode_tab           "#[fg=#12a7cd,bg=#1e1e1e]#[fg=#1e1e1e,bg=#12a7cd,bold] TAB #[fg=#12a7cd,bg=#1e1e1e] "
-                mode_resize        "#[fg=#f5f543,bg=#1e1e1e]#[fg=#1e1e1e,bg=#f5f543,bold] RESIZE #[fg=#f5f543,bg=#1e1e1e] "
-                mode_scroll        "#[fg=#2471c8,bg=#1e1e1e]#[fg=#1e1e1e,bg=#2471c8,bold] SCROLL #[fg=#2471c8,bg=#1e1e1e] "
-                mode_session       "#[fg=#23d18b,bg=#1e1e1e]#[fg=#1e1e1e,bg=#23d18b,bold] SESSION #[fg=#23d18b,bg=#1e1e1e] "
+                mode_normal        " "
+                mode_locked        "#[fg=#f14c4c,bg=#1e1e1e]▌"
+                mode_pane          "#[fg=#d670d6,bg=#1e1e1e]▌"
+                mode_tab           "#[fg=#12a7cd,bg=#1e1e1e]▌"
+                mode_resize        "#[fg=#f5f543,bg=#1e1e1e]▌"
+                mode_scroll        "#[fg=#2471c8,bg=#1e1e1e]▌"
+                mode_session       "#[fg=#23d18b,bg=#1e1e1e]▌"
                 mode_default_to_mode "normal"
 
                 // Two-tone pill tabs: ( index | name )
