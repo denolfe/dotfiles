@@ -134,21 +134,26 @@ if [[ "$usage" != "null" ]]; then
   if [[ "$size" -gt 0 ]]; then
     pct=$((current * 100 / size))
 
-    # Color gradient matching p10k theme
-    if [[ $pct -lt 25 ]]; then
-      bar_color=$'\033[38;5;2m'    # Green (OK/clean)
-    elif [[ $pct -lt 50 ]]; then
-      bar_color=$'\033[38;5;6m'    # Cyan (modified)
-    elif [[ $pct -lt 65 ]]; then
-      bar_color=$'\033[38;5;3m'    # Yellow (AWS)
-    elif [[ $pct -lt 80 ]]; then
-      bar_color=$'\033[38;5;208m'  # Orange (PR/warning)
-    else
-      bar_color=$'\033[38;5;1m'    # Red (error)
-    fi
+    # Heatmap colors for positions 0-9 (green → yellow → red)
+    # True color RGB values interpolated by position
+    heatmap_color() {
+      local pos=$1
+      local r g b
+      if [[ $pos -lt 5 ]]; then
+        # Green (0,180,0) → Yellow (220,180,0)
+        r=$((pos * 220 / 5))
+        g=180
+        b=0
+      else
+        # Yellow (220,180,0) → Red (220,60,0)
+        r=220
+        g=$((180 - (pos - 5) * 120 / 5))
+        b=0
+      fi
+      printf '\033[38;2;%d;%d;%dm' "$r" "$g" "$b"
+    }
 
     # Build 10-char bar with 40-step precision (4 gradient levels per char)
-    # █ (full) → ▓ (75%) → ▒ (50%) → ░ (25%) → space (empty)
     steps=$((pct * 40 / 100))
     [[ $steps -gt 40 ]] && steps=40
 
@@ -156,15 +161,7 @@ if [[ "$usage" != "null" ]]; then
     partial=$((steps % 4))
     empty=$((10 - full - (partial > 0 ? 1 : 0)))
 
-    bar=""
-    for ((i=0; i<full; i++)); do bar+="█"; done
-    case $partial in
-      1) bar+="░" ;;
-      2) bar+="▒" ;;
-      3) bar+="▓" ;;
-    esac
-
-    # Colors (using $'...' for proper escape interpretation)
+    # Colors
     dim=$'\033[38;5;238m'
     reset=$'\033[0m'
 
@@ -172,30 +169,66 @@ if [[ "$usage" != "null" ]]; then
     left_cap=$'\xEE\x82\xB6'   # U+E0B6 round left
     right_cap=$'\xEE\x82\xB4'  # U+E0B4 round right
 
-    # Build track (empty portion)
+    # Build bar with per-segment heatmap colors
+    bar=""
+    pos=0
+    for ((i=0; i<full; i++)); do
+      bar+="$(heatmap_color $pos)█"
+      ((pos++))
+    done
+    # Partial segment: progressively dimmed based on fill level
+    # ▓ (75%) = 80% bright, ▒ (50%) = 55% bright, ░ (25%) = 35% bright
+    heatmap_color_partial() {
+      local pos=$1 brightness=$2
+      local r g b
+      if [[ $pos -lt 5 ]]; then
+        r=$((pos * 220 / 5 * brightness / 100))
+        g=$((180 * brightness / 100))
+        b=0
+      else
+        r=$((220 * brightness / 100))
+        g=$(((180 - (pos - 5) * 120 / 5) * brightness / 100))
+        b=0
+      fi
+      printf '\033[38;2;%d;%d;%dm' "$r" "$g" "$b"
+    }
+
+    if [[ $partial -gt 0 ]]; then
+      dim_pos=$((pos > 0 ? pos - 1 : 0))
+      case $partial in
+        1) bar+="$(heatmap_color_partial $dim_pos 35)░" ;;
+        2) bar+="$(heatmap_color_partial $dim_pos 55)▒" ;;
+        3) bar+="$(heatmap_color_partial $dim_pos 80)▓" ;;
+      esac
+    fi
+
+    # Build track (empty portion) - dim
     track=""
     for ((i=0; i<empty; i++)); do track+="░"; done
 
-    # Left cap: bar color if any fill, otherwise dim
+    # Left cap color (first segment color or dim)
     if [[ $full -gt 0 || $partial -gt 0 ]]; then
-      left="${bar_color}${left_cap}"
+      left="$(heatmap_color 0)${left_cap}"
     else
       left="${dim}${left_cap}"
     fi
 
-    # Darker dim for powerline cap (glyph renders brighter than ░)
+    # Right cap - matches last filled segment or dim
     dim_cap=$'\033[38;2;40;40;40m'
-
-    # Build complete bar: left + fill + track + right
     if [[ $empty -eq 0 && $partial -eq 0 ]]; then
-      # Full bar: right cap matches fill
-      output="${left}${bar_color}${bar}${right_cap}${reset}"
+      # Full bar: right cap matches last segment (position 9)
+      output="${left}${bar}$(heatmap_color 9)${right_cap}${reset}"
     else
-      # Partial bar: track dim, cap darker to match visually
-      output="${left}${bar_color}${bar}${dim}${track}${dim_cap}${right_cap}${reset}"
+      # Partial bar: track dim, cap darker
+      output="${left}${bar}${dim}${track}${dim_cap}${right_cap}${reset}"
     fi
 
-    segments+=("${output} ${bar_color}${pct}%${reset}")
+    # Percentage colored by last filled position
+    last_pos=$((full + (partial > 0 ? 1 : 0) - 1))
+    [[ $last_pos -lt 0 ]] && last_pos=0
+    pct_color=$(heatmap_color $last_pos)
+
+    segments+=("${output} ${pct_color}${pct}%${reset}")
   fi
 fi
 
