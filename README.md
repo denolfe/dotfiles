@@ -36,6 +36,12 @@
 - **TypeScript patterns** - Single object params, types over interfaces, functions over classes, pure functions
 - **Bash permission matching** - Never use `git -C`, always `cd /path && git <cmd>`
 
+### Statusline
+
+- Directory, git branch, PR#, staged/modified/untracked counts, model name, context % gradient bar
+
+<img src="statusline.png" alt="Statusline" width="600"/>
+
 ### Slash Commands
 
 | Command           | Description                                                              |
@@ -72,10 +78,6 @@
 Custom spinner verb themes (`make claude-verbs THEME=scifi`):
 - **scifi** - "Beaming up", "Jumping to lightspeed", "Quantum leaping"...
 - **peanut** - Peanuts-themed verbs
-
-### Custom Statusline ([statusline-command.sh](./claude/statusline-command.sh))
-
-Mirrors Powerlevel10k prompt style with: directory, git branch, PR#, staged/modified/untracked counts, model name, context %.
 
 ## Keyboard Mappings
 
