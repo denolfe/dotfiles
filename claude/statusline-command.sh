@@ -25,7 +25,8 @@ if [[ "$cwd" == "$project_dir"* ]] && [[ -n "$project_dir" ]]; then
 else
   dir_display="${cwd/#$HOME/~}"
 fi
-segments+=("$(printf '\033[34m%s\033[0m' "$dir_display")")
+folder_icon=$'\xEF\x81\xBB'  # U+F07B nerd font folder
+segments+=("$(printf '\033[34m%s %s\033[0m' "$folder_icon" "$dir_display")")
 
 # Git status & branch
 if git rev-parse --is-inside-work-tree &>/dev/null; then
