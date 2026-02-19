@@ -126,14 +126,76 @@ if [[ -n "$model_name" ]] && [[ "$model_name" != "null" ]]; then
   segments+=("$(printf '\033[35m%s\033[0m' "$model_name")")
 fi
 
-# Context window percentage
+# Context window with gradient bar
 usage=$(echo "$input" | jq '.context_window.current_usage')
 if [[ "$usage" != "null" ]]; then
   current=$(echo "$usage" | jq '.input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
   size=$(echo "$input" | jq '.context_window.context_window_size')
   if [[ "$size" -gt 0 ]]; then
     pct=$((current * 100 / size))
-    segments+=("$(printf '\033[33m%d%%\033[0m' "$pct")")
+
+    # Color gradient matching p10k theme
+    if [[ $pct -lt 25 ]]; then
+      bar_color=$'\033[38;5;2m'    # Green (OK/clean)
+    elif [[ $pct -lt 50 ]]; then
+      bar_color=$'\033[38;5;6m'    # Cyan (modified)
+    elif [[ $pct -lt 65 ]]; then
+      bar_color=$'\033[38;5;3m'    # Yellow (AWS)
+    elif [[ $pct -lt 80 ]]; then
+      bar_color=$'\033[38;5;208m'  # Orange (PR/warning)
+    else
+      bar_color=$'\033[38;5;1m'    # Red (error)
+    fi
+
+    # Build 10-char bar with 40-step precision (4 gradient levels per char)
+    # █ (full) → ▓ (75%) → ▒ (50%) → ░ (25%) → space (empty)
+    steps=$((pct * 40 / 100))
+    [[ $steps -gt 40 ]] && steps=40
+
+    full=$((steps / 4))
+    partial=$((steps % 4))
+    empty=$((10 - full - (partial > 0 ? 1 : 0)))
+
+    bar=""
+    for ((i=0; i<full; i++)); do bar+="█"; done
+    case $partial in
+      1) bar+="░" ;;
+      2) bar+="▒" ;;
+      3) bar+="▓" ;;
+    esac
+
+    # Colors (using $'...' for proper escape interpretation)
+    dim=$'\033[38;5;238m'
+    reset=$'\033[0m'
+
+    # Rounded caps (powerline round separators)
+    left_cap=$'\xEE\x82\xB6'   # U+E0B6 round left
+    right_cap=$'\xEE\x82\xB4'  # U+E0B4 round right
+
+    # Build track (empty portion)
+    track=""
+    for ((i=0; i<empty; i++)); do track+="░"; done
+
+    # Left cap: bar color if any fill, otherwise dim
+    if [[ $full -gt 0 || $partial -gt 0 ]]; then
+      left="${bar_color}${left_cap}"
+    else
+      left="${dim}${left_cap}"
+    fi
+
+    # Darker dim for powerline cap (glyph renders brighter than ░)
+    dim_cap=$'\033[38;2;40;40;40m'
+
+    # Build complete bar: left + fill + track + right
+    if [[ $empty -eq 0 && $partial -eq 0 ]]; then
+      # Full bar: right cap matches fill
+      output="${left}${bar_color}${bar}${right_cap}${reset}"
+    else
+      # Partial bar: track dim, cap darker to match visually
+      output="${left}${bar_color}${bar}${dim}${track}${dim_cap}${right_cap}${reset}"
+    fi
+
+    segments+=("${output} ${bar_color}${pct}%${reset}")
   fi
 fi
 
