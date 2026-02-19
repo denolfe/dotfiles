@@ -55,7 +55,7 @@ if git rev-parse --is-inside-work-tree &>/dev/null; then
 
   # Branch & status indicators
   if [[ -n "$branch" ]]; then
-    status=$(git status --porcelain 2>/dev/null)
+    status=$(git --no-optional-locks status --porcelain 2>/dev/null)
 
     # Count status indicators
     staged=0
