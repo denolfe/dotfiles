@@ -24,7 +24,6 @@ allowed-tools: Bash
   - No copula avoidance: use "is/are/has" instead of "serves as", "stands as", "acts as"
   - No negative parallelisms: avoid "not only X but also Y", "it's not just X, it's Y"
   - No rule of three: don't force triads like "faster, safer, and more maintainable" — include only what's true and relevant
-  - No `**Bold Header:** description` list pattern: write prose or plain bullets instead
   - No em dash abuse: prefer commas, parentheses, or separate sentences
   - No chatbot artifacts: no "Let me know if...", "Here's an overview of...", "This PR aims to..."
 
@@ -41,15 +40,10 @@ After PR is created, say "PR Created: [PR URL]".
 
 ## Key Changes
 
-- [High-level change 1]
-  - [Optional: Brief detail or sub-point about change 1.]
+- **[Bold label]:** [Description of what changed and why. Can span multiple sentences for context.]
+  - [Optional: Bullet points for concise sub-details.]
 
-  [Optional additional context or rationale for change 1.]
-
-- [High-level change 2]
-  - [Optional: Brief detail or sub-point about change 2.]
-
-  [Optional additional context or rationale for change 2.]
+- **[Another change]:** [Description of another significant change.]
 
 ## Design Decisions
 
