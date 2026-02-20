@@ -128,12 +128,12 @@ if [[ -n "$model_name" ]] && [[ "$model_name" != "null" ]]; then
 fi
 
 # Context window with gradient bar
-usage=$(echo "$input" | jq '.context_window.current_usage')
-if [[ "$usage" != "null" ]]; then
-  current=$(echo "$usage" | jq '.input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
-  size=$(echo "$input" | jq '.context_window.context_window_size')
-  if [[ "$size" -gt 0 ]]; then
-    pct=$((current * 100 / size))
+# Auto-compact buffer (13K) from Claude Code source
+_ctx_tokens=$(echo "$input" | jq -r '.context_window.current_usage | .input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
+_ctx_size=$(echo "$input" | jq -r '.context_window.context_window_size')
+_ctx_effective=$(( _ctx_size - 13000 ))
+pct=$(( _ctx_tokens * 100 / _ctx_effective )) 2>/dev/null
+if [[ -n "$pct" && "$pct" -gt 0 ]] 2>/dev/null; then
 
     # Heatmap colors for positions 0-9 (green → yellow → red)
     # True color RGB values interpolated by position
@@ -230,7 +230,6 @@ if [[ "$usage" != "null" ]]; then
     pct_color=$(heatmap_color $last_pos)
 
     segments+=("${output} ${pct_color}${pct}%${reset}")
-  fi
 fi
 
 # Session cost & duration
