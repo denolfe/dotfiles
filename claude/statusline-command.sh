@@ -128,10 +128,10 @@ if [[ -n "$model_name" ]] && [[ "$model_name" != "null" ]]; then
 fi
 
 # Context window with gradient bar
-# Auto-compact buffer (13K) from Claude Code source
+# Auto-compact buffer (33K) from Claude Code source
 _ctx_tokens=$(echo "$input" | jq -r '.context_window.current_usage | .input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
 _ctx_size=$(echo "$input" | jq -r '.context_window.context_window_size')
-_ctx_effective=$(( _ctx_size - 13000 ))
+_ctx_effective=$(( _ctx_size - 33000 ))
 pct=$(( _ctx_tokens * 100 / _ctx_effective )) 2>/dev/null
 if [[ -n "$pct" && "$pct" -gt 0 ]] 2>/dev/null; then
 
