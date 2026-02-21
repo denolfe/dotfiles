@@ -41,6 +41,7 @@
 - Directory, git branch, PR#, staged/modified/untracked counts, model name, context % gradient bar
 
 <img src="statusline.png" alt="Statusline" width="600"/>
+<img src="context-bar.gif" alt="Statusline"/>
 
 ### Slash Commands
 
