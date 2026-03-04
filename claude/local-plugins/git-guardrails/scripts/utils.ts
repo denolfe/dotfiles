@@ -23,7 +23,7 @@
  * runHook(handler)
  */
 export async function runHook<TInput, TOutput>(
-  handler: (input: TInput) => TOutput | void
+  handler: (input: TInput) => TOutput | void,
 ): Promise<never> {
   const input = await Bun.stdin.text()
   const data = JSON.parse(input) as TInput

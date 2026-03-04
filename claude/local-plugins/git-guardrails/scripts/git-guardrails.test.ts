@@ -33,9 +33,11 @@ function createInput(command: string): PreToolUseInput<BashToolInput> {
     session_id: 'test-session',
     transcript_path: '/tmp/transcript.jsonl',
     cwd: '/tmp',
+    permission_mode: 'default',
     hook_event_name: 'PreToolUse',
     tool_name: 'Bash',
     tool_input: { command },
+    tool_use_id: 'test-tool-use-id',
   }
 }
 
@@ -267,7 +269,7 @@ describe('push prompting', () => {
 })
 
 describe('heredoc commit rewrite', () => {
-  test('rewrites $(cat <<\'EOF\'...) to -F - <<\'EOF\'', () => {
+  test("rewrites $(cat <<'EOF'...) to -F - <<'EOF'", () => {
     const command = `git commit -m "$(cat <<'EOF'
 feat(scope): subject line
 

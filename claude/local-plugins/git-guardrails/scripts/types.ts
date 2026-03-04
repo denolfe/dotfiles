@@ -2,7 +2,8 @@
  * Claude Code Hook Type Definitions
  *
  * TypeScript types for building Claude Code hooks. Hooks are user-defined shell
- * commands or LLM prompts that execute at specific points in Claude Code's lifecycle.
+ * commands, HTTP endpoints, LLM prompts, or agents that execute at specific
+ * points in Claude Code's lifecycle.
  *
  * ## Hook Lifecycle (execution order)
  *
@@ -20,7 +21,10 @@
  *                        │       └──► PostToolUseFailure (error)   │
  *                        │                                         │
  *                        │  SubagentStart ──► SubagentStop         │
+ *                        │  TeammateIdle, TaskCompleted             │
  *                        │  Notification, PreCompact               │
+ *                        │  ConfigChange                            │
+ *                        │  WorktreeCreate, WorktreeRemove          │
  *                        └─────────────────────────────────────────┘
  * ```
  *
@@ -41,8 +45,15 @@
  * | PreCompact         | Before context compaction           | No         |
  * | SessionEnd         | Session terminates                  | No         |
  * | Setup              | Repository init/maintenance         | No         |
+ * | TeammateIdle       | Agent teammate about to go idle     | Yes†       |
+ * | TaskCompleted      | Task being marked complete          | Yes†       |
+ * | ConfigChange       | Config file changes mid-session     | Yes        |
+ * | WorktreeCreate     | Worktree being created              | Yes‡       |
+ * | WorktreeRemove     | Worktree being removed              | No         |
  *
  * *PostToolUse can provide feedback to Claude but cannot undo the tool execution.
+ * †Exit code 2 only (stderr fed as feedback). No JSON decision control.
+ * ‡Non-zero exit blocks. stdout must contain absolute path to created worktree.
  *
  * ## Usage
  *
@@ -89,6 +100,11 @@ export type HookEventName =
   | 'SubagentStop'
   | 'Notification'
   | 'PreCompact'
+  | 'TeammateIdle'
+  | 'TaskCompleted'
+  | 'ConfigChange'
+  | 'WorktreeCreate'
+  | 'WorktreeRemove'
 
 /**
  * Base output interface with common fields across all hook outputs
@@ -116,15 +132,6 @@ export interface BlockableHookOutput extends BaseHookOutput {
   reason?: string
 }
 
-/**
- * Generic hook input with event name constraint
- *
- * @template TEventName - Specific hook event name for type safety
- * @property session_id - Unique session identifier
- * @property transcript_path - Path to conversation transcript
- * @property cwd - Current working directory
- * @property hook_event_name - The specific hook event being triggered
- */
 /**
  * Permission modes available in Claude Code
  */
@@ -395,18 +402,16 @@ export interface SessionEndOutput extends BaseHookOutput {}
 /**
  * Input for Setup hook - runs during repository initialization or maintenance
  *
- * Perform setup tasks when initializing or maintaining a repository.
+ * Triggered via --init, --init-only, or --maintenance flags.
  *
- * Note: This hook is defined in the settings schema but not yet documented
- * in the official hooks reference.
+ * @see https://code.claude.com/docs/en/hooks#setup
  */
 export interface SetupInput extends HookInput<'Setup'> {}
 
 /**
  * Output for Setup hook
  *
- * Note: This hook is defined in the settings schema but not yet documented
- * in the official hooks reference.
+ * @see https://code.claude.com/docs/en/hooks#setup
  */
 export interface SetupOutput extends BaseHookOutput {}
 
@@ -416,10 +421,12 @@ export interface SetupOutput extends BaseHookOutput {}
  * Controls when Claude stops processing after completing a task.
  *
  * @property stop_hook_active - Whether the stop hook is currently active
+ * @property last_assistant_message - Final assistant response text
  * @see https://code.claude.com/docs/en/hooks#stop
  */
 export interface StopInput extends HookInput<'Stop'> {
   stop_hook_active: boolean
+  last_assistant_message?: string
 }
 
 /**
@@ -467,6 +474,7 @@ export interface SubagentStartOutput extends BaseHookOutput {
  * @property agent_id - Unique identifier for the subagent
  * @property agent_type - Type of agent (used for matcher filtering)
  * @property agent_transcript_path - Path to the subagent's transcript
+ * @property last_assistant_message - Final assistant response text
  * @see https://code.claude.com/docs/en/hooks#subagentstop
  */
 export interface SubagentStopInput extends HookInput<'SubagentStop'> {
@@ -474,6 +482,7 @@ export interface SubagentStopInput extends HookInput<'SubagentStop'> {
   agent_id: string
   agent_type: string
   agent_transcript_path: string
+  last_assistant_message?: string
 }
 
 /**
@@ -541,6 +550,129 @@ export interface PreCompactInput extends HookInput<'PreCompact'> {
  * @see https://code.claude.com/docs/en/hooks#precompact
  */
 export interface PreCompactOutput extends BaseHookOutput {}
+
+/**
+ * Input for TeammateIdle hook - fires when an agent team teammate is about to go idle
+ *
+ * Exit code 2 sends stderr as feedback, keeping the teammate working.
+ * No JSON decision control — only exit code 2 blocks.
+ *
+ * @property teammate_name - Name of the idle teammate
+ * @property team_name - Name of the agent team
+ * @see https://code.claude.com/docs/en/hooks#teammateidle
+ */
+export interface TeammateIdleInput extends HookInput<'TeammateIdle'> {
+  teammate_name: string
+  team_name: string
+}
+
+/**
+ * Output for TeammateIdle hook
+ *
+ * @see https://code.claude.com/docs/en/hooks#teammateidle
+ */
+export interface TeammateIdleOutput extends BaseHookOutput {}
+
+/**
+ * Input for TaskCompleted hook - fires when a task is being marked as completed
+ *
+ * Exit code 2 blocks completion. stderr fed as feedback.
+ *
+ * @property task_id - Identifier of the completing task
+ * @property task_subject - Brief title of the task
+ * @property task_description - Detailed task description
+ * @property teammate_name - Name of the teammate completing the task
+ * @property team_name - Name of the agent team
+ * @see https://code.claude.com/docs/en/hooks#taskcompleted
+ */
+export interface TaskCompletedInput extends HookInput<'TaskCompleted'> {
+  task_id: string
+  task_subject: string
+  task_description?: string
+  teammate_name?: string
+  team_name?: string
+}
+
+/**
+ * Output for TaskCompleted hook
+ *
+ * @see https://code.claude.com/docs/en/hooks#taskcompleted
+ */
+export interface TaskCompletedOutput extends BaseHookOutput {}
+
+/**
+ * Sources that can trigger a ConfigChange event
+ */
+export type ConfigChangeSource =
+  | 'user_settings'
+  | 'project_settings'
+  | 'local_settings'
+  | 'policy_settings'
+  | 'skills'
+
+/**
+ * Input for ConfigChange hook - fires when config files change mid-session
+ *
+ * Enables security auditing and optional blocking of settings changes.
+ * Matcher filters on source type.
+ *
+ * @property source - Which config source changed
+ * @property file_path - Path to the changed config file
+ * @see https://code.claude.com/docs/en/hooks#configchange
+ */
+export interface ConfigChangeInput extends HookInput<'ConfigChange'> {
+  source: ConfigChangeSource
+  file_path?: string
+}
+
+/**
+ * Output for ConfigChange hook
+ *
+ * @see https://code.claude.com/docs/en/hooks#configchange
+ */
+export interface ConfigChangeOutput extends BlockableHookOutput {}
+
+/**
+ * Input for WorktreeCreate hook - fires when a worktree is being created
+ *
+ * Replaces default git worktree behavior. Hook must print absolute path
+ * to stdout. Supports custom VCS (SVN, Perforce, Mercurial, Jujutsu).
+ * Only supports `type: "command"` hooks.
+ *
+ * @property name - Slug identifier for the worktree
+ * @see https://code.claude.com/docs/en/hooks#worktreecreate
+ */
+export interface WorktreeCreateInput extends HookInput<'WorktreeCreate'> {
+  name: string
+}
+
+/**
+ * Output for WorktreeCreate hook
+ *
+ * stdout must contain absolute path to created worktree.
+ *
+ * @see https://code.claude.com/docs/en/hooks#worktreecreate
+ */
+export interface WorktreeCreateOutput extends BaseHookOutput {}
+
+/**
+ * Input for WorktreeRemove hook - fires when a worktree is being removed
+ *
+ * Only supports `type: "command"` hooks.
+ *
+ * @property worktree_path - Absolute path to the worktree being removed
+ * @see https://code.claude.com/docs/en/hooks#worktreeremove
+ */
+export interface WorktreeRemoveInput extends HookInput<'WorktreeRemove'> {
+  worktree_path: string
+}
+
+/**
+ * Output for WorktreeRemove hook
+ *
+ * @see https://code.claude.com/docs/en/hooks#worktreeremove
+ */
+export interface WorktreeRemoveOutput extends BaseHookOutput {}
 
 /**
  * Handler function type for PreToolUse hooks
@@ -693,6 +825,51 @@ export type NotificationHandler = (input: NotificationInput) => NotificationOutp
 export type PreCompactHandler = (input: PreCompactInput) => PreCompactOutput | void
 
 /**
+ * Handler function type for TeammateIdle hooks
+ *
+ * @param input - TeammateIdle hook input
+ * @returns TeammateIdleOutput or void
+ * @see https://code.claude.com/docs/en/hooks#teammateidle
+ */
+export type TeammateIdleHandler = (input: TeammateIdleInput) => TeammateIdleOutput | void
+
+/**
+ * Handler function type for TaskCompleted hooks
+ *
+ * @param input - TaskCompleted hook input
+ * @returns TaskCompletedOutput or void
+ * @see https://code.claude.com/docs/en/hooks#taskcompleted
+ */
+export type TaskCompletedHandler = (input: TaskCompletedInput) => TaskCompletedOutput | void
+
+/**
+ * Handler function type for ConfigChange hooks
+ *
+ * @param input - ConfigChange hook input
+ * @returns ConfigChangeOutput or void
+ * @see https://code.claude.com/docs/en/hooks#configchange
+ */
+export type ConfigChangeHandler = (input: ConfigChangeInput) => ConfigChangeOutput | void
+
+/**
+ * Handler function type for WorktreeCreate hooks
+ *
+ * @param input - WorktreeCreate hook input
+ * @returns WorktreeCreateOutput or void
+ * @see https://code.claude.com/docs/en/hooks#worktreecreate
+ */
+export type WorktreeCreateHandler = (input: WorktreeCreateInput) => WorktreeCreateOutput | void
+
+/**
+ * Handler function type for WorktreeRemove hooks
+ *
+ * @param input - WorktreeRemove hook input
+ * @returns WorktreeRemoveOutput or void
+ * @see https://code.claude.com/docs/en/hooks#worktreeremove
+ */
+export type WorktreeRemoveHandler = (input: WorktreeRemoveInput) => WorktreeRemoveOutput | void
+
+/**
  * Input parameters for Bash tool
  *
  * Executes shell commands with optional timeout and background execution.
@@ -768,9 +945,71 @@ export interface WebFetchToolInput {
 }
 
 /**
- * Union of all tool input types
+ * Input parameters for Glob tool
  *
- * Note: Future enhancement could add discriminator field for type narrowing
+ * Fast file pattern matching.
+ *
+ * @property pattern - Glob pattern to match files
+ * @property path - Directory to search in (defaults to cwd)
+ */
+export interface GlobToolInput {
+  pattern: string
+  path?: string
+}
+
+/**
+ * Input parameters for Grep tool
+ *
+ * Content search using ripgrep.
+ *
+ * @property pattern - Regex pattern to search for
+ * @property path - File or directory to search in
+ * @property glob - Glob pattern to filter files
+ * @property output_mode - "content", "files_with_matches", or "count"
+ */
+export interface GrepToolInput {
+  pattern: string
+  path?: string
+  glob?: string
+  output_mode?: 'content' | 'files_with_matches' | 'count'
+  '-i'?: boolean
+  multiline?: boolean
+}
+
+/**
+ * Input parameters for WebSearch tool
+ *
+ * Performs web searches and returns results.
+ *
+ * @property query - Search query
+ * @property allowed_domains - Only include results from these domains
+ * @property blocked_domains - Exclude results from these domains
+ */
+export interface WebSearchToolInput {
+  query: string
+  allowed_domains?: string[]
+  blocked_domains?: string[]
+}
+
+/**
+ * Input parameters for Agent tool
+ *
+ * Spawns a subagent for complex tasks.
+ *
+ * @property prompt - Task description for the agent
+ * @property description - Short summary (3-5 words)
+ * @property subagent_type - Agent type (e.g., "general-purpose", "Explore", "Plan")
+ * @property model - Optional model override
+ */
+export interface AgentToolInput {
+  prompt: string
+  description: string
+  subagent_type: string
+  model?: string
+}
+
+/**
+ * Union of all tool input types
  */
 export type ToolInput =
   | BashToolInput
@@ -778,3 +1017,7 @@ export type ToolInput =
   | EditToolInput
   | ReadToolInput
   | WebFetchToolInput
+  | GlobToolInput
+  | GrepToolInput
+  | WebSearchToolInput
+  | AgentToolInput

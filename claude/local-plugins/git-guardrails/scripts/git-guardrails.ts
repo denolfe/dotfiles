@@ -75,8 +75,7 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
       hookSpecificOutput: {
         hookEventName: 'PreToolUse',
         permissionDecision: 'ask',
-        permissionDecisionReason:
-          'Amending commit. Confirm you want to proceed with --amend?',
+        permissionDecisionReason: 'Amending commit. Confirm you want to proceed with --amend?',
       },
     }
   }
@@ -107,7 +106,7 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
   // Rewrite $(cat <<'EOF'...) to git commit -F - <<'EOF' (avoids $() permission prompts)
   if (/git\s+commit/.test(command) && /\$\(cat\s+<</.test(command)) {
     const match = command.match(
-      /^(git\s+commit\b.*?)\s+-m\s+"?\$\(cat\s+<<'?(\w+)'?\n([\s\S]*?)\n\2\n\)"?$/
+      /^(git\s+commit\b.*?)\s+-m\s+"?\$\(cat\s+<<'?(\w+)'?\n([\s\S]*?)\n\2\n\)"?$/,
     )
     if (match) {
       const [, prefix, delimiter, message] = match
@@ -121,7 +120,7 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
     }
   }
 
-  // Strip Claude attribution from commits
+  // Strip Claude attribution from commits, caught Claude ignoring `includeCoAuthoredBy: false`
   if (/git\s+commit/.test(command)) {
     const lines = command.split('\n')
     const filtered = lines.filter(line => !/generated/i.test(line) && !/co-authored-by/i.test(line))

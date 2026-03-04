@@ -1,0 +1,12 @@
+{
+  "name": "git-guardrails",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "typescript": "latest"
+  }
+}
