@@ -266,6 +266,103 @@ describe('push prompting', () => {
   })
 })
 
+describe('heredoc commit rewrite', () => {
+  test('rewrites $(cat <<\'EOF\'...) to -F - <<\'EOF\'', () => {
+    const command = `git commit -m "$(cat <<'EOF'
+feat(scope): subject line
+
+- Detail 1
+- Detail 2
+EOF
+)"`
+
+    const { output, exitCode } = runHook(createInput(command))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+    const updated = (output?.hookSpecificOutput?.updatedInput as any)?.command
+    expect(updated).toBe(`git commit -F - <<'EOF'
+feat(scope): subject line
+
+- Detail 1
+- Detail 2
+EOF`)
+    expect(updated).not.toContain('$(cat')
+    expect(updated).not.toContain('-m')
+  })
+
+  test('rewrites without quotes around delimiter', () => {
+    const command = `git commit -m "$(cat <<EOF
+feat: message
+EOF
+)"`
+
+    const { output, exitCode } = runHook(createInput(command))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+    const updated = (output?.hookSpecificOutput?.updatedInput as any)?.command
+    expect(updated).toBe(`git commit -F - <<'EOF'
+feat: message
+EOF`)
+    expect(updated).not.toContain('$(cat')
+    expect(updated).not.toContain('-m')
+  })
+
+  test('preserves flags before -m', () => {
+    const command = `git commit --allow-empty -m "$(cat <<'EOF'
+chore: empty
+EOF
+)"`
+
+    const { output, exitCode } = runHook(createInput(command))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+    const updated = (output?.hookSpecificOutput?.updatedInput as any)?.command
+    expect(updated).toBe(`git commit --allow-empty -F - <<'EOF'
+chore: empty
+EOF`)
+    expect(updated).not.toContain('$(cat')
+    expect(updated).not.toContain('-m')
+  })
+
+  test('handles single-line message', () => {
+    const command = `git commit -m "$(cat <<'EOF'
+fix: one liner
+EOF
+)"`
+
+    const { output, exitCode } = runHook(createInput(command))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+    const updated = (output?.hookSpecificOutput?.updatedInput as any)?.command
+    expect(updated).toBe(`git commit -F - <<'EOF'
+fix: one liner
+EOF`)
+  })
+
+  test('does not affect regular -m commits', () => {
+    const { output, exitCode } = runHook(createInput('git commit -m "Regular commit"'))
+
+    expect(exitCode).toBe(0)
+    expect(output).toBeNull()
+  })
+
+  test('does not affect git commit -F - <<EOF (already correct)', () => {
+    const command = `git commit -F - <<'EOF'
+feat: already correct
+EOF`
+
+    const { output, exitCode } = runHook(createInput(command))
+
+    expect(exitCode).toBe(0)
+    // No rewrite needed — falls through to attribution stripping which also finds no changes
+    expect(output).toBeNull()
+  })
+})
+
 describe('attribution stripping', () => {
   test('strips "Generated with Claude Code" line', () => {
     const command = `git commit -m "Test commit

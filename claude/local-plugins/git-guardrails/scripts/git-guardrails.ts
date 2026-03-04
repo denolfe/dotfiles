@@ -22,7 +22,11 @@
  *      - Requires explicit confirmation before pushing to remote
  *      - Returns ask decision to prompt user
  *
- *   5. Strips Claude attribution from git commit messages
+ *   5. Rewrites $(cat <<'EOF'...) commit pattern to git commit -F - <<'EOF'
+ *      - Avoids $() subshell which triggers extra permission prompts
+ *      - Silently rewrites the command with allow + updatedInput
+ *
+ *   6. Strips Claude attribution from git commit messages
  *      - Removes lines containing "generated" (case-insensitive)
  *      - Removes lines containing "co-authored-by" (case-insensitive)
  *      - Allows commits to proceed with cleaned messages
@@ -97,6 +101,23 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
         permissionDecision: 'ask',
         permissionDecisionReason: 'Pushing to remote. Confirm?',
       },
+    }
+  }
+
+  // Rewrite $(cat <<'EOF'...) to git commit -F - <<'EOF' (avoids $() permission prompts)
+  if (/git\s+commit/.test(command) && /\$\(cat\s+<</.test(command)) {
+    const match = command.match(
+      /^(git\s+commit\b.*?)\s+-m\s+"?\$\(cat\s+<<'?(\w+)'?\n([\s\S]*?)\n\2\n\)"?$/
+    )
+    if (match) {
+      const [, prefix, delimiter, message] = match
+      return {
+        hookSpecificOutput: {
+          hookEventName: 'PreToolUse',
+          permissionDecision: 'allow',
+          updatedInput: { command: `${prefix} -F - <<'${delimiter}'\n${message}\n${delimiter}` },
+        },
+      }
     }
   }
 
