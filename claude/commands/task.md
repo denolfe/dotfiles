@@ -6,7 +6,7 @@ allowed-tools: Bash(~/.claude/commands/task.sh:*), Read
 
 # New Task
 
-Compute the task directory path, then run the script:
+Compute the task directory path, then run the script. If no argument is provided, use the current conversation to fill in the details.
 
 1. **task-name**: hyphenated, lowercase, 2-4 words summarizing the argument (e.g., `buggy-auth`).
 2. **issue-number**: deduce from argument or branch name (e.g., `ECMS-12345`). Omit if not applicable.
