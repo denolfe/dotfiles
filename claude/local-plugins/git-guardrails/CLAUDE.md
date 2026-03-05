@@ -16,6 +16,7 @@ bun test # run tests
 | Action  | Commands                                                           | Decision         |
 | ------- | ------------------------------------------------------------------ | ---------------- |
 | Block   | `git add -A`, `git add .`, `git add --all`                         | `deny`           |
+| Block   | `git -C`, `--git-dir`, `--work-tree` (avoids permission prompts)   | `deny`           |
 | Prompt  | `git commit --amend`, `--no-verify`, `git push`                    | `ask`            |
 | Rewrite | `git commit -m "$(cat <<'EOF'...)"` → `git commit -F - <<'EOF'...` | `allow` + modify |
 | Clean   | Lines with "generated" or "co-authored-by"                         | `allow` + modify |

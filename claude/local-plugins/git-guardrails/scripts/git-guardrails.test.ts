@@ -142,6 +142,44 @@ describe('git add blocking', () => {
   })
 })
 
+describe('git -C/--git-dir/--work-tree blocking', () => {
+  test('blocks git -C /path', () => {
+    const { output, exitCode } = runHook(createInput('git -C /some/path status'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('deny')
+    expect(output?.hookSpecificOutput?.permissionDecisionReason).toContain('repo root')
+  })
+
+  test('blocks git -C with relative path', () => {
+    const { output, exitCode } = runHook(createInput('git -C ../other-repo commit -m "test"'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('deny')
+  })
+
+  test('blocks git --git-dir', () => {
+    const { output, exitCode } = runHook(createInput('git --git-dir=/other/.git status'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('deny')
+  })
+
+  test('blocks git --work-tree', () => {
+    const { output, exitCode } = runHook(createInput('git --work-tree=/other status'))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('deny')
+  })
+
+  test('allows git without path flags', () => {
+    const { output, exitCode } = runHook(createInput('git status'))
+
+    expect(exitCode).toBe(0)
+    expect(output).toBeNull()
+  })
+})
+
 describe('amend prompting', () => {
   test('prompts for git commit --amend --no-edit', () => {
     const { output, exitCode } = runHook(createInput('git commit --amend --no-edit'))

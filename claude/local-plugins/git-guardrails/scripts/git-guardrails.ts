@@ -6,30 +6,34 @@
  * Enforces git workflow preferences by intercepting git commands before execution.
  *
  * What it does:
- *   1. Blocks `git add -A`, `git add --all`, and `git add .` commands
- *      - Encourages targeted file additions for more intentional commits
- *      - Returns deny decision with helpful error message
+ *   - Blocks `git add -A`, `git add --all`, and `git add .` commands
+ *     - Encourages targeted file additions for more intentional commits
+ *     - Returns deny decision with helpful error message
  *
- *   2. Prompts for approval on `git commit --amend`
- *      - Requires explicit confirmation before amending commits
- *      - Returns ask decision to prompt user
+ *   - Blocks `git -C`, `--git-dir`, `--work-tree` commands
+ *     - Avoids permission prompts by running from repo root instead
+ *     - Returns deny decision with helpful error message
  *
- *   3. Prompts for approval on `git commit --no-verify`
- *      - Requires explicit confirmation before bypassing repository git hooks
- *      - Returns ask decision to prompt user
+ *   - Prompts for approval on `git commit --amend`
+ *     - Requires explicit confirmation before amending commits
+ *     - Returns ask decision to prompt user
  *
- *   4. Prompts for approval on `git push`
- *      - Requires explicit confirmation before pushing to remote
- *      - Returns ask decision to prompt user
+ *   - Prompts for approval on `git commit --no-verify`
+ *     - Requires explicit confirmation before bypassing repository git hooks
+ *     - Returns ask decision to prompt user
  *
- *   5. Rewrites $(cat <<'EOF'...) commit pattern to git commit -F - <<'EOF'
- *      - Avoids $() subshell which triggers extra permission prompts
- *      - Silently rewrites the command with allow + updatedInput
+ *   - Prompts for approval on `git push`
+ *     - Requires explicit confirmation before pushing to remote
+ *     - Returns ask decision to prompt user
  *
- *   6. Strips Claude attribution from git commit messages
- *      - Removes lines containing "generated" (case-insensitive)
- *      - Removes lines containing "co-authored-by" (case-insensitive)
- *      - Allows commits to proceed with cleaned messages
+ *   - Rewrites $(cat <<'EOF'...) commit pattern to git commit -F - <<'EOF'
+ *     - Avoids $() subshell which triggers extra permission prompts
+ *     - Silently rewrites the command with allow + updatedInput
+ *
+ *   - Strips Claude attribution from git commit messages
+ *     - Removes lines containing "generated" (case-insensitive)
+ *     - Removes lines containing "co-authored-by" (case-insensitive)
+ *     - Allows commits to proceed with cleaned messages
  *
  * Configuration:
  *   - Configured in ~/.claude/settings.json as PreToolUse hook with Bash matcher
@@ -65,6 +69,17 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
         permissionDecision: 'deny',
         permissionDecisionReason:
           "Use targeted 'git add <files>' instead of 'git add -A', '--all', or '.' for more intentional commits.",
+      },
+    }
+  }
+
+  // Block git -C, --git-dir, --work-tree (avoids permission prompts, run from repo root instead)
+  if (/git\s+(-C|--git-dir|--work-tree)\b/.test(command)) {
+    return {
+      hookSpecificOutput: {
+        hookEventName: 'PreToolUse',
+        permissionDecision: 'deny',
+        permissionDecisionReason: 'Run git commands from repo root instead of using -C/--git-dir/--work-tree.',
       },
     }
   }
