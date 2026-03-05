@@ -128,9 +128,9 @@ const favicon = `https://www.google.com/s2/favicons?sz=64&domain=${url.hostname}
 
 ---
 
-## GM_addElement (CSP Bypass)
+## GM_addElement (Programmatic Element Creation)
 
-Add elements that bypass Content-Security-Policy restrictions.
+Add elements programmatically. Can bypass CSP when needed.
 
 ```javascript
 // @grant GM_addElement
@@ -148,7 +148,7 @@ GM_addElement(document.body, 'div', {
   textContent: 'Hello'
 })
 
-// Add external script
+// Add external script (useful for CSP bypass)
 GM_addElement('script', {
   src: 'https://example.com/lib.js'
 })
@@ -174,8 +174,15 @@ document.addEventListener('yt-page-data-fetched', evt => {
 ```javascript
 // Intercept pushState/replaceState
 const originalPushState = history.pushState
+const originalReplaceState = history.replaceState
+
 history.pushState = function(...args) {
   originalPushState.apply(this, args)
+  onUrlChange()
+}
+
+history.replaceState = function(...args) {
+  originalReplaceState.apply(this, args)
   onUrlChange()
 }
 
@@ -326,13 +333,18 @@ Check if element is visible (not hidden/collapsed).
 
 ```javascript
 function isVisible(el) {
-  return el.offsetHeight > 0 &&
-         !el.classList.contains('hidden') &&
-         getComputedStyle(el).display !== 'none'
+  if (!el.offsetHeight) return false
+  const style = getComputedStyle(el)
+  return style.display !== 'none' &&
+         style.visibility !== 'hidden' &&
+         style.opacity !== '0'
 }
 
 // Filter to visible elements only
 const visibleItems = allItems.filter(isVisible)
+
+// Site-specific: may also need to check for site's hide classes
+// e.g., !el.classList.contains('noshow')
 ```
 
 ---

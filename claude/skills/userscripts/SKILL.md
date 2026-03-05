@@ -297,7 +297,7 @@ See `@references/advanced-patterns.md` for full implementations:
 | Scroll with offset | Smooth scroll accounting for fixed headers |
 | Dark mode | CSS media query, meta tag, or CSS variables |
 | URL parsing | Extract domain/path with `new URL()` |
-| GM_addElement | Bypass CSP for images/scripts |
+| GM_addElement | Programmatic element creation |
 | SPA navigation | Handle YouTube events, History API |
 | Debug logging | Toggleable console output |
 | Focus management | Track selection with keyboard nav |
