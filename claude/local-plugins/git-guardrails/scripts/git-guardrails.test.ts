@@ -401,6 +401,23 @@ EOF`
     // No rewrite needed — falls through to attribution stripping which also finds no changes
     expect(output).toBeNull()
   })
+
+  test('rewrites cd && git commit with heredoc', () => {
+    const command = `cd /some/dir && git commit -m "$(cat <<'EOF'
+feat: with cd prefix
+EOF
+)"`
+
+    const { output, exitCode } = runHook(createInput(command))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+    const updated = (output?.hookSpecificOutput?.updatedInput as any)?.command
+    expect(updated).toBe(`cd /some/dir && git commit -F - <<'EOF'
+feat: with cd prefix
+EOF`)
+    expect(updated).not.toContain('$(cat')
+  })
 })
 
 describe('attribution stripping', () => {

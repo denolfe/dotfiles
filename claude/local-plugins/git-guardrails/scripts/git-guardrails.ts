@@ -121,15 +121,15 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
   // Rewrite $(cat <<'EOF'...) to git commit -F - <<'EOF' (avoids $() permission prompts)
   if (/git\s+commit/.test(command) && /\$\(cat\s+<</.test(command)) {
     const match = command.match(
-      /^(git\s+commit\b.*?)\s+-m\s+"?\$\(cat\s+<<'?(\w+)'?\n([\s\S]*?)\n\2\n\)"?$/,
+      /^(.*?)(git\s+commit\b.*?)\s+-m\s+"?\$\(cat\s+<<'?(\w+)'?\n([\s\S]*?)\n\3\n\)"?$/,
     )
     if (match) {
-      const [, prefix, delimiter, message] = match
+      const [, cmdPrefix, gitCommit, delimiter, message] = match
       return {
         hookSpecificOutput: {
           hookEventName: 'PreToolUse',
           permissionDecision: 'allow',
-          updatedInput: { command: `${prefix} -F - <<'${delimiter}'\n${message}\n${delimiter}` },
+          updatedInput: { command: `${cmdPrefix}${gitCommit} -F - <<'${delimiter}'\n${message}\n${delimiter}` },
         },
       }
     }
