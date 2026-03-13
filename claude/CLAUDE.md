@@ -40,6 +40,7 @@
 ## Imports
 
 - Use `import type` for types, regular `import` for values, separate statements _even from same module_
+- Use static `import` over dynamic `await import()` unless lazy-loading is explicitly needed (e.g., test mocking, optional dependencies, conditional heavy modules).
 - Check if equivalent utility already exists before implementing; reuse over duplicate
 
 ## Commenting
