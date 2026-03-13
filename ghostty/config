@@ -7,7 +7,7 @@ font-family = JetBrainsMonoNL Nerd Font Mono
 font-size = 12
 
 # Move characters a bit closer together, similar to the look of iTerm2
-adjust-cell-width = -4%
+adjust-cell-width = -3%
 
 # Cursor
 cursor-style = block
