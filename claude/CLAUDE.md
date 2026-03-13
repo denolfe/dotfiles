@@ -6,6 +6,7 @@
 # Node.js Preferences
 
 - Always use pnpm for package management.
+  - Executing pnpm with arguments should NEVER use `--`. pnpm handles argument parsing itself.
 - Always use vitest for testing.
 
 # Commit Guidelines
