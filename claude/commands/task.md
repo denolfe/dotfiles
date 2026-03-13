@@ -13,7 +13,7 @@ Compute the task directory path, then run the script. If no argument is provided
 3. **task-title**: title-cased task-name, prefixed with issue-number if applicable (e.g., `ECMS-12345: Buggy Auth`).
 4. **project-dirname**: basename of the current project directory (e.g., `my-project`).
 5. **folder**: `{YYYY-MM-DD}_{project-dirname}_{issue-number}-{task-name}` (omit `{issue-number}-` if none).
-6. **task-dir**: `{plans-dir}/{folder}` (plans-dir per CLAUDE.md).
+6. **task-dir**: `~/.claude/plans/{folder}`
 
 Run `~/.claude/commands/task.sh "<task-dir>" "<task-title>"`
 
