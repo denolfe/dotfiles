@@ -1,7 +1,7 @@
 /**
  * Minimal Claude Code hook types for the auto-approve plugin.
  *
- * Subset of the canonical types in git-guardrails/scripts/types.ts,
+ * Minimal subset of Claude Code hook types,
  * copied here so the plugin is self-contained.
  *
  * @see https://code.claude.com/docs/en/hooks

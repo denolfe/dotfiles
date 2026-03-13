@@ -16,7 +16,7 @@ Claude Code prompts for approval on compound commands even when each part would 
 4. **Wrappers stripped** — `FOO=bar`, `time`, `timeout N`, `nice` removed before matching
 5. **All segments must match** — if any part is unmatched, defers to normal permission flow
 
-Never explicitly denies — that's git-guardrails' job.
+Never explicitly denies — only approves or defers.
 
 ### Pattern Sources
 
