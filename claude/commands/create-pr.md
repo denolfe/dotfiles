@@ -12,20 +12,22 @@ allowed-tools: Bash
 
 ## PR Content Guidelines
 
-- Follow the Template provided below _as a guideline_ for structuring the PR description, but adapt it as needed to fit the specific changes being made.
-- DO NOT include anything related to test coverage
+- Follow the Template provided below _as a guideline_ for structuring the PR description, but adapt it as needed to fit the specific changes being made. DO NOT create new sections that are not defined in the template
+- DO NOT include anything related to test plan or test coverage
 - DO NOT reference specific lines numbers
-- Wording rules
-  - No AI vocabulary: avoid "leverage", "enhance", "crucial", "pivotal", "comprehensive", "streamline", "robust", "seamless", "facilitate", "utilize" — use plain equivalents
-  - No significance inflation: don't puff up changes with "key", "vital", "critical", "fundamental" — just describe what changed
-  - No filler: cut "in order to" → "to", "it is important to note that" → (delete), "due to the fact that" → "because"
-  - No hedging: avoid "potentially", "might possibly", "it could be argued" — state facts directly
-  - No -ing padding: don't append "ensuring consistency", "highlighting the need for", "improving maintainability" as filler justifications - if the reason matters, give it its own sentence
-  - No copula avoidance: use "is/are/has" instead of "serves as", "stands as", "acts as"
-  - No negative parallelisms: avoid "not only X but also Y", "it's not just X, it's Y"
-  - No rule of three: don't force triads like "faster, safer, and more maintainable" — include only what's true and relevant
-  - No em dash abuse: prefer commas, parentheses, or separate sentences
-  - No chatbot artifacts: no "Let me know if...", "Here's an overview of...", "This PR aims to..."
+
+### Wording Rules
+
+- No AI vocabulary: avoid "leverage", "enhance", "crucial", "pivotal", "comprehensive", "streamline", "robust", "seamless", "facilitate", "utilize" — use plain equivalents
+- No significance inflation: don't puff up changes with "key", "vital", "critical", "fundamental" — just describe what changed
+- No filler: cut "in order to" → "to", "it is important to note that" → (delete), "due to the fact that" → "because"
+- No hedging: avoid "potentially", "might possibly", "it could be argued" — state facts directly
+- No -ing padding: don't append "ensuring consistency", "highlighting the need for", "improving maintainability" as filler justifications - if the reason matters, give it its own sentence
+- No copula avoidance: use "is/are/has" instead of "serves as", "stands as", "acts as"
+- No negative parallelisms: avoid "not only X but also Y", "it's not just X, it's Y"
+- No rule of three: don't force triads like "faster, safer, and more maintainable" — include only what's true and relevant
+- No em dash abuse: prefer commas, parentheses, or separate sentences
+- No chatbot artifacts: no "Let me know if...", "Here's an overview of...", "This PR aims to..."
 
 After PR is created, say "PR Created: [PR URL]".
 
@@ -36,14 +38,15 @@ After PR is created, say "PR Created: [PR URL]".
 
 [Brief summary of the PR's purpose and scope.]
 
-["Resolves PREFIX-1234" if an issue is being addressed.]
+["Resolves [PREFIX-1234](https://tracker.example.com/PREFIX-1234)". Use link for GitHub, Asana, Linear, etc. If no issue, omit this line.]
 
 ## Key Changes
 
-- **[Bold label]:** [Description of what changed and why. Can span multiple sentences for context.]
-  - [Optional: Bullet points for concise sub-details.]
+- **[Brief description of what changed]**
+  - [Description of what changed and why. Can span multiple bullets if needed, but avoid excessive detail.]
 
-- **[Another change]:** [Description of another significant change.]
+- **[Brief description of another change]**
+  - [Description of what changed and why.]
 
 ## Design Decisions
 
