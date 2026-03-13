@@ -15,7 +15,7 @@
     {
       "name": "zellij-activity",
       "description": "Displays Claude Code activity status in Zellij tab name",
-      "version": "0.0.1",
+      "version": "0.0.2",
       "source": "./zellij-activity"
     },
     {
@@ -29,6 +29,12 @@
       "description": "Core skills library for Claude Code",
       "version": "4.2.0",
       "source": "./superpowers"
+    },
+    {
+      "name": "auto-approve",
+      "description": "Auto-approves compound bash commands when each part matches allow patterns",
+      "version": "0.0.1",
+      "source": "./auto-approve"
     }
   ]
 }

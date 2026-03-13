@@ -1,0 +1,5 @@
+{
+  "name": "auto-approve",
+  "description": "Auto-approves compound bash commands when each part matches allow patterns",
+  "version": "0.0.1"
+}
