@@ -210,10 +210,19 @@ function getSettingsPaths(): string[] {
   return paths
 }
 
+function hasHeredoc(command: string): boolean {
+  const match = command.match(/<<-?'?(\w+)'?/)
+  if (!match) return false
+  const delimiter = match[1]
+  return new RegExp(`^${delimiter}$`, 'm').test(command)
+}
+
 function needsDecomposition(command: string): boolean {
   const withoutQuotes = command.replace(/"(?:[^"\\]|\\.)*"|'[^']*'/g, '')
   // Compound operators or command substitution
   if (/&&|\|\||[;|]|\$\(/.test(withoutQuotes)) return true
+  // Newlines (but not inside heredocs)
+  if (/\n/.test(withoutQuotes) && !hasHeredoc(command)) return true
   // Wrapper prefixes that need stripping
   if (/^(time|timeout|nice)\s/.test(command.trim())) return true
   if (/^[A-Z_][A-Z0-9_]*=/.test(command.trim())) return true
@@ -225,7 +234,12 @@ function isBuiltin(command: string): boolean {
   return firstWord !== undefined && SAFE_BUILTINS.has(firstWord)
 }
 
+function isComment(command: string): boolean {
+  return command.trim().startsWith('#')
+}
+
 function approveSegment(segment: string, patterns: string[]): boolean {
+  if (isComment(segment)) return true
   if (isBuiltin(segment)) return true
   if (matchesPattern(segment, patterns)) return true
 

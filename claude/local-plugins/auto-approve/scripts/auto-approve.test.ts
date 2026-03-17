@@ -449,6 +449,18 @@ describe('integration: edge cases', () => {
     expect(output).toBeNull()
   })
 
+  test('approves comment line followed by allowed command', () => {
+    const cmd = '# Check something\ncat package.json'
+    const { output } = runHook(cmd)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+  })
+
+  test('approves comment-only lines in compound command', () => {
+    const cmd = '# Step 1\nls -la && # Step 2\ngrep foo bar.txt'
+    const { output } = runHook(cmd)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+  })
+
   test('handles heredoc commit (not compound)', () => {
     const cmd = `git commit -F - <<'EOF'
 feat: test
