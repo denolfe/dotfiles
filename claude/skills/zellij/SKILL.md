@@ -12,20 +12,20 @@ Read from and write to other zellij terminal panes using `zellij action` command
 **Send command (with Enter to execute):**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-send.sh $'ls -la\n'
+~/.claude/skills/zellij/scripts/zellij-send.sh $'ls -la\n'
 ```
 
 **Send text (without Enter, for partial input):**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-send.sh "partial text"
+~/.claude/skills/zellij/scripts/zellij-send.sh "partial text"
 ```
 
 **Specify direction:**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-send.sh right $'echo hello\n'
-~/.claude/skills/zellij/tools/zellij-send.sh left "some text"
+~/.claude/skills/zellij/scripts/zellij-send.sh right $'echo hello\n'
+~/.claude/skills/zellij/scripts/zellij-send.sh left "some text"
 ```
 
 Directions: `next` (default), `left`, `right`, `up`, `down`
@@ -35,22 +35,22 @@ Directions: `next` (default), `left`, `right`, `up`, `down`
 **View adjacent pane (visible screen):**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-dump.sh next
+~/.claude/skills/zellij/scripts/zellij-dump.sh next
 ```
 
 **View pane in specific direction:**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-dump.sh left
-~/.claude/skills/zellij/tools/zellij-dump.sh right
-~/.claude/skills/zellij/tools/zellij-dump.sh up
-~/.claude/skills/zellij/tools/zellij-dump.sh down
+~/.claude/skills/zellij/scripts/zellij-dump.sh left
+~/.claude/skills/zellij/scripts/zellij-dump.sh right
+~/.claude/skills/zellij/scripts/zellij-dump.sh up
+~/.claude/skills/zellij/scripts/zellij-dump.sh down
 ```
 
 **Include full scrollback:**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-dump.sh next --full
+~/.claude/skills/zellij/scripts/zellij-dump.sh next --full
 ```
 
 ## Layout Info
@@ -58,7 +58,7 @@ Directions: `next` (default), `left`, `right`, `up`, `down`
 **Show tabs and panes:**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-info.sh
+~/.claude/skills/zellij/scripts/zellij-info.sh
 ```
 
 ## Creating Panes
@@ -66,21 +66,21 @@ Directions: `next` (default), `left`, `right`, `up`, `down`
 **New pane (auto direction):**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-new-pane.sh
+~/.claude/skills/zellij/scripts/zellij-new-pane.sh
 ```
 
 **New pane with direction:**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-new-pane.sh right
-~/.claude/skills/zellij/tools/zellij-new-pane.sh down
+~/.claude/skills/zellij/scripts/zellij-new-pane.sh right
+~/.claude/skills/zellij/scripts/zellij-new-pane.sh down
 ```
 
 **New pane and run command:**
 
 ```bash
-~/.claude/skills/zellij/tools/zellij-new-pane.sh "npm run dev"
-~/.claude/skills/zellij/tools/zellij-new-pane.sh down "tail -f /var/log/app.log"
+~/.claude/skills/zellij/scripts/zellij-new-pane.sh "npm run dev"
+~/.claude/skills/zellij/scripts/zellij-new-pane.sh down "tail -f /var/log/app.log"
 ```
 
 ## Limitations
