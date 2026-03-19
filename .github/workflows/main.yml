@@ -16,7 +16,7 @@ jobs:
           - ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Checkout submodules
         shell: bash
         run: |
@@ -43,13 +43,13 @@ jobs:
     outputs:
       plugins: ${{ steps.discover.outputs.plugins }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - id: discover
         run: |
           plugins=$(ls -d claude/local-plugins/*/package.json 2>/dev/null | xargs -I{} dirname {} | xargs -I{} basename {} | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "plugins=$plugins" >> $GITHUB_OUTPUT
 
-  test-plugin:
+  claude-plugins:
     needs: discover-plugins
     if: ${{ needs.discover-plugins.outputs.plugins != '[]' }}
     runs-on: ubuntu-latest
@@ -57,7 +57,7 @@ jobs:
       matrix:
         plugin: ${{ fromJson(needs.discover-plugins.outputs.plugins) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
