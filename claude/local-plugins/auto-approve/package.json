@@ -1,5 +1,5 @@
 {
-  "name": "git-guardrails",
+  "name": "auto-approve",
   "private": true,
   "scripts": {
     "typecheck": "tsc",
