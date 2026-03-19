@@ -28,6 +28,7 @@ allowed-tools: Bash
 - No rule of three: don't force triads like "faster, safer, and more maintainable" — include only what's true and relevant
 - No em dash abuse: prefer commas, parentheses, or separate sentences
 - No chatbot artifacts: no "Let me know if...", "Here's an overview of...", "This PR aims to..."
+- No references to mermaid node IDs or branch labels (e.g., "the D -- No branch"). These don't render outside the diagram. Describe the flow in plain language instead.
 
 After PR is created, say "PR Created: [PR URL]".
 
