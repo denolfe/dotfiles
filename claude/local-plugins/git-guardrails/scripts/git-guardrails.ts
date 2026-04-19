@@ -118,18 +118,23 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
     }
   }
 
-  // Rewrite $(cat <<'EOF'...) to git commit -F - <<'EOF' (avoids $() permission prompts)
+  // Rewrite $(cat <<'EOF'...) to git commit -F - <<'EOF' (avoids $() permission prompts).
+  // Also strips Claude attribution from the embedded message so the strip block below
+  // doesn't need to run on the rewritten form.
   if (/git\s+commit/.test(command) && /\$\(cat\s+<</.test(command)) {
     const match = command.match(
       /^(.*?)(git\s+commit\b.*?)\s+-m\s+"?\$\(cat\s+<<'?(\w+)'?\n([\s\S]*?)\n\3\n\)"?$/,
     )
     if (match) {
       const [, cmdPrefix, gitCommit, delimiter, message] = match
+      const cleanedMessage = stripClaudeAttribution(message)
       return {
         hookSpecificOutput: {
           hookEventName: 'PreToolUse',
           permissionDecision: 'allow',
-          updatedInput: { command: `${cmdPrefix}${gitCommit} -F - <<'${delimiter}'\n${message}\n${delimiter}` },
+          updatedInput: {
+            command: `${cmdPrefix}${gitCommit} -F - <<'${delimiter}'\n${cleanedMessage}\n${delimiter}`,
+          },
         },
       }
     }
@@ -137,15 +142,8 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
 
   // Strip Claude attribution from commits, caught Claude ignoring `includeCoAuthoredBy: false`
   if (/git\s+commit/.test(command)) {
-    const lines = command.split('\n')
-    const filtered = lines.filter(line => !/generated/i.test(line) && !/co-authored-by/i.test(line))
+    const cleaned = stripClaudeAttribution(command)
 
-    const cleaned = filtered
-      .join('\n')
-      .replace(/\n{3,}/g, '\n\n') // Collapse 3+ consecutive newlines to 2
-      .replace(/\n+$/, '') // Remove trailing newlines
-
-    // No changes made, allow original command
     if (cleaned === command) {
       return
     }
@@ -160,6 +158,15 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
       },
     }
   }
+}
+
+function stripClaudeAttribution(text: string): string {
+  return text
+    .split('\n')
+    .filter(line => !/generated/i.test(line) && !/co-authored-by/i.test(line))
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/\n+$/, '')
 }
 
 // Entry point

@@ -331,6 +331,26 @@ EOF`)
     expect(updated).not.toContain('-m')
   })
 
+  test("strips Claude attribution inside $(cat <<'EOF'...) rewrite", () => {
+    const command = `git commit -m "$(cat <<'EOF'
+feat(scope): subject line
+
+- Detail 1
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"`
+
+    const { output, exitCode } = runHook(createInput(command))
+
+    expect(exitCode).toBe(0)
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+    const updated = (output?.hookSpecificOutput?.updatedInput as any)?.command
+    expect(updated).not.toContain('Co-Authored-By')
+    expect(updated).not.toContain('$(cat')
+    expect(updated).toContain("git commit -F - <<'EOF'")
+  })
+
   test('rewrites without quotes around delimiter', () => {
     const command = `git commit -m "$(cat <<EOF
 feat: message
