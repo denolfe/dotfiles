@@ -1,7 +1,6 @@
 ---
-description: Create a new task file for a specific task or feature development
-argument-hint: <task-name-or-desc>
-allowed-tools: Bash(~/.claude/commands/task.sh:*), Read
+name: task
+description: Create a new task file for a specific task or feature development. Use when the user wants to start a new task, plan a feature, or asks to create a task file.
 ---
 
 # New Task
@@ -15,7 +14,7 @@ Compute the task directory path, then run the script. If no argument is provided
 5. **folder**: `{YYYY-MM-DD}_{project-dirname}_{issue-number}-{task-name}` (omit `{issue-number}-` if none).
 6. **task-dir**: `~/.claude/plans/{folder}`
 
-Run `~/.claude/commands/task.sh "<task-dir>" "<task-title>"`
+Run `~/.claude/skills/task/task.sh "<task-dir>" "<task-title>"`
 
 The script creates the directory and 1-TASK.md, then outputs the path.
 
