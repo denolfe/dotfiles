@@ -49,7 +49,8 @@
 | ----------------- | ------------------------------------------------------------------------ |
 | `/task`           | Create task folder with `1-TASK.md`, option to brainstorm `2-DESIGN.md`  |
 | `/implement-plan` | Execute `PLAN.md` with subagent-driven dev and code review between tasks |
-| `/create-pr`      | Create PR from template, architecture-focused with mermaid diagrams      |
+| `/pr create`      | Create PR from template, architecture-focused with mermaid diagrams      |
+| `/pr update`      | Update existing PR body to reflect current commits                       |
 
 ### Plugins
 
