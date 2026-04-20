@@ -1,6 +1,7 @@
 ---
 name: pr
 description: Use when the user wants to create a new pull request, update an existing PR's body, or open a draft PR for the current branch.
+arguments: "[create [draft] | update]"
 ---
 
 # PR
