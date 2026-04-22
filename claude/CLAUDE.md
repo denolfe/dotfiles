@@ -34,6 +34,7 @@
 
 - Prefer `type` over `interface` (except when extending external types)
 - Avoid type assertions (`as`); fix types at the source
+- Avoid non-null assertion (`!`); prefer optional chaining (`?.`) or type guards
 - Use Utility types (`Partial<T>`, `Pick<T, K>`, `Omit<T, K>`, `Record<K, T>`, `ReturnType<T>`) over custom inline types when subsetting
 - Prefix booleans with `is`/`has`/`can`/`should` (e.g., `isValid`, `hasData`)
 
