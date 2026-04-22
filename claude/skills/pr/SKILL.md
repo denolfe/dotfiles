@@ -1,7 +1,7 @@
 ---
 name: pr
 description: Use when the user wants to create a new pull request, update an existing PR's body, open a draft PR, or preview a PR body locally before pushing.
-arguments: "create | draft | update | preview"
+arguments: "create|draft|update|preview base=<branch>"
 ---
 
 # PR
@@ -13,6 +13,8 @@ Dispatch on the first argument:
 - `update` → see Update below
 - `preview` → see Preview below
 - No argument or unknown → check if a PR exists for the current branch. If yes, run Update. If no, run Create.
+
+An optional `base=<branch>` argument (any position) sets the target branch. If omitted, default to the repo's default branch. Pass via `--base <branch>` to `gh pr create`. Ignored for `update` and `preview`.
 
 All subcommands follow [references/content-guidelines.md](references/content-guidelines.md) and use [assets/template.md](assets/template.md).
 
