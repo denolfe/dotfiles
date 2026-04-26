@@ -18,10 +18,11 @@ All subcommands follow [references/content-guidelines.md](references/content-gui
 
 ## Create / Draft
 
-- Inspect branch state.
+- Inspect branch state and commit history (including `git log --oneline -- <changed-files>` for convention patterns).
+- Generate title: Conventional Commits format, synthesize from branch commits, ≤72 chars.
 - Write the PR body.
 - Create the PR with `gh pr create` (add `--draft` for draft PRs).
-- Say "PR Created: [PR URL]".
+- Say "PR Created: [title] [PR URL]".
 
 ## Update
 
