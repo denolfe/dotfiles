@@ -4,7 +4,7 @@ Applies to both `create` and `update`.
 
 ## Structure
 
-- Use [../assets/template.md](../assets/template.md) _as a guideline_ for structuring the PR description; adapt sections to fit the actual changes.
+- Use the template in [../SKILL.md](../SKILL.md) _as a guideline_ for structuring the PR description; adapt sections to fit the actual changes.
 - DO NOT add sections that are not defined in the template.
 - DO NOT include anything related to test plan or test coverage.
 - DO NOT reference specific line numbers.
