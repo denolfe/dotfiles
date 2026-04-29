@@ -7,16 +7,49 @@ import { join } from 'path'
 
 // Shell builtins that are always safe (no filesystem side effects worth blocking)
 export const SAFE_BUILTINS = new Set([
-  'cd', 'echo', 'printf', 'test', '[', '[[', 'true', 'false',
-  'export', 'unset', 'source', '.', 'eval',
-  'read', 'set', 'shift', 'return', 'exit',
-  'local', 'declare', 'typeset', 'readonly',
-  'pushd', 'popd', 'dirs',
-  'type', 'which', 'command', 'builtin', 'hash',
-  'wait', 'jobs', 'fg', 'bg', 'kill',
-  'trap', 'umask', 'ulimit',
-  'alias', 'unalias',
-  'getopts', 'let', 'exec',
+  '.',
+  '[',
+  '[[',
+  'alias',
+  'bg',
+  'builtin',
+  'cd',
+  'command',
+  'declare',
+  'dirs',
+  'echo',
+  'eval',
+  'exec',
+  'exit',
+  'export',
+  'false',
+  'fg',
+  'getopts',
+  'hash',
+  'jobs',
+  'kill',
+  'let',
+  'local',
+  'popd',
+  'printf',
+  'pushd',
+  'read',
+  'readonly',
+  'return',
+  'set',
+  'shift',
+  'source',
+  'test',
+  'trap',
+  'true',
+  'type',
+  'typeset',
+  'ulimit',
+  'umask',
+  'unalias',
+  'unset',
+  'wait',
+  'which',
 ])
 
 // --- Public API (exported for unit testing) ---
@@ -107,7 +140,12 @@ export function extractCommandSubstitutions(command: string): SubstitutionResult
   // Check for backticks (outside single quotes)
   const withoutSingleQuotes = command.replace(/'[^']*'/g, '')
   if (/`/.test(withoutSingleQuotes)) {
-    return { outerCommand: command, innerCommands: [], hasBackticks: true, hasNestedSubstitution: false }
+    return {
+      outerCommand: command,
+      innerCommands: [],
+      hasBackticks: true,
+      hasNestedSubstitution: false,
+    }
   }
 
   // Protect single-quoted strings
@@ -135,7 +173,12 @@ export function extractCommandSubstitutions(command: string): SubstitutionResult
 
       // Check for nested $()
       if (/\$\(/.test(inner)) {
-        return { outerCommand: command, innerCommands: [], hasBackticks: false, hasNestedSubstitution: true }
+        return {
+          outerCommand: command,
+          innerCommands: [],
+          hasBackticks: false,
+          hasNestedSubstitution: true,
+        }
       }
 
       innerCommands.push(inner.trim())
@@ -252,10 +295,61 @@ function approveSegment(segment: string, patterns: string[]): boolean {
   return false
 }
 
+// --- Rewriters ---
+
+/** Rewrite `cd <dir> && git <args>...` → `git -C <dir> <args>...` */
+export function rewriteCdGit(command: string): string | null {
+  const segments = splitCompoundCommand(command)
+  if (segments.length < 2) return null
+
+  // First segment must be a bare `cd <dir>`
+  const cdMatch = segments[0]!.match(/^cd\s+(.+)$/)
+  if (!cdMatch) return null
+
+  const dir = cdMatch[1]!.trim()
+
+  // All remaining segments must be git commands
+  const gitSegments = segments.slice(1)
+  if (!gitSegments.every(seg => /^git\s/.test(seg.trim()))) return null
+
+  // Rewrite each git command with -C flag
+  const rewritten = gitSegments.map(seg => seg.trim().replace(/^git\s+/, `git -C ${dir} `))
+
+  // Rejoin with original operator (&&, ||, ;)
+  // Extract operators between non-cd segments from the original command
+  if (rewritten.length === 1) return rewritten[0]!
+  return rewritten.join(' && ')
+}
+
 // --- Handler ---
 
 const handler: PreToolUseHandler<BashToolInput> = data => {
   const { command } = data.tool_input
+
+  // Rewrite cd && git → git -C, then validate git subcommands against patterns
+  const rewritten = rewriteCdGit(command)
+  if (rewritten) {
+    const patterns = loadAllowPatterns(getSettingsPaths())
+    // Validate each git subcommand (without -C <dir>) against allow patterns
+    const gitCommands = splitCompoundCommand(rewritten)
+    const allApproved =
+      patterns.length > 0 &&
+      gitCommands.every(seg => {
+        const bare = seg.trim().replace(/^git\s+-C\s+\S+\s+/, 'git ')
+        return approveSegment(bare, patterns)
+      })
+
+    if (!allApproved) return
+
+    return {
+      hookSpecificOutput: {
+        hookEventName: 'PreToolUse',
+        permissionDecision: 'allow',
+        permissionDecisionReason: 'Rewrote cd && git to git -C; subcommands match allow patterns',
+        updatedInput: { ...data.tool_input, command: rewritten },
+      },
+    } satisfies PreToolUseOutput
+  }
 
   // Fast path: simple commands don't need decomposition
   if (!needsDecomposition(command)) return

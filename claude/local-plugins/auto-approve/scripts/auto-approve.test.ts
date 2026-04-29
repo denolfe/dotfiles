@@ -10,6 +10,7 @@ import {
   splitCompoundCommand,
   extractCommandSubstitutions,
   stripWrappers,
+  rewriteCdGit,
 } from './auto-approve'
 
 // --- Unit Tests ---
@@ -253,6 +254,38 @@ describe('stripWrappers', () => {
   })
 })
 
+describe('rewriteCdGit', () => {
+  test('rewrites cd && git to git -C', () => {
+    expect(rewriteCdGit('cd /some/dir && git status')).toBe('git -C /some/dir status')
+  })
+
+  test('rewrites cd && git with args', () => {
+    expect(rewriteCdGit('cd /some/dir && git diff --staged')).toBe('git -C /some/dir diff --staged')
+  })
+
+  test('rewrites multiple git commands', () => {
+    expect(rewriteCdGit('cd /dir && git add . && git commit -m "msg"'))
+      .toBe('git -C /dir add . && git -C /dir commit -m "msg"')
+  })
+
+  test('returns null for non-cd start', () => {
+    expect(rewriteCdGit('git status && git diff')).toBeNull()
+  })
+
+  test('returns null when non-git follows cd', () => {
+    expect(rewriteCdGit('cd /dir && npm test')).toBeNull()
+  })
+
+  test('returns null for single command', () => {
+    expect(rewriteCdGit('git status')).toBeNull()
+  })
+
+  test('handles tilde in path', () => {
+    expect(rewriteCdGit('cd ~/.dotfiles && git log --oneline'))
+      .toBe('git -C ~/.dotfiles log --oneline')
+  })
+})
+
 // --- Integration Tests (subprocess) ---
 
 const hookPath = new URL('./auto-approve.ts', import.meta.url).pathname
@@ -369,6 +402,48 @@ describe('integration: compound command approval', () => {
   test('approves with time wrapper', () => {
     const { output } = runHook('time npm test')
     expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+  })
+})
+
+describe('integration: cd && git rewrite', () => {
+  beforeAll(() => {
+    setupSettings([
+      'Bash(git status)',
+      'Bash(git diff:*)',
+      'Bash(git commit:*)',
+      'Bash(git log:*)',
+    ])
+  })
+
+  afterAll(() => cleanupSettings())
+
+  test('rewrites cd && git status and approves', () => {
+    const { output } = runHook('cd /some/dir && git status')
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+    expect(output?.hookSpecificOutput?.updatedInput?.command).toBe('git -C /some/dir status')
+  })
+
+  test('rewrites cd && git diff with args', () => {
+    const { output } = runHook('cd /some/dir && git diff --staged')
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+    expect(output?.hookSpecificOutput?.updatedInput?.command).toBe('git -C /some/dir diff --staged')
+  })
+
+  test('rewrites multiple git commands', () => {
+    const { output } = runHook('cd /dir && git diff --staged && git log --oneline -5')
+    expect(output?.hookSpecificOutput?.permissionDecision).toBe('allow')
+    expect(output?.hookSpecificOutput?.updatedInput?.command)
+      .toBe('git -C /dir diff --staged && git -C /dir log --oneline -5')
+  })
+
+  test('passes through cd && git with disallowed subcommand', () => {
+    const { output } = runHook('cd /dir && git push --force')
+    expect(output).toBeNull()
+  })
+
+  test('passes through cd && mixed git when any disallowed', () => {
+    const { output } = runHook('cd /dir && git status && git push')
+    expect(output).toBeNull()
   })
 })
 
