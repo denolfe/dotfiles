@@ -42,6 +42,24 @@ make claude-plugins # Sync Claude Code local plugins
 
 ## Architecture
 
+### Claude Code Configuration (`claude/`)
+Claude Code customizations symlinked to `~/.claude/` via dotbot glob pattern.
+
+**Important:** Two different CLAUDE.md files exist:
+- `./CLAUDE.md` (root) → Project documentation for this dotfiles repo
+- `claude/CLAUDE.md` → User's global Claude instructions (symlinked to `~/.claude/CLAUDE.md`)
+
+When iterating on claude/ directory contents, edit `claude/CLAUDE.md`, NOT the root file.
+
+**Directory structure:**
+- `CLAUDE.md`: Global user instructions (coding preferences, commit guidelines)
+- `skills/`: Custom skills (ghostty-config, pr, task, zellij, markdown-formatting, etc.)
+- `local-plugins/`: Plugins with hooks (auto-approve, git-guardrails, sounds, superpowers symlink)
+- `commands/`: Custom slash commands (search.md)
+- `set-defaults.sh`: Claude Code defaults (`make claude`)
+
+**Plugin sync:** `make claude-plugins` runs `update-local-plugins.sh` to sync plugins to `~/.claude/local-plugins/`.
+
 ### Karabiner Configuration (`karabiner/`)
 TypeScript-based Karabiner-Elements config using Deno and [deno_karabiner](https://github.com/esamattis/deno_karabiner).
 
