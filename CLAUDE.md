@@ -18,7 +18,7 @@ make link            # Run dotbot link only (./install --only link)
 ```bash
 make karabiner       # Build karabiner.json from TypeScript
 make karabiner-dev   # Watch mode with auto-rebuild
-# Direct: deno run --allow-env --allow-read --allow-write karabiner/karabiner.ts
+# Direct: bun run karabiner/karabiner.ts
 ```
 
 ### VS Code Extensions
@@ -61,7 +61,7 @@ When iterating on claude/ directory contents, edit `claude/CLAUDE.md`, NOT the r
 **Plugin sync:** `make claude-plugins` runs `update-local-plugins.sh` to sync plugins to `~/.claude/local-plugins/`.
 
 ### Karabiner Configuration (`karabiner/`)
-TypeScript-based Karabiner-Elements config using Deno and [deno_karabiner](https://github.com/esamattis/deno_karabiner).
+TypeScript-based Karabiner-Elements config using Bun.
 
 **Key files:**
 - `karabiner.ts`: Main config, builds JSON
@@ -144,5 +144,5 @@ deno test claude/hooks/pure-md-prompt-rewriter.test.ts
 
 ## TypeScript Build Patterns
 
-**Karabiner:** Deno with no deps → single `karabiner.json` output
+**Karabiner:** Bun with no deps → single `karabiner.json` output
 **Claude hooks:** Deno with TypeScript → no compilation needed (executed directly)

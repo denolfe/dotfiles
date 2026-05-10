@@ -1,4 +1,3 @@
-// deno-lint-ignore-file camelcase
 import { Condition } from './types.ts'
 
 import { AppName, appMap } from './apps.ts'

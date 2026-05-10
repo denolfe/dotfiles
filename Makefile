@@ -9,10 +9,10 @@ link:
 
 # Build and output karabiner.json
 karabiner:
-	deno run --allow-env --allow-read --allow-write karabiner/karabiner.ts
+	bun run karabiner/karabiner.ts
 
 karabiner-dev:
-	deno run --watch --allow-env --allow-read --allow-write karabiner/karabiner.ts
+	bun --watch karabiner/karabiner.ts
 
 # Build and output phoenix config
 phoenix:

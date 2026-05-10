@@ -337,4 +337,4 @@ mods.addRule({
   ],
 })
 
-mods.writeConfig()
+await mods.writeConfig()

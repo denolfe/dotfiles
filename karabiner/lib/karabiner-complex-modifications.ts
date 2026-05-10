@@ -52,17 +52,13 @@ export class KarabinerComplexModifications {
     return JSON.stringify(fullConfig, null, '  ')
   }
 
-  writeConfig(): void {
+  async writeConfig(): Promise<void> {
     const config = this.outputConfig()
-
-    // Write to .dotfiles dir for version control
-    const __dirname = new URL('.', import.meta.url).pathname
-    Deno.writeTextFileSync(`${__dirname}/../karabiner.json`, config)
-
-    // Write to karabiner config location
-    const configPath = `${Deno.env.get('HOME')}/.config/karabiner/karabiner.json`
+    const __dirname = import.meta.dir
+    await Bun.write(`${__dirname}/../karabiner.json`, config)
+    const configPath = `${Bun.env.HOME}/.config/karabiner/karabiner.json`
     console.log(`Writing config to ${configPath}`)
-    Deno.writeTextFileSync(configPath, config)
+    await Bun.write(configPath, config)
     console.log('Done!')
   }
 }
