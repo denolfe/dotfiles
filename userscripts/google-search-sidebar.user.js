@@ -168,15 +168,17 @@
       display: none !important;
     }
 
-    /** Shift main content right to make room for sidebar **/
-    #center_col,
-    #appbar {
-      margin-left: calc(var(--sidebar-width) + var(--sidebar-padding)) !important;
-    }
-
     /** Highlight search terms in results **/
     em {
       color: var(--sidebar-primary) !important;
+    }
+
+    /** At narrow widths, shift content to make room for sidebar **/
+    @media (max-width: 1400px) {
+      #center_col,
+      #appbar {
+        margin-left: calc(var(--sidebar-width) + var(--sidebar-padding)) !important;
+      }
     }
 
     /** Custom date range dialog - keep it functional **/
