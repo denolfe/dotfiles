@@ -88,6 +88,10 @@
     ~/.config/zellij:
       path: zellij
 
+    ~/.tmux.conf:
+      path: tmux/tmux.conf
+      force: true
+
     ~/Library/Application Support/com.colliderli.iina/input_conf/YouTube.conf:
       if: '[ `uname` = Darwin ]'
       path: iina/YouTube.conf

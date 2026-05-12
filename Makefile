@@ -1,4 +1,4 @@
-.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-verbs
+.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-verbs tmux
 
 # Run dotbot install script
 install:
@@ -54,6 +54,11 @@ claude:
 # Sync Claude Code local plugins
 claude-plugins:
 	./claude/update-local-plugins.sh
+
+# Install tpm and tmux plugins (idempotent)
+tmux:
+	@test -d ~/.tmux/plugins/tpm || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	~/.tmux/plugins/tpm/bin/install_plugins
 
 gitleaks-history:
 	gitleaks detect --no-git --log-level fatal -f json --no-color --no-banner --redact --source ~/.zsh_history -r ~/.report_gitleaks.json
