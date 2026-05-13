@@ -1,0 +1,5 @@
+{
+  "name": "tmux-agent-status",
+  "description": "Displays Claude Code agent status in tmux window name",
+  "version": "0.0.1"
+}

@@ -19,6 +19,12 @@
       "source": "./zellij-activity"
     },
     {
+      "name": "tmux-agent-status",
+      "description": "Displays Claude Code agent status in tmux window name",
+      "version": "0.0.1",
+      "source": "./tmux-agent-status"
+    },
+    {
       "name": "git-guardrails",
       "description": "Enforces git workflow preferences by intercepting git commands",
       "version": "0.0.2",
