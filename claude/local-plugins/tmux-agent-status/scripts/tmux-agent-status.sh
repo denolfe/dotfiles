@@ -40,6 +40,22 @@ rename_window() {
   tmux rename-window -t "$TMUX_PANE" "$name" 2>/dev/null
 }
 
+get_tool_icon() {
+  case "$1" in
+    Bash)            echo "🖥️" ;;
+    Read)            echo "📖" ;;
+    Edit)            echo "✏️" ;;
+    Write)           echo "💾" ;;
+    Grep)            echo "🔍" ;;
+    Glob)            echo "📂" ;;
+    Task|Agent)      echo "🤖" ;;
+    WebFetch)        echo "🌐" ;;
+    WebSearch)       echo "🔎" ;;
+    AskUserQuestion) echo "❓" ;;
+    *)               echo "🔄" ;;
+  esac
+}
+
 case "$hook_type" in
   SessionStart)
     base_name=$(set_base_name)
@@ -48,11 +64,8 @@ case "$hook_type" in
   PreToolUse)
     tool_name=$(echo "$input" | jq -r '.tool_name // empty')
     base_name=$(get_base_name)
-    if [[ "$tool_name" == "AskUserQuestion" ]]; then
-      rename_window "❓ $base_name"
-    else
-      rename_window "🔄 $base_name"
-    fi
+    icon=$(get_tool_icon "$tool_name")
+    rename_window "$icon $base_name"
     ;;
   PermissionRequest)
     tool_name=$(echo "$input" | jq -r '.tool_name // empty')
