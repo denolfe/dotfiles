@@ -1,4 +1,4 @@
-.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-verbs tmux
+.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-plugin-refresh claude-verbs tmux
 
 # Run dotbot install script
 install:
@@ -54,6 +54,13 @@ claude:
 # Sync Claude Code local plugins
 claude-plugins:
 	./claude/update-local-plugins.sh
+
+# Wipe and re-sync one local plugin's install cache (usage: make claude-plugin-refresh PLUGIN=tmux-agent-status)
+claude-plugin-refresh:
+ifndef PLUGIN
+	$(error PLUGIN required: make claude-plugin-refresh PLUGIN=<name>)
+endif
+	./claude/refresh-local-plugin.sh $(PLUGIN)
 
 # Install tpm and tmux plugins (idempotent)
 tmux:
