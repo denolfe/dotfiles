@@ -54,8 +54,6 @@ export class KarabinerComplexModifications {
 
   async writeConfig(): Promise<void> {
     const config = this.outputConfig()
-    const __dirname = import.meta.dir
-    await Bun.write(`${__dirname}/../karabiner.json`, config)
     const configPath = `${Bun.env.HOME}/.config/karabiner/karabiner.json`
     console.log(`Writing config to ${configPath}`)
     await Bun.write(configPath, config)
