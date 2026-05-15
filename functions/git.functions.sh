@@ -22,6 +22,25 @@ gcm() {
   fi
 }
 
+# Create .gitignore via gitignore.io. No args = fzf picker.
+gi() {
+  local profiles="$*"
+  [ -z "$profiles" ] && profiles=$(curl -L -s https://www.gitignore.io/api/list | tr ',' '\n' | fzf --multi | paste -s -d "," -)
+  [ -z "$profiles" ] && return 1
+  curl -L -s "https://www.gitignore.io/api/$profiles" > .gitignore && echo "Created .gitignore"
+}
+
+# Init new repository
+ginit() {
+  local profiles="${1:-node,macos,windows,webstorm,sublimetext,visualstudiocode}"
+  git init --quiet || return 1
+  curl -L -s "https://www.gitignore.io/api/$profiles" > .gitignore || return 1
+  git add .gitignore || return 1
+  git commit -m "feat: initial commit" --quiet || return 1
+  echo "Repository initialized"
+}
+
+
 # Add upstream remote and set tracking of master
 grau() {
   git remote add upstream "$1" || return 1
