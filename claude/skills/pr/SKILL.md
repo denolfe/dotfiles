@@ -60,25 +60,57 @@ Before `gh pr create`, `gh pr edit`, or printing a Preview body, verify the draf
 
 If any check fails, revise before applying. Do not ship a body you haven't checked.
 
+## Applying the Body
+
+For `gh pr create` and `gh pr edit`, always use `--body-file` with `mktemp`. Never `--body` (its subshell mangles backticks and `$`). No exceptions — inconsistency invites the next agent to rationalize their way back to `--body`.
+
+```bash
+tmp=$(mktemp -t pr-body.XXXXXX) && trap 'rm -f "$tmp"' EXIT && cat > "$tmp" <<'EOF' && gh pr create --body-file "$tmp" [flags]
+[body]
+EOF
+```
+
+Run in a single Bash call — the `trap` only protects the shell it's set in.
+
 ## Create / Draft
 
 - Inspect branch state and commit history (including `git log --oneline -- <changed-files>` for convention patterns).
 - Generate title: Conventional Commits format, synthesize from branch commits, ≤72 chars.
 - Write the PR body.
-- Create the PR with `gh pr create` (add `--draft` for draft PRs).
+- Create the PR per **Applying the Body** above (add `--draft` for draft PRs).
 - Say "PR Created: [title] [PR URL]".
 
 ## Update
 
-- Find the existing PR for the current branch. If none exists, tell the user to run `/pr create` instead.
-- Inspect current branch state and any new design/plan docs since the PR was opened.
-- If any commits are unpushed, ask the user if they'd like to push them now.
-- Regenerate the PR body. Preserve existing intent where still accurate; revise drifted sections.
-- Apply the new body.
-- Show a diff of the old vs new body, highlighting changes.
-- Say "PR Updated: [PR URL]".
+<HARD-GATE>
+STOP before any `gh pr edit` call.
+Run `git status -b --porcelain=v2` (or check ahead/behind from `git status`).
+If the branch is ahead of origin by ≥1 commit, you MUST call AskUserQuestion:
+  "Branch is N commits ahead of origin. Push before updating the PR body?"
+  - Yes, push then update body
+  - No, update body only (description may reference commits not yet on remote)
+This is a correctness gate, not etiquette: if you skip it, the body will describe commits the reviewer can't see. Skipping is a violation even if the user previously approved unrelated unpushed commits.
+</HARD-GATE>
 
-Scope: body only. Do not change title or draft state unless the user asks. Do not push new commits.
+Steps:
+
+1. Find the existing PR for the current branch. If none exists, tell the user to run `/pr create` instead.
+2. Run the HARD-GATE check above. Resolve before continuing.
+3. Inspect current branch state and any new design/plan docs since the PR was opened.
+4. Regenerate the PR body. Preserve existing intent where still accurate; revise drifted sections.
+5. Apply the new body via `gh pr edit` per **Applying the Body** above.
+6. Show a diff of the old vs new body, highlighting changes.
+7. Say "PR Updated: [PR URL]".
+
+Scope: body only. Do not change title or draft state unless the user asks.
+
+### Red flags (rationalizations to reject)
+
+| Thought | Reality |
+|---------|---------|
+| "The body update is the main action, push is incidental" | Push is a precondition. The body is meaningless if the commits aren't visible to reviewers. |
+| "User said `/pr update`, not `/pr update and push`" | The skill defines update as inclusive of the push question. Asking is in scope. |
+| "I can mention pushing in my closing summary" | Too late. The PR is already updated against stale remote state. |
 
 ## Preview
 
