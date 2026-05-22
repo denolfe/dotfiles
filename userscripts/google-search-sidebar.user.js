@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            Google Search Sidebar (Updated)
 // @namespace       jmln.tw
-// @version         0.5.0
+// @version         0.5.1
 // @description     Move Google search tools (time, verbatim filters) to a persistent left sidebar
 // @icon            https://www.google.com/s2/favicons?sz=64&domain=google.com
 // @author          Jimmy Lin (original), Updated 2026
@@ -176,7 +176,8 @@
     /** At narrow widths, shift content to make room for sidebar **/
     @media (max-width: 1400px) {
       #center_col,
-      #appbar {
+      #appbar,
+      .n6owBd {
         margin-left: calc(var(--sidebar-width) + var(--sidebar-padding)) !important;
       }
     }
