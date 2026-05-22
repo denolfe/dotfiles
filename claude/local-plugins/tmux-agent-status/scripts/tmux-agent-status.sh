@@ -73,7 +73,7 @@ case "$hook_type" in
     base_name=$(get_base_name)
     rename_window "🔴 $base_name"
     ;;
-  UserPromptSubmit|PostToolUse)
+  UserPromptSubmit)
     base_name=$(get_base_name)
     rename_window "🔄 $base_name"
     ;;
