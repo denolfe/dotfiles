@@ -1,0 +1,13 @@
+{
+  "name": "pi",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "^0.75.5",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
