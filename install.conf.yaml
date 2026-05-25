@@ -59,6 +59,16 @@
       exclude: ['node_modules']
       relink: true
 
+    ~/.pi/agent/extensions:
+      glob: true
+      path: pi/extensions/*.ts
+      relink: true
+
+    ~/.pi/agent/themes:
+      glob: true
+      path: pi/themes/*.json
+      relink: true
+
     # VS Code Linux
     ~/.config/Code/User:
       if: '[[ `uname` = Linux ]]'
