@@ -1,130 +1,105 @@
 ---
 name: executing-plans
-description: Use when you have a written implementation plan to execute in a separate session with review checkpoints
+description: Use when you have a written implementation plan to execute with review checkpoints
 ---
-
-## CRITICAL CONSTRAINTS
-
-**You MUST NOT call `EnterPlanMode` or `ExitPlanMode` during this skill.** This skill operates in normal mode, executing a plan that already exists on disk. Plan mode is unnecessary and dangerous here — it restricts Write/Edit tools needed for implementation.
 
 # Executing Plans
 
 ## Overview
 
-Load plan, review critically, execute tasks in batches, report for review between batches.
-
-**Core principle:** Batch execution with checkpoints for architect review.
+Load an existing `3-PLAN.md`, review it critically, execute tasks in small batches, verify each task, and report for review between batches.
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
 
-**Note:** Tell your human partner that Superpowers works much better with access to subagents. The quality of its work will be significantly higher if run on a platform with subagent support (such as Claude Code or Codex). If subagents are available, use superpowers-extended-cc:subagent-driven-development instead of this skill.
-
 ## The Process
 
-### Step 0: Load Persisted Tasks
+### Step 1: Locate and Review Plan
 
-1. Call `TaskList` to check for existing native tasks
-2. **CRITICAL - Locate tasks file:** Try `<plan-path>.tasks.json`, if not found glob for matching `.tasks.json`
-3. If tasks file exists AND native tasks empty: recreate from JSON using TaskCreate:
-   - Include full `description` from .tasks.json (not just subject)
-   - Include `metadata` field if present (files, verifyCommand, acceptanceCriteria)
-   - Restore `blockedBy` with TaskUpdate
-4. If native tasks exist: verify they match plan, resume from first `pending`/`in_progress`
-5. If neither: proceed to Step 1b to bootstrap from plan
+1. Use the plan path provided by the user, or ask for it if none was provided.
+2. If no path is provided and an active `~/.pi/plans/...` task folder is known, read `3-PLAN.md` from that folder.
+3. If `3-PLAN.md` is missing, stop and ask for the correct plan path.
+4. Review the plan for contradictions, missing verification commands, or unclear tasks.
+5. Raise blocking concerns with the user before editing files.
+6. Confirm you are not on `main` or `master` before implementation. If you are, ask for explicit consent before editing or ask whether to create/switch to a branch or worktree.
 
-Update `.tasks.json` after every task status change.
+### Step 2: Execute a Small Batch
 
-### Step 0.5: Verify Workspace (Worktree Check)
+Default batch size is the first unfinished task, or up to three small independent tasks when the plan explicitly marks them independent.
 
-Before calling `using-git-worktrees`, check if a worktree already exists:
+For each task:
 
-1. Run `git worktree list` to see all existing worktrees
-2. If a worktree for the plan's branch already exists: **cd into it — do NOT create a new one**
-3. If on main/master with no worktree: **REQUIRED SUB-SKILL:** Use `superpowers-extended-cc:using-git-worktrees` to create one
-
-### Step 1: Load and Review Plan
-1. Read plan file
-2. Review critically - identify any questions or concerns about the plan
-3. If concerns: Raise them with your human partner before starting
-4. If no concerns: Proceed to task setup
-
-### Step 1b: Bootstrap Tasks from Plan (if needed)
-
-If TaskList returned no tasks or tasks don't match plan:
-
-1. Parse the plan document for `## Task N:` or `### Task N:` headers
-2. For each task found, use TaskCreate with:
-   - subject: The task title from the plan
-   - description: Full structured content (Goal, Files, Acceptance Criteria, Verify, Steps) with `json:metadata` code fence at the end containing files, verifyCommand, acceptanceCriteria
-   - activeForm: Present tense action (e.g., "Implementing X")
-3. **CRITICAL - Dependencies:** For EACH task that has blockedBy in the plan or .tasks.json:
-   - Call `TaskUpdate` with `taskId` and `addBlockedBy: [list-of-blocking-task-ids]`
-   - Do NOT skip this step - dependencies are essential for correct execution order
-4. Call `TaskList` and verify blockedBy relationships show correctly (e.g., "blocked by #1, #2")
-
-
-### Step 2: Execute Batch
-
-**Default batch size: First 3 tasks** (or until next checkpoint marker in the plan)
-
-For each task in the batch:
-1. Mark as in_progress
-2. Follow each step exactly (plan has bite-sized steps)
-3. **Use metadata for verification:** Parse the `json:metadata` code fence from the task description. Run `verifyCommand` and check each `acceptanceCriteria` before marking complete.
-4. Mark as completed
-5. **Sync `.tasks.json`:** Read the tasks file, update the task's `"status"` to `"completed"` (or `"in_progress"` in step 1), set `"lastUpdated"` to current ISO timestamp, write back. This keeps the persistence file in sync with native tasks for cross-session resume.
+1. Mark it in progress using `@tintinweb/pi-tasks` if available, otherwise any generic Pi task tool, otherwise the checkbox in `3-PLAN.md`.
+2. Follow the task steps exactly.
+3. Run the task's verification command and read the output.
+4. Mark the task complete only after verification evidence supports completion.
+5. Commit only the files for that task when the plan calls for a commit.
 
 ### Step 3: Report
 
-When batch complete:
-- Show what was implemented
-- Show verification output
-- Say: "Ready for feedback."
+After each batch, report:
+
+- files changed
+- verification commands run
+- relevant output or failure evidence
+- remaining tasks
+
+Then wait for user feedback before continuing.
 
 ### Step 4: Continue
 
 Based on feedback:
-- Apply changes if needed
-- Execute next batch
-- Repeat until complete
+
+- Apply changes if needed.
+- Execute the next batch.
+- Repeat until every task is complete and verified.
 
 ### Step 5: Complete Development
 
 After all tasks complete and verified:
-- Announce: "I'm using the finishing-a-development-branch skill to complete this work."
-- **REQUIRED SUB-SKILL:** Use superpowers-extended-cc:finishing-a-development-branch
-- Follow that skill to verify tests, present options, execute choice
+
+1. Run the final verification commands listed in the plan.
+2. Read the output and summarize evidence.
+3. Check git status and confirm only intended files changed.
+4. Ask the user whether they want any final cleanup, commits, or handoff notes.
+
+## Task Tracking
+
+When task tools are available, prefer `@tintinweb/pi-tasks` for statuses and dependencies. If that is unavailable, use generic Pi task tooling. If no task tooling is available, update the checkboxes in the plan file as the source of truth.
+
+When using Markdown checkboxes:
+
+- Change `[ ]` to an in-progress marker only if the plan defines one; otherwise leave it unchecked until verification passes.
+- Change `[ ]` to `[x]` only after verification succeeds.
+- Preserve the plan's task text unless a correction is required; if you correct the plan, mention it in the batch report.
 
 ## When to Stop and Ask for Help
 
-**STOP executing immediately when:**
-- Hit a blocker mid-batch (missing dependency, test fails, instruction unclear)
-- Plan has critical gaps preventing starting
-- You don't understand an instruction
-- Verification fails repeatedly
+STOP executing immediately when:
 
-**Ask for clarification rather than guessing.**
+- You hit a blocker mid-batch: missing dependency, test failure, unclear instruction, or unavailable command.
+- The plan has critical gaps preventing safe implementation.
+- You do not understand an instruction.
+- Verification fails repeatedly.
+- The current branch or worktree situation is unsafe or ambiguous.
+
+Ask for clarification rather than guessing.
 
 ## When to Revisit Earlier Steps
 
-**Return to Review (Step 1) when:**
-- Partner updates the plan based on your feedback
-- Fundamental approach needs rethinking
+Return to review when:
 
-**Don't force through blockers** - stop and ask.
+- The user updates the plan based on your feedback.
+- The implementation reveals a fundamental gap in the plan.
+- The approach needs rethinking before more edits are made.
+
+Do not force through blockers.
 
 ## Remember
-- Review plan critically first
-- Follow plan steps exactly
-- Don't skip verifications
-- Reference skills when plan says to
-- Between batches: just report and wait
-- Stop when blocked, don't guess
-- Never start implementation on main/master branch without explicit user consent
 
-## Integration
-
-**Required workflow skills:**
-- **superpowers-extended-cc:using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
-- **superpowers-extended-cc:writing-plans** - Creates the plan this skill executes
-- **superpowers-extended-cc:finishing-a-development-branch** - Complete development after all tasks
+- Review the plan critically first.
+- Follow plan steps exactly.
+- Do not skip verifications.
+- Ask before creating worktrees, switching branches, or changing execution sessions.
+- Between batches: report and wait.
+- Stop when blocked; do not guess.
+- Never start implementation on `main` or `master` without explicit user consent.
