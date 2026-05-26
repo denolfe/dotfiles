@@ -64,6 +64,11 @@
       path: pi/extensions/*.ts
       relink: true
 
+    ~/.pi/agent/skills:
+      glob: true
+      path: pi/skills/*
+      relink: true
+
     ~/.pi/agent/themes:
       glob: true
       path: pi/themes/*.json
