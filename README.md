@@ -17,7 +17,8 @@
 | Prompt                                   | [Powerlevel10k](https://github.com/romkatv/powerlevel10k)     | [customizations](./zsh/p10k.customizations.zsh), [config](./zsh/p10k.zsh) |
 | .zshrc                                   | [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)        | [.zshrc](./zsh/zshrc.zsh)                                                 |
 | Global Key Rebinds, Hyper Key, App Focus | [Karabiner](https://karabiner-elements.pqrs.org/)             | [karabiner.ts](./karabiner/karabiner.ts)                                  |
-| AI Coding Assistant                      | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | [claude/](./claude/)                                                      |
+| Claude AI Agent                          | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | [claude/](./claude/)                                                      |
+| Pi AI Agent                              | [Pi](https://github.com/earendil-works/pi-coding-agent)       | [pi/](./pi/)                                                              |
 
 ## [Makefile](./Makefile)
 
@@ -61,11 +62,12 @@
 
 **[Local](./claude/local-plugins/)**
 
-| Plugin                                                     | Purpose                                                        |
-| ---------------------------------------------------------- | -------------------------------------------------------------- |
-| [git-guardrails](./claude/local-plugins/git-guardrails/)   | Blocks `git add -A/.`, prompts for `--amend` and `--no-verify` |
-| [sounds](./claude/local-plugins/sounds/)                   | Audio notifications (PermissionRequest, Stop)                  |
-| [zellij-activity](./claude/local-plugins/zellij-activity/) | Zellij tab status updates (6 events)                           |
+| Plugin                                                         | Purpose                                                        |
+| -------------------------------------------------------------- | -------------------------------------------------------------- |
+| [auto-approve](./claude/local-plugins/auto-approve/)           | Auto-approves compound bash commands when each part is allowed |
+| [git-guardrails](./claude/local-plugins/git-guardrails/)       | Blocks `git add -A/.`, prompts for `--amend` and `--no-verify` |
+| [sounds](./claude/local-plugins/sounds/)                       | Audio notifications (PermissionRequest, Stop)                  |
+| [tmux-agent-status](./claude/local-plugins/tmux-agent-status/) | Tmux agent status updates (6 events)                           |
 
 ### Skills
 
@@ -80,6 +82,29 @@
 Custom spinner verb themes (`make claude-verbs THEME=scifi`):
 - **scifi** - "Beaming up", "Jumping to lightspeed", "Quantum leaping"...
 - **peanut** - Peanuts-themed verbs
+
+## [Pi Coding Agent](./pi/)
+
+Pi customizations are symlinked to `~/.pi/agent/` by dotbot.
+
+### Extensions
+
+| Extension                                                 | Purpose                                                             |
+| --------------------------------------------------------- | ------------------------------------------------------------------- |
+| [statusline](./pi/extensions/statusline.ts)               | Footer with directory, git status, model, context, metrics, session |
+| [git-guardrails](./pi/extensions/git-guardrails.ts)       | Git safety guardrails for Pi shell commands                         |
+| [tmux-agent-status](./pi/extensions/tmux-agent-status.ts) | Tmux agent status updates                                           |
+
+### Skills
+
+| Skill                                                                         | Description                                              |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------- |
+| [brainstorming](./pi/skills/brainstorming/)                                   | Explore intent, requirements, and design before building |
+| [task](./pi/skills/task/)                                                     | Create Pi task folders for task or feature development   |
+| [writing-plans](./pi/skills/writing-plans/)                                   | Write implementation plans from approved requirements    |
+| [executing-plans](./pi/skills/executing-plans/)                               | Execute written plans with review checkpoints            |
+| [subagent-driven-development](./pi/skills/subagent-driven-development/)       | Execute plans with subagents and review loops            |
+| [verification-before-completion](./pi/skills/verification-before-completion/) | Require evidence before completion claims                |
 
 ## Keyboard Mappings
 
