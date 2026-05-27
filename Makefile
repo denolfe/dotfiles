@@ -1,4 +1,4 @@
-.PHONY: install link karabiner karabiner-dev phoenix phoenix-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-plugin-refresh claude-verbs tmux
+.PHONY: install link karabiner karabiner-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-plugin-refresh claude-verbs tmux
 
 # Run dotbot install script
 install:
@@ -13,13 +13,6 @@ karabiner:
 
 karabiner-dev:
 	bun --watch karabiner/karabiner.ts
-
-# Build and output phoenix config
-phoenix:
-	pnpm -C phoenix run build
-
-phoenix-dev:
-	pnpm -C phoenix run dev
 
 # Install extensions from vscode/extensions.txt
 vscode-install:
