@@ -266,7 +266,7 @@ export default function (pi: ExtensionAPI) {
         invalidate() {},
         render(width: number): string[] {
           const sessionName = ctx.sessionManager.getSessionName?.()
-          const directory = `${FOLDER_ICON} ${formatDirectory(ctx.cwd)}${sessionName ? ` • ${sessionName}` : ''}`
+          const directory = `${FOLDER_ICON} ${formatDirectory(ctx.cwd)}`
           const segments = [color(BLUE, directory), ...gitStatusSegment(ctx.cwd)]
 
           const stats = sessionMetrics(ctx)
@@ -292,6 +292,9 @@ export default function (pi: ExtensionAPI) {
           const line = segments.join(sep)
           const padding = Math.max(0, width - visibleWidth(line))
           const lines = [truncateToWidth(line + ' '.repeat(padding), width, '')]
+          if (sessionName) {
+            lines.push(truncateToWidth(color(GREY, sessionName), width, color(GREY, '...')))
+          }
 
           const extensionStatuses = footerData.getExtensionStatuses()
           if (extensionStatuses.size > 0) {
