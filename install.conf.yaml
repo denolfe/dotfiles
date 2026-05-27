@@ -109,11 +109,6 @@
       path: iina/YouTube.conf
       force: true
 
-    # Tools
-    ~/bin/glowm:
-      path: tools/glowm/glowm.ts
-      force: true
-
 - shell:
   -
     command: ./git/set-gitconfig.sh
