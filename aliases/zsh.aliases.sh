@@ -103,7 +103,6 @@ if type rg > /dev/null 2>&1; then
 fi
 
 if type terminal-notifier > /dev/null 2>&1; then
-  # notify alias with iterm2 icon
   alias notify="terminal-notifier -title 'ZSH' -sound funk -message"
 fi
 
