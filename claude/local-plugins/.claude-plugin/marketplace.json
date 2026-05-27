@@ -13,12 +13,6 @@
       "source": "./sounds"
     },
     {
-      "name": "zellij-activity",
-      "description": "Displays Claude Code activity status in Zellij tab name",
-      "version": "0.0.2",
-      "source": "./zellij-activity"
-    },
-    {
       "name": "tmux-agent-status",
       "description": "Displays Claude Code agent status in tmux window name",
       "version": "0.0.1",

@@ -32,7 +32,6 @@ CLAUDE_PLUGINS=(
 # Local plugins (from local-plugins marketplace)
 LOCAL_PLUGINS=(
   "sounds"
-  "zellij-activity"
   "git-guardrails"
 )
 

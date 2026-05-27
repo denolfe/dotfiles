@@ -4,7 +4,6 @@
 LOCAL_MARKETPLACE="${HOME}/.claude/local-plugins"
 LOCAL_PLUGINS=(
   "sounds"
-  "zellij-activity"
   "tmux-agent-status"
   "git-guardrails"
 )

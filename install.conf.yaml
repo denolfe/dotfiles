@@ -100,9 +100,6 @@
       path: vscode/macos/*.json
       force: true
 
-    ~/.config/zellij:
-      path: zellij
-
     ~/.tmux.conf:
       path: tmux/tmux.conf
       force: true

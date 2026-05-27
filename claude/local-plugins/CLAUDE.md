@@ -5,7 +5,6 @@ Local Claude Code plugins, symlinked to `~/.claude/local-plugins`.
 ## Current Plugins
 
 - **sounds** - Audio notifications (PermissionRequest, Stop)
-- **zellij-activity** - Zellij tab status updates (6 events)
 - **git-guardrails** - Git workflow enforcement (PreToolUse/Bash)
 
 ## Notes
