@@ -136,13 +136,12 @@ Bash script setting macOS preferences via `defaults write`. Categories:
 Run after OS install or updates.
 
 ### Testing
-TypeScript hooks in `claude/hooks/` use Deno's built-in test runner:
+TypeScript Claude local plugins use Bun's built-in test runner:
 ```bash
-deno test claude/hooks/git-guardrails.test.ts
-deno test claude/hooks/pure-md-prompt-rewriter.test.ts
+bun test claude/local-plugins/auto-approve claude/local-plugins/git-guardrails
 ```
 
 ## TypeScript Build Patterns
 
 **Karabiner:** Bun with no deps → single `karabiner.json` output
-**Claude hooks:** Deno with TypeScript → no compilation needed (executed directly)
+**Claude local plugins:** Bun with TypeScript → no compilation needed for execution
