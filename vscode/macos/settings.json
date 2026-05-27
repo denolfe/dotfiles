@@ -787,4 +787,12 @@
     "*.mp3": "vscode.audioPreview"
   },
   "vitest.commandLine": "npx vitest --api.host 127.0.0.1",
+  "json.schemaDownload.trustedDomains": {
+    "https://developer.microsoft.com/json-schemas/": true,
+    "https://json-schema.org/": true,
+    "https://json.schemastore.org/": true,
+    "https://raw.githubusercontent.com": true,
+    "https://unpkg.com": true,
+    "https://www.schemastore.org/": true
+  },
 }
