@@ -121,10 +121,15 @@ if git rev-parse --is-inside-work-tree &>/dev/null; then
   fi
 fi
 
-# Model name
+# Model name (with effort level if model supports it)
 model_name=$(echo "$input" | jq -r '.model.display_name')
+effort=$(echo "$input" | jq -r '.effort.level // empty')
 if [[ -n "$model_name" ]] && [[ "$model_name" != "null" ]]; then
-  segments+=("$(printf '\033[35m%s\033[0m' "$model_name")")
+  if [[ -n "$effort" ]]; then
+    segments+=("$(printf '\033[35m%s\033[0m \033[2m%s\033[0m' "$model_name" "$effort")")
+  else
+    segments+=("$(printf '\033[35m%s\033[0m' "$model_name")")
+  fi
 fi
 
 # Context window with gradient bar
