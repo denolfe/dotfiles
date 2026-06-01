@@ -10,6 +10,27 @@ cwd=$(echo "$input" | jq -r '.cwd // .session.cwd // empty')
 
 state_file="/tmp/tmux-claude-window-${TMUX_PANE}"
 
+ICON_BASH="🔧"
+ICON_READ="📖"
+ICON_EDIT="✏️"
+ICON_WRITE="💾"
+ICON_GREP="🔍"
+ICON_GLOB="📂"
+ICON_AGENT="🤖"
+ICON_WEB_FETCH="🌐"
+ICON_WEB_SEARCH="🔎"
+ICON_ASK="❓"
+ICON_DEFAULT="🔄"
+ICON_PERMISSION="🔴"
+ICON_PROMPT="🔄"
+ICON_STOP="🟢"
+
+ALL_ICONS=(
+  "$ICON_BASH" "$ICON_READ" "$ICON_EDIT" "$ICON_WRITE" "$ICON_GREP"
+  "$ICON_GLOB" "$ICON_AGENT" "$ICON_WEB_FETCH" "$ICON_WEB_SEARCH"
+  "$ICON_ASK" "$ICON_DEFAULT" "$ICON_PERMISSION" "$ICON_STOP"
+)
+
 set_base_name() {
   local base_name=""
 
@@ -27,9 +48,35 @@ set_base_name() {
   echo "$base_name"
 }
 
+strip_icon() {
+  local n="$1"
+  for icon in "${ALL_ICONS[@]}"; do
+    if [[ "$n" == "$icon "* ]]; then
+      echo "${n#"$icon "}"
+      return
+    fi
+  done
+  echo "$n"
+}
+
+# Detects manual renames: if the live window name (minus any status icon)
+# differs from the cached base, treat the live name as a new pinned base.
 get_base_name() {
-  if [[ -f "$state_file" ]]; then
-    cat "$state_file"
+  local cached=""
+  [[ -f "$state_file" ]] && cached=$(cat "$state_file")
+
+  local current stripped
+  current=$(tmux display-message -t "$TMUX_PANE" -p '#W' 2>/dev/null)
+  stripped=$(strip_icon "$current")
+
+  if [[ -n "$cached" && -n "$stripped" && "$stripped" != "$cached" ]]; then
+    echo "$stripped" > "$state_file"
+    echo "$stripped"
+    return
+  fi
+
+  if [[ -n "$cached" ]]; then
+    echo "$cached"
   else
     set_base_name
   fi
@@ -42,17 +89,17 @@ rename_window() {
 
 get_tool_icon() {
   case "$1" in
-    Bash)            echo "🖥️" ;;
-    Read)            echo "📖" ;;
-    Edit)            echo "✏️" ;;
-    Write)           echo "💾" ;;
-    Grep)            echo "🔍" ;;
-    Glob)            echo "📂" ;;
-    Task|Agent)      echo "🤖" ;;
-    WebFetch)        echo "🌐" ;;
-    WebSearch)       echo "🔎" ;;
-    AskUserQuestion) echo "❓" ;;
-    *)               echo "🔄" ;;
+    Bash)            echo "$ICON_BASH" ;;
+    Read)            echo "$ICON_READ" ;;
+    Edit)            echo "$ICON_EDIT" ;;
+    Write)           echo "$ICON_WRITE" ;;
+    Grep)            echo "$ICON_GREP" ;;
+    Glob)            echo "$ICON_GLOB" ;;
+    Task|Agent)      echo "$ICON_AGENT" ;;
+    WebFetch)        echo "$ICON_WEB_FETCH" ;;
+    WebSearch)       echo "$ICON_WEB_SEARCH" ;;
+    AskUserQuestion) echo "$ICON_ASK" ;;
+    *)               echo "$ICON_DEFAULT" ;;
   esac
 }
 
@@ -71,15 +118,15 @@ case "$hook_type" in
     tool_name=$(echo "$input" | jq -r '.tool_name // empty')
     [[ "$tool_name" == "AskUserQuestion" ]] && exit 0
     base_name=$(get_base_name)
-    rename_window "🔴 $base_name"
+    rename_window "$ICON_PERMISSION $base_name"
     ;;
   UserPromptSubmit)
     base_name=$(get_base_name)
-    rename_window "🔄 $base_name"
+    rename_window "$ICON_PROMPT $base_name"
     ;;
   Stop)
     base_name=$(get_base_name)
-    rename_window "🟢 $base_name"
+    rename_window "$ICON_STOP $base_name"
     ;;
   SessionEnd)
     base_name=$(get_base_name)
