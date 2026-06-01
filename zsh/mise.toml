@@ -1,7 +1,7 @@
 [tools]
 bun = "latest"
 node = "23.11.0"
-pnpm = "9.7.1"
+pnpm = "10.27.0"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
