@@ -10,8 +10,9 @@ project_dir=$(echo "$input" | jq -r '.workspace.project_dir')
 # Change to cwd for git commands
 cd "$cwd" 2>/dev/null || cd ~
 
-# Initialize segments
-segments=()
+# Initialize segments (two lines: line1 = dir/branch/context/cost, line2 = model)
+line1=()
+line2=()
 
 # Directory (relative to project if in project)
 if [[ "$cwd" == "$project_dir"* ]] && [[ -n "$project_dir" ]]; then
@@ -26,33 +27,11 @@ else
   dir_display="${cwd/#$HOME/~}"
 fi
 folder_icon=$'\xEF\x81\xBB'  # U+F07B nerd font folder
-segments+=("$(printf '\033[34m%s %s\033[0m' "$folder_icon" "$dir_display")")
+line1+=("$(printf '\033[34m%s %s\033[0m' "$folder_icon" "$dir_display")")
 
 # Git status & branch
 if git rev-parse --is-inside-work-tree &>/dev/null; then
   branch=$(git branch --show-current 2>/dev/null)
-
-  # PR number (orange for open, purple for merged)
-  pr_info=$(git config --get branch."$branch".github-pr-owner-number 2>/dev/null)
-  if [[ -n "$pr_info" ]]; then
-    pr_number=$(echo "$pr_info" | awk -F "#" '{print $3}')
-    repo=$(echo "$pr_info" | awk -F "#" '{print $1 "/" $2}')
-
-    if [[ -n "$pr_number" ]]; then
-      # Check cache
-      cache=$(git config --get branch."$branch".github-pr-state-cache 2>/dev/null)
-      pr_color='\033[38;5;208m'  # Orange default
-
-      if [[ -n "$cache" ]]; then
-        cached_state=$(echo "$cache" | cut -d: -f1)
-        if [[ "$cached_state" == "MERGED" ]]; then
-          pr_color='\033[38;5;135m'  # Purple
-        fi
-      fi
-
-      segments+=("$(printf '%b#%s\033[0m' "$pr_color" "$pr_number")")
-    fi
-  fi
 
   # Branch & status indicators
   if [[ -n "$branch" ]]; then
@@ -114,21 +93,22 @@ if git rev-parse --is-inside-work-tree &>/dev/null; then
 
     # Combine branch and indicators
     if [[ -n "$indicators" ]]; then
-      segments+=("$(printf '%b %s' "$branch_seg" "$indicators")")
+      line1+=("$(printf '%b %s' "$branch_seg" "$indicators")")
     else
-      segments+=("$branch_seg")
+      line1+=("$branch_seg")
     fi
   fi
 fi
 
 # Model name (with effort level if model supports it)
 model_name=$(echo "$input" | jq -r '.model.display_name')
+model_name="${model_name%% (*}"  # Strip context suffix, e.g. " (1M context)"
 effort=$(echo "$input" | jq -r '.effort.level // empty')
 if [[ -n "$model_name" ]] && [[ "$model_name" != "null" ]]; then
   if [[ -n "$effort" ]]; then
-    segments+=("$(printf '\033[35m%s\033[0m \033[2m%s\033[0m' "$model_name" "$effort")")
+    line2+=("$(printf '\033[35m%s\033[0m \033[2m%s\033[0m' "$model_name" "$effort")")
   else
-    segments+=("$(printf '\033[35m%s\033[0m' "$model_name")")
+    line2+=("$(printf '\033[35m%s\033[0m' "$model_name")")
   fi
 fi
 
@@ -234,7 +214,8 @@ if [[ -n "$pct" && "$pct" -gt 0 ]] 2>/dev/null; then
     [[ $last_pos -lt 0 ]] && last_pos=0
     pct_color=$(heatmap_color $last_pos)
 
-    segments+=("${output} ${pct_color}${pct}%${reset}")
+    tokens_k=$(( _ctx_tokens / 1000 ))
+    line1+=("${output} ${pct_color}${tokens_k}k${reset}")
 fi
 
 # Session cost & duration
@@ -251,17 +232,28 @@ if [[ "$cost" != "0" ]] && [[ "$cost" != "null" ]]; then
     else
       duration_str="${duration_sec}s"
     fi
-    segments+=("$(printf '\033[90m%s %s\033[0m' "$cost_str" "$duration_str")")
+    line1+=("$(printf '\033[90m%s %s\033[0m' "$cost_str" "$duration_str")")
   else
-    segments+=("$(printf '\033[90m%s\033[0m' "$cost_str")")
+    line1+=("$(printf '\033[90m%s\033[0m' "$cost_str")")
   fi
 fi
 
-# Join with separator
+# Join a segment array with the separator
 sep=" \033[2m│\033[0m "
-output=""
-for i in "${!segments[@]}"; do
-  [[ $i -gt 0 ]] && output+="$sep"
-  output+="${segments[$i]}"
-done
-printf "%b\n" "$output"
+join_segments() {
+  local out="" i=0 seg
+  for seg in "$@"; do
+    [[ $i -gt 0 ]] && out+="$sep"
+    out+="$seg"
+    ((i++))
+  done
+  printf '%s' "$out"
+}
+
+out1="$(join_segments "${line1[@]}")"
+out2="$(join_segments "${line2[@]}")"
+if [[ -n "$out2" ]]; then
+  printf "%b\n%b\n" "$out1" "$out2"
+else
+  printf "%b\n" "$out1"
+fi
