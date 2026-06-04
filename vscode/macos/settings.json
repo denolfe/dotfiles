@@ -233,6 +233,9 @@
   },
   "gitHistory.showEditorTitleMenuBarIcons": false,
   "gitlens.menus": false,
+  "gitlens.currentLine.enabled": false,
+  "git.blame.editorDecoration.enabled": true,
+  "git.blame.editorDecoration.template": "${authorName}, ${subject} (${authorDateAgo})",
   "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
   "javascript.inlayHints.parameterNames.enabled": "literals",
   "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
@@ -308,6 +311,7 @@
     "editor.lineHighlightBorder": "#383B3D",
     "editorStickyScroll.background": "#383B3D",
     "editorStickyScrollGutter.background": "#383B3D",
+    "git.blame.editorDecorationForeground": "#383B3D",
     "[Default Dark Modern]": {
       "editorSuggestWidget.selectedBackground": "#01395e"
     },
