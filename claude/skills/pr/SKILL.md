@@ -20,22 +20,30 @@ An optional `base=<branch>` argument (any position) sets the target branch. If o
 
 ## Template
 
-Use this structure as a guideline; adapt sections to fit the actual changes. Do not add sections not defined here. Omit sections that don't apply.
+- Use this structure as a guideline
+- Adapt sections to fit the actual changes. Do not add sections not defined here. Omit sections that don't apply.
+- All language should be succinct, concise and avoid excessive detail.
 
 ```markdown
 # Overview
 
-[Brief summary of the PR's purpose and scope.]
+[Brief summary of the PR's purpose and scope. 1-2 sentences.]
+
+[Optional: 1-2 sentences on motivation or context]
+
+[Optional: Show usage changes if the PR affects user-facing behavior.]
 
 ["Resolves [PREFIX-1234](https://tracker.example.com/PREFIX-1234)". Use link for GitHub, Asana, Linear, etc. If no issue, omit this line.]
 
 ## Key Changes
 
-- **[Brief description of what changed]**
-  - [Description of what changed and why. Can span multiple bullets if needed, but avoid excessive detail.]
+#### [Brief description of what changed]
 
-- **[Brief description of another change]**
-  - [Description of what changed and why.]
+[1-2 sentence description of what changed and why. Be clear and concise; avoid excessive detail.]
+
+#### [Brief description of another change]
+
+[1-2 sentence description of what changed and why. Be clear and concise; avoid excessive detail.]
 
 ## Design Decisions
 
@@ -75,7 +83,11 @@ Run in a single Bash call — the `trap` only protects the shell it's set in.
 ## Create / Draft
 
 - Inspect branch state and commit history (including `git log --oneline -- <changed-files>` for convention patterns).
-- Generate title: Conventional Commits format, synthesize from branch commits, ≤72 chars.
+- Generate title
+  - Conventional Commits: `<type>(<scope>)?<!>?: <title>`. Title starts lowercase. No trailing period. Omit scope when no single area dominates.
+  - Synthesize from branch commits
+  - ≤72 chars
+  - Should describe the change, not the symptom or task.
 - Write the PR body.
 - Create the PR per **Applying the Body** above (add `--draft` for draft PRs).
 - Say "PR Created: [title] [PR URL]".
