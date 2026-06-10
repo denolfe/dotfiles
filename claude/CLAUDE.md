@@ -11,7 +11,7 @@
 
 # Commit Guidelines
 
-- Always use Conventional Commits. Match repo's existing style (types, scope usage, etc).
+- Always use Conventional Commits. Match repo's existing style by checking commits in the file path. Do not make up new scopes or types without justification. If in doubt, do not add a scope.
 - First commit on branch: include scope (often becomes PR title). Subsequent commits: bias toward `chore` (no scope) since they'll be squashed.
 
 # Coding Patterns and Best Practices (Typescript)
