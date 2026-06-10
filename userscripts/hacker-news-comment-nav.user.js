@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Hacker News Comment Navigator
 // @namespace    https://news.ycombinator.com/
-// @version      0.0.1
+// @version      0.0.2
 // @description  Keyboard navigation for Hacker News comments (j/k/Enter)
 // @author       Elliot DeNolf
 // @match        https://news.ycombinator.com/item*
@@ -65,10 +65,17 @@
   }
 
   function handleKeydown(e) {
-    if (!focusedComment) return
     if (isTyping()) return
 
     const key = e.key.toLowerCase()
+
+    if (!focusedComment) {
+      if (key === 'j' || key === 'k') {
+        e.preventDefault()
+        focusFirstComment()
+      }
+      return
+    }
 
     if (key === 'j') {
       e.preventDefault()
@@ -86,12 +93,18 @@
   }
 
   function isTyping() {
-    const tag = document.activeElement?.tagName.toLowerCase()
-    return tag === 'input' || tag === 'textarea'
+    const el = document.activeElement
+    const tag = el?.tagName.toLowerCase()
+    return tag === 'input' || tag === 'textarea' || el?.isContentEditable === true
   }
 
   function isVisible(comment) {
     return comment.offsetHeight > 0 && !comment.classList.contains('noshow')
+  }
+
+  function focusFirstComment() {
+    const first = allComments.find(isVisible)
+    if (first) setFocus(first)
   }
 
   function navigateNext() {
