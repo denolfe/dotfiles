@@ -51,6 +51,9 @@ alias gstl="git stash list --pretty=format:'%C(blue)%gd%C(reset): %<(100,trunc)%
 # Remove 'gcm' alias, replaced by custom function
 unalias gcm
 
+# Remove 'gsw' alias, replaced by custom function
+unalias gsw
+
 # Remove 'gl' alias from zsh plugin
 unalias gl
 

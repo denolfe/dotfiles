@@ -14,7 +14,7 @@ gcm() {
   # If in worktree and main is checked out elsewhere, cd there
   if [[ "$output" =~ "already used by worktree at" ]]; then
     worktree_path=$(echo "$output" | grep -oE "at '.*'" | sed "s/at '//;s/'$//")
-    echo "Navingating to main at $worktree_path"
+    echo "Navigating to main at $worktree_path"
     cd "$worktree_path" || return 1
   else
     echo "$output"
@@ -62,6 +62,25 @@ getlatest() {
   git pull
   if [[ $(git stash list | head -n1) == *$stash_string* ]]; then
     git stash apply
+  fi
+}
+
+gsw() {
+  local output worktree_path
+
+  if output=$(git switch "$@" 2>&1); then
+    echo "$output"
+    return 0
+  fi
+
+  # If branch is checked out in another worktree, cd there
+  if [[ "$output" =~ "already used by worktree at" ]]; then
+    worktree_path=$(echo "$output" | grep -oE "at '.*'" | sed "s/at '//;s/'$//")
+    echo "Navigating to branch at $worktree_path"
+    cd "$worktree_path" || return 1
+  else
+    echo "$output"
+    return 1
   fi
 }
 
@@ -205,6 +224,17 @@ gac() {
 # Open latest GitHub action run for current branch
 gaco() {
   open "$(gh run list --workflow main.yml --branch "$(git branch --show-current)" --json url --jq '.[0].url')"
+}
+
+# Rerun latest GitHub action for current branch or specific PR
+gacr() {
+  local branch
+  if [ -n "$1" ]; then
+    branch=$(gh pr view "$1" --json headRefName -q .headRefName)
+  else
+    branch=$(git branch --show-current)
+  fi
+  gh run rerun --failed "$(gh run list --branch "$branch" --limit 1 --json databaseId -q '.[0].databaseId')"
 }
 
 # Get status of current action run for current branch
