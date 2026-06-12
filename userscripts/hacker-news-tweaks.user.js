@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            Hacker News Tweaks
 // @namespace       denolfe
-// @version         0.0.5
+// @version         0.0.6
 // @description     Misc HN tweaks
 // @icon            https://www.google.com/s2/favicons?sz=64&domain=news.ycombinator.com
 // @homepage        https://github.com/denolfe/dotfiles
@@ -34,12 +34,13 @@ function GM_addStyle(css) {
 const zoomLevel = 1.1
 GM_addStyle(`
 
+html,
 body {
-  zoom: ${zoomLevel};
+  background-color: #f6f6ef;
 }
 
-body > center {
-  background-color: #f6f6ef;
+body {
+  zoom: ${zoomLevel};
 }
 
 body > center > table {
