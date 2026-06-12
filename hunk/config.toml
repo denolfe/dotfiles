@@ -1,0 +1,77 @@
+theme = "custom"
+mode = "auto"        # auto, split, stack
+exclude_untracked = false
+line_numbers = true
+wrap_lines = true
+agent_notes = false
+
+# feat(keymap): add user-configurable keybindings: https://github.com/modem-dev/hunk/pull/270
+[keybindings.global]
+# Delta-style n/N for hunk navigation (in addition to [ ])
+"hunk.prev" = ["[", "N"]
+"hunk.next" = ["]", "n"]
+
+[custom_theme]
+label = "Dark+"
+
+# Core UI - from ghostty Dark+ theme
+background = "#1e1e1e"
+panel = "#252526"
+panelAlt = "#2d2d2d"
+border = "#3a3d41"
+text = "#cccccc"
+muted = "#858585"
+
+# Accent - bright blue from palette
+accent = "#3b8eea"
+accentMuted = "#264f78"
+
+# Diff backgrounds - VS Code defaults composited on #1e1e1e
+# Line: RGBA(155,185,85,0.2) / RGBA(255,0,0,0.2)
+addedBg = "#2b3325"
+removedBg = "#4b1e1e"
+contextBg = "#1e1e1e"
+# Text: #9ccc2c33 / #ff000033 (more visible for char-level)
+addedContentBg = "#37422a"
+removedContentBg = "#5c2626"
+contextContentBg = "#252526"
+
+# Diff signs - bright green/red from palette
+addedSignColor = "#23d18b"
+removedSignColor = "#f14c4c"
+
+# Line numbers
+lineNumberBg = "#1e1e1e"
+lineNumberFg = "#858585"
+
+# Selection
+selectedHunk = "#264f78"
+
+# Badges - using palette colors
+badgeAdded = "#23d18b"
+badgeRemoved = "#f14c4c"
+badgeNeutral = "#858585"
+
+# File status colors from palette
+fileNew = "#23d18b"
+fileDeleted = "#f14c4c"
+fileRenamed = "#d670d6"
+fileModified = "#3b8eea"
+fileUntracked = "#e5e510"
+
+# Notes - magenta from palette
+noteBorder = "#d670d6"
+noteBackground = "#2d2d2d"
+noteTitleBackground = "#3a3d41"
+noteTitleText = "#cccccc"
+
+[custom_theme.syntax]
+default = "#cccccc"
+keyword = "#569cd6"
+string = "#ce9178"
+comment = "#6a9955"
+number = "#b5cea8"
+function = "#dcdcaa"
+type = "#4ec9b0"
+property = "#9cdcfe"
+punctuation = "#cccccc"

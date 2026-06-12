@@ -74,6 +74,10 @@
       path: pi/themes/*.json
       relink: true
 
+    ~/.config/hunk/config.toml:
+      path: hunk/config.toml
+      force: true
+
     # VS Code Linux
     ~/.config/Code/User:
       if: '[[ `uname` = Linux ]]'
