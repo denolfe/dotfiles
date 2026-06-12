@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name            Hacker News Tweaks
 // @namespace       denolfe
-// @version         0.0.4
+// @version         0.0.5
 // @description     Misc HN tweaks
 // @icon            https://www.google.com/s2/favicons?sz=64&domain=news.ycombinator.com
 // @homepage        https://github.com/denolfe/dotfiles
 // @include         https://news.ycombinator.com/*
 // @author          Elliot DeNolf
-// @run-at          document-end
+// @run-at          document-start
 // @grant           none
 // ==/UserScript==
 
@@ -21,23 +21,22 @@
  * - Add a rounded identicon avatar (hashed from username) next to each username
  */
 
-// Open article links in new window
-document.querySelectorAll('.titleline > a').forEach(link => {
-  link.setAttribute('target', '_blank')
-})
-
-// Set the zoom level
-const zoomLevel = 1.1
-document.body.style.zoom = zoomLevel
-
 function GM_addStyle(css) {
   const style = document.createElement('style')
   style.textContent = css
-  document.head.appendChild(style)
+  // document-start: <head> may not exist yet, so fall back to documentElement
+  ;(document.head || document.documentElement).appendChild(style)
   return style
 }
 
+// Inject styles (including zoom) at document-start so the page paints zoomed
+// from the first frame instead of reflowing after load (avoids the jump).
+const zoomLevel = 1.1
 GM_addStyle(`
+
+body {
+  zoom: ${zoomLevel};
+}
 
 body > center {
   background-color: #f6f6ef;
@@ -96,6 +95,23 @@ body > center > table {
 
 `)
 
+// DOM tweaks need a parsed document; defer them since we run at document-start.
+function applyDomTweaks() {
+  // Open article links in new window
+  document.querySelectorAll('.titleline > a').forEach(link => {
+    link.setAttribute('target', '_blank')
+  })
+
+  addAvatars()
+  styleQuotes()
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', applyDomTweaks)
+} else {
+  applyDomTweaks()
+}
+
 // Deterministic 32-bit string hash (xfnv1a-style)
 function hashString(str) {
   let h = 1779033703 ^ str.length
@@ -137,16 +153,18 @@ function generateAvatarSvg(username) {
 }
 
 // Add a rounded avatar before each username
-document.querySelectorAll('a.hnuser').forEach(userLink => {
-  if (userLink.dataset.avatarAdded) return
-  const username = userLink.textContent.trim()
-  if (!username) return
-  const wrapper = document.createElement('span')
-  wrapper.className = 'hn-avatar'
-  wrapper.innerHTML = generateAvatarSvg(username)
-  userLink.parentNode.insertBefore(wrapper, userLink)
-  userLink.dataset.avatarAdded = '1'
-})
+function addAvatars() {
+  document.querySelectorAll('a.hnuser').forEach(userLink => {
+    if (userLink.dataset.avatarAdded) return
+    const username = userLink.textContent.trim()
+    if (!username) return
+    const wrapper = document.createElement('span')
+    wrapper.className = 'hn-avatar'
+    wrapper.innerHTML = generateAvatarSvg(username)
+    userLink.parentNode.insertBefore(wrapper, userLink)
+    userLink.dataset.avatarAdded = '1'
+  })
+}
 
 // Strip the leading '> ' marker from the first text node of a quote block
 function stripLeadingMarker(container) {
@@ -155,31 +173,33 @@ function stripLeadingMarker(container) {
 }
 
 // Render '>' comment lines as styled blockquotes
-document.querySelectorAll('.commtext').forEach(commtext => {
-  if (commtext.dataset.quotesStyled) return
-  commtext.dataset.quotesStyled = '1'
+function styleQuotes() {
+  document.querySelectorAll('.commtext').forEach(commtext => {
+    if (commtext.dataset.quotesStyled) return
+    commtext.dataset.quotesStyled = '1'
 
-  // Paragraph quotes
-  commtext.querySelectorAll('p').forEach(p => {
-    if (p.textContent.trimStart().startsWith('>')) {
-      p.classList.add('hn-quote')
-      stripLeadingMarker(p)
+    // Paragraph quotes
+    commtext.querySelectorAll('p').forEach(p => {
+      if (p.textContent.trimStart().startsWith('>')) {
+        p.classList.add('hn-quote')
+        stripLeadingMarker(p)
+      }
+    })
+
+    // Leading text before the first <p> is a direct child of .commtext
+    const firstP = commtext.querySelector('p')
+    const leadingNodes = []
+    for (const node of commtext.childNodes) {
+      if (node === firstP) break
+      leadingNodes.push(node)
+    }
+    const leadingText = leadingNodes.map(n => n.textContent).join('')
+    if (leadingText.trimStart().startsWith('>')) {
+      const wrapper = document.createElement('span')
+      wrapper.className = 'hn-quote'
+      leadingNodes.forEach(n => wrapper.appendChild(n))
+      commtext.insertBefore(wrapper, commtext.firstChild)
+      stripLeadingMarker(wrapper)
     }
   })
-
-  // Leading text before the first <p> is a direct child of .commtext
-  const firstP = commtext.querySelector('p')
-  const leadingNodes = []
-  for (const node of commtext.childNodes) {
-    if (node === firstP) break
-    leadingNodes.push(node)
-  }
-  const leadingText = leadingNodes.map(n => n.textContent).join('')
-  if (leadingText.trimStart().startsWith('>')) {
-    const wrapper = document.createElement('span')
-    wrapper.className = 'hn-quote'
-    leadingNodes.forEach(n => wrapper.appendChild(n))
-    commtext.insertBefore(wrapper, commtext.firstChild)
-    stripLeadingMarker(wrapper)
-  }
-})
+}
