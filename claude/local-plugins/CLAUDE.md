@@ -6,6 +6,7 @@ Local Claude Code plugins, symlinked to `~/.claude/local-plugins`.
 
 - **sounds** - Audio notifications (PermissionRequest, Stop)
 - **git-guardrails** - Git workflow enforcement (PreToolUse/Bash)
+- **hunk-turn-review** - Scopes a live Hunk diff session to each turn's changes (UserPromptSubmit/PostToolUse/Stop)
 
 ## Notes
 
