@@ -20,11 +20,16 @@ npmjs() {
     return 1
   fi
 
-  # Scoped packages (@scope/name) require the slash encoded for the registry endpoint
+  # Fast path: unauthenticated public registry hit (handles most public packages).
+  # Scoped packages (@scope/name) require the slash encoded for the registry endpoint.
   registry_name="${package_name/\//%2f}"
   if ! curl -fsL -o /dev/null "https://registry.npmjs.org/$registry_name" 2>/dev/null; then
-    echo "Package '$package_name' not found on npm registry"
-    return 1
+    # Public registry 404s on private packages too. Fall back to npm view, which
+    # respects ~/.npmrc auth + per-scope registries, before declaring it missing.
+    if ! npm view "$package_name" name >/dev/null 2>&1; then
+      echo "Package '$package_name' not found on npm registry"
+      return 1
+    fi
   fi
 
   url="https://www.npmjs.com/package/$package_name"
