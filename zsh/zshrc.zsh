@@ -98,7 +98,7 @@ setopt interactive_comments
 HISTSIZE=1000000000000000000
 SAVEHIST=1000000000000000000
 HISTFILE=~/.zsh_history
-export HISTORY_IGNORE="ls *:cd *:z *:pwd:exit:clear:date:history:which *:type *:man *:pbpaste:* --help:gl:gl *:gls:gls *:gst:gst *:gd:gd *:gro:gro *:gsh:gsh *"
+export HISTORY_IGNORE="(ls *|cd *|z *|pwd|exit|clear|date|history|which *|type *|man *|pbpaste|* --help|gl|gl *|gls|gls *|gst|gst *|gd|gd *|gro|gro *|gsh|gsh *)"
 
 # Return time on long running processes
 REPORTTIME=2
