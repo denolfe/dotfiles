@@ -14,10 +14,6 @@
  *     - Avoids permission prompts by running from repo root instead
  *     - Returns deny decision with helpful error message
  *
- *   - Prompts for approval on `git commit --amend`
- *     - Requires explicit confirmation before amending commits
- *     - Returns ask decision to prompt user
- *
  *   - Prompts for approval on `git commit --no-verify`
  *     - Requires explicit confirmation before bypassing repository git hooks
  *     - Returns ask decision to prompt user
@@ -80,17 +76,6 @@ const handler: PreToolUseHandler<BashToolInput> = data => {
         hookEventName: 'PreToolUse',
         permissionDecision: 'deny',
         permissionDecisionReason: 'Run git commands from repo root instead of using -C/--git-dir/--work-tree.',
-      },
-    }
-  }
-
-  // Prompt for approval on git commit --amend
-  if (/git\s+commit/.test(command) && /--amend/.test(command)) {
-    return {
-      hookSpecificOutput: {
-        hookEventName: 'PreToolUse',
-        permissionDecision: 'ask',
-        permissionDecisionReason: 'Amending commit. Confirm you want to proceed with --amend?',
       },
     }
   }
