@@ -7,6 +7,7 @@ alias regen='zgenom reset;source ~/.zshrc'
 # Main directories
 alias .f='cd ~/.dotfiles'
 alias .d='cd ~/dev'
+alias .sb='cd ~/dev/sandbox'
 
 # Karabiner seems to be fiddly with CapsLock state on wake, so this is a way to restart it while spamming CapsLock.
 # New keyboard blinks when CapsLock is enabled, so this is a quick way to fix.
@@ -30,6 +31,8 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 alias ~='cd ~/'
+alias -- --='cd -2'
+alias -- ---='cd -3'
 
 hs(){ history | grep -i "$1" ;}
 
