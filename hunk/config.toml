@@ -1,5 +1,5 @@
 theme = "custom"
-mode = "auto"        # auto, split, stack
+mode = "stack"        # auto, split, stack
 exclude_untracked = false
 line_numbers = true
 wrap_lines = true
