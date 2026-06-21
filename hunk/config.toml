@@ -13,6 +13,7 @@ agent_notes = false
 
 [custom_theme]
 label = "Dark+"
+base = "dark-plus"
 
 # Core UI - from ghostty Dark+ theme
 background = "#1e1e1e"
@@ -42,7 +43,7 @@ removedSignColor = "#f14c4c"
 
 # Line numbers
 lineNumberBg = "#1e1e1e"
-lineNumberFg = "#858585"
+lineNumberFg = "#3a3d41"
 
 # Selection
 selectedHunk = "#264f78"
