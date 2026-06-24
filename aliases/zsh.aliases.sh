@@ -34,8 +34,6 @@ alias ~='cd ~/'
 alias -- --='cd -2'
 alias -- ---='cd -3'
 
-hs(){ history | grep -i "$1" ;}
-
 # Zsh global aliases
 alias -g H='| head'
 alias -g Hn='| head -n'
