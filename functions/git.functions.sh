@@ -85,7 +85,11 @@ gsw() {
 }
 
 gswb() {
-  git checkout "$(gbv | cut -c 3- | awk -F ' - ' '{ print $1 }' | fzf --height 30% --prompt="Checkout Branch > ")"
+  local branch
+  branch=$(gbv | cut -c 3- | awk -F ' - ' '{ print $1 }' | fzf --height 30% --prompt="Checkout Branch > ")
+  [[ -z "$branch" ]] && return
+  print -rs -- "git checkout ${branch}"
+  git checkout "$branch"
 }
 
 gswpr() {

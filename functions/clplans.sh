@@ -8,6 +8,7 @@ clplans() {
     | sort -rn \
     | cut -d' ' -f2- \
     | fzf) || return
+  print -rs -- "sanemd ${(q)file}"
   sanemd "$file"
 }
 
@@ -19,5 +20,7 @@ clplansl() {
     | sort -rn \
     | head -1 \
     | cut -d' ' -f2-) || return
-  [[ -n "$file" ]] && sanemd "$file"
+  [[ -z "$file" ]] && return
+  print -rs -- "sanemd ${(q)file}"
+  sanemd "$file"
 }

@@ -24,8 +24,9 @@ fpr() {
     formatted_list=$(echo "$scripts" |awk -F'\t' '{printf "%-20s %-30s\n", $1, $2}')
   fi
 
-  echo "$formatted_list" | \
-  fzf | \
-  sed 's/ .*//' | \
-  xargs pnpm run
+  local script
+  script=$(echo "$formatted_list" | fzf | sed 's/ .*//')
+  [[ -z "$script" ]] && return
+  print -rs -- "pnpm run ${script}"
+  pnpm run "$script"
 }
