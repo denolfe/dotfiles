@@ -2,12 +2,15 @@
 
 # View and open Claude plans in the terminal using fzf.
 clplans() {
+  local dir="$HOME/.claude/plans"
   local file
-  file=$(rg --files ~/.claude/plans -g '*.md' \
+  file=$(cd "$dir" && rg --files -g '*.md' \
     | xargs stat -f '%m %N' \
     | sort -rn \
     | cut -d' ' -f2- \
-    | fzf) || return
+    | fzf --preview "sanemd $dir/{}" --preview-window=right:60%:nohidden:wrap \
+        --bind 'ctrl-j:preview-half-page-down,ctrl-k:preview-half-page-up') || return
+  file="$dir/$file"
   print -rs -- "sanemd ${(q)file}"
   sanemd "$file"
 }
