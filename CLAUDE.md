@@ -96,7 +96,13 @@ Uses [zgenom](https://github.com/jandamm/zgenom) plugin manager with:
 - `git.functions.sh`: Git workflow helpers
 - `claude.functions.sh`: Claude Code integration
 - `fpr.sh`, `fyr.sh`: fzf PR/year selectors
-- `gl.sh`: Enhanced git log
+- `gl.sh`: Enhanced git log (`gl` = formatted log; `gli` = interactive fzf browser with delta preview)
+
+#### Writing fzf functions
+
+- **Global defaults apply to every call.** Grep `FZF_DEFAULT_OPTS` in `zsh/zshrc.zsh` (theme in `zsh/fzf-theme*.sh`) and read current values before overriding — the preview may default to hidden (`nohidden` forces it), prompt/bindings may already be set. Omit `--prompt` to reuse the default.
+- **Can't test the UI headlessly** (fzf blocks on `/dev/tty`). Verify pieces: `zsh -n` for syntax, run `--preview`/bind commands standalone, dry-run bind strings via `sh -c` (`open`→`echo`). Test the live UI in a real terminal. See `gli` in `gl.sh` for a worked example.
+- **Push the resolved command to history** with `print -rs -- "<cmd>"` when a picker runs an action on the selection, so it's re-runnable via ↑/`ctrl-r`. Quote interpolated values with `${(q)var}`. Existing usage: `gswb` (`git.functions.sh`), `fpr.sh`, `clplans.sh`.
 
 ### Dotbot Installation (`install.conf.yaml`)
 Dotbot handles:
