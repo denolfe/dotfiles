@@ -64,11 +64,9 @@ gitleaks-history:
 	gitleaks detect --no-git --log-level fatal -f json --no-color --no-banner --redact --source ~/.zsh_history -r ~/.report_gitleaks.json
 	code -a ~/.report_gitleaks.json
 
-# Set Claude spinner verbs (usage: make claude-verbs THEME=scifi or THEME=peanut)
+# Set Claude spinner verbs (usage: make claude-verbs [THEME=scifi|peanut]; defaults to scifi)
+THEME ?= scifi
 claude-verbs:
-ifndef THEME
-	$(error THEME required: make claude-verbs THEME=scifi or THEME=peanut)
-endif
 ifeq ($(filter $(THEME),scifi peanut),)
 	$(error THEME must be 'scifi' or 'peanut')
 endif
