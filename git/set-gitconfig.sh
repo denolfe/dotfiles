@@ -51,12 +51,6 @@ git config --global alias.sync "!zsh -ic git-sync"
 git config --global alias.add-upstream "!zsh -ic add-upstream"
 git config --global alias.trav "!zsh -ic git-trav"
 
-if [[ -z $(git config --global --get user.email) ]]; then
-  START="\033[96m\033[1m"
-  END="\033[0m"
-  echo -e "!!!\n\n${START}Git Email not set, please configure!\n\ngit config --global user.email 'test@email.com'\n\n!!!${END}"
-fi
-
 # Delta
 
 git config --global pager.diff delta
