@@ -8,8 +8,12 @@
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
   -
-    command: ./macos/setup-homebrew.sh
-    description: Installing Homebrew and Essential Packages
+    command: 'if [ "$(uname)" = "Darwin" ]; then ./macos/setup-homebrew.sh; fi'
+    description: Installing Homebrew and Essential Packages (macOS only)
+    stdout: true
+  -
+    command: 'if [ "$(uname)" = "Linux" ]; then ./linux/setup-tools.sh; fi'
+    description: Installing CLI tools via mise (Linux devbox only)
     stdout: true
   -
     description: Downloading vim-plug to ~/.vim/autoload/plug.vim
@@ -127,10 +131,5 @@
   -
     command: ./git/set-gitconfig.sh
     description: Configuring Git
-    stdout: true
-    quiet: false
-  -
-    command: yarn config set prefix ~/.yarn
-    description: Configuring yarn prefix
     stdout: true
     quiet: false
