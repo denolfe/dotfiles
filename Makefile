@@ -1,4 +1,4 @@
-.PHONY: install link karabiner karabiner-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-plugin-refresh claude-verbs tmux
+.PHONY: install link karabiner karabiner-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-plugin-refresh claude-verbs tmux skills-restore skills-update
 
 # Run dotbot install script
 install:
@@ -71,3 +71,11 @@ ifeq ($(filter $(THEME),scifi peanut),)
 	$(error THEME must be 'scifi' or 'peanut')
 endif
 	jq --slurpfile verbs ${DOTFILES}/claude/verbs-$(THEME).json '.spinnerVerbs.verbs = $$verbs[0]' ~/.claude/settings.json > ~/.claude/settings.json.tmp && mv ~/.claude/settings.json.tmp ~/.claude/settings.json
+
+# Reinstall all global skills from the lock file
+skills-restore:
+	./agents/skills-restore.sh
+
+# Update all global skills to latest
+skills-update:
+	./agents/skills-update.sh

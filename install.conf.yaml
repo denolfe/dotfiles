@@ -56,8 +56,18 @@
     ~/.claude:
       glob: true
       path: claude/*
-      exclude: ['node_modules']
+      exclude: ['claude/node_modules', 'claude/skills'] # skills handled below
       relink: true
+
+    # Link skills individually, allows skills cli to link into skills dir
+    ~/.claude/skills:
+      glob: true
+      path: claude/skills/*
+      relink: true
+
+    ~/.agents/.skill-lock.json:
+      path: agents/.skill-lock.json
+      force: true
 
     ~/.pi/agent/extensions:
       glob: true

@@ -1,0 +1,69 @@
+{
+  "version": 3,
+  "skills": {
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "eb6a23305aea6e340d14b9de3766e721f9f4861b",
+      "installedAt": "2026-01-27T15:00:40.080Z",
+      "updatedAt": "2026-07-08T19:22:39.742Z"
+    },
+    "humanizer": {
+      "source": "blader/humanizer",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/blader/humanizer.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "1b48564898e999219882660237fde01bf4843a0f",
+      "installedAt": "2026-02-11T14:31:34.114Z",
+      "updatedAt": "2026-07-08T19:22:41.013Z"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "skillFolderHash": "343db72180d05814949fef7d46be96b5c6ee86b3",
+      "installedAt": "2026-05-29T19:55:18.978Z",
+      "updatedAt": "2026-07-08T19:22:42.281Z"
+    },
+    "thermo-nuclear-code-quality-review": {
+      "source": "cursor/plugins",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/cursor/plugins.git",
+      "skillPath": "cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md",
+      "skillFolderHash": "d9c8935dd560b3b6f5941247d04a1843f8c7cc35",
+      "installedAt": "2026-06-01T03:17:09.213Z",
+      "updatedAt": "2026-07-08T19:22:43.730Z"
+    },
+    "read-the-damn-docs": {
+      "source": "builderio/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/builderio/skills.git",
+      "skillPath": "skills/read-the-damn-docs/SKILL.md",
+      "skillFolderHash": "bdcaa95189bb3fad84fccb0e71ae02336e7ba85d",
+      "installedAt": "2026-07-08T13:47:16.736Z",
+      "updatedAt": "2026-07-08T19:22:45.143Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "antigravity-cli",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-code-cli",
+    "opencode",
+    "warp",
+    "zed",
+    "claude-code"
+  ]
+}
