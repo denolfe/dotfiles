@@ -171,7 +171,7 @@ if [ `uname` = Darwin ]; then
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig
 fi
 
-source /opt/homebrew/share/zsh/site-functions
+[[ -e /opt/homebrew/share/zsh/site-functions ]] && source /opt/homebrew/share/zsh/site-functions
 
 # pnpm
 export PNPM_HOME="$HOME/.pnpm-global"
@@ -189,3 +189,4 @@ esac
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
 fi
+export PATH="/opt/homebrew/bin:$PATH"
