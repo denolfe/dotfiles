@@ -6,6 +6,7 @@
 # compact, many icons, concise, instant_prompt=verbose.
 
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+  coder_workspace
   dir
   pr_number
   vcs
@@ -82,6 +83,14 @@ POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION=''
 ####################################################################################################
 ##################################### Custom Prompt Segments #######################################
 ####################################################################################################
+
+## Custom Segment: coder_workspace - show the Coder devbox workspace name (far left)
+
+# Shows $CODER_WORKSPACE_NAME when set (i.e. on a Coder remote devbox); hidden locally
+prompt_coder_workspace() {
+  if [[ -z "${CODER_WORKSPACE_NAME:-}" ]]; then return; fi
+  _p9k_prompt_segment "$0" 0 015 '' 0 '' $'\uf0c2'" ${CODER_WORKSPACE_NAME}"
+}
 
 ## Custom Segment: alias_reveal - show 👀 when alias reveal is enabled
 
