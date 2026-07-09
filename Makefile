@@ -66,7 +66,7 @@ gitleaks-history:
 
 # Set Claude spinner verbs
 claude-verbs:
-	jq --slurpfile verbs ${DOTFILES}/claude/verbs.json '.spinnerVerbs.verbs = $$verbs[0]' ~/.claude/settings.json > ~/.claude/settings.json.tmp && mv ~/.claude/settings.json.tmp ~/.claude/settings.json
+	./claude/set-verbs.sh
 
 # Reinstall all global skills from the lock file
 skills-restore:
