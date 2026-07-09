@@ -64,13 +64,9 @@ gitleaks-history:
 	gitleaks detect --no-git --log-level fatal -f json --no-color --no-banner --redact --source ~/.zsh_history -r ~/.report_gitleaks.json
 	code -a ~/.report_gitleaks.json
 
-# Set Claude spinner verbs (usage: make claude-verbs [THEME=scifi|peanut]; defaults to scifi)
-THEME ?= scifi
+# Set Claude spinner verbs
 claude-verbs:
-ifeq ($(filter $(THEME),scifi peanut),)
-	$(error THEME must be 'scifi' or 'peanut')
-endif
-	jq --slurpfile verbs ${DOTFILES}/claude/verbs-$(THEME).json '.spinnerVerbs.verbs = $$verbs[0]' ~/.claude/settings.json > ~/.claude/settings.json.tmp && mv ~/.claude/settings.json.tmp ~/.claude/settings.json
+	jq --slurpfile verbs ${DOTFILES}/claude/verbs.json '.spinnerVerbs.verbs = $$verbs[0]' ~/.claude/settings.json > ~/.claude/settings.json.tmp && mv ~/.claude/settings.json.tmp ~/.claude/settings.json
 
 # Reinstall all global skills from the lock file
 skills-restore:
