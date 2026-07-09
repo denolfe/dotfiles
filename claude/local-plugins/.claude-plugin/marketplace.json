@@ -39,12 +39,6 @@
       "description": "Auto-approves compound bash commands when each part matches allow patterns",
       "version": "0.0.1",
       "source": "./auto-approve"
-    },
-    {
-      "name": "hunk-turn-review",
-      "description": "Scopes a live Hunk diff session to the files each agent turn changes",
-      "version": "0.0.1",
-      "source": "./hunk-turn-review"
     }
   ]
 }

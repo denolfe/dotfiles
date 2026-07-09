@@ -10,11 +10,14 @@ Local (source lives in this dir):
 - **tmux-agent-status** - Agent status in tmux window name
 - **git-guardrails** - Git workflow enforcement (PreToolUse/Bash)
 - **auto-approve** - Auto-approves compound bash commands matching allow patterns
-- **hunk-turn-review** - Scopes a live Hunk diff session to each turn's changes (UserPromptSubmit/PostToolUse/Stop)
 
 Remote (pinned github source in `marketplace.json`, no local code):
 
 - **superpowers-extended-cc** - CC-specific fork of Superpowers, pinned to `denolfe/superpowers@customized-5.2.8`. Dev in `~/dev/superpowers-fork`; commit + push the branch, then `make claude-plugins` to pull.
+
+Reference-only (code kept in this dir, NOT registered in `marketplace.json`, so never installed):
+
+- **hunk-turn-review** - Scopes a live Hunk diff session to each turn's changes (UserPromptSubmit/PostToolUse/Stop). Unused; re-add its entry to `marketplace.json` to revive.
 
 ## Install / Update
 
