@@ -25,10 +25,14 @@
       "source": "./git-guardrails"
     },
     {
-      "name": "superpowers",
-      "description": "Core skills library for Claude Code",
-      "version": "4.2.0",
-      "source": "./superpowers"
+      "name": "superpowers-extended-cc",
+      "description": "Claude Code-specific fork of Superpowers with native task management and CC-specific enhancements",
+      "version": "5.2.8",
+      "source": {
+        "source": "github",
+        "repo": "denolfe/superpowers",
+        "ref": "customized-5.2.8"
+      }
     },
     {
       "name": "auto-approve",

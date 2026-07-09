@@ -4,14 +4,25 @@ Local Claude Code plugins, symlinked to `~/.claude/local-plugins`.
 
 ## Current Plugins
 
+Local (source lives in this dir):
+
 - **sounds** - Audio notifications (PermissionRequest, Stop)
+- **tmux-agent-status** - Agent status in tmux window name
 - **git-guardrails** - Git workflow enforcement (PreToolUse/Bash)
+- **auto-approve** - Auto-approves compound bash commands matching allow patterns
 - **hunk-turn-review** - Scopes a live Hunk diff session to each turn's changes (UserPromptSubmit/PostToolUse/Stop)
+
+Remote (pinned github source in `marketplace.json`, no local code):
+
+- **superpowers-extended-cc** - CC-specific fork of Superpowers, pinned to `denolfe/superpowers@customized-5.2.8`. Dev in `~/dev/superpowers-fork`; commit + push the branch, then `make claude-plugins` to pull.
+
+## Install / Update
+
+Run `make claude-plugins` (→ `claude/update-local-plugins.sh`). Idempotent: adds-or-updates the `local` marketplace, then installs/enables/updates **every** plugin listed in `marketplace.json` (list is derived via `jq`, not hardcoded). This is also the update command for the pinned github plugins.
 
 ## Notes
 
-- Plugins are copied to `~/.claude/plugins/cache/local/` on install
-- After editing source, run `/plugin marketplace update local` then reinstall
+- Local plugins are copied to `~/.claude/plugins/cache/local/` on install
 - Use `${CLAUDE_PLUGIN_ROOT}` for relative script paths
 
 ## Setup
