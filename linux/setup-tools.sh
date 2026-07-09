@@ -8,15 +8,16 @@ if ! command -v mise > /dev/null 2>&1; then
 fi
 
 TOOLS=(
-  "fzf"
-  "fd"
   "bat"
-  "eza"
-  "ripgrep"
+  "bun"
   "delta"
-  "jq"
+  "eza"
+  "fd"
+  "fzf"
   "gh"
+  "jq"
   "neovim"
+  "ripgrep"
 )
 
 echo "Installing CLI tools via mise..."
