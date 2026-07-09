@@ -1,4 +1,4 @@
-.PHONY: install link karabiner karabiner-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-plugin-refresh claude-verbs tmux skills-restore skills-update
+.PHONY: install link karabiner karabiner-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-plugin-refresh claude-verbs ai-install tmux skills-restore skills-update
 
 # Run dotbot install script
 install:
@@ -41,6 +41,9 @@ macos:
 	./macos/set-defaults.sh
 
 # Installs and enables Claude Code settings and plugins
+# Full AI dev setup for a fresh machine
+ai-install: claude claude-plugins claude-verbs skills-restore
+
 claude:
 	./claude/set-defaults.sh
 
