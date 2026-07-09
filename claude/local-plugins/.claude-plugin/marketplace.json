@@ -29,8 +29,8 @@
       "description": "Claude Code-specific fork of Superpowers with native task management and CC-specific enhancements",
       "version": "5.2.8",
       "source": {
-        "source": "github",
-        "repo": "denolfe/superpowers",
+        "source": "url",
+        "url": "https://github.com/denolfe/superpowers.git",
         "ref": "customized-5.2.8"
       }
     },

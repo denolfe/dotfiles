@@ -23,12 +23,35 @@ echo "[LOCAL] Updating local marketplace..."
 claude plugin marketplace update local 2>/dev/null || claude plugin marketplace add "$LOCAL_MARKETPLACE"
 
 echo "[LOCAL] Installing/updating plugins from manifest..."
+
+# Run a plugin subcommand, tolerating the "already in desired state" case while
+# surfacing any genuine failure (e.g. a clone that fails auth).
+run_plugin() {
+  local action="$1" full="$2" out status=0
+  out="$(claude plugin "$action" "$full" 2>&1)" || status=$?
+  if [[ $status -eq 0 ]]; then
+    return 0
+  fi
+  if grep -qiE 'already (installed|enabled|exists|up[- ]?to[- ]?date)' <<<"$out"; then
+    echo "  ✔ ${full} already ${action}d"
+    return 0
+  fi
+  echo "  ✘ ${full} ${action} failed:" >&2
+  echo "$out" | sed 's/^/      /' >&2
+  return 1
+}
+
+FAILED=0
 while IFS= read -r PLUGIN; do
   [[ -z "$PLUGIN" ]] && continue
   FULL_NAME="${PLUGIN}@local"
-  claude plugin install "$FULL_NAME" 2>/dev/null || echo "  ✔ ${PLUGIN} already installed"
-  claude plugin enable "$FULL_NAME" 2>/dev/null || echo "  ✔ ${PLUGIN} already enabled"
-  claude plugin update "$FULL_NAME" 2>/dev/null || true
+  run_plugin install "$FULL_NAME" || FAILED=1
+  run_plugin enable "$FULL_NAME" || FAILED=1
+  run_plugin update "$FULL_NAME" || FAILED=1
 done < <(jq -r '.plugins[].name' "$MANIFEST")
 
+if [[ $FAILED -ne 0 ]]; then
+  echo "[LOCAL] ✘ One or more plugins failed" >&2
+  exit 1
+fi
 echo "[LOCAL] ✔ Done"
