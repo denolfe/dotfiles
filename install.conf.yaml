@@ -33,7 +33,9 @@
       force: true
     ~/.oh-my-zsh: zsh/oh-my-zsh
     ~/.zgenom: zsh/zgenom
-    ~/.config/mise/config.toml: zsh/mise.toml
+    ~/.config/mise/config.toml:
+      path: zsh/mise.toml
+      if: '[ ! -e ~/.config/mise/config.toml ]'
     ~/.hushlogin: zsh/hushlogin
 
     ~/.prettierrc.js:
