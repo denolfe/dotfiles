@@ -16,6 +16,6 @@ if [[ ! -f "$SETTINGS" ]]; then
   exit 1
 fi
 
-jq --slurpfile verbs "$VERBS" '.spinnerVerbs.verbs = $verbs[0]' "$SETTINGS" > "${SETTINGS}.tmp"
+jq --slurpfile verbs "$VERBS" '.spinnerVerbs = {"mode": "replace", "verbs": $verbs[0]}' "$SETTINGS" > "${SETTINGS}.tmp"
 mv "${SETTINGS}.tmp" "$SETTINGS"
 echo "✔ spinner verbs set from $VERBS"
