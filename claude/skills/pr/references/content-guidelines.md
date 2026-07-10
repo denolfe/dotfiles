@@ -21,6 +21,6 @@ Applies to both `create` and `update`.
 - No copula avoidance: use "is/are/has" instead of "serves as", "stands as", "acts as"
 - No negative parallelisms: avoid "not only X but also Y", "it's not just X, it's Y"
 - No rule of three: don't force triads like "faster, safer, and more maintainable" — include only what's true and relevant
-- No em dash abuse: prefer commas, parentheses, or separate sentences
+- No em dashes anywhere: use commas, colons, parentheses, or separate sentences. This is absolute, not "avoid abuse" — it applies in prose AND in list/link separators (write `[label](url): description`, not `[label](url) — description`)
 - No chatbot artifacts: no "Let me know if...", "Here's an overview of...", "This PR aims to..."
 - No references to mermaid node IDs or branch labels (e.g., "the D -- No branch"). These don't render outside the diagram. Describe the flow in plain language instead.

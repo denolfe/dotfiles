@@ -64,7 +64,8 @@ Before `gh pr create`, `gh pr edit`, or printing a Preview body, verify the draf
 
 - Every `##` heading appears in the Template above (no `## Test plan`, `## Testing`, `## Test coverage`, `## Summary`, or other ad-hoc headings).
 - No line numbers referenced.
-- No banned wording from [references/content-guidelines.md](references/content-guidelines.md) (AI vocab, hedging, filler, em-dash abuse, chatbot artifacts).
+- No banned wording from [references/content-guidelines.md](references/content-guidelines.md) (AI vocab, hedging, filler, chatbot artifacts).
+- No em dashes (`—`) anywhere in the body, including link/label separators. Grep the drafted body for `—`; if any appear, replace with a colon, comma, parentheses, or separate sentence before applying.
 
 If any check fails, revise before applying. Do not ship a body you haven't checked.
 
