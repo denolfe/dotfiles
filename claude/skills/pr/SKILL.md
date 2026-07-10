@@ -37,13 +37,11 @@ An optional `base=<branch>` argument (any position) sets the target branch. If o
 
 ## Key Changes
 
-#### [Brief description of what changed]
+- **[Brief description of what changed]**
+  - [Description of what changed and why. Can span multiple bullets if needed, but avoid excessive detail.]
 
-[1-2 sentence description of what changed and why. Be clear and concise; avoid excessive detail.]
-
-#### [Brief description of another change]
-
-[1-2 sentence description of what changed and why. Be clear and concise; avoid excessive detail.]
+- **[Brief description of another change]**
+  - [Description of what changed and why.]
 
 ## Design Decisions
 
