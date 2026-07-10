@@ -25,8 +25,6 @@ An optional `base=<branch>` argument (any position) sets the target branch. If o
 - All language should be succinct, concise and avoid excessive detail.
 
 ```markdown
-# Overview
-
 [Brief summary of the PR's purpose and scope. 1-2 sentences.]
 
 [Optional: 1-2 sentences on motivation or context]
