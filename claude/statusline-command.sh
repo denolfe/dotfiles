@@ -112,6 +112,47 @@ if [[ -n "$model_name" ]] && [[ "$model_name" != "null" ]]; then
   fi
 fi
 
+# Rate limits (Claude.ai Pro/Max only; absent otherwise). Shows remaining % + reset countdown.
+now=$(date +%s)
+
+format_reset() {
+  local remaining=$(( $1 - now ))
+  (( remaining < 0 )) && remaining=0
+  local d=$(( remaining / 86400 ))
+  local h=$(( (remaining % 86400) / 3600 ))
+  local m=$(( (remaining % 3600) / 60 ))
+  if (( d > 0 )); then
+    printf '%dd%dh' "$d" "$h"
+  elif (( h > 0 )); then
+    printf '%dh%dm' "$h" "$m"
+  else
+    printf '%dm' "$m"
+  fi
+}
+
+limit_color() {
+  # Color by usage: green low, yellow high, red critical
+  if (( $1 >= 90 )); then printf '\033[31m'
+  elif (( $1 >= 75 )); then printf '\033[33m'
+  else printf '\033[32m'; fi
+}
+
+build_limit_seg() {
+  local label=$1 used=$2 resets=$3
+  local used_int=${used%.*}
+  printf '%b%s %d%%\033[0m \033[2m↻%s\033[0m' \
+    "$(limit_color "$used_int")" "$label" "$used_int" "$(format_reset "$resets")"
+}
+
+five_used=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+five_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
+seven_used=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
+seven_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
+
+[[ -n "$five_used" ]] && line2+=("$(build_limit_seg "5h" "$five_used" "$five_reset")")
+# Weekly window only surfaces once it's worth watching (>50% used)
+[[ -n "$seven_used" ]] && (( ${seven_used%.*} > 50 )) && line2+=("$(build_limit_seg "7d" "$seven_used" "$seven_reset")")
+
 # Context window with gradient bar
 # Auto-compact buffer (33K) from Claude Code source
 _ctx_tokens=$(echo "$input" | jq -r '.context_window.current_usage | .input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
