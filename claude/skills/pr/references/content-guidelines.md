@@ -4,8 +4,8 @@ Applies to both `create` and `update`.
 
 ## Structure
 
-- Use the template in [../SKILL.md](../SKILL.md) _as a guideline_ for structuring the PR description; adapt sections to fit the actual changes.
-- DO NOT add sections that are not defined in the template.
+- Assemble the PR description from the block library in [blocks.md](blocks.md); it is the source of truth for allowed sections (Overview, Motivation, Usage, Resolves link, Key Changes, Design Decisions, Root Cause, Overall Flow, References / Links).
+- DO NOT add sections that are not in the block library.
 - DO NOT include anything related to test plan or test coverage.
 - DO NOT reference specific line numbers.
 - Focus on architecture and high-level decisions over implementation details.

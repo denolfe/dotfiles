@@ -16,49 +16,35 @@ Dispatch on the first argument:
 
 An optional `base=<branch>` argument (any position) sets the target branch. If omitted, default to the repo's default branch. Pass via `--base <branch>` to `gh pr create`. Ignored for `update` and `preview`.
 
-**Before drafting any PR body (create/draft/update/preview): Read [references/content-guidelines.md](references/content-guidelines.md) in full.** Do not draft from memory.
+**Before drafting any PR body (create/draft/update/preview): Read [references/content-guidelines.md](references/content-guidelines.md) AND [references/blocks.md](references/blocks.md) in full.** Do not draft from memory.
+
+## Classify
+
+Run this first, before selecting blocks. Classify the change on two axes:
+
+- **TYPE (fix vs feature)** — infer from Conventional Commit prefixes on the branch commits plus diff shape. `fix:`/`revert:` lean fix; `feat:` leans feature.
+- **COMPLEXITY (simple vs complex)** — infer from files touched, diff size, and whether new architecture or a changed control/data flow is introduced.
+
+Then:
+
+1. State the result in one line, e.g. `Detected: feature + complex`.
+2. Ask the user ONLY when signals conflict: mixed `fix`/`feat` commits, or a diff on the simple/complex borderline. Otherwise proceed.
 
 ## Template
 
-- Use this structure as a guideline
-- Adapt sections to fit the actual changes. Do not add sections not defined here. Omit sections that don't apply.
-- All language should be succinct, concise and avoid excessive detail.
+The body is assembled from the block library, not a single fixed template.
 
-```markdown
-[Brief summary of the PR's purpose and scope. 1-2 sentences.]
+1. Take the classification's quadrant and pick the matching **profile** in [references/blocks.md](references/blocks.md).
+2. Add or drop the profile's `○` blocks using the **include-when rules** there.
+3. Emit blocks in the order listed in the block library.
 
-[Optional: 1-2 sentences on motivation or context]
-
-[Optional: Show usage changes if the PR affects user-facing behavior.]
-
-["Resolves [PREFIX-1234](https://tracker.example.com/PREFIX-1234)". Use link for GitHub, Asana, Linear, etc. If no issue, omit this line.]
-
-## Key Changes
-
-- **[Brief description of what changed]**
-  - [Description of what changed and why. Can span multiple bullets if needed, but avoid excessive detail.]
-
-- **[Brief description of another change]**
-  - [Description of what changed and why.]
-
-## Design Decisions
-
-[Explanation of major design decisions made in the PR, focusing on architecture and rationale rather than implementation specifics.]
-
-## Overall Flow
-
-[Include any relevant architecture diagrams or flowcharts that illustrate the changes made. Written in mermaid syntax; use sequence diagram unless another format is more appropriate. Clearly note the changes from the previous flow if any.]
-
-## References / Links
-
-[Links to any _external_ resources provided during the brainstorming, design, or implementation phases, such as external library docs, blog posts, etc. If none, omit this section. DO NOT reference the plan files themselves.]
-```
+Do not add sections outside the block library. Keep all language succinct and concise.
 
 ## Pre-Apply Check
 
 Before `gh pr create`, `gh pr edit`, or printing a Preview body, verify the drafted body:
 
-- Every `##` heading appears in the Template above (no `## Test plan`, `## Testing`, `## Test coverage`, `## Summary`, or other ad-hoc headings).
+- Every `##` heading appears in the block library in [references/blocks.md](references/blocks.md) (no `## Test plan`, `## Testing`, `## Test coverage`, `## Summary`, or other ad-hoc headings).
 - No line numbers referenced.
 - No banned wording from [references/content-guidelines.md](references/content-guidelines.md) (AI vocab, hedging, filler, chatbot artifacts).
 - No em dashes (`—`) anywhere in the body, including link/label separators. Grep the drafted body for `—`; if any appear, replace with a colon, comma, parentheses, or separate sentence before applying.
@@ -85,7 +71,7 @@ Run in a single Bash call — the `trap` only protects the shell it's set in.
   - Synthesize from branch commits
   - ≤72 chars
   - Should describe the change, not the symptom or task.
-- Write the PR body.
+- Run **Classify** above, then write the PR body per **Template** (profile + include-when rules).
 - Create the PR per **Applying the Body** above (add `--draft` for draft PRs).
 - Say "PR Created: [title] [PR URL]".
 
@@ -106,7 +92,7 @@ Steps:
 1. Find the existing PR for the current branch. If none exists, tell the user to run `/pr create` instead.
 2. Run the HARD-GATE check above. Resolve before continuing.
 3. Inspect current branch state and any new design/plan docs since the PR was opened.
-4. Regenerate the PR body. Preserve existing intent where still accurate; revise drifted sections.
+4. Run **Classify** above, then regenerate the PR body per **Template** (profile + include-when rules). Preserve existing intent where still accurate; revise drifted sections.
 5. Apply the new body via `gh pr edit` per **Applying the Body** above.
 6. Show a diff of the old vs new body, highlighting changes.
 7. Say "PR Updated: [PR URL]".
@@ -126,6 +112,17 @@ Scope: body only. Do not change title or draft state unless the user asks.
 Generate the PR body and print it inline without creating, updating, or pushing anything.
 
 - Inspect branch state (same as Create).
-- Output the PR body inline in the response, inside a fenced ```markdown block so it's easy to copy.
+- Print a **preview summary** first, then the body. The summary is a fixed set of key/value lines so it's scannable, not prose:
+
+  ```
+  **Title:**    <generated title>
+  **Detected:** <type> + <complexity>
+  **Blocks:**   <comma-separated blocks included, in emit order>
+  **Dropped:**  <comma-separated ○ blocks omitted + one-word reason each, or "none">
+  **Status:**   Preview only: nothing created or pushed
+  ```
+
+- After the summary, output the PR body.
+- Close with a one-line next step, e.g. "Run `/pr create` to open it."
 - Do NOT write to any file.
 - Do NOT run `gh pr create`, `gh pr edit`, `git push`, or any remote-mutating command.
