@@ -8,11 +8,11 @@ clplans() {
     | xargs stat -f '%m %N' \
     | sort -rn \
     | cut -d' ' -f2- \
-    | fzf --preview "sanemd $dir/{}" --preview-window=right:60%:nohidden:wrap \
+    | fzf --preview "viewmd -r $dir/{}" --preview-window=right:60%:nohidden:wrap \
         --bind 'ctrl-j:preview-half-page-down,ctrl-k:preview-half-page-up') || return
   file="$dir/$file"
-  print -rs -- "sanemd ${(q)file}"
-  sanemd "$file"
+  print -rs -- "viewmd ${(q)file}"
+  viewmd "$file"
 }
 
 # Open the most recently modified Claude plan.
@@ -24,6 +24,6 @@ clplansl() {
     | head -1 \
     | cut -d' ' -f2-) || return
   [[ -z "$file" ]] && return
-  print -rs -- "sanemd ${(q)file}"
-  sanemd "$file"
+  print -rs -- "viewmd ${(q)file}"
+  viewmd "$file"
 }
