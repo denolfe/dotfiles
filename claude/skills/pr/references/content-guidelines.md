@@ -21,13 +21,14 @@ The rules below are PR-specific emphases and overrides, not a replacement:
 - No chatbot artifacts: no "Let me know if...", "Here's an overview of...", "This PR aims to..."
 - No references to mermaid node IDs or branch labels (e.g., "the D -- No branch"). These don't render outside the diagram. Describe the flow in plain language instead.
 
-## Sentence Density
+## Sentence Structure
 
-Vocabulary rules govern words; these govern sentence shape. Density (not word choice) is what makes a body hard to read. This applies to every block's prose. Keep the CS terms and the fidelity, split the structure.
+Wording rules govern words; these govern sentence shape. Density (not word choice) is what makes a body hard to read. Applies to every block's prose.
 
-- **One idea per sentence.** Do not chain *what changed* + *mechanism* + *consequence* into a single sentence with `which` / `so` / `and`. State the change, then the mechanism, then the consequence as separate sentences.
-- **What-first.** Lead with the change. Mechanism and consequence follow as their own sentences, never as trailing clauses.
-- This is the opposite of a length constraint: prefer several short sentences over one packed sentence, even though it adds lines. A body that reads faster is the goal, not one that fits in fewer lines.
+**Cut extraneous load, keep intrinsic load** (Cognitive Load Theory). Keep the content: CS terms, caveats, fidelity. Strip the packaging: clause chains and mechanism-first ordering. Two techniques:
+
+- **Chunking (one idea per sentence).** Do not chain *what changed* + *mechanism* + *consequence* with `which` / `so` / `and`. State each as its own sentence. Prefer several short sentences over one packed one, even at more lines: reads-faster beats fits-in-fewer-lines.
+- **BLUF (bottom line up front).** Lead with the change. Mechanism and consequence follow as their own sentences, never as trailing clauses.
 
 Per-block length caps (e.g. Key Changes sub-bullets) live with those blocks in [blocks.md](blocks.md).
 

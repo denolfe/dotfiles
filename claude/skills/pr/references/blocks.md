@@ -69,7 +69,7 @@ What was actually broken and why. Use instead of Design Decisions on a bugfix.
 
 ### Key Changes
 
-Nested-bullet list of what changed. Each sub-bullet follows the Sentence Density
+Nested-bullet list of what changed. Each sub-bullet follows the Sentence Structure
 rules in [content-guidelines.md](content-guidelines.md): what-first, one idea per
 sentence. Cap each sub-bullet at ~2 sentences / ~25 words; over that, split into
 two bullets or promote a clause to its own bullet.
