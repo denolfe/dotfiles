@@ -13,15 +13,11 @@ Applies to both `create` and `update`.
 
 ## Wording Rules
 
-- No AI vocabulary: avoid "leverage", "enhance", "crucial", "pivotal", "comprehensive", "streamline", "robust", "seamless", "facilitate", "utilize" — use plain equivalents
-- No significance inflation: don't puff up changes with "key", "vital", "critical", "fundamental" — just describe what changed
-- No filler: cut "in order to" → "to", "it is important to note that" → (delete), "due to the fact that" → "because"
-- No hedging: avoid "potentially", "might possibly", "it could be argued" — state facts directly
-- No -ing padding: don't append "ensuring consistency", "highlighting the need for", "improving maintainability" as filler justifications - if the reason matters, give it its own sentence
-- No copula avoidance: use "is/are/has" instead of "serves as", "stands as", "acts as"
-- No negative parallelisms: avoid "not only X but also Y", "it's not just X, it's Y"
-- No rule of three: don't force triads like "faster, safer, and more maintainable" — include only what's true and relevant
-- No em dashes anywhere: use commas, colons, parentheses, or separate sentences. This is absolute, not "avoid abuse" — it applies in prose AND in list/link separators (write `[label](url): description`, not `[label](url) — description`)
+**REQUIRED SUB-SKILL:** Invoke the `humanizer` skill and apply it to the drafted body. It is the source of truth for general prose anti-patterns (AI vocabulary, significance inflation, filler, hedging, `-ing` padding, copula avoidance, negative parallelisms, rule of three). Do not re-derive the list from memory.
+
+The rules below are PR-specific emphases and overrides, not a replacement:
+
+- No em dashes anywhere: use commas, colons, parentheses, or separate sentences. This is an absolute ban, stronger than the humanizer's "avoid overuse": it applies in prose AND in list/link separators (write `[label](url): description`, not `[label](url) — description`)
 - No chatbot artifacts: no "Let me know if...", "Here's an overview of...", "This PR aims to..."
 - No references to mermaid node IDs or branch labels (e.g., "the D -- No branch"). These don't render outside the diagram. Describe the flow in plain language instead.
 
