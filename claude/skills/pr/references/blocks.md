@@ -69,13 +69,29 @@ What was actually broken and why. Use instead of Design Decisions on a bugfix.
 
 ### Key Changes
 
-Nested-bullet list of what changed.
+Nested-bullet list of what changed. Each sub-bullet follows the Sentence Density
+rules in [content-guidelines.md](content-guidelines.md): what-first, one idea per
+sentence. Cap each sub-bullet at ~2 sentences / ~25 words; over that, split into
+two bullets or promote a clause to its own bullet.
 
 ```markdown
 ## Key Changes
 
 - **[What changed]**
-  - [What changed and why, without excessive detail.]
+  - [The change, one sentence. Mechanism or consequence as a second short sentence.]
+```
+
+Working example (note the short sentences, not one packed clause chain):
+
+```markdown
+## Key Changes
+
+- **Hardened publish path**
+  - Publishing now uses a non-throwing subprocess call. Errors return instead of
+    aborting, so the retry and post-failure recheck both run.
+  - A registry pre-check skips already-published packages. An already-published
+    error from npm also counts as success. Together these make a re-run safe on a
+    partial publish.
 ```
 
 ### Design Decisions (feature-oriented)
@@ -111,27 +127,8 @@ External resources only (library docs, blog posts). Never the plan files.
 
 ## Profiles
 
-Baseline block set per quadrant. `✓` always, `–` omit, `○` decide by rule.
-
-### Simple Fix
-
-`✓` Overview, Root Cause. `○` Key Changes, Usage, Resolves link.
-
-### Complex Fix
-
-`✓` Overview, Root Cause, Key Changes. `○` Motivation, Design Decisions, Overall
-Flow, Usage, Resolves link, References.
-
-### Simple Feature
-
-`✓` Overview, Key Changes. `○` Usage, Resolves link, References.
-
-### Complex Feature
-
-`✓` Overview, Key Changes, Design Decisions, References. `○` Motivation, Overall
-Flow, Usage, Resolves link.
-
-## Decision Table
+A profile is one column below: the baseline block set for that quadrant. `✓`
+always include, `–` omit, `○` decide with the include-when rules.
 
 ```
 Block                | Simple Fix | Complex Fix | Simple Feat | Complex Feat
