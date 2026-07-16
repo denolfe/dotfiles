@@ -2,7 +2,7 @@
 
 # https://github.com/ohmyzsh/ohmyzsh/issues/5243#issuecomment-253649851
 alias rl='exec zsh'
-alias regen='zgenom reset;source ~/.zshrc'
+alias regen='zgenom reset && exec zsh'
 
 # Main directories
 alias .f='cd ~/.dotfiles'
