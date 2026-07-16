@@ -41,10 +41,33 @@ run_plugin() {
   return 1
 }
 
+# Git-sourced plugins: `claude plugin update` only refetches when the manifest
+# version changes, so new commits on the same pinned ref are silently skipped.
+# Detect that by comparing the installed gitCommitSha against the remote tip.
+INSTALLED_JSON="${HOME}/.claude/plugins/installed_plugins.json"
+
+is_stale_git_plugin() {
+  local plugin="$1" url ref installed_sha remote_sha
+  url=$(jq -r --arg n "$plugin" '.plugins[] | select(.name == $n) | .source | objects | .url // empty' "$MANIFEST")
+  [[ -z "$url" ]] && return 1
+  [[ -f "$INSTALLED_JSON" ]] || return 1
+  installed_sha=$(jq -r --arg key "${plugin}@local" \
+    '.plugins[$key][0].gitCommitSha // empty' "$INSTALLED_JSON")
+  [[ -z "$installed_sha" ]] && return 1
+  ref=$(jq -r --arg n "$plugin" '.plugins[] | select(.name == $n) | .source | objects | .ref // "HEAD"' "$MANIFEST")
+  # awk END: for annotated tags ls-remote lists tag then peeled ^{}; last line is the commit
+  remote_sha=$(git ls-remote "$url" "$ref" 2>/dev/null | awk 'END { print $1 }')
+  [[ -n "$remote_sha" && "$remote_sha" != "$installed_sha" ]]
+}
+
 FAILED=0
 while IFS= read -r PLUGIN; do
   [[ -z "$PLUGIN" ]] && continue
   FULL_NAME="${PLUGIN}@local"
+  if is_stale_git_plugin "$PLUGIN"; then
+    echo "  ↻ ${FULL_NAME} pinned ref moved; reinstalling…"
+    run_plugin uninstall "$FULL_NAME" || FAILED=1
+  fi
   run_plugin install "$FULL_NAME" || FAILED=1
   run_plugin enable "$FULL_NAME" || FAILED=1
   run_plugin update "$FULL_NAME" || FAILED=1
