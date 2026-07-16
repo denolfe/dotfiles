@@ -48,6 +48,7 @@ Before `gh pr create`, `gh pr edit`, or printing a Preview body, verify the draf
 - No line numbers referenced.
 - No banned wording from [references/content-guidelines.md](references/content-guidelines.md) (AI vocab, hedging, filler, chatbot artifacts).
 - Sentence structure (per [references/content-guidelines.md](references/content-guidelines.md)): scan all prose. Flag any sentence that chains *what changed* + *mechanism* + *consequence* with `which`/`so`/`and`, or leads with mechanism instead of the change. Split flagged sentences into what-then-why. Additionally, Key Changes sub-bullets over ~2 sentences / ~25 words (the cap in [references/blocks.md](references/blocks.md)) split into two bullets.
+- Jargon (per [references/content-guidelines.md](references/content-guidelines.md) "Glossing Jargon"): every term of art carries a one-clause appositive gloss at first use. Flag any glossed term expanded into a worked example (cut to the gloss) or re-taught on a later mention.
 - No em dashes (`—`) anywhere in the body, including link/label separators. Grep the drafted body for `—`; if any appear, replace with a colon, comma, parentheses, or separate sentence before applying.
 
 If any check fails, revise before applying. Do not ship a body you haven't checked.

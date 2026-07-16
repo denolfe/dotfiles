@@ -17,6 +17,7 @@ Applies to both `create` and `update`.
 
 The rules below are PR-specific emphases and overrides, not a replacement:
 
+- Explain each concept in plain language targeted at a mid-level software engineer.
 - No em dashes anywhere: use commas, colons, parentheses, or separate sentences. This is an absolute ban, stronger than the humanizer's "avoid overuse": it applies in prose AND in list/link separators (write `[label](url): description`, not `[label](url) — description`)
 - No chatbot artifacts: no "Let me know if...", "Here's an overview of...", "This PR aims to..."
 - No references to mermaid node IDs or branch labels (e.g., "the D -- No branch"). These don't render outside the diagram. Describe the flow in plain language instead.
@@ -44,4 +45,29 @@ Good (one idea per sentence):
   A registry pre-check skips already-published packages. npm's
   already-published error also counts as success. Together these make a
   re-run safe on a partial publish.
+```
+
+## Glossing Jargon
+
+A reviewer outside the subsystem should follow the body without a glossary. Make terms of art accessible without spending words. Two paired techniques:
+
+- **Appositive gloss.** Define a term of art in a short noun phrase set off by commas or parens, at first use only: `an immutable tag (a permanent git ref that hands off between workflows)`. One clause, not a sentence. Gloss each term **once**; never re-teach a term already glossed.
+- **Progressive disclosure.** The gloss is all the depth the body owes. Do not expand it into a worked example or scenario. Under the Cognitive Load frame above, the gloss is intrinsic load (keep it); the example is extraneous load (cut it, or link to a design doc).
+
+Gloss the term of art, not the everyday word. Over-glossing reads as condescending and re-inflates the body. If a term needs more than one clause to land, it belongs in Design Decisions or a linked doc, not an inline aside.
+
+The gloss still obeys Sentence Structure above: attach it to a term inside a sentence, do not chain a second fact with `and`/`so` to make room for it.
+
+Example (note: same two sentences as the Sentence Structure "good" case, with the gloss appended, not a re-chained version):
+
+```
+Bad (worked example, extraneous load):
+  Before publishing we ask npm "is this already up?" and skip it if so.
+  And if npm says "already published," we treat that as success, so
+  running again after a partial failure just finishes the leftovers.
+
+Good (appositive gloss, progressive disclosure):
+  A registry pre-check skips already-published packages. npm's
+  "already published" error also counts as success (idempotency: a
+  re-run finishes a partial publish instead of erroring).
 ```
