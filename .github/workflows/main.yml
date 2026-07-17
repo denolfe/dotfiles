@@ -35,15 +35,43 @@ jobs:
         run: ./install
 
       - name: Install Claude defaults
-        run: make claude
+        run: |
+          make claude
+          {
+            echo "## Claude settings"
+            echo
+            echo '```json'
+            cat ~/.claude/settings.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Restore skills
-        run: make skills-restore
+        run: |
+          make skills-restore | tee /tmp/skills-restore.log
+          {
+            echo "## Skills restored"
+            echo
+            echo "| Skill | Source | Status |"
+            echo "| --- | --- | --- |"
+            awk '/✓$/{print "| " $2 " | `" $3 "` | ✅ |"} /✗$/{print "| " $2 " | `" $3 "` | ❌ |"}' /tmp/skills-restore.log
+          } >> "$GITHUB_STEP_SUMMARY"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update skills
-        run: make skills-update
+        run: |
+          make skills-update 2>&1 | tee /tmp/skills-update.log
+          {
+            echo "## Skills update"
+            echo
+            echo "<details><summary><code>skills update --global</code></summary>"
+            echo
+            echo '```'
+            sed $'s/\x1b\\[[0-9;]*[a-zA-Z]//g' /tmp/skills-update.log | tr -d '\r'
+            echo '```'
+            echo
+            echo "</details>"
+          } >> "$GITHUB_STEP_SUMMARY"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
