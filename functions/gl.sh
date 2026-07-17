@@ -77,6 +77,8 @@ gli() {
     gsub(/ ago/, "", $3)
     printf "%s\t\033[1;36m%s\033[0m %s \033[32m(%s)\033[0m \033[34m<%s>\033[0m \033[33m%s\033[0m\n", hash, $1, $2, $3, $4, $5
   }' | fzf --ansi --no-sort --delimiter='\t' --with-nth=2 \
+    --disabled \
+    --height=100% \
     --header $'enter: view · ctrl-y: copy hash · ctrl-o: PR/commit' \
     --preview 'git show --color=always --shortstat --patch {1} | delta' \
     --preview-window 'down,80%,nohidden' \
