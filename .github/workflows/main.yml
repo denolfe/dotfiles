@@ -38,6 +38,15 @@ jobs:
       - name: Install dotfiles
         run: ./install
 
+      - name: Install Claude defaults
+        run: make claude
+
+      - name: Restore skills
+        run: make skills-restore
+
+      - name: Update skills
+        run: make skills-update
+
   discover-plugins:
     runs-on: ubuntu-latest
     outputs:
