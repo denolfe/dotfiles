@@ -31,7 +31,6 @@
     ~/.zshrc:
       path: zsh/zshrc.zsh
       force: true
-    ~/.oh-my-zsh: zsh/oh-my-zsh
     ~/.zgenom: zsh/zgenom
     ~/.config/mise/config.toml:
       path: zsh/mise.toml
