@@ -8,6 +8,8 @@ allowed-tools: WebSearch
 
 Topic: $ARGUMENTS
 
+If no arguments were provided, use the current context to determine what to search for. If the context is insufficient, ask the user for clarification.
+
 ## Step 1: Generate Queries
 
 Generate 2-4 queries based on complexity:
