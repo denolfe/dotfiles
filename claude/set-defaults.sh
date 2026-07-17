@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Set Claude Code default settings
+# Run with `make claude`
 
 SETTINGS_FILE="${HOME}/.claude/settings.json"
 
@@ -11,7 +12,6 @@ fi
 
 echo "[SETTINGS] Applying default settings to $SETTINGS_FILE..."
 
-# Apply default settings (plugins via `make claude-plugins`, verbs via `make claude-verbs`)
 jq '
   .attribution = {"commit": "", "pr": ""} |
   .env.SLASH_COMMAND_TOOL_CHAR_BUDGET = "50000" |
@@ -22,7 +22,8 @@ jq '
   .effortLevel = "medium" |
   .skipWorkflowUsageWarning = true |
   .verbose = true |
-  .statusLine = {"type": "command", "command": "~/.claude/statusline-command.sh"}
+  .statusLine = {"type": "command", "command": "~/.claude/statusline-command.sh"} |
+  .permissions = {"defaultMode": "auto"}
 ' "$SETTINGS_FILE" > "${SETTINGS_FILE}.tmp" && mv "${SETTINGS_FILE}.tmp" "$SETTINGS_FILE"
 
 echo "[SETTINGS] ✔ Default settings applied"
