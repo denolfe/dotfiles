@@ -26,7 +26,7 @@ alias cpjv='cat package.json | jq -r ".version"'
 # Reverse pnpm aliases set by pnpm plugin
 alias pi='pnpm install'
 alias pin='pnpm init'
-unalias pdx
+(( $+aliases[pdx] )) && unalias pdx
 # pnpx resolving depends on corepack's status
 alias pnpx='pnpm dlx'
 
