@@ -39,9 +39,13 @@ jobs:
 
       - name: Restore skills
         run: make skills-restore
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update skills
         run: make skills-update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   discover-plugins:
     runs-on: ubuntu-latest
