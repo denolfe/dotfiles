@@ -37,11 +37,12 @@ jobs:
       - name: Install Claude defaults
         run: |
           make claude
+          jq empty ~/.claude/settings.json
           {
             echo "## Claude settings"
             echo
             echo '```json'
-            cat ~/.claude/settings.json
+            jq . ~/.claude/settings.json
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -74,6 +75,17 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log skill lock
+        run: |
+          jq empty ~/.agents/.skill-lock.json
+          {
+            echo "## Skill lock"
+            echo
+            echo '```json'
+            jq . ~/.agents/.skill-lock.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
   discover-plugins:
     runs-on: ubuntu-latest
