@@ -48,6 +48,10 @@
       path: ghostty
       force: true
 
+    ~/.config/eza:
+      path: eza
+      force: true
+
     ~/Library/Preferences/glow:
       if: '[ `uname` = Darwin ]'
       path: glow

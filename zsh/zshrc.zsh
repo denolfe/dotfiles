@@ -155,6 +155,7 @@ export FZF_TMUX_HEIGHT=80%
 source <(fzf --zsh)
 
 export EZA_ICON_SPACING=2
+export EZA_CONFIG_DIR="$XDG_CONFIG_HOME/eza"
 
 export BAT_THEME='Visual Studio Dark+'
 

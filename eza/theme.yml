@@ -1,0 +1,112 @@
+# Variant 1 — "Default Faithful"
+# eza-themes/default.yml role+attribute structure, recolored to the repo's
+# Dark+ ANSI palette. Preserves default.yml's bold/underline weight hierarchy
+# (user perms bold, group/other plain; build files bold+underlined).
+# Palette: fg #cccccc blue #3b8eea cyan #29b8db green #23d18b yellow #e5e510
+#          red #f14c4c magenta #d670d6 gray #666666 white #e5e5e5
+
+colourful: true
+
+filekinds:
+  normal: {foreground: "#cccccc"}
+  directory: {foreground: "#3b8eea", is_bold: true}
+  symlink: {foreground: "#29b8db"}
+  pipe: {foreground: "#e5e510"}
+  block_device: {foreground: "#e5e510", is_bold: true}
+  char_device: {foreground: "#e5e510", is_bold: true}
+  socket: {foreground: "#f14c4c", is_bold: true}
+  special: {foreground: "#e5e510"}
+  executable: {foreground: "#23d18b", is_bold: true}
+  mount_point: {foreground: "#3b8eea", is_bold: true, is_underline: true}
+
+perms:
+  user_read: {foreground: "#e5e510", is_bold: true}
+  user_write: {foreground: "#f14c4c", is_bold: true}
+  user_execute_file: {foreground: "#23d18b", is_bold: true, is_underline: true}
+  user_execute_other: {foreground: "#23d18b", is_bold: true}
+  group_read: {foreground: "#e5e510"}
+  group_write: {foreground: "#f14c4c"}
+  group_execute: {foreground: "#23d18b"}
+  other_read: {foreground: "#e5e510"}
+  other_write: {foreground: "#f14c4c"}
+  other_execute: {foreground: "#23d18b"}
+  special_user_file: {foreground: "#d670d6"}
+  special_other: {foreground: "#d670d6"}
+  attribute: {foreground: "#cccccc"}
+
+size:
+  major: {foreground: "#23d18b", is_bold: true}
+  minor: {foreground: "#23d18b"}
+  number_byte: {foreground: "#23d18b", is_bold: true}
+  number_kilo: {foreground: "#23d18b", is_bold: true}
+  number_mega: {foreground: "#23d18b", is_bold: true}
+  number_giga: {foreground: "#23d18b", is_bold: true}
+  number_huge: {foreground: "#23d18b", is_bold: true}
+  unit_byte: {foreground: "#23d18b"}
+  unit_kilo: {foreground: "#23d18b"}
+  unit_mega: {foreground: "#23d18b"}
+  unit_giga: {foreground: "#23d18b"}
+  unit_huge: {foreground: "#23d18b"}
+
+users:
+  user_you: {foreground: "#666666"}
+  user_root: {foreground: "#cccccc"}
+  user_other: {foreground: "#cccccc"}
+  group_yours: {foreground: "#e5e510", is_bold: true}
+  group_other: {foreground: "#cccccc"}
+  group_root: {foreground: "#cccccc"}
+
+links:
+  normal: {foreground: "#f14c4c", is_bold: true}
+  multi_link_file: {foreground: "#f14c4c", background: "#e5e510"}
+
+git:
+  new: {foreground: "#23d18b"}
+  modified: {foreground: "#3b8eea"}
+  deleted: {foreground: "#f14c4c"}
+  renamed: {foreground: "#e5e510"}
+  typechange: {foreground: "#d670d6"}
+  ignored: {foreground: "#cccccc", is_dimmed: true}
+  conflicted: {foreground: "#f14c4c"}
+
+git_repo:
+  branch_main: {foreground: "#23d18b"}
+  branch_other: {foreground: "#e5e510"}
+  git_clean: {foreground: "#23d18b"}
+  git_dirty: {foreground: "#e5e510"}
+
+security_context:
+  colon: {foreground: "#cccccc", is_dimmed: true}
+  user: {foreground: "#3b8eea"}
+  role: {foreground: "#23d18b"}
+  typ: {foreground: "#e5e510"}
+  range: {foreground: "#29b8db"}
+
+file_type:
+  # Value gradient: muted gray = generated/ephemeral, neutral fg = common
+  # authored, muted hue = common content, saturated = rare media/packed,
+  # bright+bold = must-not-miss (security / build orchestration).
+  image: {foreground: "#d670d6"}
+  video: {foreground: "#d670d6", is_bold: true}
+  music: {foreground: "#29b8db"}
+  lossless: {foreground: "#29b8db", is_bold: true}
+  crypto: {foreground: "#f5f543", is_bold: true}
+  document: {foreground: "#6a9955"}
+  compressed: {foreground: "#ce9178"}
+  temp: {foreground: "#666666"}
+  compiled: {foreground: "#666666"}
+  build: {foreground: "#29b8db", is_bold: true}
+  source: {foreground: "#cccccc"}
+
+punctuation: {foreground: "#666666", is_bold: true}
+date: {foreground: "#3b8eea"}
+inode: {foreground: "#d670d6"}
+blocks: {foreground: "#29b8db"}
+header: {foreground: "#cccccc", is_underline: true}
+octal: {foreground: "#d670d6"}
+flags: {foreground: "#cccccc"}
+
+symlink_path: {foreground: "#29b8db"}
+control_char: {foreground: "#f14c4c"}
+broken_symlink: {foreground: "#f14c4c"}
+broken_path_overlay: {foreground: "#cccccc", is_underline: true}
