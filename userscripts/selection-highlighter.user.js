@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Selection Highlighter
 // @namespace    neaumusic
-// @version      0.1
+// @version      0.2
 // @description  Highlight all instances of a selected word on the page. Port of https://github.com/neaumusic/selection-highlighter
 // @author       Elliot DeNolf
 // @match        *://*/*
@@ -16,7 +16,6 @@
   const defaultOptions = {
     minSelectionString: 1,
     denyListedHosts: ['foo.com', 'bar.com'],
-    gateKeys: [],
     matchWholeWord: false,
     matchCaseSensitive: false,
     highlightStylesObject: {
@@ -31,8 +30,10 @@
     scrollMarkersDebounce: 0,
   }
 
+  // Cap total highlights per run to bound memory/layout cost on huge match counts
+  const MAX_HIGHLIGHTS = 5000
+
   let options = defaultOptions
-  let pressedKeys = []
   let isNewSelection = false
   let lastSelectionString = ''
   let latestRunNumber = 0
@@ -44,7 +45,11 @@
   // initOptions()
   addStyleElement()
   const scrollMarkersCanvasContext = addScrollMarkersCanvas()
-  pressedKeys = addPressedKeysListeners()
+
+  // Coalesce the flood of selectionchange events into at most one run per frame.
+  // rAF (not a timeout) keeps highlighting near-instant while still collapsing the
+  // multiple events that fire within a single frame during a drag.
+  let selectionFrame = null
 
   document.addEventListener('selectstart', onSelectStart)
   document.addEventListener('selectionchange', onSelectionChange)
@@ -54,6 +59,13 @@
   }
 
   function onSelectionChange() {
+    if (selectionFrame !== null) return
+    selectionFrame = requestAnimationFrame(runHighlight)
+  }
+
+  function runHighlight() {
+    selectionFrame = null
+
     const selectionString = window.getSelection().toString()
     if (!isNewSelection && selectionString === lastSelectionString) return
 
@@ -72,58 +84,66 @@
     if (!selection || !selection.anchorNode || !selection.focusNode) return
 
     const selectionString = selection.toString().trim()
-    if (!selectionString) return
+    if (selectionString.length < options.minSelectionString) return
 
     const regex = occurrenceRegex(selectionString)
 
     const treeWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null)
 
     let match
+    let matchCount = 0
     while (treeWalker.nextNode() && runNumber === latestRunNumber) {
       if (!(treeWalker.currentNode instanceof Text)) continue
       while ((match = regex.exec(treeWalker.currentNode.data))) {
-        highlightOccurrences(selection, treeWalker.currentNode, match)
+        // Zero-width matches never advance lastIndex; force progress to avoid a hang
+        if (match[0].length === 0) {
+          regex.lastIndex++
+          continue
+        }
+        highlightOccurrences(treeWalker.currentNode, match)
+        if (++matchCount >= MAX_HIGHLIGHTS) return
       }
     }
   }
 
-  function highlightOccurrences(selection, textNode, match) {
+  function highlightOccurrences(textNode, match) {
     const matchIndex = match.index
     const range = new Range()
     range.setStart(textNode, matchIndex)
-    range.setEnd(textNode, matchIndex + selection.toString().length)
+    range.setEnd(textNode, matchIndex + match[0].length)
     highlights.add(range)
   }
 
   function drawScrollMarkers(runNumber) {
+    // One rAF for the whole run: batching all getBoundingClientRect reads into a
+    // single frame avoids the layout-thrash storm of one rAF per match.
     requestAnimationFrame(() => {
       if (runNumber !== latestRunNumber) return
+
+      const dpr = devicePixelRatio || 1
       const { width, height } = scrollMarkersCanvasContext.canvas
       scrollMarkersCanvasContext.clearRect(0, 0, width, height)
-    })
+      scrollMarkersCanvasContext.lineWidth = 1 * dpr
+      scrollMarkersCanvasContext.strokeStyle = 'grey'
+      scrollMarkersCanvasContext.fillStyle = 'yellow'
 
-    for (let range of highlights.values()) {
-      requestAnimationFrame(() => {
-        if (runNumber !== latestRunNumber) return
-        const dpr = devicePixelRatio || 1
+      const scrollHeight = document.documentElement.scrollHeight
+      const scrollTop = document.documentElement.scrollTop
+
+      for (const range of highlights.values()) {
         const clientRect = range.getBoundingClientRect()
-        if (!clientRect.width || !clientRect.height) return
+        if (!clientRect.width || !clientRect.height) continue
 
         const top =
           (window.innerHeight *
-            (document.documentElement.scrollTop +
-              clientRect.top +
-              0.5 * (clientRect.top - clientRect.bottom))) /
-          document.documentElement.scrollHeight
+            (scrollTop + clientRect.top + 0.5 * (clientRect.top - clientRect.bottom))) /
+          scrollHeight
 
         scrollMarkersCanvasContext.beginPath()
-        scrollMarkersCanvasContext.lineWidth = 1 * dpr
-        scrollMarkersCanvasContext.strokeStyle = 'grey'
-        scrollMarkersCanvasContext.fillStyle = 'yellow'
         scrollMarkersCanvasContext.strokeRect(0.5 * dpr, (top + 0.5) * dpr, 15 * dpr, 3 * dpr)
         scrollMarkersCanvasContext.fillRect(1 * dpr, (top + 1) * dpr, 14 * dpr, 2 * dpr)
-      })
-    }
+      }
+    })
   }
 
   function addStyleElement() {
@@ -161,28 +181,14 @@
     return scrollMarkersCanvas.getContext('2d')
   }
 
-  function addPressedKeysListeners() {
-    const pressedKeys = []
-    document.addEventListener('keydown', e => {
-      if (!pressedKeys.includes(e.key)) {
-        pressedKeys.push(e.key)
-      }
-    })
-    document.addEventListener('keyup', e => {
-      const index = pressedKeys.indexOf(e.key)
-      if (index !== -1) {
-        pressedKeys.splice(index, 1)
-      }
-    })
-    window.addEventListener('blur', () => {
-      pressedKeys.length = 0
-    })
-    return pressedKeys
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   }
 
   function occurrenceRegex(selectionString) {
+    const escaped = escapeRegExp(selectionString)
     return new RegExp(
-      options.matchWholeWord ? `\\b${selectionString}\\b` : selectionString,
+      options.matchWholeWord ? `\\b${escaped}\\b` : escaped,
       options.matchCaseSensitive ? 'g' : 'ig',
     )
   }
