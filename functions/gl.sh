@@ -36,7 +36,7 @@ gl() {
 
     # Format the output with colors
     printf "\033[1;36m%s\033[0m %s \033[32m(%s)\033[0m \033[34m<%s>\033[0m \033[33m%s\033[0m\n", $1, $2, $3, $4, $5
-  }' | less -R
+  }' | less +g -R
 }
 
 # Interactive git log browser: gl-style list on the left, live delta diff on the right.
@@ -82,7 +82,7 @@ gli() {
     --header $'enter: view · ctrl-y: copy hash · ctrl-o: PR/commit' \
     --preview 'git show --color=always --shortstat --patch {1} | delta' \
     --preview-window 'down,80%,nohidden' \
-    --bind "enter:execute(git show --color=always {1} | delta | less -R)" \
+    --bind "enter:execute(git show --color=always {1} | DELTA_PAGER='less -R +g' delta --paging=always)" \
     --bind "ctrl-y:execute-silent(printf %s {1} | pbcopy)" \
     --bind "ctrl-o:execute-silent($open_gh)"
 }
