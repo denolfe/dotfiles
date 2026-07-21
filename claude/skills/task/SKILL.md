@@ -5,6 +5,8 @@ description: Create a new task file for a specific task or feature development. 
 
 # New Task
 
+This is the starting point of any new work. It facilitates the creation of a task directory and a 1-TASK.md file, which serves as the initial documentation for the task. The task file will contain a summary of the task, its objectives, and any relevant details.
+
 Compute the task directory path, then run the script. If no argument is provided, use the current conversation to fill in the details.
 
 1. **task-name**: hyphenated, lowercase, 2-4 words summarizing the argument (e.g., `buggy-auth`).
@@ -12,9 +14,9 @@ Compute the task directory path, then run the script. If no argument is provided
 3. **task-title**: title-cased task-name, prefixed with issue-number if applicable (e.g., `ECMS-12345: Buggy Auth`).
 4. **project-dirname**: basename of the current project directory (e.g., `my-project`).
 5. **folder**: `{YYYY-MM-DD}_{project-dirname}_{issue-number}-{task-name}` (omit `{issue-number}-` if none).
-6. **task-dir**: `~/.claude/plans/{folder}`
+6. **task-dir**: `$HOME/.claude/plans/{folder}`
 
-Run `~/.claude/skills/task/task.sh "<task-dir>" "<task-title>"`
+Run `"$HOME/.claude/skills/task/task.sh" "<task-dir>" "<task-title>"`
 
 The script creates the directory and 1-TASK.md, then outputs the path.
 
