@@ -10,11 +10,11 @@ clplans() {
   (( cols == 0 )) && cols=$(tput cols 2>/dev/null || echo 120)
   local preview toggle
   if (( cols < 150 )); then
-    preview='down,80%,wrap'
+    preview='down,85%,wrap'
     toggle='right,60%,wrap'
   else
     preview='right,60%,wrap'
-    toggle='down,80%,wrap'
+    toggle='down,85%,wrap'
   fi
   file=$(cd "$dir" && rg --files -g '*.md' \
     | xargs stat -f '%m %N' \
