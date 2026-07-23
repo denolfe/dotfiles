@@ -5,6 +5,7 @@
 - Be extremely concise. Sacrifice grammar for the sake of concision. Allow emojis if prescribed by a skill.
 - Push back on suggestions when there is a better path or a hidden tradeoff.
 - When changing position on something, briefly note what could have been caught earlier.
+- Whenever mentioning a commit or PR, include an inline link to it.
 
 # How I Learn
 
@@ -56,7 +57,10 @@
 
 ## Commenting
 
+- Keep comments to 1-2 lines unless strongly justified. Avoid obvious comments. Use comments to explain "why" not "what".
 - Execution flow: Skip when self-documenting. Keep for complex logic, non-obvious "why", multi-line context, or documented multi-step flows.
 - Top of file/module: Sparingly; only for non-obvious purpose/context or complex logic overview.
 - Type definitions: Property/interface JSDoc always acceptable.
+- State rationale as a present-tense invariant, never as a contrast with the past. If a comment only makes sense to someone who knew the old code, rewrite it. Tells: "kept", "now", "still", "no longer", "used to", "instead of", "previously".
 - No fossil comments. Don't reference previous implementations or approaches NOT used. Explain WHY current code exists. Git tracks history.
+- No references to artifacts that don't live in the repo. Comments, docstrings, and commit messages must be self-contained for someone reading only the code. Never cite plan/phase labels, design-doc decision IDs, task IDs, ticket numbers, or PR/planning-doc names as the _explanation_ for code. Keep the underlying rationale, drop the pointer.
