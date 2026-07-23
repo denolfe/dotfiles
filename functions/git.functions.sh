@@ -85,11 +85,25 @@ gsw() {
 }
 
 gswb() {
-  local branch
+  local branch output worktree_path
   branch=$(gbv | cut -c 3- | awk -F ' - ' '{ print $1 }' | fzf --height 30% --prompt="Checkout Branch > ")
   [[ -z "$branch" ]] && return
   print -rs -- "git checkout ${branch}"
-  git checkout "$branch"
+
+  if output=$(git checkout "$branch" 2>&1); then
+    echo "$output"
+    return 0
+  fi
+
+  # If branch is checked out in another worktree, cd there
+  if [[ "$output" =~ "already used by worktree at" ]]; then
+    worktree_path=$(echo "$output" | grep -oE "at '.*'" | sed "s/at '//;s/'$//")
+    echo "Navigating to branch at $worktree_path"
+    cd "$worktree_path" || return 1
+  else
+    echo "$output"
+    return 1
+  fi
 }
 
 gswpr() {
