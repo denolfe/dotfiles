@@ -41,7 +41,7 @@ gl() {
 
 # Interactive git log browser: gl-style list on the left, live delta diff on the right.
 # Passes args through to git log (e.g. gli main..HEAD, gli -20, gli --author=me).
-# Keys: enter=pager, ctrl-y=copy hash,
+# Keys: enter=pager, j/k=nav, q=quit, ctrl-y=copy hash,
 #       ctrl-o=open associated PR on GitHub (falls back to commit page).
 gli() {
   local remote_url
@@ -79,10 +79,12 @@ gli() {
   }' | fzf --ansi --no-sort --delimiter='\t' --with-nth=2 \
     --disabled \
     --height=100% \
-    --header $'enter: view · ctrl-y: copy hash · ctrl-o: PR/commit' \
-    --preview 'git show --color=always --shortstat --patch {1} | delta' \
+    --header $'enter: view · j/k: nav · ctrl-y: copy hash · ctrl-o: PR/commit · q: quit' \
+    --preview 'git show --color=always --stat --patch {1} | delta' \
     --preview-window 'down,80%,nohidden' \
     --bind "enter:execute(git show --color=always {1} | DELTA_PAGER='less -R +g' delta --paging=always)" \
     --bind "ctrl-y:execute-silent(printf %s {1} | pbcopy)" \
-    --bind "ctrl-o:execute-silent($open_gh)"
+    --bind "ctrl-o:execute-silent($open_gh)" \
+    --bind 'q:abort' \
+    --bind 'j:down,k:up'
 }
