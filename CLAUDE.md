@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal dotfiles configuration using [Dotbot](https://github.com/anishathalye/dotbot) for installation and symlink management. Configures macOS development environment with terminal, shell, keyboard remappings, window management, and editor settings.
 
+## Git Flow
+
+Commits should be done against the main branch the majority of the time. Only use feature branches for larger changes that require multiple commits or a PR.
+
 ## Build & Development Commands
 
 ### Installation
