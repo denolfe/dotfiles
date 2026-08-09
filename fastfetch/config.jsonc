@@ -32,27 +32,27 @@
             "type": "host"
         },
         {
-            "key": "{#39}│ {#34}󰟾 distro   {#39}│",
+            "key": "{#39}│ {#33}󰟾 distro   {#39}│",
             "type": "os",
             "format": "{2} {10} {8}"
         },
         {
-            "key": "{#39}│ {#31} term     {#39}│",
-            "type": "terminal",
-            "format": "{5}"
+            "key": "{#39}│ {#34} term     {#39}│",
+            "type": "command",
+            "text": "~/.dotfiles/fastfetch/scripts/outer-terminal.sh"
         },
         {
-            "key": "{#39}│ {#31} font     {#39}│",
-            "type": "terminalfont",
-            "format": "{2}"
+            "key": "{#39}│ {#35} font     {#39}│",
+            "type": "command",
+            "text": "~/.dotfiles/fastfetch/scripts/outer-terminal-font.sh"
         },
         {
-            "key": "{#39}│ {#32} shell    {#39}│",
+            "key": "{#39}│ {#36} shell    {#39}│",
             "type": "shell",
             "format": "{6}"
         },
         {
-            "key": "{#39}│ {#35} packages {#39}│",
+            "key": "{#39}│ {#31} packages {#39}│",
             "type": "packages"
         },
         {
@@ -60,18 +60,18 @@
             "type": "custom"
         },
         {
-            "key": "{#39}│ {#34}󰉉 disk     {#39}│",
+            "key": "{#39}│ {#32}󰉉 disk     {#39}│",
             "type": "disk",
             "folders": "/",
             "format": "{1} / {2} ({3})"
         },
         {
-            "key": "{#39}│ {#35} memory   {#39}│",
+            "key": "{#39}│ {#33} memory   {#39}│",
             "type": "memory",
             "format": "{1} / {2} ({3})"
         },
         {
-            "key": "{#39}│ {#33}󰅐 uptime   {#39}│",
+            "key": "{#39}│ {#34}󰅐 uptime   {#39}│",
             "type": "uptime"
         },
         {
@@ -79,7 +79,7 @@
             "type": "custom"
         },
         {
-            "key": "{#39}│ {#39} colors   {#39}│",
+            "key": "{#39}│ {#35} colors   {#39}│",
             "type": "colors",
             "symbol": "circle"
         },
