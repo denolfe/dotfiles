@@ -72,7 +72,7 @@ Run in a single Bash call — the `trap` only protects the shell it's set in.
   - Conventional Commits: `<type>(<scope>)?<!>?: <title>`. Title starts lowercase. No trailing period. Omit scope when no single area dominates.
   - Synthesize from branch commits
   - ≤72 chars
-  - Should describe the change, not the symptom or task.
+  - Should describe the change, not the symptom or task. Focus on what an affected user would interpret, not the exact code change.
 - Run **Classify** above, then write the PR body per **Template** (profile + include-when rules).
 - Create the PR per **Applying the Body** above (add `--draft` for draft PRs).
 - Say "PR Created: [title] [PR URL]".

@@ -10,7 +10,7 @@ Assembly order: pick a **profile** for the change's quadrant, then add or drop t
 
 Blocks appear in the body in the order listed here. Two groups:
 
-- **Overview blocks** render heading-less at the top of the body, forming the opening.
+- **Overview blocks** render _heading-less_ at the top of the body, forming the opening.
 - **Section blocks** each carry their own `##` heading and follow the overview.
 
 ## Overview Blocks

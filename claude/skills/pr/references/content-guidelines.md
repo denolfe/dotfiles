@@ -8,6 +8,7 @@ Applies to both `create` and `update`.
 - DO NOT add sections that are not in the block library.
 - DO NOT include anything related to test plan or test coverage.
 - DO NOT reference specific line numbers.
+- DO NOT cite _specific_ number of references or line counts.
 - Focus on architecture and high-level decisions over implementation details.
 - Reference design/plan documents or branch commits for deeper context instead of inlining details.
 
@@ -26,7 +27,7 @@ The rules below are PR-specific emphases and overrides, not a replacement:
 
 Wording rules govern words; these govern sentence shape. Density (not word choice) is what makes a body hard to read. Applies to every block's prose.
 
-**Cut extraneous load, keep intrinsic load** (Cognitive Load Theory). Keep the content: CS terms, caveats, fidelity. Strip the packaging: clause chains and mechanism-first ordering. Two techniques:
+**Cut extraneous load, keep intrinsic load** (Cognitive Load Theory). Keep the content: technical terms, caveats, fidelity. Strip the packaging: clause chains and mechanism-first ordering. Two techniques:
 
 - **Chunking (one idea per sentence).** Do not chain *what changed* + *mechanism* + *consequence* with `which` / `so` / `and`. State each as its own sentence. Prefer several short sentences over one packed one, even at more lines: reads-faster beats fits-in-fewer-lines.
 - **BLUF (bottom line up front).** Lead with the change. Mechanism and consequence follow as their own sentences, never as trailing clauses.
