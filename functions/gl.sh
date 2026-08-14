@@ -4,9 +4,16 @@
 #
 # Modeled after: git config --global alias.l3 "log --abbrev=7 --format='%C(bold cyan)%h%Creset %s %Cgreen(%cr) %C(blue)<%<(8,trunc)%an>%Creset%C(yellow)%d%Creset'"
 
+# Usage: gl [-C <dir>] [git log args...]
 gl() {
+  local dir="."
+  if [[ "$1" == "-C" ]]; then
+    dir="$2"
+    shift 2
+  fi
+
   local remote_url
-  remote_url=$(git config --get remote.origin.url)
+  remote_url=$(git -C "$dir" config --get remote.origin.url)
 
   local repo_url
   if [[ "$remote_url" =~ ^git@ ]]; then
@@ -17,7 +24,7 @@ gl() {
   fi
 
   # pass arguments to git log
-  git log --abbrev=7 --format='%h|%s|%cr|%an|%d' "$@" | awk -F'|' -v repo_url="$repo_url" '
+  git -C "$dir" log --abbrev=7 --format='%h|%s|%cr|%an|%d' "$@" | awk -F'|' -v repo_url="$repo_url" '
   {
     # Shorten some relative date formats
     gsub(/ hours?/, " hrs", $3)
@@ -41,11 +48,20 @@ gl() {
 
 # Interactive git log browser: gl-style list on the left, live delta diff on the right.
 # Passes args through to git log (e.g. gli main..HEAD, gli -20, gli --author=me).
+# Usage: gli [-C <dir>] [git log args...]
 # Keys: enter=pager, j/k=nav, q=quit, ctrl-y=copy hash,
 #       ctrl-o=open associated PR on GitHub (falls back to commit page).
 gli() {
+  local dir="."
+  if [[ "$1" == "-C" ]]; then
+    dir="$2"
+    shift 2
+  fi
+  # fzf runs preview/bind commands via `sh -c`, so the dir must be quoted there.
+  local qdir=${(q)dir}
+
   local remote_url
-  remote_url=$(git config --get remote.origin.url)
+  remote_url=$(git -C "$dir" config --get remote.origin.url)
 
   local repo_url
   if [[ "$remote_url" =~ ^git@ ]]; then
@@ -69,7 +85,7 @@ gli() {
   fi
 
   # Emit "<raw-hash>\t<gl-styled-line>"; fzf hides column 1 but keeps it for {1}.
-  git log --abbrev=7 --format='%h|%s|%cr|%an|%d' "$@" | awk -F'|' '
+  git -C "$dir" log --abbrev=7 --format='%h|%s|%cr|%an|%d' "$@" | awk -F'|' '
   {
     hash = $1
     gsub(/ hours?/, " hrs", $3)
@@ -80,9 +96,9 @@ gli() {
     --disabled \
     --height=100% \
     --header $'enter: view · j/k: nav · ctrl-y: copy hash · ctrl-o: PR/commit · q: quit' \
-    --preview 'git show --color=always --stat --patch {1} | delta' \
+    --preview "git -C $qdir show --color=always --stat --patch {1} | delta" \
     --preview-window 'down,80%,nohidden' \
-    --bind "enter:execute(git show --color=always {1} | DELTA_PAGER='less -R +g' delta --paging=always)" \
+    --bind "enter:execute(git -C $qdir show --color=always {1} | DELTA_PAGER='less -R +g' delta --paging=always)" \
     --bind "ctrl-y:execute-silent(printf %s {1} | pbcopy)" \
     --bind "ctrl-o:execute-silent($open_gh)" \
     --bind 'q:abort' \

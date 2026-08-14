@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 # View and open Claude plans in the terminal using fzf.
+# Usage: clplans [dir]
 clplans() {
-  local dir="$HOME/.claude/plans"
+  local dir="${1:-$HOME/.claude/plans}"
   local file
   # Narrow terminals can't fit a side-by-side preview legibly; go bottom instead.
   # ctrl-x toggles to the other orientation.
@@ -20,7 +21,7 @@ clplans() {
     | xargs stat -f '%m %N' \
     | sort -rn \
     | cut -d' ' -f2- \
-    | fzf --height=100% --preview "viewmd -r $dir/{}" --preview-window="${preview}:nohidden" \
+    | fzf --height=100% --preview "viewmd -r ${(q)dir}/{}" --preview-window="${preview}:nohidden" \
         --bind 'ctrl-j:preview-half-page-down,ctrl-k:preview-half-page-up' \
         --bind "ctrl-x:change-preview-window(${toggle}|${preview})") || return
   file="$dir/$file"
