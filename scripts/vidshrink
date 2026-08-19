@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+#
+# Usage: vidshrink <file> [target_MiB] [output]
+# Description: two-pass x264 re-encode that lands a video under a size cap.
+# Defaults to 25 MiB, the common upload limit.
+set -euo pipefail
+
+input="${1:-}"
+target_mib="${2:-25}"
+output="${3:-}"
+
+if [ -z "$input" ] || [ ! -f "$input" ]; then
+    echo "Usage: vidshrink <file> [target_MiB] [output]" >&2
+    exit 1
+fi
+
+if [ -z "$output" ]; then
+    dir="$(dirname "$input")"
+    base="$(basename "${input%.*}")"
+    output="${dir}/${base}-${target_mib}mb.mp4"
+fi
+
+duration="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$input")"
+has_audio="$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$input")"
+
+# Audio takes a fixed slice of the budget; video gets the rest.
+audio_kbps=0
+audio_args=(-an)
+if [ -n "$has_audio" ]; then
+    audio_kbps=128
+    audio_args=(-c:a aac -b:a 128k)
+fi
+
+# 3% headroom absorbs container overhead and rate-control overshoot.
+video_kbps="$(awk -v mib="$target_mib" -v d="$duration" -v a="$audio_kbps" \
+    'BEGIN { printf "%d", (mib * 1048576 * 8 / d / 1000 - a) * 0.97 }')"
+
+if [ "$video_kbps" -lt 100 ]; then
+    echo "Clip is too long for ${target_mib} MiB (video budget ${video_kbps} kbps)" >&2
+    exit 1
+fi
+
+echo "Duration ${duration}s -> video ${video_kbps} kbps, audio ${audio_kbps} kbps"
+
+passlog="$(mktemp -t vidshrink)"
+trap 'rm -f "${passlog}"*' EXIT
+
+ffmpeg -y -v error -stats -i "$input" \
+    -c:v libx264 -b:v "${video_kbps}k" -preset slow -passlogfile "$passlog" \
+    -pass 1 -an -f null /dev/null
+
+ffmpeg -y -v error -stats -i "$input" \
+    -c:v libx264 -b:v "${video_kbps}k" -preset slow -passlogfile "$passlog" \
+    -pass 2 -pix_fmt yuv420p -movflags +faststart "${audio_args[@]}" "$output"
+
+size_mib="$(awk -v b="$(stat -f%z "$output")" 'BEGIN { printf "%.1f", b / 1048576 }')"
+echo "${output} -> ${size_mib} MiB"
