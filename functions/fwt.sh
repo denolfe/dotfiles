@@ -4,46 +4,65 @@
 #
 # Select a git worktree with fzf and cd into it
 
-fwt() {
-  local selection cwd
+# Emits "path<TAB>label" per worktree, most recently modified first.
+_fwt_list() {
+  local cwd
   cwd=$(git rev-parse --show-toplevel 2>/dev/null)
 
   # One for-each-ref maps every branch to its committer date, avoiding a
   # per-worktree `git log` spawn. The stream feeds awk: commit lines first
   # populate the map, then the worktree porcelain is processed.
-  selection=$(
-    {
-      git for-each-ref --format='commit %(committerdate:unix) %(refname:short)' refs/heads
-      git worktree list --porcelain
-    } | \
-    awk -v cwd="$cwd" -v now="$(date +%s)" '
-      function reltime(epoch,   d) {
-        d = now - epoch
-        if (d < 3600)   return int(d/60) "m ago"
-        if (d < 86400)  return int(d/3600) "h ago"
-        if (d < 604800) return int(d/86400) "d ago"
-        return int(d/604800) "w ago"
-      }
-      $1 == "commit" { committed[$3] = $2; next }
-      /^worktree / { path = substr($0, 10); branch = ""; detached = 0 }
-      /^branch /   { sub("refs/heads/", "", $2); branch = $2 }
-      /^detached/  { detached = 1 }
-      /^$/ && path && !detached && path != cwd {
-        # One stat gets both mtime (sort key) and birthtime (created label).
-        "stat -f %m,%B \"" path "\"" | getline st
-        split(st, s, ","); mtime = s[1]; created = s[2]
-        n = split(path, parts, "/")
-        flat = branch; gsub("/", "-", flat)
-        label = (parts[n] == flat) ? branch : branch "*"
-        printf "%s\t%s\t%-40s %-10s created %s\n", \
-          mtime, path, label, reltime(committed[branch]), reltime(created)
-        path = ""
-      }
-    ' | \
-    sort -rn | \
-    cut -f2- | \
-    fzf --header="Select worktree (recent first)" --with-nth=2.. | \
-    cut -f1)
+  {
+    git for-each-ref --format='commit %(committerdate:unix) %(refname:short)' refs/heads
+    git worktree list --porcelain
+  } | \
+  awk -v cwd="$cwd" -v now="$(date +%s)" '
+    function reltime(epoch,   d) {
+      d = now - epoch
+      if (d < 3600)   return int(d/60) "m ago"
+      if (d < 86400)  return int(d/3600) "h ago"
+      if (d < 604800) return int(d/86400) "d ago"
+      return int(d/604800) "w ago"
+    }
+    $1 == "commit" { committed[$3] = $2; next }
+    /^worktree / { path = substr($0, 10); branch = ""; detached = 0 }
+    /^branch /   { sub("refs/heads/", "", $2); branch = $2 }
+    /^detached/  { detached = 1 }
+    /^$/ && path && !detached && path != cwd {
+      # One stat gets both mtime (sort key) and birthtime (created label).
+      "stat -f %m,%B \"" path "\"" | getline st
+      split(st, s, ","); mtime = s[1]; created = s[2]
+      n = split(path, parts, "/")
+      flat = branch; gsub("/", "-", flat)
+      label = (parts[n] == flat) ? branch : branch "*"
+      printf "%s\t%s\t%-40s %-10s created %s\n", \
+        mtime, path, label, reltime(committed[branch]), reltime(created)
+      path = ""
+    }
+  ' | \
+  sort -rn | \
+  cut -f2-
+}
+
+fwt() {
+  local selection
+  selection=$(_fwt_list | fzf --header="Select worktree (recent first)" --with-nth=2.. | cut -f1)
 
   [[ -n "$selection" ]] && cd "$selection" || return
+}
+
+# USAGE: fwtl
+#
+# cd into the most recently modified git worktree, no picker
+
+fwtl() {
+  local selection
+  selection=$(_fwt_list | head -1 | cut -f1)
+
+  if [[ -z "$selection" ]]; then
+    echo "No other worktrees found" >&2
+    return 1
+  fi
+
+  cd "$selection" || return
 }
