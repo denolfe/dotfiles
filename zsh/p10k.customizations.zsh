@@ -49,6 +49,18 @@ POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL='\uE0B6' # Round
 # The right end of right prompt.
 POWERLEVEL9K_RIGHT_PROMPT_LAST_SEGMENT_END_SYMBOL='\uE0B4' # Round
 
+# Use plain segment boundaries in Codex while retaining icons and colors.
+if [[ ${CODEX_SHELL:-} == 1 ]]; then
+  POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='|'
+  POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='|'
+  POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=''
+  POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=''
+  POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
+  POWERLEVEL9K_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''
+  POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''
+  POWERLEVEL9K_RIGHT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
+fi
+
 typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='➜'
 typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=2
 typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=001
@@ -271,3 +283,15 @@ prompt_claude_usage() {
 
   _p9k_prompt_segment "$0$state" 208 016 '' 0 '' "\$$formatted_cost 🤖"
 }
+
+# Codex maps ANSI black to a light color; indexed black retains black text.
+if [[ ${CODEX_SHELL:-} == 1 ]]; then
+  () {
+    local name
+    for name in ${(k)parameters[(I)POWERLEVEL9K_*FOREGROUND]}; do
+      if [[ ${(P)name} == 0 ]]; then
+        typeset -g "$name=16"
+      fi
+    done
+  }
+fi

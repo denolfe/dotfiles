@@ -395,6 +395,11 @@
     local   modified='%0F' # black foreground
     local  untracked='%0F' # black foreground
     local conflicted='%1F' # red foreground
+    if [[ ${CODEX_SHELL:-} == 1 ]]; then
+      clean='%16F'
+      modified='%16F'
+      untracked='%16F'
+    fi
 
     local res
 
