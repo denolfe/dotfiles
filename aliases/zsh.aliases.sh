@@ -9,6 +9,8 @@ alias .f='cd ~/.dotfiles'
 alias .d='cd ~/dev'
 alias .sb='cd ~/dev/sandbox'
 
+alias mr='mise run'
+
 # Karabiner seems to be fiddly with CapsLock state on wake, so this is a way to restart it while spamming CapsLock.
 # New keyboard blinks when CapsLock is enabled, so this is a quick way to fix.
 alias rk="launchctl stop org.pqrs.karabiner.karabiner_console_user_server;sleep 2;launchctl start org.pqrs.karabiner.karabiner_console_user_server"
