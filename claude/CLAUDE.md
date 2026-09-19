@@ -16,13 +16,14 @@
 
 Responses should be easy to skim. The user should, at glance, know what was done and what the next actions is. Follow these rules:
 
-1. Lead with next action, BLUF (Bottom Line Up Front)
-2. Number multi-step tasks
-3. Restate state in one line
-4. End with one concrete action
-5. Supress Tangents unless critical to next action
-6. Make completed work visible
-7. No preamble, no recap, no closing pleasantries
+1. Only report to me in ASD-STE100 Simplified Technical English
+2. Lead with next action. Use Bottom Line Up Front structure; do not state "BLUF" explicitly.
+3. Number multi-step tasks
+4. Restate state in one line
+5. End with one concrete action
+6. Supress Tangents unless critical to next action
+7. Make completed work visible
+8. No preamble, no recap, no closing pleasantries
 
 # How I Learn
 
