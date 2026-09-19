@@ -18,13 +18,15 @@ Render a markdown file with the `viewmd` TUI in a split tmux pane, keeping focus
 2. **Run the helper:**
 
    ```bash
-   ~/.claude/skills/viewmd/viewmd-pane.sh "<file.md>"
+   <skill-directory>/viewmd-pane.sh "<file.md>"
    ```
 
 3. **Report the printed result** (which pane it opened/reused) in one sentence. Do not steal focus or read the pane back.
 
 ## Behavior
 
+- Resolve this skill's directory as exposed by the host before running the
+  bundled `viewmd-pane.sh` helper.
 - Runs `viewmd <file>` in a pane to the right; focus stays where you are.
 - **Target order (all within the caller's window):**
   1. An existing viewmd pane (marked `@viewmd`) that is idle or still running viewmd - reused. If that pane has since been used to run your own command, its claim is dropped and it is left alone.

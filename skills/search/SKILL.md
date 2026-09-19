@@ -1,12 +1,13 @@
 ---
+name: search
 description: Search the web with parallel queries for comprehensive results
 argument-hint: <topic or question>
-allowed-tools: WebSearch
+disable-model-invocation: true
 ---
 
 # Search
 
-Topic: $ARGUMENTS
+The topic is whatever the user passed when invoking this skill.
 
 If no arguments were provided, use the current context to determine what to search for. If the context is insufficient, ask the user for clarification.
 
@@ -32,7 +33,7 @@ Searching:
 - [query 2]
 ```
 
-Call WebSearch for ALL queries in a single response. Do NOT execute sequentially.
+Issue all queries in a single response, not sequentially.
 
 ## Step 3: Synthesize
 

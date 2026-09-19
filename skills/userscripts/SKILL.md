@@ -18,13 +18,13 @@ Ask one at a time:
 ### Phase 2: DOM Inspection
 
 **Option A: Fetch URL directly (try first for public sites)**
-- Use WebFetch to retrieve page HTML
+- Fetch the page HTML
 - Search for relevant selectors, CSS variables, data attributes
 - Works for public sites not behind login
 
 **Option B: User provides MHTML/HTML file**
 - If fetch fails (login required, dynamic content), instruct: "Save the page (Cmd+S / Ctrl+S) as MHTML or 'Webpage, Complete'"
-- Grep for patterns: `class=`, `data-`, `id=`, `--` (CSS variables)
+- Search the HTML for patterns: `class=`, `data-`, `id=`, `--` (CSS variables)
 - Prefer stable selectors: `data-testid`, `data-*`, semantic IDs over generated class names
 
 **Option C: User provides selectors**

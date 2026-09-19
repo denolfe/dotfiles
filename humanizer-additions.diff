@@ -1,0 +1,37 @@
+--- SKILL.md
++++ SKILL.md
+@@ -390,6 +390,38 @@ Key insight from Wikipedia: "LLMs use statistical algorithms to guess what shoul
+
+ ---
+
++### 25. Clickbait Setup Phrases
++
++**Words to watch:** Here's why, Here's the thing, Here's what you need to know, The reason is simple, What does this mean?, So what's the takeaway?
++
++**Problem:** LLMs front-load explanations with rhetorical questions or "reveal" phrases that delay substance.
++
++**Before:**
++> Here's why this matters: the API processes requests asynchronously. Here's the thing—most developers don't realize this until they hit race conditions.
++
++**After:**
++> The API processes requests asynchronously, which can cause race conditions if you assume synchronous behavior.
++
++---
++
++### 26. Forced Enthusiasm
++
++**Words to watch:** Let's dive in, Excited to share, Can't wait to show you, Let's get started, Without further ado, Let's jump right in, Ready? Let's go
++
++**Problem:** LLMs inject performative energy that reads as hollow, especially in technical writing.
++
++**Before:**
++> Excited to share our new authentication system! Let's dive in and explore how it works. Ready? Let's get started!
++
++**After:**
++> The new authentication system uses JWT tokens with a 15-minute expiry.
++
++---
++
+ ## Reference
+
+ This skill is based on [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup. The patterns documented there come from observations of thousands of instances of AI-generated text on Wikipedia.

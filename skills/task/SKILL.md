@@ -14,16 +14,17 @@ Compute the task directory path, then run the script. If no argument is provided
 3. **task-title**: title-cased task-name, prefixed with issue-number if applicable (e.g., `ECMS-12345: Buggy Auth`).
 4. **project-dirname**: basename of the current project directory (e.g., `my-project`).
 5. **folder**: `{YYYY-MM-DD}_{project-dirname}_{issue-number}-{task-name}` (omit `{issue-number}-` if none).
-6. **task-dir**: `$HOME/.claude/plans/{folder}`
+6. **task-dir**: `$HOME/.agents/plans/{folder}`
 
-Run `"$HOME/.claude/skills/task/task.sh" "<task-dir>" "<task-title>"`
+Resolve this skill's directory as exposed by the host, then run its bundled
+`task.sh` script with `"<task-dir>" "<task-title>"`.
 
 The script creates the directory and 1-TASK.md, then outputs the path.
 
 Once created:
 
 1. Read and present 1-TASK.md contents
-2. AskUserQuestion with options, also note which is '(recommended)' based upon the details provided and task complexity:
+2. Ask the user to choose, noting which option is '(recommended)' based upon the details provided and task complexity:
    - Research web
    - Brainstorm design
    - Add more detail

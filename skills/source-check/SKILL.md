@@ -48,8 +48,8 @@ Fetch current documentation for these technical topics:
 
 For each topic:
 1. Generate 1-2 targeted search queries (include library name, version if relevant)
-2. Use WebSearch to find current docs (prefer official docs, changelogs, release notes)
-3. If needed, use WebFetch on official docs URL for details
+2. Search the web for current docs (prefer official docs, changelogs, release notes)
+3. If needed, fetch the official docs URL for details
 4. Summarize current state/behavior
 
 Return ONLY this format:

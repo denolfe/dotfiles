@@ -1,7 +1,6 @@
 ---
 name: pr
 description: Use when the user wants to create a new pull request, update an existing PR's body, open a draft PR, or preview a PR body locally before pushing.
-arguments: "create|draft|update|preview base=<branch>"
 ---
 
 # PR
@@ -82,7 +81,7 @@ Run in a single Bash call — the `trap` only protects the shell it's set in.
 <HARD-GATE>
 STOP before any `gh pr edit` call.
 Run `git status -b --porcelain=v2` (or check ahead/behind from `git status`).
-If the branch is ahead of origin by ≥1 commit, you MUST call AskUserQuestion:
+If the branch is ahead of origin by ≥1 commit, you MUST stop and ask the user:
   "Branch is N commits ahead of origin. Push before updating the PR body?"
   - Yes, push then update body
   - No, update body only (description may reference commits not yet on remote)

@@ -18,10 +18,10 @@ Capture side tasks noticed during development without context-switching.
 
 1. **Parse argument** → generate slug (if no argument, infer from recent conversation)
 2. **Get branch** → `git branch --show-current`
-3. **Get task** → check if in `~/.claude/plans/`, grab task name
+3. **Get task** → check if in `~/.agents/plans/`, grab task name
 4. **Gather context** → recent files from conversation (no reads/greps)
 5. **Infer** → why noticed, suggested approach if obvious
-6. **Write** → `~/.claude/deferred/{YYYY-MM-DD}_{slug}.md`
+6. **Write** → `~/.agents/deferred/{YYYY-MM-DD}_{slug}.md`
 7. **Output path** → return to main work (no confirmation prompt)
 
 ## Output Format
@@ -48,7 +48,7 @@ Capture side tasks noticed during development without context-switching.
 ## Edge Cases
 
 - No argument → infer from conversation, generate slug
-- Directory missing → create `~/.claude/deferred/`
+- Directory missing → create `~/.agents/deferred/`
 - Duplicate slug same day → append `-2`, `-3`
 
 ## Not in Scope

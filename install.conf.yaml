@@ -68,30 +68,23 @@
       exclude: ['claude/node_modules', 'claude/skills'] # skills handled below
       relink: true
 
-    # Link skills individually, allows skills cli to link into skills dir
+    ~/.agents/AGENTS.md:
+      path: agents/AGENTS.md
+
+    # Keep dotfiles-owned skills and npx-installed skills side by side.
+    ~/.agents/skills:
+      glob: true
+      path: skills/*
+      relink: true
+
     ~/.claude/skills:
       glob: true
-      path: claude/skills/*
+      path: skills/*
       relink: true
 
     ~/.agents/.skill-lock.json:
       path: agents/.skill-lock.json
       force: true
-
-    ~/.pi/agent/extensions:
-      glob: true
-      path: pi/extensions/*.ts
-      relink: true
-
-    ~/.pi/agent/skills:
-      glob: true
-      path: pi/skills/*
-      relink: true
-
-    ~/.pi/agent/themes:
-      glob: true
-      path: pi/themes/*.json
-      relink: true
 
     ~/.config/hunk/config.toml:
       path: hunk/config.toml
