@@ -8,6 +8,10 @@
 - Whenever mentioning a commit or PR, include an inline link to it.
 - Do not use decorative glyphs/symbols.
 
+## File Interactions
+
+- Do not edit files using Python scripts, use the Edit/Write tools.
+
 ## Communication Prose
 
 Responses should be easy to skim. The user should, at glance, know what was done and what the next actions is. Follow these rules:
