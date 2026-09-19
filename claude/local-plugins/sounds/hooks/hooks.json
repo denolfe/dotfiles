@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /System/Library/Sounds/Funk.aiff"
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/play-stop.sh"
           }
         ]
       }
