@@ -1,4 +1,4 @@
-export type AppName = 'chrome' | 'vscode' | 'ghostty' | 'slack' | 'spotify' | 'notion'
+export type AppName = 'chrome' | 'vscode' | 'ghostty' | 'slack' | 'spotify' | 'notion' | 'discord'
 
 export const appMap: Record<AppName, { bundle: string; name: string }> = {
   chrome: { bundle: 'com.google.Chrome', name: 'Google Chrome' },
@@ -7,4 +7,5 @@ export const appMap: Record<AppName, { bundle: string; name: string }> = {
   spotify: { bundle: 'com.spotify.client', name: 'Spotify' },
   notion: { bundle: 'notion.id', name: 'Notion' },
   ghostty: { bundle: 'com.mitchellh.ghostty', name: 'Ghostty' },
+  discord: { bundle: 'com.hnc.Discord', name: 'Discord' },
 }
