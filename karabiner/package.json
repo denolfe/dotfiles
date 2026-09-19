@@ -1,6 +1,9 @@
 {
   "name": "karabiner-config",
   "private": true,
+  "scripts": {
+    "typecheck": "bunx tsc --noEmit"
+  },
   "devDependencies": {
     "bun-types": "^1.3.13",
     "typescript": "^6.0.3"

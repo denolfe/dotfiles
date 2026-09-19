@@ -142,5 +142,5 @@ jobs:
 
       - name: Typecheck karabiner
         working-directory: karabiner
-        run: bun install && bunx tsc --noEmit
+        run: bun install && bun run typecheck
 
