@@ -100,7 +100,6 @@ Pi customizations are symlinked to `~/.pi/agent/` by dotbot.
 | Skill                                                                         | Description                                              |
 | ----------------------------------------------------------------------------- | -------------------------------------------------------- |
 | [brainstorming](./pi/skills/brainstorming/)                                   | Explore intent, requirements, and design before building |
-| [task](./pi/skills/task/)                                                     | Create Pi task folders for task or feature development   |
 | [writing-plans](./pi/skills/writing-plans/)                                   | Write implementation plans from approved requirements    |
 | [executing-plans](./pi/skills/executing-plans/)                               | Execute written plans with review checkpoints            |
 | [subagent-driven-development](./pi/skills/subagent-driven-development/)       | Execute plans with subagents and review loops            |
