@@ -79,6 +79,69 @@ describe('edit diff extension adapter', () => {
     expect(stripAnsi(component.render(80).join('\n')).trim()).toBe('Edit src/demo.ts')
   })
 
+  test('streams a pending edit preview and retains its last valid projection', async () => {
+    const cwd = await mkdtemp(join(tmpdir(), 'pi-edit-preview-'))
+    temporaryDirectories.push(cwd)
+    await writeFile(join(cwd, 'demo.txt'), 'status: before\n')
+    const tool = registerExtension('edit')
+    const state = {}
+
+    const insufficientArgs = { path: 'demo.txt', oldText: 'status: before' }
+    const summary = tool.renderCall(insufficientArgs, theme, {
+      args: insufficientArgs,
+      argsComplete: false,
+      isPartial: true,
+      expanded: false,
+      cwd,
+      state,
+      lastComponent: undefined,
+    })
+    expect(stripAnsi(summary.render(80).join('\n'))).not.toContain('Preview not shown')
+    expect(stripAnsi(summary.render(80).join('\n'))).not.toContain('pending edit')
+
+    const partialArgs = { ...insufficientArgs, newText: 'status: str' }
+    const pending = tool.renderCall(partialArgs, theme, {
+      args: partialArgs,
+      argsComplete: false,
+      isPartial: true,
+      expanded: false,
+      cwd,
+      state,
+      lastComponent: summary,
+    })
+    const output = stripAnsi(pending.render(80).join('\n'))
+    expect(output).toContain('Edit demo.txt')
+    expect(output).toContain('pending edit')
+    expect(output).toContain('status: before')
+    expect(output).toContain('status: str')
+    for (const line of pending.render(48)) expect(visibleWidth(line)).toBeLessThanOrEqual(48)
+
+    const temporarilyInvalidArgs = { path: 'demo.txt', oldText: 's', newText: 'streamed' }
+    const retained = tool.renderCall(temporarilyInvalidArgs, theme, {
+      args: temporarilyInvalidArgs,
+      argsComplete: false,
+      isPartial: true,
+      expanded: false,
+      cwd,
+      state,
+      lastComponent: pending,
+    })
+    const retainedOutput = stripAnsi(retained.render(80).join('\n'))
+    expect(retainedOutput).toContain('status: str')
+    expect(retainedOutput).not.toContain('matched')
+
+    const completedInvalid = tool.renderCall(temporarilyInvalidArgs, theme, {
+      args: temporarilyInvalidArgs,
+      argsComplete: true,
+      isPartial: true,
+      expanded: false,
+      cwd,
+      state,
+      lastComponent: retained,
+    })
+    expect(stripAnsi(completedInvalid.render(80).join('\n'))).toContain('matched 2 regions')
+  })
+
   test('clamps long call paths to the available render width', () => {
     const tool = registerExtension('edit')
     const component = tool.renderCall(
@@ -184,6 +247,63 @@ describe('write diff extension adapter', () => {
     )
 
     expect(stripAnsi(component.render(80).join('\n')).trim()).toBe('Write src/demo.ts (2 lines • 12B)')
+  })
+
+  test('streams pending create and overwrite previews from partial arguments', async () => {
+    const cwd = await mkdtemp(join(tmpdir(), 'pi-write-preview-'))
+    temporaryDirectories.push(cwd)
+    await writeFile(join(cwd, 'existing.txt'), 'before\n')
+    const tool = registerExtension('write')
+
+    const cases = [
+      { args: { path: 'new.txt', content: 'created\n' }, label: 'pending create', before: undefined, after: 'created' },
+      { args: { path: 'existing.txt', content: 'after\n' }, label: 'pending overwrite', before: 'before', after: 'after' },
+    ]
+
+    for (const testCase of cases) {
+      const component = tool.renderCall(testCase.args, theme, {
+        args: testCase.args,
+        argsComplete: false,
+        isPartial: true,
+        expanded: false,
+        cwd,
+        state: {},
+        lastComponent: undefined,
+      })
+      const output = stripAnsi(component.render(80).join('\n'))
+      expect(output).toContain(testCase.label)
+      if (testCase.before) expect(output).toContain(testCase.before)
+      expect(output).toContain(testCase.after)
+    }
+  })
+
+  test('replaces the pending write preview with the authoritative final result', async () => {
+    const cwd = await mkdtemp(join(tmpdir(), 'pi-write-preview-'))
+    temporaryDirectories.push(cwd)
+    await writeFile(join(cwd, 'demo.txt'), 'before\n')
+    const tool = registerExtension('write')
+    const args = { path: 'demo.txt', content: 'projected\n' }
+
+    const pending = tool.renderCall(args, theme, {
+      args,
+      argsComplete: true,
+      isPartial: true,
+      expanded: false,
+      cwd,
+      state: {},
+      lastComponent: undefined,
+    })
+    expect(stripAnsi(pending.render(80).join('\n'))).toContain('pending overwrite')
+
+    const final = tool.renderResult(
+      { content: [{ type: 'text', text: 'Wrote demo.txt' }], details: {} },
+      { expanded: false, isPartial: false },
+      theme,
+      { args, cwd, toolCallId: 'call-final', state: { previousFile: { exists: true, content: 'before\n' } }, isError: false },
+    )
+    const output = stripAnsi(final.render(80).join('\n'))
+    expect(output).toContain('overwritten')
+    expect(output).not.toContain('pending overwrite')
   })
 
   test('falls back to Pi text when the write fails or content is unavailable', () => {

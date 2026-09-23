@@ -6,6 +6,11 @@ import {
 } from '@earendil-works/pi-coding-agent'
 import { Text, truncateToWidth, visibleWidth, type Component } from '@earendil-works/pi-tui'
 import { pluralize } from './formatting'
+import {
+  buildPendingEditPreviewData,
+  buildPendingWritePreviewData,
+  type PendingDiffPreviewData,
+} from './pending-diff-preview'
 import { renderCompletedDiff } from './renderer'
 import {
   buildWriteUnifiedDiff,
@@ -43,7 +48,19 @@ function registerEditTool(pi: ExtensionAPI): void {
       return builtIn.get(context.cwd).execute(toolCallId, params, signal, onUpdate)
     },
     renderCall(args, theme, context) {
-      return reuseThemeBox(context.lastComponent, callSummary('Edit', pathArgument(args), theme), theme)
+      const summary = callSummary('Edit', pathArgument(args), theme)
+      if (!context.isPartial) {
+        return reuseThemeBox(context.lastComponent, summary, theme)
+      }
+
+      const preview = resolvePendingPreview(
+        context.state,
+        'edit',
+        JSON.stringify(args),
+        context.argsComplete,
+        () => buildPendingEditPreviewData(args, context.cwd),
+      )
+      return renderPendingCall(summary, preview, context.expanded, theme)
     },
     renderResult(result, options, theme, context) {
       if (options.isPartial) {
@@ -93,7 +110,19 @@ function registerWriteTool(pi: ExtensionAPI): void {
           'muted',
           ` (${countWriteContentLines(content)} ${pluralize(countWriteContentLines(content), 'line')} • ${formatSize(getWriteContentSizeBytes(content))})`,
         )
-      return reuseThemeBox(context.lastComponent, `${callSummary('Write', pathArgument(args), theme)}${suffix}`, theme)
+      const summary = `${callSummary('Write', pathArgument(args), theme)}${suffix}`
+      if (!context.isPartial) {
+        return reuseThemeBox(context.lastComponent, summary, theme)
+      }
+
+      const preview = resolvePendingPreview(
+        context.state,
+        'write',
+        JSON.stringify(args),
+        context.argsComplete,
+        () => buildPendingWritePreviewData(args, context.cwd),
+      )
+      return renderPendingCall(summary, preview, context.expanded, theme)
     },
     renderResult(result, options, theme, context) {
       if (options.isPartial) {
@@ -145,6 +174,97 @@ function registerWriteTool(pi: ExtensionAPI): void {
       )
     },
   })
+}
+
+type PendingPreviewState = {
+  key?: string
+  data?: PendingDiffPreviewData
+  lastValid?: PendingDiffPreviewData
+}
+
+function resolvePendingPreview(
+  state: Record<string, unknown> | undefined,
+  kind: 'edit' | 'write',
+  key: string,
+  argsComplete: boolean,
+  compute: () => PendingDiffPreviewData | undefined,
+): PendingDiffPreviewData | undefined {
+  if (!state) {
+    const preview = compute()
+    return argsComplete || isValidPendingPreview(preview) ? preview : undefined
+  }
+
+  const stateKey = `pending-${kind}-preview`
+  const cached = state[stateKey] && typeof state[stateKey] === 'object'
+    ? state[stateKey] as PendingPreviewState
+    : {}
+  state[stateKey] = cached
+
+  if (cached.key !== key) {
+    cached.key = key
+    cached.data = compute()
+    if (isValidPendingPreview(cached.data)) cached.lastValid = cached.data
+  }
+
+  return argsComplete ? cached.data : (isValidPendingPreview(cached.data) ? cached.data : cached.lastValid)
+}
+
+function isValidPendingPreview(preview: PendingDiffPreviewData | undefined): boolean {
+  return !!preview && !preview.notice && typeof preview.nextContent === 'string'
+}
+
+function renderPendingCall(
+  summary: string,
+  preview: PendingDiffPreviewData | undefined,
+  expanded: boolean,
+  theme: RenderTheme,
+): Component {
+  if (!preview) return createThemeCallBox(new Text(summary, 0, 0), theme)
+  if (preview.notice || preview.nextContent === undefined) {
+    const notice = theme.fg('warning', preview.notice ?? 'Preview unavailable.')
+    return createThemeCallBox(new Text(`${summary}\n${notice}`, 0, 0), theme)
+  }
+
+  const previousLines = splitWriteContentLines(preview.previousContent ?? '')
+  const nextLines = splitWriteContentLines(preview.nextContent)
+  const guard = resolveWriteDiffGuard({ previousLines, nextLines })
+  if (guard) {
+    const notice = theme.fg(
+      'warning',
+      `Preview omitted (${guard.previousLineCount} → ${guard.nextLineCount} lines).`,
+    )
+    return createThemeCallBox(new Text(`${summary}\n${notice}`, 0, 0), theme)
+  }
+
+  const diff = buildWriteUnifiedDiff({ previousLines, nextLines })
+  if (!diff) {
+    return createThemeCallBox(new Text(`${summary}\n${theme.fg('muted', 'No pending changes.')}`, 0, 0), theme)
+  }
+
+  return combineComponents(
+    createThemeCallBox(new Text(summary, 0, 0), theme),
+    renderCompletedDiff(
+      { diff },
+      {
+        expanded,
+        filePath: preview.filePath,
+        headerLabel: preview.headerLabel,
+        hideHunkHeaders: true,
+      },
+      theme,
+    ),
+  )
+}
+
+function combineComponents(...components: Component[]): Component {
+  return {
+    render(width: number): string[] {
+      return components.flatMap((component) => component.render(width))
+    },
+    invalidate(): void {
+      for (const component of components) component.invalidate?.()
+    },
+  }
 }
 
 /** Built-in tools are bound to a working directory, so one is kept per observed cwd. */
