@@ -1664,11 +1664,8 @@ function renderDiffStatBar(stats: DiffStats, width: number, theme: DiffTheme): s
 }
 
 function buildDiffSummaryBasePieces(stats: DiffStats, theme: DiffTheme, label: string): string[] {
-	return [
-		theme.fg("toolOutput", `↳ ${emphasis(theme, label)}`),
-		theme.fg("toolDiffAdded", `+${stats.added}`),
-		theme.fg("toolDiffRemoved", `-${stats.removed}`),
-	];
+	const counts = `${theme.fg("toolDiffAdded", `+${stats.added}`)} ${theme.fg("toolDiffRemoved", `-${stats.removed}`)}`;
+	return [theme.fg("toolOutput", `└ ${emphasis(theme, label)}`), counts];
 }
 
 function renderHeaderRows(stats: DiffStats, mode: Exclude<DiffPresentationMode, "summary">, width: number, theme: DiffTheme, label: string): RenderedRow[] {
@@ -1679,9 +1676,8 @@ function renderHeaderRows(stats: DiffStats, mode: Exclude<DiffPresentationMode, 
 
 	const summaryPieces = [
 		...buildDiffSummaryBasePieces(stats, theme, label),
-		theme.fg("muted", `${stats.hunks} ${pluralize(stats.hunks, "hunk")}`),
 		theme.fg("muted", `${stats.files} ${pluralize(stats.files, "file")}`),
-		theme.fg("muted", mode),
+		theme.fg("muted", `${stats.hunks} ${pluralize(stats.hunks, "hunk")}`),
 	];
 
 	const summary = summaryPieces.join(theme.fg("muted", " • "));
@@ -1690,7 +1686,7 @@ function renderHeaderRows(stats: DiffStats, mode: Exclude<DiffPresentationMode, 
 		return [{ text: stabilizeBackgroundResets(truncateToWidth(summary, width)), hunkIndex: null }];
 	}
 
-	const meterSeparator = " ";
+	const meterSeparator = theme.fg("muted", " • ");
 	const meterWidth = visibleWidth(meterSeparator) + visibleWidth(meter);
 	if (meterWidth >= width) {
 		return [{ text: stabilizeBackgroundResets(truncateToWidth(summary, width)), hunkIndex: null }];
@@ -1809,7 +1805,7 @@ export function renderCompletedDiff(
 	const label = options.headerLabel?.trim() || "diff";
 	const diffText = safeGetDiff(details);
 	if (!diffText.trim()) {
-		return new Text(theme.fg("muted", "↳ no diff payload"), 0, 0);
+		return new Text(theme.fg("muted", "└ no diff payload"), 0, 0);
 	}
 
 	let parsed: ParsedDiff;
@@ -1817,14 +1813,14 @@ export function renderCompletedDiff(
 		parsed = parseDiff(diffText);
 	} catch (error) {
 		const message = error instanceof Error ? error.message : String(error);
-		return new Text(theme.fg("warning", `↳ unable to render diff: ${message}`), 0, 0);
+		return new Text(theme.fg("warning", `└ unable to render diff: ${message}`), 0, 0);
 	}
 
 	const entries = options.hideHunkHeaders
 		? parsed.entries.filter((entry) => entry.kind !== "hunk")
 		: parsed.entries;
 	if (entries.length === 0) {
-		return new Text(theme.fg("muted", "↳ no diff data"), 0, 0);
+		return new Text(theme.fg("muted", "└ no diff data"), 0, 0);
 	}
 
 	const splitRows = buildSplitRows(entries);

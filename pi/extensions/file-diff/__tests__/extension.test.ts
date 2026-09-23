@@ -75,7 +75,7 @@ describe('edit diff extension adapter', () => {
       { lastComponent: undefined },
     )
 
-    expect(component.render(80).join('\n').trimEnd()).toBe('edit src/demo.ts')
+    expect(component.render(80).join('\n').trimEnd()).toBe('Edit src/demo.ts')
   })
 
   test('routes completed diffs, failures, and no-diff results', () => {
@@ -169,7 +169,7 @@ describe('write diff extension adapter', () => {
       { lastComponent: undefined },
     )
 
-    expect(component.render(80).join('\n').trimEnd()).toBe('write src/demo.ts (2 lines • 12B)')
+    expect(component.render(80).join('\n').trimEnd()).toBe('Write src/demo.ts (2 lines • 12B)')
   })
 
   test('falls back to Pi text when the write fails or content is unavailable', () => {

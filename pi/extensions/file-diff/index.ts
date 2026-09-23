@@ -38,7 +38,7 @@ function registerEditTool(pi: ExtensionAPI): void {
       return builtIn.get(context.cwd).execute(toolCallId, params, signal, onUpdate)
     },
     renderCall(args, theme, context) {
-      return reuseText(context.lastComponent, callSummary('edit', pathArgument(args), theme))
+      return reuseText(context.lastComponent, callSummary('Edit', pathArgument(args), theme))
     },
     renderResult(result, options, theme, context) {
       if (options.isPartial) {
@@ -88,7 +88,7 @@ function registerWriteTool(pi: ExtensionAPI): void {
           'muted',
           ` (${countWriteContentLines(content)} ${pluralize(countWriteContentLines(content), 'line')} • ${formatSize(getWriteContentSizeBytes(content))})`,
         )
-      return reuseText(context.lastComponent, `${callSummary('write', pathArgument(args), theme)}${suffix}`)
+      return reuseText(context.lastComponent, `${callSummary('Write', pathArgument(args), theme)}${suffix}`)
     },
     renderResult(result, options, theme, context) {
       if (options.isPartial) {
@@ -113,7 +113,7 @@ function registerWriteTool(pi: ExtensionAPI): void {
       const label = previousFile.exists ? 'overwritten' : 'created'
 
       if (nextLines.length === 0 && previousLines.length === 0) {
-        return new Text(theme.fg('muted', `↳ ${label} (empty file)`), 0, 0)
+        return new Text(theme.fg('muted', `└ ${label} (empty file)`), 0, 0)
       }
 
       const guard = resolveWriteDiffGuard({ previousLines, nextLines })
@@ -121,7 +121,7 @@ function registerWriteTool(pi: ExtensionAPI): void {
         return new Text(
           theme.fg(
             'warning',
-            `↳ ${label} • diff omitted (${guard.previousLineCount} → ${guard.nextLineCount} lines)`,
+            `└ ${label} • diff omitted (${guard.previousLineCount} → ${guard.nextLineCount} lines)`,
           ),
           0,
           0,
@@ -172,13 +172,13 @@ function takeWorkspaceFileRead(
   return captured
 }
 
-function callSummary(toolName: string, path: string, theme: RenderTheme): string {
-  return `${theme.fg('toolTitle', theme.bold(toolName))} ${theme.fg('accent', path)}`
+function callSummary(label: string, path: string, theme: RenderTheme): string {
+  return `${theme.fg('toolTitle', theme.bold(label))} ${theme.fg('accent', path)}`
 }
 
 function resultFallback(fallback: string, emptyMessage: string, theme: RenderTheme): Component {
   return new Text(
-    fallback ? theme.fg('toolOutput', fallback) : theme.fg('muted', `↳ ${emptyMessage}`),
+    fallback ? theme.fg('toolOutput', fallback) : theme.fg('muted', `└ ${emptyMessage}`),
     0,
     0,
   )

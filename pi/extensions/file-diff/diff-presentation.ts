@@ -30,9 +30,9 @@ export function buildDiffSummaryText(stats: DiffSummaryStats, width: number, lab
   if (safeWidth === 0) return ''
 
   const summaryCandidates = [
-    `↳ ${label} +${stats.added} -${stats.removed} • ${stats.hunks} ${pluralize(stats.hunks, 'hunk')} • ${stats.files} ${pluralize(stats.files, 'file')}`,
-    `↳ ${label} +${stats.added} -${stats.removed} • ${stats.hunks}h • ${stats.files}f`,
-    `↳ ${label} +${stats.added} -${stats.removed}`,
+    `└ ${label} +${stats.added} -${stats.removed} • ${stats.files} ${pluralize(stats.files, 'file')} • ${stats.hunks} ${pluralize(stats.hunks, 'hunk')}`,
+    `└ ${label} +${stats.added} -${stats.removed} • ${stats.files}f • ${stats.hunks}h`,
+    `└ ${label} +${stats.added} -${stats.removed}`,
     `+${stats.added} -${stats.removed}`,
     label,
     '…',
