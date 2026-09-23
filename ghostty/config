@@ -48,8 +48,8 @@ keybind = cmd+.=esc:.
 # Equalize splits
 keybind = cmd+shift+equal=equalize_splits
 
-# Claude Code Terminal Integration
-keybind = shift+enter=text:\x1b\r
+# Multiline input in Claude Code and Pi
+keybind = shift+enter=text:\n
 
 keybind = global:shift+cmd+ctrl+alt+semicolon=toggle_quick_terminal
 
