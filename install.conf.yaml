@@ -100,6 +100,16 @@
       path: pi/skills/*
       relink: true
 
+    ~/.pi/agent/prompts:
+      glob: true
+      path: pi/prompts/*
+      force: true
+
+    ~/.pi/agent/agents:
+      glob: true
+      path: pi/agents/*
+      force: true
+
     ~/.pi/agent/themes:
       glob: true
       path: pi/themes/*

@@ -1,32 +1,31 @@
 # Implementer Subagent Prompt Template
 
-Use this template when dispatching an implementer subagent from Pi.
+Use this template when dispatching an implementer subagent.
 
-```text
-Agent tool:
-  subagent_type: general-purpose
+```
+Agent tool (general-purpose):
   description: "Implement Task N: [task name]"
   prompt: |
-    You are implementing Task N: [task name].
+    You are implementing Task N: [task name]
 
     ## Task Description
 
-    **Goal:** [from task description]
+    **Goal:** [from task description or metadata]
 
     **Files:**
-    [from task Files section]
+    [from task metadata.files or description Files section]
 
     **Acceptance Criteria:**
-    [from task Acceptance Criteria section]
+    [from task metadata.acceptanceCriteria or description]
 
-    **Verify:** [from task Verify line]
+    **Verify:** [from task metadata.verifyCommand or description]
 
     **Steps:**
-    [from task Steps section]
+    [from task description Steps section]
 
     ## Context
 
-    [Scene-setting: where this fits, dependencies, architectural context, relevant prior task outcomes]
+    [Scene-setting: where this fits, dependencies, architectural context]
 
     ## Before You Begin
 
@@ -36,89 +35,95 @@ Agent tool:
     - Dependencies or assumptions
     - Anything unclear in the task description
 
-    Ask them now. Raise concerns before starting work.
+    **Ask them now.** Raise any concerns before starting work.
 
     ## Your Job
 
     Once you're clear on requirements:
-    1. Implement exactly what the task specifies.
-    2. Write tests, following TDD if the task says to.
-    3. Run the verification command and read the output.
-    4. Commit your work if the task calls for a commit.
-    5. Self-review using the checklist below.
-    6. Report back in the required format.
+    1. Implement exactly what the task specifies
+    2. Write tests (following TDD if task says to)
+    3. Verify implementation works
+    4. Commit your work
+    5. Self-review (see below)
+    6. Report back
 
     Work from: [directory]
 
-    While you work, if you encounter something unexpected or unclear, pause and ask.
-    Do not guess or make assumptions.
+    **While you work:** If you encounter something unexpected or unclear, **ask questions**.
+    It's always OK to pause and clarify. Don't guess or make assumptions.
 
     ## Code Organization
 
-    Keep files focused and follow the plan's file structure.
-
-    - Each file should have one clear responsibility with a well-defined interface.
-    - If a file you're creating is growing beyond the plan's intent, stop and report
-      `DONE_WITH_CONCERNS`; do not split files without plan guidance.
-    - If an existing file you're modifying is already large or tangled, work carefully
-      and note it as a concern in your report.
-    - Follow established repository patterns.
-    - Improve code you're touching when it directly supports the task, but do not
-      restructure outside your assignment.
+    You only hold a module's interface in context to use it, so a sprawling interface is
+    what costs you, not a long file. Keep this in mind:
+    - Follow the file structure defined in the plan
+    - Build deep modules: a lot of behavior behind a small interface, at a clean seam
+    - If the interface you're building is sprawling past what the plan described, stop
+      and report it as DONE_WITH_CONCERNS — don't re-cut the seam on your own without
+      plan guidance
+    - If a module you're modifying is a pass-through, or its interface has already
+      sprawled, work carefully and note it as a concern in your report
+    - In existing codebases, follow established patterns. Improve code you're touching
+      the way a good developer would, but don't restructure things outside your task.
 
     ## When You're in Over Your Head
 
-    It is OK to stop and say the task needs more context or a different approach.
-    Bad work is worse than no work.
+    It is always OK to stop and say "this is too hard for me." Bad work is worse than
+    no work. You will not be penalized for escalating.
 
-    Stop and escalate when:
-    - The task requires architectural decisions with multiple valid approaches.
-    - You need broad codebase understanding beyond the provided context.
-    - You are uncertain whether your approach is correct.
-    - The task involves restructuring the plan did not anticipate.
-    - You have been reading files without making progress.
+    **STOP and escalate when:**
+    - The task requires architectural decisions with multiple valid approaches
+    - You need to understand code beyond what was provided and can't find clarity
+    - You feel uncertain about whether your approach is correct
+    - The task involves restructuring existing code in ways the plan didn't anticipate
+    - You've been reading file after file trying to understand the system without progress
 
-    Report `BLOCKED` or `NEEDS_CONTEXT`. Describe what you're stuck on, what you
-    tried, and what help you need.
+    **How to escalate:** Report back with status BLOCKED or NEEDS_CONTEXT. Describe
+    specifically what you're stuck on, what you've tried, and what kind of help you need.
+    The controller can provide more context, re-dispatch with a more capable model,
+    or break the task into smaller pieces.
 
     ## Before Reporting Back: Self-Review
 
-    Review your work with fresh eyes.
+    Review your work with fresh eyes. Ask yourself:
 
     **Completeness:**
-    - Did I implement every requirement?
-    - Did I miss edge cases called out by the task?
-    - Did I avoid extra unrequested features?
+    - Did I fully implement everything in the spec?
+    - Did I miss any requirements?
+    - Are there edge cases I didn't handle?
 
     **Quality:**
-    - Are names clear and accurate?
+    - Is this my best work?
+    - Are names clear and accurate (match what things do, not how they work)?
     - Is the code clean and maintainable?
-    - Does the implementation follow repository patterns?
+
+    **Discipline:**
+    - Did I avoid overbuilding (YAGNI)?
+    - Did I only build what was requested?
+    - Did I follow existing patterns in the codebase?
 
     **Testing:**
-    - Do tests verify behavior rather than implementation details?
+    - Do tests actually verify behavior (not just mock behavior)?
     - Did I follow TDD if required?
-    - Did I run the full verification command and read the output?
+    - Are tests comprehensive?
 
-    Fix issues found during self-review before reporting.
+    If you find issues during self-review, fix them now before reporting.
 
     ## Report Format
 
     When done, report:
     - **Status:** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT
-    - What you implemented, or what you attempted if blocked
+    - What you implemented (or what you attempted, if blocked)
     - **Files changed:** [list actual files]
     - **Acceptance criteria status:**
       - [criterion 1]: PASS/FAIL
       - [criterion 2]: PASS/FAIL
-    - **Verify command output:** [paste actual output]
-    - Tests run and results
-    - Commit SHA, if committed
-    - Self-review findings
-    - Issues or concerns
+    - **Verify command output:** [paste actual output of verify command]
+    - What you tested and test results
+    - Self-review findings (if any)
+    - Any issues or concerns
 
-    Use `DONE_WITH_CONCERNS` if you completed the work but have doubts about
-    correctness. Use `BLOCKED` if you cannot complete the task. Use
-    `NEEDS_CONTEXT` if required information was missing. Never silently produce
-    work you're unsure about.
+    Use DONE_WITH_CONCERNS if you completed the work but have doubts about correctness.
+    Use BLOCKED if you cannot complete the task. Use NEEDS_CONTEXT if you need
+    information that wasn't provided. Never silently produce work you're unsure about.
 ```

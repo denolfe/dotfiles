@@ -1,68 +1,61 @@
 # Spec Compliance Reviewer Prompt Template
 
-Use this template when dispatching a spec compliance reviewer subagent from Pi.
+Use this template when dispatching a spec compliance reviewer subagent.
 
-**Purpose:** Verify the implementer built what was requested: nothing missing and nothing extra.
+**Purpose:** Verify implementer built what was requested (nothing more, nothing less)
 
-```text
-Agent tool:
-  subagent_type: general-purpose
+```
+Agent tool (general-purpose):
   description: "Review spec compliance for Task N"
   prompt: |
-    You are reviewing whether an implementation matches its task specification.
+    You are reviewing whether an implementation matches its specification.
 
     ## What Was Requested
 
-    [Full text of task requirements]
+    [FULL TEXT of task requirements]
 
     ## What Implementer Claims They Built
 
-    [Implementer's report]
+    [From implementer's report]
 
-    ## Critical Rule: Do Not Trust the Report
+    ## CRITICAL: Do Not Trust the Report
 
-    The implementer's report may be incomplete, inaccurate, or optimistic. Verify
-    everything independently.
+    The implementer finished suspiciously quickly. Their report may be incomplete,
+    inaccurate, or optimistic. You MUST verify everything independently.
 
-    Do not:
-    - Take their word for what they implemented.
-    - Trust claims about completeness without checking code.
-    - Accept their interpretation of requirements without comparing to the task.
+    **DO NOT:**
+    - Take their word for what they implemented
+    - Trust their claims about completeness
+    - Accept their interpretation of requirements
 
-    Do:
-    - Read the actual code they changed.
-    - Compare implementation to requirements line by line.
-    - Check for missing pieces they claimed to implement.
-    - Look for extra features not requested by the task.
+    **DO:**
+    - Read the actual code they wrote
+    - Compare actual implementation to requirements line by line
+    - Check for missing pieces they claimed to implement
+    - Look for extra features they didn't mention
 
     ## Your Job
 
     Read the implementation code and verify:
 
     **Missing requirements:**
-    - Did they implement everything requested?
-    - Did they skip or miss any acceptance criteria?
-    - Did they claim something works without implementing it?
+    - Did they implement everything that was requested?
+    - Are there requirements they skipped or missed?
+    - Did they claim something works but didn't actually implement it?
 
-    **Extra or unneeded work:**
-    - Did they build things that were not requested?
+    **Extra/unneeded work:**
+    - Did they build things that weren't requested?
     - Did they over-engineer or add unnecessary features?
-    - Did they add nice-to-haves that are outside the task?
+    - Did they add "nice to haves" that weren't in spec?
 
     **Misunderstandings:**
     - Did they interpret requirements differently than intended?
     - Did they solve the wrong problem?
-    - Did they implement the right feature in a way that conflicts with the task?
+    - Did they implement the right feature but wrong way?
 
-    Verify by reading code, not by trusting the report.
+    **Verify by reading code, not by trusting report.**
 
-    ## Report Format
-
-    Report one of:
-
-    - ✅ Spec compliant — everything matches after code inspection.
-    - ❌ Issues found — list specific missing or extra work with file:line references.
-
-    If issues are found, make them actionable so an implementer can fix them without
-    rereading your mind.
+    Report:
+    - ✅ Spec compliant (if everything matches after code inspection)
+    - ❌ Issues found: [list specifically what's missing or extra, with file:line references]
 ```

@@ -1,219 +1,300 @@
 ---
 name: subagent-driven-development
-description: Use when executing implementation plans with independent tasks in the current Pi session using fresh subagents and review loops
+description: Use when executing implementation plans with independent tasks in the current session
 ---
 
 # Subagent-Driven Development
 
-Execute an existing `3-PLAN.md` by dispatching a fresh subagent for each task, then running two review loops after each task: spec compliance first, code quality second.
+Execute plan by dispatching fresh subagent per task, with two-stage review after each: spec compliance review first, then code quality review.
 
-**Announce at start:** "I'm using the subagent-driven-development skill to implement this plan."
+**Why subagents:** You delegate tasks to specialized agents with isolated context. By precisely crafting their instructions and context, you ensure they stay focused and succeed at their task. They should never inherit your session's context or history — you construct exactly what they need. This also preserves your own context for coordination work.
 
-**Core principle:** fresh subagent per task + spec review + quality review = focused implementation with verification before progress.
+**Core principle:** Fresh subagent per task + two-stage review (spec then quality) = high quality, fast iteration
+
+
+## Pi Task Tool Preference
+
+When task tools are available, prefer `@tintinweb/pi-tasks`. If it is unavailable, use generic Pi task tools such as `TaskCreate`, `TaskList`, `TaskGet`, and `TaskUpdate`. If no task tools are available, use the plan/checklist Markdown as the source of truth.
 
 ## When to Use
 
-Use this skill when:
+```dot
+digraph when_to_use {
+    "Have implementation plan?" [shape=diamond];
+    "Tasks mostly independent?" [shape=diamond];
+    "Stay in this session?" [shape=diamond];
+    "subagent-driven-development" [shape=box];
+    "executing-plans" [shape=box];
+    "Manual execution or brainstorm first" [shape=box];
 
-- A `3-PLAN.md` implementation plan already exists.
-- Tasks are mostly independent or clearly sequenced.
-- You want to stay in this Pi session as coordinator.
-- Subagent tools are available.
+    "Have implementation plan?" -> "Tasks mostly independent?" [label="yes"];
+    "Have implementation plan?" -> "Manual execution or brainstorm first" [label="no"];
+    "Tasks mostly independent?" -> "Stay in this session?" [label="yes"];
+    "Tasks mostly independent?" -> "Manual execution or brainstorm first" [label="no - tightly coupled"];
+    "Stay in this session?" -> "subagent-driven-development" [label="yes"];
+    "Stay in this session?" -> "executing-plans" [label="no - parallel session"];
+}
+```
 
-Use the Pi-adapted `executing-plans` skill instead when:
-
-- Subagent tools are unavailable.
-- Tasks are tightly coupled and need one continuous implementation context.
-- The user wants batch execution with manual checkpoints instead of per-task delegation.
+**vs. Executing Plans (parallel session):**
+- Same session (no context switch)
+- Fresh subagent per task (no context pollution)
+- Two-stage review after each task: spec compliance first, then code quality
+- Faster iteration (no human-in-loop between tasks)
 
 ## The Process
 
-### Step 1: Locate and Review the Plan
+```dot
+digraph process {
+    rankdir=TB;
 
-1. Use the plan path provided by the user, or ask for it if none was provided.
-2. If no path is provided and an active `~/.pi/plans/...` task folder is known, read `3-PLAN.md` from that folder.
-3. If `3-PLAN.md` is missing, stop and ask for the correct plan path.
-4. Review the plan for contradictions, missing verification commands, unclear tasks, or unsafe commit instructions.
-5. Raise blocking concerns with the user before editing files or dispatching subagents.
-6. Confirm you are not on `main` or `master` before implementation. If you are, ask for explicit consent before editing, or ask whether to create/switch to a branch or worktree.
+    subgraph cluster_per_task {
+        label="Per Task";
+        "Dispatch implementer subagent: general-purpose (template: skills/subagent-driven-development/implementer-prompt.md)" [shape=box];
+        "Implementer subagent asks questions?" [shape=diamond];
+        "Answer questions, provide context" [shape=box];
+        "Implementer subagent implements, tests, commits, self-reviews" [shape=box];
+        "Dispatch spec reviewer subagent: general-purpose (template: skills/subagent-driven-development/spec-reviewer-prompt.md)" [shape=box];
+        "Spec reviewer subagent confirms code matches spec?" [shape=diamond];
+        "Implementer subagent fixes spec gaps" [shape=box];
+        "Dispatch code quality reviewer subagent: code-reviewer (template: skills/subagent-driven-development/code-quality-reviewer-prompt.md)" [shape=box];
+        "Code quality reviewer subagent approves?" [shape=diamond];
+        "Implementer subagent fixes quality issues" [shape=box];
+        "TaskUpdate: mark task completed" [shape=box];
+    }
 
-### Step 2: Extract and Track Tasks
+    "Read plan, extract tasks, TaskCreate for each with full text" [shape=box];
+    "More tasks remain?" [shape=diamond];
+    "Dispatch final code reviewer subagent: code-reviewer for entire implementation" [shape=box];
+    "Use finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
-Extract every task from the plan with its full text:
+    "Read plan, extract tasks, TaskCreate for each with full text" -> "Dispatch implementer subagent: general-purpose (template: skills/subagent-driven-development/implementer-prompt.md)";
+    "Dispatch implementer subagent: general-purpose (template: skills/subagent-driven-development/implementer-prompt.md)" -> "Implementer subagent asks questions?";
+    "Implementer subagent asks questions?" -> "Answer questions, provide context" [label="yes"];
+    "Answer questions, provide context" -> "Dispatch implementer subagent: general-purpose (template: skills/subagent-driven-development/implementer-prompt.md)";
+    "Implementer subagent asks questions?" -> "Implementer subagent implements, tests, commits, self-reviews" [label="no"];
+    "Implementer subagent implements, tests, commits, self-reviews" -> "Dispatch spec reviewer subagent: general-purpose (template: skills/subagent-driven-development/spec-reviewer-prompt.md)";
+    "Dispatch spec reviewer subagent: general-purpose (template: skills/subagent-driven-development/spec-reviewer-prompt.md)" -> "Spec reviewer subagent confirms code matches spec?";
+    "Spec reviewer subagent confirms code matches spec?" -> "Implementer subagent fixes spec gaps" [label="no"];
+    "Implementer subagent fixes spec gaps" -> "Dispatch spec reviewer subagent: general-purpose (template: skills/subagent-driven-development/spec-reviewer-prompt.md)" [label="re-review"];
+    "Spec reviewer subagent confirms code matches spec?" -> "Dispatch code quality reviewer subagent: code-reviewer (template: skills/subagent-driven-development/code-quality-reviewer-prompt.md)" [label="yes"];
+    "Dispatch code quality reviewer subagent: code-reviewer (template: skills/subagent-driven-development/code-quality-reviewer-prompt.md)" -> "Code quality reviewer subagent approves?";
+    "Code quality reviewer subagent approves?" -> "Implementer subagent fixes quality issues" [label="no"];
+    "Implementer subagent fixes quality issues" -> "Dispatch code quality reviewer subagent: code-reviewer (template: skills/subagent-driven-development/code-quality-reviewer-prompt.md)" [label="re-review"];
+    "Code quality reviewer subagent approves?" -> "TaskUpdate: mark task completed" [label="yes"];
+    "TaskUpdate: mark task completed" -> "More tasks remain?";
+    "More tasks remain?" -> "Dispatch implementer subagent: general-purpose (template: skills/subagent-driven-development/implementer-prompt.md)" [label="yes"];
+    "More tasks remain?" -> "Dispatch final code reviewer subagent: code-reviewer for entire implementation" [label="no"];
+    "Dispatch final code reviewer subagent: code-reviewer for entire implementation" -> "Use finishing-a-development-branch";
+}
+```
 
-- goal
-- files
-- acceptance criteria
-- verification command
-- dependencies
-- steps
-- commit instructions
+## Dispatching with Metadata
 
-When task tools are available, prefer `@tintinweb/pi-tasks`. If unavailable, use generic Pi task tools. If no task tools are available, use the plan's Markdown checkboxes as the source of truth.
-
-For every task, preserve enough context that implementer subagents do not need to read the whole plan file. The coordinator should provide task text, relevant plan context, dependency notes, and exact verification commands.
-
-### Step 3: Dispatch One Implementer Subagent
-
-Dispatch only one implementation subagent at a time unless the plan explicitly states that tasks are independent and safe to run in parallel. Sequential dispatch is the default because most implementation tasks touch shared files.
-
-Use `implementer-prompt.md` as the prompt template. Fill in:
-
-- task name and number
-- full task description
-- acceptance criteria
-- files to create or modify
-- verification command
-- relevant architecture context from the plan
-- current working directory
-- branch/worktree constraints
-
-The implementer must:
-
-1. Ask questions before starting if requirements are unclear.
-2. Implement exactly the assigned task.
-3. Run the task's verification command and read the output.
-4. Commit only the files for that task when the plan calls for a commit.
-5. Self-review before reporting.
-6. Report status as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`.
-
-### Step 4: Handle Implementer Status
-
-**DONE:** Proceed to spec compliance review.
-
-**DONE_WITH_CONCERNS:** Read the concerns before proceeding. If they affect correctness or scope, address them before review. If they are observations, note them and continue to review.
-
-**NEEDS_CONTEXT:** Provide the missing context and re-dispatch. Do not tell the implementer to guess.
-
-**BLOCKED:** Assess the blocker:
-
-1. If context is missing, provide more context and re-dispatch.
-2. If the task requires more reasoning, re-dispatch with a more capable model if available.
-3. If the task is too large, stop and ask the user whether to split it.
-4. If the plan is wrong, stop and ask the user how to revise it.
-
-Never ignore an escalation or force the same retry without changing context, scope, or model.
-
-### Step 5: Run Spec Compliance Review
-
-After implementation, dispatch a fresh reviewer using `spec-reviewer-prompt.md`.
-
-The spec reviewer must inspect the actual code and compare it against the task requirements. They should look for:
-
-- missing requirements
-- extra unrequested work
-- misunderstood requirements
-- claims in the implementer report that are not supported by code
-
-If the reviewer finds issues, send the issue list back to an implementer subagent for fixes, then run spec compliance review again. Do not proceed to code quality review until spec compliance passes.
-
-### Step 6: Run Code Quality Review
-
-Only after spec compliance passes, dispatch a fresh reviewer using `code-quality-reviewer-prompt.md`.
-
-The code quality reviewer should inspect the task diff and evaluate maintainability, tests, decomposition, naming, integration risk, and fit with repository patterns.
-
-If the reviewer finds critical or important issues, send them to an implementer subagent for fixes, then run code quality review again. Minor issues may be fixed or explicitly deferred, but do not move on while important review issues remain open.
-
-### Step 7: Mark Task Complete
-
-Mark the task complete only after:
-
-- implementation status is `DONE` or acceptable `DONE_WITH_CONCERNS`
-- spec compliance review passes
-- code quality review passes or only explicitly accepted minor issues remain
-- verification evidence supports completion
-- any required task commit exists
-
-Update status using `@tintinweb/pi-tasks` if available, otherwise generic Pi task tools, otherwise the Markdown checkbox in `3-PLAN.md`.
-
-### Step 8: Repeat for Remaining Tasks
-
-Repeat the implementation and review loop for each remaining task in dependency order.
-
-After each task, keep a brief coordinator log:
-
-- task completed
-- files changed
-- verification command and result
-- review outcomes
-- commit SHA if committed
-- concerns or follow-ups
-
-### Step 9: Final Review and Handoff
-
-After all tasks are complete:
-
-1. Run the final verification commands listed in the plan.
-2. Read and summarize the output.
-3. Dispatch a final code quality reviewer for the overall implementation if subagent capacity allows.
-4. Check git status and confirm the diff is scoped to the plan.
-5. Report the implementation summary, verification evidence, commits, and remaining risks to the user.
-6. Ask what they want next: cleanup, more verification, PR preparation, or handoff notes.
+When dispatching an implementer subagent:
+1. Read the task's description via TaskGet — metadata is embedded as a `json:metadata` code fence at the end
+2. Parse the metadata JSON and map fields (files, acceptanceCriteria, verifyCommand) to the implementer prompt sections
+3. The implementer should receive ALL structured data — don't make them parse it from prose
 
 ## Model Selection
 
-Use the least powerful model that can handle each role safely.
+Use the least powerful model that can handle each role to conserve cost and increase speed.
 
-- Mechanical tasks touching 1-2 files with complete instructions: fast/cheap model.
-- Integration tasks touching multiple files or requiring debugging: standard model.
-- Architecture-sensitive work and review: strongest available model.
+**Mechanical implementation tasks** (isolated functions, clear specs, 1-2 files): use a fast, cheap model. Most implementation tasks are mechanical when the plan is well-specified.
 
-Escalate model capability when a subagent reports uncertainty, repeated failure, or broad reasoning needs.
+**Integration and judgment tasks** (multi-file coordination, pattern matching, debugging): use a standard model.
+
+**Architecture, design, and review tasks**: use the most capable available model.
+
+**Task complexity signals:**
+- Touches 1-2 files with a complete spec → cheap model
+- Touches multiple files with integration concerns → standard model
+- Requires design judgment or broad codebase understanding → most capable model
+
+## Handling Implementer Status
+
+Implementer subagents report one of four statuses. Handle each appropriately:
+
+**DONE:** Proceed to spec compliance review.
+
+**DONE_WITH_CONCERNS:** The implementer completed the work but flagged doubts. Read the concerns before proceeding. If the concerns are about correctness or scope, address them before review. If they're observations (e.g., "this interface is wider than the plan implied"), note them and proceed to review.
+
+**NEEDS_CONTEXT:** The implementer needs information that wasn't provided. Provide the missing context and re-dispatch.
+
+**BLOCKED:** The implementer cannot complete the task. Assess the blocker:
+1. If it's a context problem, provide more context and re-dispatch with the same model
+2. If the task requires more reasoning, re-dispatch with a more capable model
+3. If the task is too large, break it into smaller pieces
+4. If the plan itself is wrong, escalate to the human
+
+**Never** ignore an escalation or force the same model to retry without changes. If the implementer said it's stuck, something needs to change.
 
 ## Prompt Templates
 
-- `skills/subagent-driven-development/implementer-prompt.md` — implementer subagent prompt
-- `skills/subagent-driven-development/spec-reviewer-prompt.md` — spec compliance reviewer prompt
-- `skills/subagent-driven-development/code-quality-reviewer-prompt.md` — code quality reviewer prompt
+- `skills/subagent-driven-development/implementer-prompt.md` - Dispatch implementer subagent
+- `skills/subagent-driven-development/spec-reviewer-prompt.md` - Dispatch spec compliance reviewer subagent
+- `skills/subagent-driven-development/code-quality-reviewer-prompt.md` - Dispatch code quality reviewer subagent
 
-Resolve these paths relative to this skill directory when reading templates.
+## Example Workflow
 
-## Red Flags
+```
+You: I'm using Subagent-Driven Development to execute this plan.
 
-Never:
+[Read plan file once: docs/superpowers/plans/feature-plan.md]
+[Extract all 5 tasks with full text and context]
+[TaskCreate for each task with full description]
 
-- Start implementation on `main` or `master` without explicit user consent.
-- Skip spec compliance review.
-- Skip code quality review.
-- Start code quality review before spec compliance passes.
-- Proceed with unresolved critical or important review issues.
-- Dispatch multiple implementation subagents in parallel unless the plan explicitly says the tasks are independent and file-safe.
-- Make implementer subagents read the whole plan when you can provide curated task text.
-- Skip scene-setting context.
-- Ignore subagent questions or concerns.
-- Treat an implementer's self-review as a substitute for independent review.
-- Move to the next task while review issues remain open.
+Task 1: Hook installation script
 
-If a subagent asks questions, answer clearly and provide additional context before work continues.
+[Get Task 1 text and context (already extracted)]
+[Dispatch implementation subagent with full task text + context]
 
-If a reviewer finds issues, send them to an implementer, then re-review. Do not skip the re-review.
+Implementer: "Before I begin - should the hook be installed at user or system level?"
 
-If a subagent fails a task, dispatch a focused fix subagent with specific instructions or stop and ask the user for direction. Do not silently patch around the failure as coordinator unless the user asks you to switch to direct implementation.
+You: "User level (~/.config/superpowers/hooks/)"
 
-## Pi Task Integration
+Implementer: "Got it. Implementing now..."
+[Later] Implementer:
+  - Implemented install-hook command
+  - Added tests, 5/5 passing
+  - Self-review: Found I missed --force flag, added it
+  - Committed
 
-When task tools are available, prefer `@tintinweb/pi-tasks`.
+[Dispatch spec compliance reviewer]
+Spec reviewer: ✅ Spec compliant - all requirements met, nothing extra
 
-During execution:
+[Get git SHAs, dispatch code quality reviewer]
+Code reviewer: Strengths: Good test coverage, clean. Issues: None. Approved.
 
-1. Use `@tintinweb/pi-tasks` task tools when available to track statuses, dependencies, acceptance criteria, and verification evidence.
-2. If `@tintinweb/pi-tasks` is unavailable, use any generic Pi task tools available in the session.
-3. If no task tools are available, update Markdown checkboxes in `3-PLAN.md` and include status in coordinator reports.
+[Mark Task 1 complete]
 
-Do not require platform-specific task tools from other coding agents.
+Task 2: Recovery modes
+
+[Get Task 2 text and context (already extracted)]
+[Dispatch implementation subagent with full task text + context]
+
+Implementer: [No questions, proceeds]
+Implementer:
+  - Added verify/repair modes
+  - 8/8 tests passing
+  - Self-review: All good
+  - Committed
+
+[Dispatch spec compliance reviewer]
+Spec reviewer: ❌ Issues:
+  - Missing: Progress reporting (spec says "report every 100 items")
+  - Extra: Added --json flag (not requested)
+
+[Implementer fixes issues]
+Implementer: Removed --json flag, added progress reporting
+
+[Spec reviewer reviews again]
+Spec reviewer: ✅ Spec compliant now
+
+[Dispatch code quality reviewer]
+Code reviewer: Strengths: Solid. Issues (Important): Magic number (100)
+
+[Implementer fixes]
+Implementer: Extracted PROGRESS_INTERVAL constant
+
+[Code reviewer reviews again]
+Code reviewer: ✅ Approved
+
+[Mark Task 2 complete]
+
+...
+
+[After all tasks]
+[Dispatch final code-reviewer]
+Final reviewer: All requirements met, ready to merge
+
+Done!
+```
 
 ## Advantages
 
-- Fresh context per task keeps implementers focused.
-- Coordinator preserves plan-level context and sequencing.
-- Independent spec review prevents under-building and over-building.
-- Independent quality review catches maintainability and test issues.
-- Verification evidence is collected before progress claims.
+**vs. Manual execution:**
+- Subagents follow TDD naturally
+- Fresh context per task (no confusion)
+- Parallel-safe (subagents don't interfere)
+- Subagent can ask questions (before AND during work)
 
-## Cost and Trade-offs
+**vs. Executing Plans:**
+- Same session (no handoff)
+- Continuous progress (no waiting)
+- Review checkpoints automatic
 
-- More subagent invocations than direct execution.
-- More coordinator effort to curate prompts and context.
-- Review loops add iterations.
-- The trade-off is higher confidence and earlier issue detection.
+**Efficiency gains:**
+- No file reading overhead (controller provides full text)
+- Controller curates exactly what context is needed
+- Subagent gets complete information upfront
+- Questions surfaced before work begins (not after)
+
+**Quality gates:**
+- Self-review catches issues before handoff
+- Two-stage review: spec compliance, then code quality
+- Review loops ensure fixes actually work
+- Spec compliance prevents over/under-building
+- Code quality ensures implementation is well-built
+
+**Cost:**
+- More subagent invocations (implementer + 2 reviewers per task)
+- Controller does more prep work (extracting all tasks upfront)
+- Review loops add iterations
+- But catches issues early (cheaper than debugging later)
+
+## Red Flags
+
+**Never:**
+- Start implementation on main/master branch without explicit user consent
+- Skip reviews (spec compliance OR code quality)
+- Proceed with unfixed issues
+- Dispatch multiple implementation subagents in parallel (conflicts)
+- Make subagent read plan file (provide full text instead)
+- Skip scene-setting context (subagent needs to understand where task fits)
+- Ignore subagent questions (answer before letting them proceed)
+- Accept "close enough" on spec compliance (spec reviewer found issues = not done)
+- Skip review loops (reviewer found issues = implementer fixes = review again)
+- Let implementer self-review replace actual review (both are needed)
+- **Start code quality review before spec compliance is ✅** (wrong order)
+- Move to next task while either review has open issues
+
+**If subagent asks questions:**
+- Answer clearly and completely
+- Provide additional context if needed
+- Don't rush them into implementation
+
+**If reviewer finds issues:**
+- Implementer (same subagent) fixes them
+- Reviewer reviews again
+- Repeat until approved
+- Don't skip the re-review
+
+**If subagent fails task:**
+- Dispatch fix subagent with specific instructions
+- Don't try to fix manually (context pollution)
+
+## Task Persistence Sync
+
+After marking each task completed via `TaskUpdate`, update the `.tasks.json` file to stay in sync:
+
+1. Read `<plan-path>.tasks.json`
+2. Set the task's `"status"` to `"completed"`
+3. Set `"lastUpdated"` to current ISO timestamp
+4. Write the file back
+
+This ensures cross-session resume works correctly. Without this, a new session loading `.tasks.json` would see completed tasks as `"pending"`.
+
+## Integration
+
+**Required workflow skills:**
+- **using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
+- **writing-plans** - Creates the plan this skill executes
+- **requesting-code-review** - Code review template for reviewer subagents
+- **finishing-a-development-branch** - Complete development after all tasks
+
+**Subagents should use:**
+- **test-driven-development** - Subagents follow TDD for each task
+
+**Alternative workflow:**
+- **executing-plans** - Use for parallel session instead of same-session execution

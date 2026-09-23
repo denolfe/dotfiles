@@ -1,71 +1,78 @@
 ---
 name: writing-plans
-description: Use when you have an approved design or requirements for a multi-step task, before touching code
+description: Use when you have a spec or requirements for a multi-step task, before touching code
 ---
 
 # Writing Plans
 
+## CRITICAL CONSTRAINTS — Read Before Anything Else
+
+**You MUST NOT call plan-mode tools at any point during this skill.** This skill operates in normal mode and manages its own completion flow via `ask_user_question`. Pi does not need a separate plan mode for this workflow; stay in the normal session so read/write/edit tools remain available and the execution-choice gate is preserved. If you feel the urge to call either, STOP — follow this skill's instructions instead.
+
 ## Overview
 
-Write a comprehensive implementation plan from an approved design. Assume the implementer understands software development but has little context for this repository. Include exact files, steps, verification commands, acceptance criteria, dependencies, and commit points.
+Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+
+Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**Plan location:** Read `2-DESIGN.md` from the active `~/.pi/plans/<YYYY-MM-DD>_<project>_<task>/` folder and write `3-PLAN.md` in the same folder. If no active task folder is known, ask the user for the folder or design file path before proceeding.
+**Context:** This should be run in a dedicated worktree (created by brainstorming skill).
+
+**Save plans to:** `3-PLAN.md` in the current task folder (read context from `2-DESIGN.md` in same folder, e.g. `~/.pi/plans/{YYYY-MM-DD}_{project}_{task}/`)
+- (User preferences for plan location override this default)
 
 ## Scope Check
 
-If the design covers multiple independent subsystems, suggest breaking it into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
+If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
 
 ## File Structure
 
-Before defining tasks, map out which files will be created or modified and what each one is responsible for.
+Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.
 
-- Design units with clear boundaries and well-defined interfaces.
-- Prefer smaller, focused files over large files that do too much.
-- Files that change together should live together.
-- In existing codebases, follow established patterns.
-- Include targeted cleanup only when it directly supports the task.
+- Design **deep modules**: a lot of behavior behind a small interface, placed at a clean seam. Carry each module's interface forward from `2-DESIGN.md` — what a caller must know to use it correctly, including invariants, ordering, and error modes.
+- You only hold a module's interface in context to use it, so a sprawling interface is what costs you, not a long file. Split when the interface sprawls, not when the file grows.
+- Prefer fewer, deeper modules. Many small modules that each pass work along spread every change across all of them.
+- Files that change together should live together. Split when the interface sprawls, not by technical layer.
+- In existing codebases, follow established patterns. Don't unilaterally restructure — but where a module you're touching is a pass-through, or its interface has sprawled, including a targeted fix in the plan is reasonable.
 
-This structure informs task decomposition. Each task should produce self-contained changes that make sense independently.
+This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently. Module count and task count are independent: one deep module may take several tasks.
 
-## Pi Task Integration
+## REQUIRED FIRST STEP: Initialize Task Tracking
 
-For each implementation task in the plan:
+**BEFORE exploring code or writing the plan, you MUST:**
 
-1. Prefer `@tintinweb/pi-tasks` task tools when available.
-2. If `@tintinweb/pi-tasks` is unavailable, use any generic Pi task tools available in the session.
-3. If no task tools are available, rely on the checkbox tasks in `3-PLAN.md`.
+1. Call `TaskList` or the available Pi task-list tool to check for existing tasks from brainstorming
+2. If tasks exist: you will enhance them with implementation details as you write the plan
+3. If no tasks: you will create them with `TaskCreate` as you write each plan task
 
-Each task should include:
+**Do not proceed to exploration until TaskList has been called.**
 
-- goal
-- files to create or modify
-- acceptance criteria
-- verification command
-- dependency information
-- concise execution steps
+```
+TaskList
+```
 
 ## Task Granularity
 
-Each task is a coherent unit of work that produces a testable, committable outcome.
+**Each task is a coherent unit of work that produces a testable, committable outcome.**
 
-Scope test:
+See `skills/shared/task-format-reference.md` for the full granularity guide.
 
-1. Can it be verified independently? If not, it may be too small.
-2. Does it touch more than one concern? If so, it may be too big.
-3. Would it get its own commit? If not, merge it with an adjacent task.
+Key principle: TDD cycles happen WITHIN tasks, not as separate tasks. A task is "Implement X with tests" — the red-green-refactor steps are execution detail inside the task, not task boundaries.
 
-TDD cycles happen within tasks, not as separate tasks. A task is "Implement X with tests"; red-green-refactor steps are execution details inside that task.
+**Scope test:**
+1. Can it be verified independently? (if no → too small)
+2. Does it touch more than one concern? (if yes → too big)
+3. Would it get its own commit? (if no → merge with adjacent task)
 
 ## Plan Document Header
 
-Every plan MUST start with this header:
+**Every plan MUST start with this header:**
 
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** Use the Pi-adapted `executing-plans` skill after this plan exists. Execute task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. Prefer `@tintinweb/pi-tasks` task tools when available; otherwise use generic Pi task tooling or the Markdown checkboxes in this file.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use subagent-driven-development (recommended) or executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -79,7 +86,7 @@ Every plan MUST start with this header:
 ## Task Structure
 
 ````markdown
-### Task N: [Component Name]
+### Task N: [Module Name]
 
 **Goal:** [One sentence — what this task produces]
 
@@ -131,42 +138,169 @@ git commit -m "feat: add specific feature"
 
 ## No Placeholders
 
-Every step must contain the actual content an implementer needs. These are plan failures:
-
+Every step must contain the actual content an engineer needs. These are **plan failures** — never write them:
 - "TBD", "TODO", "implement later", "fill in details"
-- "Add appropriate error handling" without specifying cases and behavior
-- "Write tests for the above" without concrete test cases
-- "Similar to Task N" instead of repeating necessary details
-- Steps that describe what to do without showing how
+- "Add appropriate error handling" / "add validation" / "handle edge cases"
+- "Write tests for the above" (without actual test code)
+- "Similar to Task N" (repeat the code — the engineer may be reading tasks out of order)
+- Steps that describe what to do without showing how (code blocks required for code steps)
 - References to types, functions, or methods not defined in any task
+
+## Remember
+- Exact file paths always
+- Complete code in every step — if a step changes code, show the code
+- Exact commands with expected output
+- DRY, YAGNI, TDD, frequent commits
 
 ## Self-Review
 
-After writing the complete plan, review it against the design.
+After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.
 
-1. **Design coverage:** Can you point to a task for every design requirement? List and fix any gaps.
-2. **Placeholder scan:** Search for the red flags in the "No Placeholders" section and fix them.
-3. **Type consistency:** Check names, methods, signatures, and paths across tasks.
-4. **Verification quality:** Every task must have an exact verification command and expected result.
-5. **Dependency clarity:** Dependencies must be explicit in task order or task notes.
+**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.
 
-If you find issues, fix them inline. If a design requirement has no task, add the task.
+**2. Placeholder scan:** Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.
+
+**3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
+
+If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
 
 ## Execution Handoff
 
-After writing and self-reviewing `3-PLAN.md`, stop and ask the user how they want to execute it.
+<HARD-GATE>
+STOP. You are about to complete the plan. DO NOT use plan-mode tools. You MUST call ask_user_question below. Both are FORBIDDEN — plan-mode tools are not part of this Pi workflow and can skip the user's execution choice.
+</HARD-GATE>
 
-Offer these choices in plain text:
+Your ONLY permitted next action is calling `ask_user_question` with this EXACT structure:
 
-1. Use the Pi-adapted `executing-plans` skill in this session.
-2. Open a separate Pi session and run `/skill:executing-plans <path-to-3-PLAN.md>`.
+```yaml
+ask_user_question:
+  question: "Plan complete and saved to `3-PLAN.md`. How would you like to execute it?"
+  header: "Execution"
+  options:
+    - label: "Subagent-Driven (this session)"
+      description: "I dispatch fresh subagent per task, review between tasks, fast iteration"
+    - label: "Parallel Session (separate)"
+      description: "Open new session in worktree with executing-plans, batch execution with checkpoints"
+```
 
-Do not begin implementation until the user chooses an execution path.
+**If you are about to use a plan-mode exit, STOP — call ask_user_question instead.**
 
-## Remember
+<HARD-GATE>
+STOP. The user has chosen an execution method. You MUST invoke the corresponding skill by loading the Pi skill NOW. Do NOT implement tasks yourself — do NOT read files, make edits, or update task statuses. Your ONLY permitted action is invoking the skill below.
 
-- Use exact file paths.
-- Include complete code in every step when a step changes code.
-- Include exact commands with expected output.
-- Keep tasks independently verifiable.
-- Prefer DRY, YAGNI, TDD, and frequent focused commits.
+**If Subagent-Driven chosen:**
+Load the Pi skill: `subagent-driven-development`
+- The skill handles everything: subagent dispatch, review, task tracking
+- You stay in this session as the coordinator
+- Do NOT start working on tasks directly
+
+**If Parallel Session chosen:**
+Guide the user to open a new session in the worktree, then invoke: `executing-plans`
+</HARD-GATE>
+
+---
+
+## Native Task Integration Reference
+
+Use Pi task tools to create structured tasks. Prefer `@tintinweb/pi-tasks` when available; otherwise use generic Pi task tools alongside the plan document.
+
+### Creating Native Tasks
+
+For each task in the plan, create a corresponding native task. Embed metadata as a `json:metadata` code fence at the end of the description — this is the only way to ensure metadata survives TaskGet (the `metadata` parameter on TaskCreate is accepted but not returned by TaskGet).
+
+```yaml
+TaskCreate:
+  subject: "Task N: [Module Name]"
+  description: |
+    **Goal:** [From task's Goal line]
+
+    **Files:**
+    [From task's Files section]
+
+    **Acceptance Criteria:**
+    [From task's Acceptance Criteria]
+
+    **Verify:** [From task's Verify line]
+
+    **Steps:**
+    [Key actions from task's Steps — abbreviated]
+
+    ```json:metadata
+    {"files": ["path/to/file1.py"], "verifyCommand": "pytest tests/path/ -v", "acceptanceCriteria": ["criterion 1", "criterion 2"]}
+    ```
+  activeForm: "Implementing [Module Name]"
+```
+
+### Why Embedded Metadata
+
+The `metadata` parameter on TaskCreate is accepted but **not returned by TaskGet**. Embedding it as a `json:metadata` code fence in the description ensures:
+- TaskGet returns the full metadata (it's part of the description)
+- Cross-session resume can parse it from .tasks.json
+- Subagent dispatch can extract it for implementer prompts
+
+See `skills/shared/task-format-reference.md` for the full metadata schema.
+
+### Setting Dependencies
+
+After all tasks created, set blockedBy relationships:
+
+```
+TaskUpdate:
+  taskId: [task-id]
+  addBlockedBy: [prerequisite-task-ids]
+```
+
+### During Execution
+
+Update task status as work progresses:
+
+```
+TaskUpdate:
+  taskId: [task-id]
+  status: in_progress  # when starting
+
+TaskUpdate:
+  taskId: [task-id]
+  status: completed    # when done
+```
+
+---
+
+## Task Persistence
+
+At plan completion, write the task persistence file **in the same directory as the plan document**.
+
+If the plan is saved to `3-PLAN.md`, the tasks file MUST be saved to `3-PLAN.md.tasks.json` in the same task folder.
+
+```json
+{
+  "planPath": "3-PLAN.md",
+  "tasks": [
+    {
+      "id": 0,
+      "subject": "Task 0: ...",
+      "status": "pending",
+      "description": "**Goal:** ...\n\n**Files:**\n...\n\n```json:metadata\n{\"files\": [\"path/to/file.py\"], \"verifyCommand\": \"pytest tests/ -v\", \"acceptanceCriteria\": [\"criterion 1\"]}\n```"
+    },
+    {
+      "id": 1,
+      "subject": "Task 1: ...",
+      "status": "pending",
+      "blockedBy": [0],
+      "description": "**Goal:** ...\n\n```json:metadata\n{\"files\": [], \"verifyCommand\": \"\", \"acceptanceCriteria\": []}\n```"
+    }
+  ],
+  "lastUpdated": "<timestamp>"
+}
+```
+
+Both the plan `.md` and `.tasks.json` must be co-located in the current task folder.
+
+### Resuming Work
+
+Any new session can resume by running:
+```
+/executing-plans <plan-path>
+```
+
+The skill reads the `.tasks.json` file and continues from where it left off.
