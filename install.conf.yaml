@@ -86,6 +86,25 @@
       path: agents/.skill-lock.json
       force: true
 
+    ~/.pi/agent/npm/package.json:
+      path: pi/npm/package.json
+      force: true
+
+    ~/.pi/agent/extensions:
+      glob: true
+      path: pi/extensions/*
+      relink: true
+
+    ~/.pi/agent/skills:
+      glob: true
+      path: pi/skills/*
+      relink: true
+
+    ~/.pi/agent/themes:
+      glob: true
+      path: pi/themes/*
+      relink: true
+
     ~/.config/hunk/config.toml:
       path: hunk/config.toml
       force: true
