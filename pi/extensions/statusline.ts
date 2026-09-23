@@ -1,7 +1,7 @@
 import type { AssistantMessage } from '@earendil-works/pi-ai'
 import type { ExtensionAPI } from '@earendil-works/pi-coding-agent'
 import { truncateToWidth, visibleWidth } from '@earendil-works/pi-tui'
-import { execFileSync } from 'node:child_process'
+import { execFile } from 'node:child_process'
 import { homedir } from 'node:os'
 import { basename, relative } from 'node:path'
 
@@ -23,30 +23,32 @@ const FOLDER_ICON = ''
 const BRANCH_ICON = ''
 const LEFT_CAP = ''
 const RIGHT_CAP = ''
+const GIT_REFRESH_MS = 3000
+const GIT_COMMAND_TIMEOUT_MS = 1000
 
 function color(code: string, text: string): string {
   return `${code}${text}${RESET}`
 }
 
-function git(cwd: string, args: string[]): string | undefined {
-  try {
-    return execFileSync('git', args, {
-      cwd,
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-      env: { ...process.env, GIT_OPTIONAL_LOCKS: '0' },
-    }).trim()
-  } catch {
-    return undefined
-  }
+function git(cwd: string, args: string[]): Promise<string | undefined> {
+  return new Promise((resolve) => {
+    execFile(
+      'git',
+      args,
+      {
+        cwd,
+        encoding: 'utf8',
+        timeout: GIT_COMMAND_TIMEOUT_MS,
+        env: { ...process.env, GIT_OPTIONAL_LOCKS: '0' },
+      },
+      (error, stdout) => {
+        resolve(error ? undefined : stdout.trim())
+      },
+    )
+  })
 }
 
-function gitRoot(cwd: string): string | undefined {
-  return git(cwd, ['rev-parse', '--show-toplevel'])
-}
-
-function formatDirectory(cwd: string): string {
-  const root = gitRoot(cwd)
+function formatDirectoryFromRoot(cwd: string, root: string | undefined): string {
   if (root && (cwd === root || cwd.startsWith(`${root}/`))) {
     const rel = relative(root, cwd)
     return rel ? `${basename(root)}/${rel}` : basename(root)
@@ -56,23 +58,23 @@ function formatDirectory(cwd: string): string {
   return cwd === home ? '~' : cwd.startsWith(`${home}/`) ? `~${cwd.slice(home.length)}` : cwd
 }
 
-function gitStatusSegment(cwd: string): string[] {
-  if (!git(cwd, ['rev-parse', '--is-inside-work-tree'])) return []
+async function gitStatusSegments(cwd: string): Promise<string[]> {
+  if (!(await git(cwd, ['rev-parse', '--is-inside-work-tree']))) return []
 
   const segments: string[] = []
   const branch =
-    git(cwd, ['branch', '--show-current']) || git(cwd, ['rev-parse', '--short', 'HEAD'])
+    (await git(cwd, ['branch', '--show-current'])) || (await git(cwd, ['rev-parse', '--short', 'HEAD']))
 
   if (branch) {
-    const prInfo = git(cwd, ['config', '--get', `branch.${branch}.github-pr-owner-number`])
+    const prInfo = await git(cwd, ['config', '--get', `branch.${branch}.github-pr-owner-number`])
     if (prInfo) {
       const prNumber = prInfo.split('#')[2]
-      const cache = git(cwd, ['config', '--get', `branch.${branch}.github-pr-state-cache`])
+      const cache = await git(cwd, ['config', '--get', `branch.${branch}.github-pr-state-cache`])
       const prColor = cache?.split(':')[0] === 'MERGED' ? PURPLE : ORANGE
       if (prNumber) segments.push(color(prColor, `#${prNumber}`))
     }
 
-    const status = git(cwd, ['status', '--porcelain']) ?? ''
+    const status = (await git(cwd, ['status', '--porcelain'])) ?? ''
     let staged = 0
     let modified = 0
     let deleted = 0
@@ -90,9 +92,13 @@ function gitStatusSegment(cwd: string): string[] {
 
     const branchSeg = color(status ? CYAN : GREEN, `${BRANCH_ICON} ${branch}`)
     const indicators: string[] = []
-    if (git(cwd, ['rev-parse', '--abbrev-ref', '@{upstream}'])) {
-      const ahead = Number(git(cwd, ['rev-list', '--count', '@{upstream}..HEAD']) ?? 0)
-      const behind = Number(git(cwd, ['rev-list', '--count', 'HEAD..@{upstream}']) ?? 0)
+    if (await git(cwd, ['rev-parse', '--abbrev-ref', '@{upstream}'])) {
+      const [aheadRaw, behindRaw] = await Promise.all([
+        git(cwd, ['rev-list', '--count', '@{upstream}..HEAD']),
+        git(cwd, ['rev-list', '--count', 'HEAD..@{upstream}']),
+      ])
+      const ahead = Number(aheadRaw ?? 0)
+      const behind = Number(behindRaw ?? 0)
       if (behind > 0) indicators.push(color(CYAN, `↓${behind}`))
       if (ahead > 0) indicators.push(color(CYAN, `↑${ahead}`))
     }
@@ -105,6 +111,23 @@ function gitStatusSegment(cwd: string): string[] {
   }
 
   return segments
+}
+
+type GitCache = {
+  directory: string
+  gitSegments: string[]
+}
+
+async function refreshGitCache(cwd: string): Promise<GitCache> {
+  const [root, gitSegments] = await Promise.all([
+    git(cwd, ['rev-parse', '--show-toplevel']),
+    gitStatusSegments(cwd),
+  ])
+
+  return {
+    directory: `${FOLDER_ICON} ${formatDirectoryFromRoot(cwd, root)}`,
+    gitSegments,
+  }
 }
 
 function heatmapColor(pos: number): string {
@@ -142,13 +165,10 @@ function formatTokens(count: number): string {
 }
 
 function contextSegment(
-  usage: { percent?: number | null; contextWindow?: number | null } | undefined,
-  autoCompactEnabled: boolean,
+  usage: { tokens?: number | null; percent?: number | null } | undefined,
 ): string | undefined {
-  const contextWindow = Number(usage?.contextWindow ?? 0)
-  const auto = autoCompactEnabled ? ' (auto)' : ''
   if (usage?.percent == null) {
-    return contextWindow > 0 ? color(GREY, `?/${formatTokens(contextWindow)}${auto}`) : undefined
+    return usage ? color(GREY, '?') : undefined
   }
 
   const pct = Math.max(0, Math.min(999, Math.round(usage.percent)))
@@ -181,8 +201,8 @@ function contextSegment(
       : `${left}${bar}${TRACK}${track}${DARK_CAP}${RIGHT_CAP}${RESET}`
   const lastPos = Math.max(0, full + (partial > 0 ? 1 : 0) - 1)
 
-  const percentAndWindow = `${pct}%${contextWindow > 0 ? `/${formatTokens(contextWindow)}` : ''}${auto}`
-  return `${output} ${heatmapColor(lastPos)}${percentAndWindow}${RESET}`
+  const tokens = formatTokens(Number(usage.tokens ?? 0))
+  return `${output} ${heatmapColor(lastPos)}${tokens}${RESET}`
 }
 
 type SessionMetrics = {
@@ -231,21 +251,27 @@ function formatDuration(ms: number): string | undefined {
   return `${total}s`
 }
 
-function autoCompactEnabled(ctx: any): boolean {
-  return ctx.session?.autoCompactionEnabled !== false
+function kebabCase(text: string): string {
+  return text
+    .trim()
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/[^A-Za-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .toLowerCase()
 }
 
 function modelSegment(pi: ExtensionAPI, ctx: any): string | undefined {
   const modelName = ctx.model?.name ?? ctx.model?.id
   if (!modelName) return undefined
 
-  if (!ctx.model?.reasoning) return modelName
+  const formattedModelName = kebabCase(modelName)
+  if (!ctx.model?.reasoning) return formattedModelName
 
   try {
     const level = pi.getThinkingLevel()
-    return level === 'off' ? `${modelName} • thinking off` : `${modelName} • ${level}`
+    return level === 'off' ? `${formattedModelName} thinking-off` : `${formattedModelName} ${level}`
   } catch {
-    return modelName
+    return formattedModelName
   }
 }
 
@@ -259,28 +285,51 @@ function sanitizeStatusText(text: string): string {
 export default function (pi: ExtensionAPI) {
   pi.on('session_start', async (_event, ctx) => {
     ctx.ui.setFooter((tui, _theme, footerData) => {
-      const unsub = footerData.onBranchChange(() => tui.requestRender())
+      let disposed = false
+      let refreshInFlight = false
+      let cache: GitCache = {
+        directory: `${FOLDER_ICON} ${formatDirectoryFromRoot(ctx.cwd, undefined)}`,
+        gitSegments: [],
+      }
+
+      const refresh = async () => {
+        if (disposed || refreshInFlight) return
+        refreshInFlight = true
+        try {
+          cache = await refreshGitCache(ctx.cwd)
+          tui.requestRender()
+        } catch {
+          // Keep the last known-good statusline. Rendering must never depend on git succeeding.
+        } finally {
+          refreshInFlight = false
+        }
+      }
+
+      void refresh()
+      const timer = setInterval(() => void refresh(), GIT_REFRESH_MS)
+      timer.unref?.()
+
+      const unsubBranch = footerData.onBranchChange(() => {
+        void refresh()
+        tui.requestRender()
+      })
 
       return {
-        dispose: unsub,
+        dispose() {
+          disposed = true
+          clearInterval(timer)
+          unsubBranch()
+        },
         invalidate() {},
         render(width: number): string[] {
           const sessionName = ctx.sessionManager.getSessionName?.()
-          const directory = `${FOLDER_ICON} ${formatDirectory(ctx.cwd)}`
-          const segments = [color(BLUE, directory), ...gitStatusSegment(ctx.cwd)]
+          const segments = [color(BLUE, cache.directory), ...cache.gitSegments]
 
           const stats = sessionMetrics(ctx)
-          const tokenStats: string[] = []
-          if (stats.input > 0) tokenStats.push(`↑${formatTokens(stats.input)}`)
-          if (stats.output > 0) tokenStats.push(`↓${formatTokens(stats.output)}`)
-          if (stats.cacheRead > 0) tokenStats.push(`R${formatTokens(stats.cacheRead)}`)
-          if (stats.cacheWrite > 0) tokenStats.push(`W${formatTokens(stats.cacheWrite)}`)
-          if (tokenStats.length) segments.push(color(GREY, tokenStats.join(' ')))
-
           const model = modelSegment(pi, ctx)
           if (model) segments.push(color(MAGENTA, model))
 
-          const ctxSegment = contextSegment(ctx.getContextUsage(), autoCompactEnabled(ctx))
+          const ctxSegment = contextSegment(ctx.getContextUsage())
           if (ctxSegment) segments.push(ctxSegment)
 
           if (stats.cost > 0) {
@@ -288,7 +337,7 @@ export default function (pi: ExtensionAPI) {
             segments.push(color(GREY, `$${stats.cost.toFixed(2)}${duration ? ` ${duration}` : ''}`))
           }
 
-          const sep = ` ${DIM}│${RESET} `
+          const sep = ` ${DIM}·${RESET} `
           const line = segments.join(sep)
           const padding = Math.max(0, width - visibleWidth(line))
           const lines = [truncateToWidth(line + ' '.repeat(padding), width, '')]
