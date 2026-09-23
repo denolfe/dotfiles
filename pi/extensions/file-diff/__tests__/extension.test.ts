@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, test } from 'bun:test'
 import type { ExtensionAPI } from '@earendil-works/pi-coding-agent'
+import { visibleWidth } from '@earendil-works/pi-tui'
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -39,7 +40,7 @@ describe('edit diff extension adapter', () => {
     expect(tool.description).toBeTruthy()
     expect(tool.parameters).toBeTruthy()
     expect(tool.prepareArguments).toBeFunction()
-    expect(tool.renderShell).toBe('default')
+    expect(tool.renderShell).toBe('self')
     expect(tool.renderCall).toBeFunction()
     expect(tool.renderResult).toBeFunction()
   })
@@ -75,7 +76,20 @@ describe('edit diff extension adapter', () => {
       { lastComponent: undefined },
     )
 
-    expect(component.render(80).join('\n').trimEnd()).toBe('Edit src/demo.ts')
+    expect(stripAnsi(component.render(80).join('\n')).trim()).toBe('Edit src/demo.ts')
+  })
+
+  test('clamps long call paths to the available render width', () => {
+    const tool = registerExtension('edit')
+    const component = tool.renderCall(
+      { path: '/Users/edenolf/.pi/agent/npm/node_modules/pi-codex-style-tools/index.ts' },
+      theme,
+      { lastComponent: undefined },
+    )
+
+    for (const line of component.render(122)) {
+      expect(visibleWidth(line)).toBeLessThanOrEqual(122)
+    }
   })
 
   test('routes completed diffs, failures, and no-diff results', () => {
@@ -121,7 +135,7 @@ describe('write diff extension adapter', () => {
     expect(tool.name).toBe('write')
     expect(tool.description).toBeTruthy()
     expect(tool.parameters).toBeTruthy()
-    expect(tool.renderShell).toBe('default')
+    expect(tool.renderShell).toBe('self')
     expect(tool.renderCall).toBeFunction()
     expect(tool.renderResult).toBeFunction()
   })
@@ -169,7 +183,7 @@ describe('write diff extension adapter', () => {
       { lastComponent: undefined },
     )
 
-    expect(component.render(80).join('\n').trimEnd()).toBe('Write src/demo.ts (2 lines • 12B)')
+    expect(stripAnsi(component.render(80).join('\n')).trim()).toBe('Write src/demo.ts (2 lines • 12B)')
   })
 
   test('falls back to Pi text when the write fails or content is unavailable', () => {

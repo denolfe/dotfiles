@@ -42,7 +42,7 @@ describe('completed edit diff renderer', () => {
     expect(output).toContain('before')
     expect(output).toContain('after')
     expect(output).toMatch(/1\s+│/)
-    expect(lines.filter((line) => /^─+$/.test(line))).toHaveLength(2)
+    expect(lines.filter((line) => /^\s*─+$/.test(line))).toHaveLength(2)
   })
 
   test('shows hashline anchors only when expanded', () => {

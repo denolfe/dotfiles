@@ -4,7 +4,7 @@ import {
   formatSize,
   type ExtensionAPI,
 } from '@earendil-works/pi-coding-agent'
-import { Text, type Component } from '@earendil-works/pi-tui'
+import { Text, truncateToWidth, visibleWidth, type Component } from '@earendil-works/pi-tui'
 import { pluralize } from './formatting'
 import { renderCompletedDiff } from './renderer'
 import {
@@ -19,8 +19,13 @@ import type { WorkspaceFileRead } from './workspace-file'
 
 type RenderTheme = {
   fg(color: string, text: string): string
+  bg?: (color: string, text: string) => string
   bold(text: string): string
 }
+
+const FALLBACK_CONTAINER_BG_ANSI = '\x1b[48;2;38;38;39m'
+const ANSI_BG_RESET = '\x1b[49m'
+const TOOL_PADDING_X = 1
 
 export default function fileDiffExtension(pi: ExtensionAPI): void {
   registerEditTool(pi)
@@ -33,12 +38,12 @@ function registerEditTool(pi: ExtensionAPI): void {
   pi.registerTool({
     ...builtIn.get(process.cwd()),
     name: 'edit',
-    renderShell: 'default',
+    renderShell: 'self',
     async execute(toolCallId, params, signal, onUpdate, context) {
       return builtIn.get(context.cwd).execute(toolCallId, params, signal, onUpdate)
     },
     renderCall(args, theme, context) {
-      return reuseText(context.lastComponent, callSummary('Edit', pathArgument(args), theme))
+      return reuseThemeBox(context.lastComponent, callSummary('Edit', pathArgument(args), theme), theme)
     },
     renderResult(result, options, theme, context) {
       if (options.isPartial) {
@@ -72,7 +77,7 @@ function registerWriteTool(pi: ExtensionAPI): void {
   pi.registerTool({
     ...builtIn.get(process.cwd()),
     name: 'write',
-    renderShell: 'default',
+    renderShell: 'self',
     async execute(toolCallId, params, signal, onUpdate, context) {
       previousFileByToolCallId.set(
         toolCallId,
@@ -88,7 +93,7 @@ function registerWriteTool(pi: ExtensionAPI): void {
           'muted',
           ` (${countWriteContentLines(content)} ${pluralize(countWriteContentLines(content), 'line')} • ${formatSize(getWriteContentSizeBytes(content))})`,
         )
-      return reuseText(context.lastComponent, `${callSummary('Write', pathArgument(args), theme)}${suffix}`)
+      return reuseThemeBox(context.lastComponent, `${callSummary('Write', pathArgument(args), theme)}${suffix}`, theme)
     },
     renderResult(result, options, theme, context) {
       if (options.isPartial) {
@@ -184,12 +189,41 @@ function resultFallback(fallback: string, emptyMessage: string, theme: RenderThe
   )
 }
 
-function reuseText(lastComponent: Component | undefined, text: string): Component {
-  if (lastComponent instanceof Text) {
-    lastComponent.setText(text)
+function reuseThemeBox(lastComponent: Component | undefined, text: string, theme: RenderTheme): Component {
+  const existingText = isThemeCallBox(lastComponent) ? lastComponent.text : undefined
+
+  if (existingText) {
+    existingText.setText(text)
     return lastComponent
   }
-  return new Text(text, 0, 0)
+
+  return createThemeCallBox(new Text(text, 0, 0), theme)
+}
+
+function createThemeCallBox(text: Text, theme: RenderTheme): Component & { text: Text; kind: 'theme-call-box' } {
+  return {
+    kind: 'theme-call-box',
+    text,
+    render(width: number): string[] {
+      const contentWidth = Math.max(0, width - TOOL_PADDING_X)
+      return [
+        themeBackgroundLine('', width, theme),
+        ...text.render(contentWidth).map((line) => themeBackgroundLine(line, width, theme)),
+      ]
+    },
+    invalidate: () => text.invalidate?.(),
+  }
+}
+
+function isThemeCallBox(component: Component | undefined): component is Component & { text: Text; kind: 'theme-call-box' } {
+  return !!component && (component as { kind?: unknown }).kind === 'theme-call-box' && (component as { text?: unknown }).text instanceof Text
+}
+
+function themeBackgroundLine(line: string, width: number, theme: RenderTheme): string {
+  const paddedLine = `${' '.repeat(TOOL_PADDING_X)}${line}`
+  const clampedLine = truncateToWidth(paddedLine, Math.max(0, width), '')
+  const padded = `${clampedLine}${' '.repeat(Math.max(0, width - visibleWidth(clampedLine)))}`
+  return theme.bg?.('toolSuccessBg', padded) ?? `${FALLBACK_CONTAINER_BG_ANSI}${padded}${ANSI_BG_RESET}`
 }
 
 function textContent(result: { content?: Array<{ type: string; text?: string }> }): string {

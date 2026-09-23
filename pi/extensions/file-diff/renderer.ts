@@ -113,6 +113,8 @@ const REMOVE_INLINE_EMPHASIS_MIX_RATIO = 0.26;
 const ADDITION_TINT_TARGET: RgbColor = { r: 84, g: 190, b: 118 };
 const DELETION_TINT_TARGET: RgbColor = { r: 232, g: 95, b: 122 };
 const ANSI_BG_RESET = "\x1b[49m";
+const FALLBACK_CONTAINER_BG_ANSI = "\x1b[48;2;38;38;39m";
+const TOOL_PADDING_X = 1;
 const DIFF_WIDTH_OPS = {
 	measure: visibleWidth,
 	truncate: (text: string, maxWidth: number): string => truncateToWidth(text, maxWidth, ""),
@@ -1119,10 +1121,7 @@ function readThemeAnsi(theme: DiffTheme, kind: "fg" | "bg", slot: string): strin
 }
 
 function resolveContainerBackgroundAnsi(theme: DiffTheme): string | undefined {
-	return readThemeAnsi(theme, "bg", "toolSuccessBg")
-		?? readThemeAnsi(theme, "bg", "toolPendingBg")
-		?? readThemeAnsi(theme, "bg", "toolErrorBg")
-		?? readThemeAnsi(theme, "bg", "userMessageBg");
+	return readThemeAnsi(theme, "bg", "toolSuccessBg") ?? FALLBACK_CONTAINER_BG_ANSI;
 }
 
 function resolveDiffPalette(theme: DiffTheme): DiffPalette {
@@ -1710,6 +1709,18 @@ function renderDiffSpacerLine(width: number): string {
 	return safeWidth > 0 ? " ".repeat(safeWidth) : "";
 }
 
+function applyNeutralContainerBackground(component: Component, backgroundAnsi: string): Component {
+	return {
+		render(width: number): string[] {
+			const contentWidth = Math.max(1, width - TOOL_PADDING_X);
+			const leftPadding = " ".repeat(TOOL_PADDING_X);
+			return component.render(contentWidth)
+				.map((line) => applyBackgroundToVisualRow(`${leftPadding}${line}`, width, backgroundAnsi, ANSI_BG_RESET));
+		},
+		invalidate: () => component.invalidate?.(),
+	};
+}
+
 function applyLineLimit(
 	rows: RenderedRow[],
 	width: number,
@@ -1836,7 +1847,7 @@ export function renderCompletedDiff(
 
 	const cache = createDiffRenderCache();
 
-	return {
+	return applyNeutralContainerBackground({
 		render(width: number): string[] {
 			const safeWidth = normalizeDiffRenderWidth(width);
 			const mode = resolveDiffPresentationMode(safeWidth);
@@ -1879,5 +1890,5 @@ export function renderCompletedDiff(
 			return cache.set(safeWidth, options.expanded, mode, clampedLines);
 		},
 		invalidate: cache.invalidate,
-	};
+	}, containerBgAnsi);
 }
