@@ -1,0 +1,19 @@
+{
+  "name": "pi-extensions",
+  "private": true,
+  "dependencies": {
+    "@aliou/pi-dev-kit": "^0.8.0",
+    "@aliou/pi-guardrails": "^0.18.0",
+    "@howaboua/pi-codex-conversion": "^3.0.37",
+    "@howaboua/pi-codex-web-run": "^0.0.4",
+    "@juicesharp/rpiv-ask-user-question": "^2.11.0",
+    "@tintinweb/pi-subagents": "^0.19.0",
+    "@tintinweb/pi-tasks": "^0.9.0",
+    "pi-btw": "^0.6.0",
+    "pi-codex-style-tools": "^0.1.0",
+    "pi-context": "^2.2.0",
+    "pi-mermaid": "^0.3.0",
+    "pi-rewind": "^0.5.0",
+    "pi-tmux-window-name": "^0.4.6"
+  }
+}

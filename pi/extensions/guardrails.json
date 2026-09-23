@@ -1,0 +1,88 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aliou/pi-guardrails/refs/heads/main/schema.json",
+  "applyBuiltinDefaults": true,
+  "version": "0.9.0-20260327",
+  "onboarding": {
+    "completed": true,
+    "completedAt": "2026-05-25T03:03:06.734Z",
+    "version": "0.9.0-20260327"
+  },
+  "features": {
+    "policies": true
+  },
+  "policies": {
+    "rules": [
+      {
+        "id": "block-credential-directories",
+        "name": "Block credential directories",
+        "description": "Never allow Pi to read or modify SSH, GnuPG, or macOS keychain directories.",
+        "patterns": [
+          {
+            "pattern": "~/.ssh"
+          },
+          {
+            "pattern": "~/.ssh/**"
+          },
+          {
+            "pattern": "~/.gnupg"
+          },
+          {
+            "pattern": "~/.gnupg/**"
+          },
+          {
+            "pattern": "~/Library/Keychains"
+          },
+          {
+            "pattern": "~/Library/Keychains/**"
+          }
+        ],
+        "protection": "noAccess",
+        "onlyIfExists": true,
+        "blockMessage": "Accessing {file} is not allowed. Local credential directories are permanently blocked by Guardrails."
+      },
+      {
+        "id": "secret-files",
+        "description": "Files containing secrets",
+        "patterns": [
+          {
+            "pattern": ".env"
+          },
+          {
+            "pattern": ".env.local"
+          },
+          {
+            "pattern": ".env.production"
+          },
+          {
+            "pattern": ".env.prod"
+          },
+          {
+            "pattern": ".dev.vars"
+          }
+        ],
+        "allowedPatterns": [
+          {
+            "pattern": ".env.example"
+          },
+          {
+            "pattern": ".env.sample"
+          },
+          {
+            "pattern": ".env.test"
+          },
+          {
+            "pattern": "*.example.env"
+          },
+          {
+            "pattern": "*.sample.env"
+          },
+          {
+            "pattern": "*.test.env"
+          }
+        ],
+        "protection": "noAccess",
+        "onlyIfExists": true
+      }
+    ]
+  }
+}
