@@ -38,6 +38,22 @@ Local Superpowers skills follow upstream `obra/superpowers` as the source of tru
 | `e552f48` | Name concrete subagent types in old SDD graph | Drop | Upstream v6.4.1 replaced the old two-reviewer SDD flow; Pi subagent mapping belongs in bootstrap/tool mapping. |
 | `d579a9b` | Add squash-and-merge option to finishing branch skill | Keep | This is a local integration preference and is still useful after upstream's safer finishing-branch rewrite. |
 
+## Customization Intent Ledger
+
+Use this ledger during future upstream syncs. The goal is to preserve the user-facing intent of each customization, not necessarily the exact historical patch.
+
+| Intent | Source commits | Current tracking signal | Re-apply if upstream loses... |
+|---|---|---|---|
+| Require explicit whole-design approval before implementation | `34ccb3a`, `7866d84` | `brainstorming/SKILL.md` requires an exact approving quote and rejects inferred approval from tweaks or Q&A | A hard stop before implementation unless the user explicitly approved the whole design |
+| Keep brainstorming design artifacts in the task folder | `a1bef15`, `adb8561` | `brainstorming/SKILL.md` writes `2-DESIGN.md`; `writing-plans/SKILL.md` reads sibling `2-DESIGN.md` | The `2-DESIGN.md` artifact or handoff from design to plan |
+| Preserve clarifying-question history in design docs | `c964d09` | `brainstorming/SKILL.md` includes a clarifying-question log template | A record of questions asked, selected answers, and alternatives considered |
+| Read the codebase before asking avoidable questions | `c964d09` | `brainstorming/SKILL.md` starts each path with project-context exploration | The expectation that repo context should be inspected before asking questions the code can answer |
+| Use conversational section approval, not mandatory UI prompts | `abf7326` | `brainstorming/SKILL.md` says to present sections as normal chat text | Freedom to use normal transcript approval instead of forcing `ask_user_question` for every section |
+| Save implementation plans in the task folder | `538e935` | `writing-plans/SKILL.md` saves `3-PLAN.md` and `3-PLAN.md.tasks.json` | The stable `3-PLAN.md` / task JSON convention |
+| Offer squash-and-merge as a finishing option | `d579a9b` | `finishing-a-development-branch/SKILL.md` includes Option 2, squash locally | A local squash merge path that preserves upstream's safety checks |
+| Keep Pi-specific subagent/tool adaptation centralized | `e552f48` spirit only | `pi/extensions/superpowers.ts` and `using-superpowers/references/pi-tools.md` explain Pi tools | Concrete Pi guidance for tasks/subagents after upstream changes tool names or workflow text |
+| Avoid restoring old batch-checkpoint execution flow unless needed | `d0633cd` intentionally dropped | `executing-plans` remains upstream v6.4.1 | Nothing by default; reintroduce only if upstream loses needed execution safety and the user asks for it |
+
 ## Expected Local Differences From Upstream
 
 - `pi/extensions/superpowers.ts` contains Pi-specific bootstrap guidance.
