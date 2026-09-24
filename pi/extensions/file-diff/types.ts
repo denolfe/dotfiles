@@ -14,6 +14,6 @@ export const FILE_DIFF_CONFIG: FileDiffConfig = {
   diffViewMode: 'unified',
   diffIndicatorMode: 'bars',
   diffSplitMinWidth: 120,
-  diffCollapsedLines: 24,
+  diffCollapsedLines: 50,
   diffWordWrap: true,
 }

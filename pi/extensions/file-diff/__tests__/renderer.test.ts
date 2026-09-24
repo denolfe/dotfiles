@@ -85,16 +85,17 @@ describe('completed edit diff renderer', () => {
     for (const line of lines) expect(visibleWidth(line)).toBeLessThanOrEqual(32)
   })
 
-  test('limits collapsed output and expands up to the fixed larger budget', () => {
-    const body = Array.from({ length: 40 }, (_, index) => `+line ${index + 1}`)
-    const diff = ['@@ -0,0 +1,40 @@', ...body].join('\n')
+  test('shows 50 collapsed diff rows before hiding the rest', () => {
+    const body = Array.from({ length: 60 }, (_, index) => `+line ${index + 1}`)
+    const diff = ['@@ -0,0 +1,60 @@', ...body].join('\n')
 
-    const collapsed = render(diff, { width: 80 })
-    const expanded = render(diff, { width: 80, expanded: true })
+    const collapsed = render(diff, { width: 80 }).join('\n')
+    const expanded = render(diff, { width: 80, expanded: true }).join('\n')
 
-    expect(collapsed.join('\n')).toContain('more diff lines')
-    expect(expanded.join('\n')).toContain('line 40')
-    expect(expanded.length).toBeGreaterThan(collapsed.length)
+    expect(collapsed).toContain('line 49')
+    expect(collapsed).not.toContain('line 50')
+    expect(collapsed).toContain('more diff lines')
+    expect(expanded).toContain('line 60')
   })
 
   test('returns a stable fallback when no diff payload exists', () => {
