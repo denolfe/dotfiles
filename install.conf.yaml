@@ -62,12 +62,19 @@
       path: scripts/*
       relink: true
 
+    # Claude Code
     ~/.claude:
       glob: true
       path: claude/*
       exclude: ['claude/node_modules', 'claude/skills'] # skills handled below
       relink: true
 
+    ~/.claude/skills:
+      glob: true
+      path: skills/*
+      relink: true
+
+    # Agent Skills / Codex
     ~/.agents/AGENTS.md:
       path: agents/AGENTS.md
 
@@ -77,13 +84,17 @@
       path: skills/*
       relink: true
 
-    ~/.claude/skills:
-      glob: true
-      path: skills/*
-      relink: true
-
     ~/.agents/.skill-lock.json:
       path: agents/.skill-lock.json
+      force: true
+
+    # Pi Agent
+    ~/.pi/agent/AGENTS.md:
+      path: agents/AGENTS.md
+      force: true
+
+    ~/.pi/agent/SYSTEM.md:
+      path: pi/SYSTEM.md
       force: true
 
     ~/.pi/agent/npm/package.json:
@@ -93,12 +104,12 @@
     ~/.pi/agent/extensions:
       glob: true
       path: pi/extensions/*
-      relink: true
+      force: true
 
     ~/.pi/agent/skills:
       glob: true
       path: pi/skills/*
-      relink: true
+      force: true
 
     ~/.pi/agent/prompts:
       glob: true
@@ -113,7 +124,7 @@
     ~/.pi/agent/themes:
       glob: true
       path: pi/themes/*
-      relink: true
+      force: true
 
     ~/.config/hunk/config.toml:
       path: hunk/config.toml
