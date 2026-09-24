@@ -142,6 +142,73 @@ describe('edit diff extension adapter', () => {
     expect(stripAnsi(completedInvalid.render(80).join('\n'))).toContain('matched 2 regions')
   })
 
+  test('uses exact replacement once unchanged streamed arguments become complete', async () => {
+    const cwd = await mkdtemp(join(tmpdir(), 'pi-edit-complete-'))
+    temporaryDirectories.push(cwd)
+    await writeFile(join(cwd, 'demo.txt'), 'before\nnext\n')
+    const tool = registerExtension('edit')
+    const args = { path: 'demo.txt', oldText: 'before\n', newText: 'after' }
+    const state = {}
+    const partial = tool.renderCall(args, theme, {
+      args, argsComplete: false, isPartial: true, expanded: false, cwd, state, lastComponent: undefined,
+    })
+    const complete = tool.renderCall(args, theme, {
+      args, argsComplete: true, isPartial: true, expanded: false, cwd, state, lastComponent: partial,
+    })
+
+    expect(stripAnsi(partial.render(80).join('\n'))).not.toContain('afternext')
+    expect(stripAnsi(complete.render(80).join('\n'))).toContain('afternext')
+  })
+
+  test('does not resize the edit preview when an incomplete replacement gains a newline', async () => {
+    const cwd = await mkdtemp(join(tmpdir(), 'pi-edit-height-'))
+    temporaryDirectories.push(cwd)
+    await writeFile(join(cwd, 'demo.txt'), 'before\nnext\n')
+    const tool = registerExtension('edit')
+    const state = {}
+    const baseArgs = { path: 'demo.txt', oldText: 'before\n', newText: 'after' }
+    const withNewline = { ...baseArgs, newText: 'after\n' }
+    const before = tool.renderCall(baseArgs, theme, {
+      args: baseArgs, argsComplete: false, isPartial: true, expanded: false, cwd, state, lastComponent: undefined,
+    })
+    const after = tool.renderCall(withNewline, theme, {
+      args: withNewline, argsComplete: false, isPartial: true, expanded: false, cwd, state, lastComponent: before,
+    })
+
+    expect(before.render(80).length).toBe(after.render(80).length)
+  })
+
+  test('keeps streamed sparse edits focused on the latest change', async () => {
+    const cwd = await mkdtemp(join(tmpdir(), 'pi-edit-sparse-'))
+    temporaryDirectories.push(cwd)
+    await writeFile(join(cwd, 'demo.txt'), Array.from({ length: 80 }, (_, index) => `demo line ${String(index + 1).padStart(2, '0')}`).join('\n'))
+    const tool = registerExtension('edit')
+    const args = {
+      path: 'demo.txt',
+      edits: [
+        { oldText: 'demo line 04', newText: 'changed line 04' },
+        { oldText: 'demo line 76', newText: 'changed line 76' },
+      ],
+    }
+
+    const preview = tool.renderCall(args, theme, {
+      args,
+      argsComplete: false,
+      isPartial: true,
+      expanded: false,
+      cwd,
+      state: {},
+      lastComponent: undefined,
+    })
+    const lines = preview.render(80).map(stripAnsi)
+
+    expect(lines.join('\n')).not.toContain('changed line 04')
+    expect(lines.join('\n')).toContain('changed line 76')
+    expect(lines.join('\n')).toContain('demo line 74')
+    expect(lines.join('\n')).toContain('demo line 78')
+    expect(lines.length).toBeLessThan(15)
+  })
+
   test('clamps long call paths to the available render width', () => {
     const tool = registerExtension('edit')
     const component = tool.renderCall(
@@ -192,6 +259,30 @@ describe('edit diff extension adapter', () => {
 })
 
 describe('write diff extension adapter', () => {
+  test('follows the latest changed line in a streamed write preview', async () => {
+    const cwd = await mkdtemp(join(tmpdir(), 'pi-write-follow-'))
+    temporaryDirectories.push(cwd)
+    const tool = registerExtension('write')
+    const args = {
+      path: 'demo.txt',
+      content: Array.from({ length: 75 }, (_, index) => `line ${index + 1}`).join('\n'),
+    }
+
+    const preview = tool.renderCall(args, theme, {
+      args,
+      argsComplete: false,
+      isPartial: true,
+      expanded: false,
+      cwd,
+      state: {},
+      lastComponent: undefined,
+    })
+    const output = stripAnsi(preview.render(80).join('\n'))
+
+    expect(output).toContain('line 75')
+    expect(output).toContain('omitted')
+  })
+
   test('preserves Pi write metadata while installing only presentation overrides', () => {
     const tool = registerExtension('write')
 

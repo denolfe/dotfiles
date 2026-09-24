@@ -64,6 +64,8 @@ interface DiffStats {
 interface RenderedRow {
 	text: string;
 	hunkIndex: number | null;
+	kind?: DiffLineKind | Exclude<DiffEntryKind, "line">;
+	entryIndex?: number;
 }
 
 interface SplitDiffRow {
@@ -96,6 +98,7 @@ interface DiffRenderOptions {
 	filePath?: string;
 	headerLabel?: string;
 	hideHunkHeaders?: boolean;
+	previewMode?: "pending";
 }
 
 type CodeLineHighlighter = (line: string) => string;
@@ -677,7 +680,7 @@ function formatLineNumberLabel(
 	return formatLineNumber(value, fallback, width);
 }
 
-function formatMetaEntryRows(entry: DiffMetaEntry, width: number, theme: DiffTheme, wordWrap: boolean): RenderedRow[] {
+function formatMetaEntryRows(entry: DiffMetaEntry, width: number, theme: DiffTheme, wordWrap: boolean, entryIndex: number): RenderedRow[] {
 	const normalized = sanitizeAnsiForThemedOutput(normalizeCodeWhitespace(entry.raw));
 	const lines = wordWrap
 		? wrapToWidth(normalized, width, true)
@@ -696,6 +699,8 @@ function formatMetaEntryRows(entry: DiffMetaEntry, width: number, theme: DiffThe
 	return lines.map((line) => ({
 		text: mapColor(line),
 		hunkIndex: entry.kind === "file" ? null : entry.hunkIndex || null,
+		kind: entry.kind,
+		entryIndex,
 	}));
 }
 
@@ -1573,11 +1578,13 @@ function highlightDiffLine(
 	return { highlighted, rowBg };
 }
 
-function pushDiffLineRows(rows: RenderedRow[], lines: string[], entry: DiffLineEntry): void {
+function pushDiffLineRows(rows: RenderedRow[], lines: string[], entry: DiffLineEntry, entryIndex: number): void {
 	rows.push(
 		...lines.map((text) => ({
 			text,
 			hunkIndex: entry.hunkIndex || null,
+			kind: entry.lineKind,
+			entryIndex,
 		})),
 	);
 }
@@ -1601,12 +1608,12 @@ function processDiffEntries(
 ): RenderedRow[] {
 	const { width, theme, wordWrap } = ctx;
 	const rows: RenderedRow[] = [];
-	for (const entry of entries) {
+	for (const [entryIndex, entry] of entries.entries()) {
 		if (entry.kind !== "line") {
-			rows.push(...formatMetaEntryRows(entry, width, theme, wordWrap));
+			rows.push(...formatMetaEntryRows(entry, width, theme, wordWrap, entryIndex));
 			continue;
 		}
-		pushDiffLineRows(rows, processLine(entry), entry);
+		pushDiffLineRows(rows, processLine(entry), entry, entryIndex);
 	}
 	return rows;
 }
@@ -1710,15 +1717,171 @@ function renderDiffSpacerLine(width: number): string {
 }
 
 function applyNeutralContainerBackground(component: Component, backgroundAnsi: string): Component {
+	let cachedWidth: number | undefined;
+	let cachedLines: string[] | undefined;
+
 	return {
 		render(width: number): string[] {
+			if (cachedWidth === width && cachedLines) return cachedLines;
+
 			const contentWidth = Math.max(1, width - TOOL_PADDING_X);
 			const leftPadding = " ".repeat(TOOL_PADDING_X);
-			return component.render(contentWidth)
+			const lines = component.render(contentWidth)
 				.map((line) => applyBackgroundToVisualRow(`${leftPadding}${line}`, width, backgroundAnsi, ANSI_BG_RESET));
+			cachedWidth = width;
+			cachedLines = lines;
+			return lines;
 		},
-		invalidate: () => component.invalidate?.(),
+		invalidate() {
+			cachedWidth = undefined;
+			cachedLines = undefined;
+			component.invalidate?.();
+		},
 	};
+}
+
+function isChangedRow(row: RenderedRow): boolean {
+	return row.kind === "add" || row.kind === "remove";
+}
+
+function renderLatestChange(rows: RenderedRow[], width: number, maxLines: number, theme: DiffTheme): string[] {
+	const lastChange = rows.findLastIndex(isChangedRow);
+	if (lastChange < 0) return [clampDiffLineToWidth(theme.fg("muted", "No pending changes."), width)];
+
+	const hunkIndex = rows[lastChange]?.hunkIndex;
+	let firstChange = lastChange;
+	while (firstChange > 0) {
+		const previous = rows[firstChange - 1];
+		if (!previous || !isChangedRow(previous) || previous.hunkIndex !== hunkIndex) break;
+		firstChange--;
+	}
+
+	let start = firstChange;
+	for (let contextCount = 0; contextCount < 2 && start > 0; contextCount++) {
+		const context = rows[start - 1];
+		if (context?.kind !== "context" || context.hunkIndex !== hunkIndex) break;
+		start = entryStart(rows, start - 1);
+	}
+
+	let end = lastChange + 1;
+	for (let contextCount = 0; contextCount < 2 && end < rows.length; contextCount++) {
+		const context = rows[end];
+		if (context?.kind !== "context" || context.hunkIndex !== hunkIndex) break;
+		end = entryEnd(rows, end);
+	}
+
+	const limit = Math.max(1, maxLines);
+	const isWithinBudget = (): boolean => end - start + Number(start > 0) + Number(end < rows.length) <= limit;
+	if (isWithinBudget()) return renderFollowedRows(rows, start, end, width, theme);
+
+	while (!isWithinBudget() && start < firstChange) start = entryEnd(rows, start);
+	while (!isWithinBudget() && end > lastChange + 1) end = entryStart(rows, end - 1);
+
+	const lastEntryStart = entryStart(rows, lastChange);
+	while (!isWithinBudget() && start < lastEntryStart) start = entryEnd(rows, start);
+	if (isWithinBudget()) return renderFollowedRows(rows, start, end, width, theme);
+
+	// One source line can wrap past the entire viewport; show its start and latest tail.
+	const maxVisible = limit - Number(lastEntryStart > 0) - Number(end < rows.length);
+	const tailStart = Math.max(lastEntryStart + 1, end - Math.max(1, maxVisible - 2));
+	const visible = [
+		clampDiffLineToWidth(rows[lastEntryStart]?.text ?? "", width),
+		renderOmission(`${tailStart - lastEntryStart - 1} wrapped rows omitted inside line`, width, theme),
+		...rows.slice(tailStart, end).map((row) => clampDiffLineToWidth(row.text, width)),
+	];
+	if (lastEntryStart > 0) visible.unshift(renderOmission(`${lastEntryStart} rows omitted above`, width, theme));
+	if (end < rows.length) visible.push(renderOmission(`${rows.length - end} rows omitted below`, width, theme));
+	return visible;
+}
+
+function entryStart(rows: RenderedRow[], index: number): number {
+	const entryIndex = rows[index]?.entryIndex;
+	while (index > 0 && rows[index - 1]?.entryIndex === entryIndex) index--;
+	return index;
+}
+
+function entryEnd(rows: RenderedRow[], index: number): number {
+	const entryIndex = rows[index]?.entryIndex;
+	while (index < rows.length && rows[index]?.entryIndex === entryIndex) index++;
+	return index;
+}
+
+function renderFollowedRows(rows: RenderedRow[], start: number, end: number, width: number, theme: DiffTheme): string[] {
+	const visible = rows.slice(start, end).map((row) => clampDiffLineToWidth(row.text, width));
+	if (start > 0) visible.unshift(renderOmission(`${start} rows omitted above`, width, theme));
+	if (end < rows.length) visible.push(renderOmission(`${rows.length - end} rows omitted below`, width, theme));
+	return visible;
+}
+
+function renderChangedHunks(rows: RenderedRow[], width: number, maxLines: number, theme: DiffTheme): string[] {
+	const limit = Math.max(1, maxLines);
+	if (!rows.some(isChangedRow)) return applyLineLimit(rows, width, false, limit, 0, 0, theme);
+
+	let planned = planChangedHunks(rows, width, theme, 2);
+	if (planned.length > limit) planned = planChangedHunks(rows, width, theme, 1);
+	if (planned.length > limit) planned = planChangedHunks(rows, width, theme, 0);
+	if (planned.length <= limit) return planned.map((row) => row.text);
+
+	const shown = planned.slice(0, limit - 1);
+	const lastShownIndex = shown.at(-1)?.sourceIndex ?? -1;
+	const hidden = rows.slice(lastShownIndex + 1);
+	const hiddenChanges = hidden.filter(isChangedRow).length;
+	const label = hiddenChanges > 0 ? `${hiddenChanges} changed rows omitted` : `${hidden.length} diff rows omitted`;
+	return [...shown.map((row) => row.text), renderOmission(`${label} • Ctrl+O to expand`, width, theme)];
+}
+
+function planChangedHunks(rows: RenderedRow[], width: number, theme: DiffTheme, contextRadius: number): Array<{ text: string; sourceIndex: number }> {
+	const selected = new Set<number>();
+	const hunkHeaders = new Map<number, number[]>();
+
+	for (const [index, row] of rows.entries()) {
+		if (row.kind !== "hunk" || row.hunkIndex === null) continue;
+		const headers = hunkHeaders.get(row.hunkIndex) ?? [];
+		headers.push(index);
+		hunkHeaders.set(row.hunkIndex, headers);
+	}
+
+	for (const [index, row] of rows.entries()) {
+		if (!isChangedRow(row)) continue;
+		selected.add(index);
+		for (const header of hunkHeaders.get(row.hunkIndex ?? 0) ?? []) selected.add(header);
+		for (const direction of [-1, 1]) {
+			for (let distance = 1; distance <= contextRadius; distance++) {
+				const neighborIndex = index + direction * distance;
+				const neighbor = rows[neighborIndex];
+				if (neighbor?.kind !== "context" || neighbor.hunkIndex !== row.hunkIndex) break;
+				selected.add(neighborIndex);
+			}
+		}
+	}
+
+	const planned: Array<{ text: string; sourceIndex: number }> = [];
+	let cursor = 0;
+	for (const index of [...selected].sort((a, b) => a - b)) {
+		if (index > cursor) {
+			const skipped = rows.slice(cursor, index);
+			const label = skipped.every((row) => row.kind === "context") ? "unchanged" : "diff";
+			planned.push({ text: renderOmission(`${skipped.length} ${label} rows omitted`, width, theme), sourceIndex: cursor - 1 });
+		}
+		planned.push({ text: clampDiffLineToWidth(rows[index]?.text ?? "", width), sourceIndex: index });
+		cursor = index + 1;
+	}
+	if (cursor < rows.length) {
+		planned.push({ text: renderOmission(`${rows.length - cursor} diff rows omitted`, width, theme), sourceIndex: cursor - 1 });
+	}
+	return planned;
+}
+
+function renderOmission(message: string, width: number, theme: DiffTheme): string {
+	const count = message.match(/^\d+/)?.[0];
+	const candidates = [
+		`… (${message})`,
+		count ? `… ${count} hidden` : "… hidden",
+		"… hidden",
+		"…",
+	];
+	const label = candidates.find((candidate) => visibleWidth(candidate) <= width) ?? "…";
+	return clampDiffLineToWidth(theme.fg("muted", label), width);
 }
 
 function applyLineLimit(
@@ -1872,15 +2035,11 @@ export function renderCompletedDiff(
 						{ width: safeWidth, theme, inlineHighlights, palette, highlightLine, containerBgAnsi, wordWrap, indicatorMode, showHashlineAnchors },
 						lineNumberWidth,
 					);
-			const bodyWithLimit = applyLineLimit(
-				bodyRows,
-				safeWidth,
-				options.expanded,
-				config.diffCollapsedLines,
-				config.expandedPreviewMaxLines,
-				parsed.stats.hunks,
-				theme,
-			);
+			const bodyWithLimit = options.expanded
+				? applyLineLimit(bodyRows, safeWidth, true, config.diffCollapsedLines, config.expandedPreviewMaxLines, parsed.stats.hunks, theme)
+				: options.previewMode === "pending"
+					? renderLatestChange(bodyRows, safeWidth, config.diffCollapsedLines, theme)
+					: renderChangedHunks(bodyRows, safeWidth, config.diffCollapsedLines, theme);
 			const frame = renderDiffFrameLine(safeWidth, theme);
 			const renderedLines = mode === "unified"
 				? [...headerRows.map((row) => row.text), frame, ...bodyWithLimit, frame]

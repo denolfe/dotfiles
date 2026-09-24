@@ -34,7 +34,11 @@ export function buildPendingWritePreviewData(input: unknown, cwd: string): Pendi
   }
 }
 
-export function buildPendingEditPreviewData(input: unknown, cwd: string): PendingDiffPreviewData | undefined {
+export function buildPendingEditPreviewData(
+  input: unknown,
+  cwd: string,
+  options: { isPartialArguments?: boolean } = {},
+): PendingDiffPreviewData | undefined {
   const filePath = pathArgument(input)
   if (!filePath) return undefined
 
@@ -44,7 +48,11 @@ export function buildPendingEditPreviewData(input: unknown, cwd: string): Pendin
     return editNotice(filePath, 'Preview unavailable because the target file does not exist yet.')
   }
 
-  const projected = projectEditContent(existing.content, editReplacements(input))
+  const projected = projectEditContent({
+    originalContent: existing.content,
+    replacements: editReplacements(input),
+    isPartialArguments: options.isPartialArguments ?? false,
+  })
   if (!projected.ok) {
     return {
       ...editNotice(filePath, projected.reason),
@@ -62,7 +70,12 @@ export function buildPendingEditPreviewData(input: unknown, cwd: string): Pendin
   }
 }
 
-function projectEditContent(originalContent: string, replacements: EditReplacement[]): ProjectedEditResult {
+function projectEditContent(params: {
+  originalContent: string
+  replacements: EditReplacement[]
+  isPartialArguments: boolean
+}): ProjectedEditResult {
+  const { originalContent, replacements, isPartialArguments } = params
   if (replacements.length === 0) {
     return { ok: false, reason: 'Preview not shown: the edit request did not include exact replacement blocks.' }
   }
@@ -100,9 +113,15 @@ function projectEditContent(originalContent: string, replacements: EditReplaceme
 
   let cursor = 0
   let output = ''
-  for (const range of ranges) {
+  for (const [index, range] of ranges.entries()) {
     output += normalizedContent.slice(cursor, range.start)
     output += range.replacement
+    const nextStart = ranges[index + 1]?.start ?? normalizedContent.length
+    // Incomplete replacement text preserves a boundary before unchanged following text.
+    if (isPartialArguments && range.end < nextStart
+      && normalizedContent[range.end - 1] === '\n' && !range.replacement.endsWith('\n')) {
+      output += '\n'
+    }
     cursor = range.end
   }
   output += normalizedContent.slice(cursor)

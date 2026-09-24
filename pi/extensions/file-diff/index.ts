@@ -58,7 +58,7 @@ function registerEditTool(pi: ExtensionAPI): void {
         'edit',
         JSON.stringify(args),
         context.argsComplete,
-        () => buildPendingEditPreviewData(args, context.cwd),
+        () => buildPendingEditPreviewData(args, context.cwd, { isPartialArguments: !context.argsComplete }),
       )
       return renderPendingCall(summary, preview, context.expanded, theme)
     },
@@ -178,6 +178,7 @@ function registerWriteTool(pi: ExtensionAPI): void {
 
 type PendingPreviewState = {
   key?: string
+  argsComplete?: boolean
   data?: PendingDiffPreviewData
   lastValid?: PendingDiffPreviewData
 }
@@ -200,8 +201,9 @@ function resolvePendingPreview(
     : {}
   state[stateKey] = cached
 
-  if (cached.key !== key) {
+  if (cached.key !== key || cached.argsComplete !== argsComplete) {
     cached.key = key
+    cached.argsComplete = argsComplete
     cached.data = compute()
     if (isValidPendingPreview(cached.data)) cached.lastValid = cached.data
   }
@@ -250,6 +252,7 @@ function renderPendingCall(
         filePath: preview.filePath,
         headerLabel: preview.headerLabel,
         hideHunkHeaders: true,
+        previewMode: 'pending',
       },
       theme,
     ),

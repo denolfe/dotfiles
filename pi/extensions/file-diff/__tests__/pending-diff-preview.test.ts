@@ -79,6 +79,51 @@ describe('pending edit preview projection', () => {
     expect(preview?.nextContent).toBe('status: str\n')
   })
 
+  test('keeps the line boundary stable until a streamed edit is complete', async () => {
+    const workspace = await temporaryWorkspace('pi-edit-boundary-')
+    await writeFile(join(workspace, 'sample.txt'), 'alpha\nbeta\n')
+    const args = { path: 'sample.txt', oldText: 'alpha\n', newText: 'one' }
+
+    const streaming = buildPendingEditPreviewData(args, workspace, { isPartialArguments: true })
+    const complete = buildPendingEditPreviewData(args, workspace, { isPartialArguments: false })
+    const streamingWithNewline = buildPendingEditPreviewData(
+      { ...args, newText: 'one\n' }, workspace, { isPartialArguments: true },
+    )
+
+    expect(streaming?.nextContent).toBe('one\nbeta\n')
+    expect(streamingWithNewline?.nextContent).toBe('one\nbeta\n')
+    expect(complete?.nextContent).toBe('onebeta\n')
+  })
+
+  test('does not invent a boundary when the next edit replaces the adjacent text', async () => {
+    const workspace = await temporaryWorkspace('pi-edit-adjacent-')
+    await writeFile(join(workspace, 'sample.txt'), 'a\nb')
+    const args = {
+      path: 'sample.txt',
+      edits: [
+        { oldText: 'a\n', newText: 'x' },
+        { oldText: 'b', newText: 'y' },
+      ],
+    }
+
+    const preview = buildPendingEditPreviewData(args, workspace, { isPartialArguments: true })
+
+    expect(preview?.nextContent).toBe('xy')
+  })
+
+  test('does not add a line break when the old text has none', async () => {
+    const workspace = await temporaryWorkspace('pi-edit-boundary-')
+    await writeFile(join(workspace, 'sample.txt'), 'alpha beta\n')
+
+    const streaming = buildPendingEditPreviewData(
+      { path: 'sample.txt', oldText: 'alpha', newText: 'one' },
+      workspace,
+      { isPartialArguments: true },
+    )
+
+    expect(streaming?.nextContent).toBe('one beta\n')
+  })
+
   test('returns a non-projectable notice for incomplete replacement fields', async () => {
     const workspace = await temporaryWorkspace('pi-edit-preview-')
     await writeFile(join(workspace, 'sample.txt'), 'status: before\n')
