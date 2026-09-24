@@ -90,7 +90,8 @@ ${piToolMapping()}
 
 function stripFrontmatter(content: string): string {
   const match = content.match(/^---\n[\s\S]*?\n---\n([\s\S]*)$/);
-  return (match ? match[1] : content).trim();
+  const body = match?.[1] ?? content;
+  return body.trim();
 }
 
 function piToolMapping(): string {
