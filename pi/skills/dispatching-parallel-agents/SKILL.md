@@ -5,11 +5,6 @@ description: Use when facing 2+ independent tasks that can be worked on without 
 
 # Dispatching Parallel Agents
 
-
-## Pi Task Tool Preference
-
-When task tools are available, prefer `@tintinweb/pi-tasks`. If it is unavailable, use generic Pi task tools such as `TaskCreate`, `TaskList`, `TaskGet`, and `TaskUpdate`. If no task tools are available, use the plan/checklist Markdown as the source of truth.
-
 ## Overview
 
 You delegate tasks to specialized agents with isolated context. By precisely crafting their instructions and context, you ensure they stay focused and succeed at their task. They should never inherit your session's context or history — you construct exactly what they need. This also preserves your own context for coordination work.
@@ -70,15 +65,16 @@ Each agent gets:
 
 ### 3. Dispatch in Parallel
 
-```text
-Use the Pi Agent tool once per independent domain, preferably in the same tool-call turn so they run concurrently:
+Issue all three subagent dispatches in the same response — they run in parallel:
 
-Agent: Fix agent-tool-abort.test.ts failures
-Agent: Fix batch-completion-behavior.test.ts failures
-Agent: Fix tool-approval-race-conditions.test.ts failures
+```text
+Subagent (general-purpose): "Fix agent-tool-abort.test.ts failures"
+Subagent (general-purpose): "Fix batch-completion-behavior.test.ts failures"
+Subagent (general-purpose): "Fix tool-approval-race-conditions.test.ts failures"
+# All three run concurrently.
 ```
 
-If the number of agents depends on runtime discovery or the work needs deterministic fan-out/fan-in, ask the user for explicit permission to use `SubagentWorkflow`.
+Multiple dispatch calls in one response = parallel execution. One per response = sequential.
 
 ### 4. Review and Integrate
 
@@ -162,15 +158,6 @@ Agent 3 → Fix tool-approval-race-conditions.test.ts
 
 **Integration:** All fixes independent, no conflicts, full suite green
 
-**Time saved:** 3 problems solved in parallel vs sequentially
-
-## Key Benefits
-
-1. **Parallelization** - Multiple investigations happen simultaneously
-2. **Focus** - Each agent has narrow scope, less context to track
-3. **Independence** - Agents don't interfere with each other
-4. **Speed** - 3 problems solved in time of 1
-
 ## Verification
 
 After agents return:
@@ -178,63 +165,3 @@ After agents return:
 2. **Check for conflicts** - Did agents edit same code?
 3. **Run full suite** - Verify all fixes work together
 4. **Spot check** - Agents can make systematic errors
-
-## Real-World Impact
-
-From debugging session (2025-10-03):
-- 6 failures across 3 files
-- 3 agents dispatched in parallel
-- All investigations completed concurrently
-- All fixes integrated successfully
-- Zero conflicts between agent changes
-
----
-
-## Native Task Integration
-
-Track parallel agent work with structured Pi-native tasks.
-
-### Before Dispatch
-
-Create a task per agent with structured description:
-
-```yaml
-TaskCreate:
-  subject: "[Agent assignment — concrete deliverable]"
-  description: |
-    **Goal:** [What this agent should produce]
-
-    **Files:**
-    - [Expected files to touch]
-
-    **Acceptance Criteria:**
-    - [ ] [Concrete criterion]
-
-    **Verify:** [Command to verify agent's work]
-
-    ```json:metadata
-    {"files": ["expected/files"], "verifyCommand": "test command", "acceptanceCriteria": ["criterion"]}
-    ```
-```
-
-See `skills/shared/task-format-reference.md` for the full task format reference.
-
-### Monitor Progress
-
-```
-TaskList
-```
-
-### After Completion
-
-When marking tasks completed via `TaskUpdate`, also sync `.tasks.json`:
-
-1. Read `<plan-path>.tasks.json`
-2. Set the task's `"status"` to `"completed"`
-3. Set `"lastUpdated"` to current ISO timestamp
-4. Write back
-
-### Notes
-
-- No blockedBy (parallel = independent)
-- Controller is responsible for `.tasks.json` sync (not the dispatched agents)
