@@ -8,8 +8,6 @@ const BOOTSTRAP_MARKER = "superpowers-pi:using-superpowers bootstrap";
 const extensionDir = dirname(fileURLToPath(import.meta.url));
 const resourceRoot = findResourceRoot(extensionDir);
 const skillsDir = resolve(resourceRoot, "skills");
-const promptsDir = resolve(resourceRoot, existsSync(resolve(resourceRoot, "prompts")) ? "prompts" : "commands");
-const agentsDir = resolve(resourceRoot, "agents");
 const bootstrapSkillPath = resolve(skillsDir, "using-superpowers", "SKILL.md");
 
 let cachedBootstrap: string | null | undefined;
@@ -19,8 +17,6 @@ export default function superpowersPiExtension(pi: ExtensionAPI) {
 
   pi.on("resources_discover", async () => ({
     skillPaths: existsSync(skillsDir) ? [skillsDir] : [],
-    promptPaths: existsSync(promptsDir) ? [promptsDir] : [],
-    agentPaths: existsSync(agentsDir) ? [agentsDir] : [],
   }));
 
   pi.on("session_start", async () => {
