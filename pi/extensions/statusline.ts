@@ -345,10 +345,13 @@ export default function (pi: ExtensionAPI) {
             lines.push(truncateToWidth(color(GREY, sessionName), width, color(GREY, '...')))
           }
 
-          const extensionStatuses = footerData.getExtensionStatuses()
-          if (extensionStatuses.size > 0) {
-            const statusLine = Array.from(extensionStatuses.entries())
-              .sort(([a], [b]) => a.localeCompare(b))
+          // Remove the "rewind" extension status from the status line
+          const extensionStatuses = Array.from(footerData.getExtensionStatuses().entries())
+            .filter(([key]) => key !== 'rewind')
+            .sort(([a], [b]) => a.localeCompare(b))
+
+          if (extensionStatuses.length > 0) {
+            const statusLine = extensionStatuses
               .map(([, text]) => sanitizeStatusText(text))
               .join(' ')
             lines.push(truncateToWidth(statusLine, width, color(GREY, '...')))
