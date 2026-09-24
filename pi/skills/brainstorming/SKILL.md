@@ -48,6 +48,10 @@ selected path's prerequisites:
   method. Conversational design approval only permits writing the spec;
   written-spec approval only permits invoking writing-plans.
 
+**Auto mode does NOT waive this gate.** Auto mode reduces clarifying questions on routine decisions; presenting a design and awaiting approval is not a routine decision. If you are in auto mode and reach this gate, you still stop and ask.
+
+**Before the first Write/Edit/implementation-skill call that follows brainstorming, you MUST state in plain text: `Design approved by user in message: "[exact quoted text from user]"`.** If you cannot produce a direct quote of the user approving the whole design (not a section, not a refinement, not inferred agreement), you have not been approved — return to the approval step.
+
 A reply approves the stage actually presented. Approval of an idea or
 feature scope does not approve artifacts that do not exist yet. Resume
 at the earliest incomplete stage; do not turn one approval into permission
@@ -106,6 +110,10 @@ complete that path's reviews before implementation.
 | "The spike works, so I'll keep the code" | A spike's output is an answer. Keeping the code is a new request — classify it. |
 | "It grew, but I'm almost done — no need to re-classify" | Hidden complexity upgrades the path mid-task. Stop and say so. |
 | "They approved the spike, so the follow-up change is approved too" | Each task gets its own classification and its own approval. |
+| "The user's latest message sounds like agreement" | Not approval. Approval is an explicit yes to the posted whole design. |
+| "I already have section-level approval" | Section approval does not equal whole-design approval. The post-doc gate still fires. |
+| "User accepted with tweaks — that's basically yes" | Tweaks are a revision request, not approval. Apply tweaks, re-present the revised section, and ask again. |
+| "They asked clarifying questions about the section, I answered, that means it's settled" | Q&A is not approval. After answering, re-present the revised section and fire the gate again. |
 
 ## Checklist
 
@@ -132,7 +140,7 @@ your path and complete them in order.
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
+6. **Write design doc** — save to `2-DESIGN.md` in the current task folder and commit
 7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
 8. **User reviews written spec** — ask user to review the spec file before proceeding
 9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
@@ -218,6 +226,7 @@ is the whole process.
 - Once you believe you understand what you're building, present the design
 - Scale each section to its complexity: a few sentences if straightforward, up to 200-300 words if nuanced
 - Ask after each section whether it looks right so far
+- **Present the section as normal chat text, then ask for approval** — for example: `📌 Section [N/Total]: Does this look right, or should we revise?` The section and the approval question must stay visible together in the transcript.
 - Cover: architecture, components, data flow, error handling, testing
 - Be ready to go back and clarify if something doesn't make sense
 
@@ -238,8 +247,21 @@ is the whole process.
 
 **Documentation:**
 
-- Write the validated design (spec) to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
+- Write the validated design (spec) to `2-DESIGN.md` in the current task folder (for example, `~/.pi/plans/{YYYY-MM-DD}_{project}_{task}/2-DESIGN.md`)
   - (User preferences for spec location override this default)
+- Include a clarifying-question log in the design document using this template:
+
+```markdown
+## Clarifying Questions Asked During Brainstorming
+
+1. **Q: [Question text]?**
+   **A:** [User's answer or "No answer provided."]
+
+   Other Options Considered:
+   - [Option 1]
+   - [Option 2]
+```
+
 - Use elements-of-style:writing-clearly-and-concisely skill if available
 - Commit the design document to git
 

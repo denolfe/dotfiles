@@ -39,8 +39,8 @@ This determines which menu to show and how cleanup works:
 
 | State | Menu | Cleanup |
 |-------|------|---------|
-| `GIT_DIR == GIT_COMMON` (normal repo) | Standard 3 options | No worktree to clean up |
-| `GIT_DIR != GIT_COMMON`, named branch | Standard 3 options | Provenance-based (see Step 6) |
+| `GIT_DIR == GIT_COMMON` (normal repo) | Standard 4 options | No worktree to clean up |
+| `GIT_DIR != GIT_COMMON`, named branch | Standard 4 options | Provenance-based (see Step 6) |
 | `GIT_DIR != GIT_COMMON`, detached HEAD | Reduced 2 options (no merge) | Externally managed — leave in place |
 
 ## Step 3: Determine Base Branch
@@ -52,14 +52,15 @@ Confirm before merging: merging into the wrong base is expensive to undo.
 
 ## Step 4: Present Options
 
-**Normal repo and named-branch worktree — present exactly these 3 options:**
+**Normal repo and named-branch worktree — present exactly these 4 options:**
 
 ```
 Implementation complete. What would you like to do?
 
 1. Merge back to <base-branch> locally
-2. Push and create a Pull Request
-3. Keep the branch as-is (I'll handle it later)
+2. Squash all commits and merge to <base-branch> locally
+3. Push and create a Pull Request
+4. Keep the branch as-is (I'll handle it later)
 
 Which option?
 ```
@@ -110,7 +111,24 @@ delete the branch:
 git branch -d <feature-branch>
 ```
 
-### Option 2: Push and Create PR
+### Option 2: Squash and Merge Locally
+
+Collapses all branch commits into a single commit on the base branch. Works even if the base branch advanced since the branch split.
+
+```bash
+MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
+cd "$MAIN_ROOT"
+git checkout <base-branch>
+git pull
+git merge --squash <feature-branch>
+git commit
+<test command>
+git branch -D <feature-branch>
+```
+
+`git branch -d` reports the branch as unmerged after a squash merge, so use `-D` only after tests pass on the merged result.
+
+### Option 3: Push and Create PR
 
 ```bash
 git push -u origin <feature-branch>
@@ -125,7 +143,7 @@ present, and report the URL to your human partner.
 
 Keep the worktree — your human partner iterates on PR feedback there.
 
-### Option 3: Keep As-Is
+### Option 4: Keep As-Is
 
 Report: "Keeping branch <name>. Worktree preserved at <path>."
 
@@ -158,7 +176,7 @@ git branch -D <feature-branch>
 
 ## Step 6: Cleanup Workspace
 
-**Runs for Option 1 and confirmed discards.** Options 2 and 3 always
+**Runs for Option 1 and confirmed discards.** Options 3 and 4 always
 preserve the worktree. Both callers have already changed directory to the
 main repo root — worktree removal must run from outside the worktree —
 and use the `GIT_DIR`/`GIT_COMMON`/`WORKTREE_PATH` values captured in
@@ -205,8 +223,9 @@ place. If your platform provides a workspace-exit tool, use it.
 | Option | Merge | Push | Keep Worktree | Cleanup Branch |
 |--------|-------|------|---------------|----------------|
 | 1. Merge locally | yes | - | - | yes |
-| 2. Create PR | - | yes | yes | - |
-| 3. Keep as-is | - | - | yes | - |
+| 2. Squash and merge locally | yes (squash) | - | - | yes (force after tests) |
+| 3. Create PR | - | yes | yes | - |
+| 4. Keep as-is | - | - | yes | - |
 | Discard (explicit request only) | - | - | - | yes (force) |
 
 ## Common Rationalizations
