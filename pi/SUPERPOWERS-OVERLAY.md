@@ -55,3 +55,13 @@ Local Superpowers skills follow upstream `obra/superpowers` as the source of tru
 4. Build `pi/extensions/superpowers.ts`.
 5. Run a drift check with `diff -ru pi/skills ~/dev/reference-repos/superpowers/skills` and confirm differences match this manifest.
 6. Update this file with the new upstream ref and any changed overlay decisions.
+
+## Last Verified
+
+- Date: 2026-09-24
+- Extension build: `bun build pi/extensions/superpowers.ts --outdir /tmp/pi-superpowers-check --target bun`
+- Prompt wrapper check: no `brainstorm.md`, `write-plan.md`, or `execute-plan.md` under `pi/prompts`
+- Expected drift files:
+  - `pi/skills/brainstorming/SKILL.md`
+  - `pi/skills/writing-plans/SKILL.md`
+  - `pi/skills/finishing-a-development-branch/SKILL.md`
