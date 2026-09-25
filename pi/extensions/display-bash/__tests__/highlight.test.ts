@@ -17,10 +17,10 @@ describe('bash tokenizer', () => {
       ['command', 'ls'],
       ['flag', '-la'],
     ])
-    expect(significant('bun test extensions/file-diff')).toEqual([
+    expect(significant('bun test extensions/display-file-diff')).toEqual([
       ['command', 'bun'],
       ['text', 'test'],
-      ['path', 'extensions/file-diff'],
+      ['path', 'extensions/display-file-diff'],
     ])
   })
 

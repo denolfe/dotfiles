@@ -40,9 +40,9 @@ describe('bash display extension', () => {
   test('delegates execution to the Pi builtin for the active working directory', async () => {
     const tool = registerExtension()
 
-    const result = await tool.execute('call-1', { command: 'echo bash-display' }, undefined, undefined, { cwd: '/tmp' })
+    const result = await tool.execute('call-1', { command: 'echo display-bash' }, undefined, undefined, { cwd: '/tmp' })
 
-    expect(JSON.stringify(result)).toContain('bash-display')
+    expect(JSON.stringify(result)).toContain('display-bash')
   })
 
   test('renders the command inline after the tool title', () => {

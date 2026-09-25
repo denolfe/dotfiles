@@ -46,7 +46,7 @@ describe('edit diff extension adapter', () => {
   })
 
   test('delegates execution to Pi builtins for the active working directory', async () => {
-    const cwd = await mkdtemp(join(tmpdir(), 'pi-file-diff-'))
+    const cwd = await mkdtemp(join(tmpdir(), 'pi-display-file-diff-'))
     temporaryDirectories.push(cwd)
     const path = join(cwd, 'demo.txt')
     await writeFile(path, 'status: before\n')
