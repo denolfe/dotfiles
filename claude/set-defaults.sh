@@ -17,7 +17,9 @@ jq '
   .env.SLASH_COMMAND_TOOL_CHAR_BUDGET = "50000" |
   .env.CLAUDE_CODE_SUPPRESS_SESSION_ATTRIBUTION = "1" |
   .env.CLAUDE_CODE_DISABLE_AUTO_MEMORY = "1" |
+  .env.CLAUDE_CODE_ENABLE_TODO_TOOLS = "1" |
   .env.FORCE_COLOR = "3" |
+  .theme = "custom:readable-dark" |
   .alwaysThinkingEnabled = true |
   .effortLevel = "medium" |
   .skipWorkflowUsageWarning = true |
