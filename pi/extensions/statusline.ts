@@ -16,13 +16,9 @@ const MAGENTA = '\x1b[35m'
 const GREY = '\x1b[90m'
 const ORANGE = '\x1b[38;5;208m'
 const PURPLE = '\x1b[38;5;135m'
-const TRACK = '\x1b[38;5;238m'
-const DARK_CAP = '\x1b[38;2;40;40;40m'
 
 const FOLDER_ICON = ''
 const BRANCH_ICON = ''
-const LEFT_CAP = ''
-const RIGHT_CAP = ''
 const GIT_REFRESH_MS = 3000
 const GIT_COMMAND_TIMEOUT_MS = 1000
 
@@ -130,32 +126,6 @@ async function refreshGitCache(cwd: string): Promise<GitCache> {
   }
 }
 
-function heatmapColor(pos: number): string {
-  let r: number
-  let g: number
-  if (pos < 5) {
-    r = Math.floor((pos * 220) / 5)
-    g = 180
-  } else {
-    r = 220
-    g = Math.floor(180 - ((pos - 5) * 120) / 5)
-  }
-  return `\x1b[38;2;${r};${g};0m`
-}
-
-function heatmapColorPartial(pos: number, brightness: number): string {
-  let r: number
-  let g: number
-  if (pos < 5) {
-    r = Math.floor(((pos * 220) / 5) * (brightness / 100))
-    g = Math.floor(180 * (brightness / 100))
-  } else {
-    r = Math.floor(220 * (brightness / 100))
-    g = Math.floor((180 - ((pos - 5) * 120) / 5) * (brightness / 100))
-  }
-  return `\x1b[38;2;${r};${g};0m`
-}
-
 function formatTokens(count: number): string {
   if (count < 1000) return count.toString()
   if (count < 10000) return `${(count / 1000).toFixed(1)}k`
@@ -171,38 +141,46 @@ function contextSegment(
     return usage ? color(GREY, '?') : undefined
   }
 
-  const pct = Math.max(0, Math.min(999, Math.round(usage.percent)))
-  const steps = Math.min(40, Math.floor((pct * 40) / 100))
-  const full = Math.floor(steps / 4)
-  const partial = steps % 4
-  const empty = 10 - full - (partial > 0 ? 1 : 0)
+  const percent = Math.max(0, usage.percent)
+  const tokens = Math.max(0, usage.tokens ?? 0)
+  const pct = Math.min(999, Math.round(percent))
+  return color(contextColor({ tokens, percent }), `${pct}% ${formatTokens(tokens)}`)
+}
 
-  let bar = ''
-  let pos = 0
-  for (let i = 0; i < full; i++) {
-    bar += `${heatmapColor(pos)}█`
-    pos++
-  }
-  if (partial > 0) {
-    const dimPos = Math.max(0, pos - 1)
-    bar +=
-      partial === 1
-        ? `${heatmapColorPartial(dimPos, 35)}░`
-        : partial === 2
-          ? `${heatmapColorPartial(dimPos, 55)}▒`
-          : `${heatmapColorPartial(dimPos, 80)}▓`
+function contextColor({ tokens, percent }: { tokens: number; percent: number }): string {
+  const green: [number, number] = [0, 180]
+  const yellow: [number, number] = [220, 180]
+  const orange: [number, number] = [220, 120]
+  const red: [number, number] = [220, 60]
+
+  if (percent >= 80) {
+    return gradientColor({ from: orange, to: red, progress: (percent - 80) / 10 })
   }
 
-  const track = '░'.repeat(Math.max(0, empty))
-  const left = full > 0 || partial > 0 ? `${heatmapColor(0)}${LEFT_CAP}` : `${TRACK}${LEFT_CAP}`
-  const output =
-    empty === 0 && partial === 0
-      ? `${left}${bar}${heatmapColor(9)}${RIGHT_CAP}${RESET}`
-      : `${left}${bar}${TRACK}${track}${DARK_CAP}${RIGHT_CAP}${RESET}`
-  const lastPos = Math.max(0, full + (partial > 0 ? 1 : 0) - 1)
+  const yellowPercent = tokens > 0 ? (150000 * percent) / tokens : 80
+  // Small context windows reach percentage warnings before the absolute token anchor.
+  if (yellowPercent >= 80) {
+    return gradientColor({ from: green, to: orange, progress: percent / 80 })
+  }
+  if (tokens <= 150000) {
+    return gradientColor({ from: green, to: yellow, progress: tokens / 150000 })
+  }
+  return gradientColor({
+    from: yellow,
+    to: orange,
+    progress: (percent - yellowPercent) / (80 - yellowPercent),
+  })
+}
 
-  const tokens = formatTokens(Number(usage.tokens ?? 0))
-  return `${output} ${heatmapColor(lastPos)}${tokens}${RESET}`
+function gradientColor({ from, to, progress }: {
+  from: [number, number]
+  to: [number, number]
+  progress: number
+}): string {
+  const fraction = Math.max(0, Math.min(1, progress))
+  const r = Math.round(from[0] + (to[0] - from[0]) * fraction)
+  const g = Math.round(from[1] + (to[1] - from[1]) * fraction)
+  return `\x1b[38;2;${r};${g};0m`
 }
 
 type SessionMetrics = {
