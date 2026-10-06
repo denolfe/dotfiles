@@ -13,16 +13,17 @@ Never stop to ask the user. Make a best-effort choice, record it, and continue. 
 ## Process
 
 1. **Load.** Read the plan (a path the user gives, else the one from this conversation) and the spec it links. Record concerns for the final report. Follow the project's git flow; if it is unclear, create a branch `build/<slug>`. If the working tree is not clean, commit nothing of it: stash it and record the stash in the report.
-2. **Loop** until no frontier task remains:
-   1. Pick the first frontier task (all blockers have a `Commit:` SHA).
+2. **Show progress.** If the host has native task tools (e.g. `TaskCreate`/`TaskUpdate`), create one task per plan task, plus "Verify all" and "Review", and mark tasks with a SHA as completed. These are a view for the user only: update them, never read state from them.
+3. **Loop** until no frontier task remains:
+   1. Pick the first frontier task (all blockers have a `Commit:` SHA). Mark its native task in progress.
    2. Dispatch an implementer subagent with the brief below. Run one at a time in this tree.
    3. **Check the commit.** `git log -1` is a new commit that matches the reported SHA, and `git status --porcelain -- <reported files>` is empty. If not, send the subagent back to commit once; if it still fails, stash the reported files as `build-task-<N>` and treat the task as `FAILED`. Never commit its work yourself.
-   4. Write the SHA into `Commit:` and check the acceptance boxes the report marks PASS.
+   4. Write the SHA into `Commit:`, check the acceptance boxes the report marks PASS, and mark its native task completed.
    5. Append each reported decision to the spec under `## Build Decisions`, so later subagents build on the same choices.
-   6. On `FAILED`, set `Commit: FAILED (<reason>)`. Its dependents leave the frontier; continue with the other tasks.
-3. **Verify all.** Run the plan's `Verify all` command.
-4. **Review.** Call the Skill tool with `code-review` on the full diff of this work. Send all findings to one implementer subagent, which fixes and commits them. Check the commit as in step 2.3.
-5. **Report**, in this order:
+   6. On `FAILED`, set `Commit: FAILED (<reason>)` and put the reason in its native task's subject. Its dependents leave the frontier; continue with the other tasks.
+4. **Verify all.** Run the plan's `Verify all` command.
+5. **Review.** Call the Skill tool with `code-review` on the full diff of this work. Send all findings to one implementer subagent, which fixes and commits them. Check the commit as in step 3.3.
+6. **Report**, in this order:
    1. Build Decisions, for the user to review first
    2. failed and skipped tasks, with reasons
    3. tasks with SHAs, verify output, review fixes, concerns, all stashes
