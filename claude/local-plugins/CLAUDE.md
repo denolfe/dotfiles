@@ -13,7 +13,7 @@ Local (source lives in this dir):
 
 Remote (pinned github source in `marketplace.json`, no local code):
 
-- **superpowers-extended-cc** - CC-specific fork of Superpowers, pinned to `denolfe/superpowers@customized-5.2.8`. Dev in `~/dev/superpowers-fork`; commit + push the branch, then `make claude-plugins` to pull.
+- **superpowers-custom** - Fork of Superpowers with personal customizations, pinned to `denolfe/superpowers@customized-7.0.0`. Distinct name avoids a `superpowers:` namespace clash in projects that enable upstream superpowers; the fork rewrites skill refs to `superpowers-custom:*`, so this entry name must match its `plugin.json`. Dev in `~/dev/superpowers-fork`; commit + push the branch, then `make claude-plugins` to pull.
 
 Reference-only (code kept in this dir, NOT registered in `marketplace.json`, so never installed):
 
