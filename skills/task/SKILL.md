@@ -26,11 +26,11 @@ Once created:
 1. Read and present 1-TASK.md contents
 2. Ask the user to choose, noting which option is '(recommended)' based upon the details provided and task complexity:
    - Research web
-   - Spec design
+   - Brainstorm design
    - Add more detail
    - Implement directly
 3. Handle choice, also note which is '(recommended)' based upon task complexity:
-   - Spec → Run the `spec` skill with this task directory as the spec location
+   - Brainstorm → Run `superpowers-custom:brainstorming` with this task directory as the task folder, present 1-TASK.md + 2-DESIGN.md
    - Add details → Accept more input, merge into 1-TASK.md, return to step 2
    - Implement directly → Implement directly
-   - Research → Ask topic, run the `research` skill with this task directory as the save location, return to step 2
+   - Research → Ask topic, fetch, return to step 2
