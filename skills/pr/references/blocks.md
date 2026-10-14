@@ -67,7 +67,7 @@ What was actually broken and why. Use instead of Design Decisions on a bugfix.
 [What was broken and the underlying cause. Keep to the mechanism, not a narrative.]
 ```
 
-### Key Changes
+### Changes
 
 Nested-bullet list of what changed. Each sub-bullet follows the Sentence Structure
 rules in [content-guidelines.md](content-guidelines.md): what-first, one idea per
@@ -75,7 +75,7 @@ sentence. Cap each sub-bullet at ~2 sentences / ~25 words; over that, split into
 two bullets or promote a clause to its own bullet.
 
 ```markdown
-## Key Changes
+## Changes
 
 - **[What changed]**
   - [The change, one sentence. Mechanism or consequence as a second short sentence.]
@@ -84,7 +84,7 @@ two bullets or promote a clause to its own bullet.
 Working example (note the short sentences, not one packed clause chain):
 
 ```markdown
-## Key Changes
+## Changes
 
 - **Hardened publish path**
   - Publishing now uses a non-throwing subprocess call. Errors return instead of
@@ -143,7 +143,7 @@ always include, `–` omit, `○` decide with the include-when rules.
 Block                | Simple Fix | Complex Fix | Simple Feat | Complex Feat
 Overview             |     ✓      |      ✓      |      ✓      |      ✓
 Root Cause           |     ✓      |      ✓      |      –      |      –
-Key Changes          |     ○      |      ✓      |      ✓      |      ✓
+Changes              |     ○      |      ✓      |      ✓      |      ✓
 Motivation           |     –      |      ○      |      –      |      ○
 Design Decisions     |     –      |      ○      |      –      |      ✓
 Overall Flow         |     –      |      ○      |      –      |      ○
@@ -157,7 +157,7 @@ AI Footer            |     ✓      |      ✓      |      ✓      |      ✓
 
 Resolve every `○` with these:
 
-- **Key Changes**: include unless the diff is a one-liner obvious from Overview.
+- **Changes**: include unless the diff is a one-liner obvious from Overview.
 - **Motivation**: include when the "why" is not self-evident from Overview.
 - **Design Decisions**: include when a non-obvious architectural choice was made or an alternative was strongly considered or rejected.
 - **Overall Flow**: include when control or data flow changed and a diagram aids

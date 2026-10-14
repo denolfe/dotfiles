@@ -4,7 +4,7 @@ Applies to both `create` and `update`.
 
 ## Structure
 
-- Assemble the PR description from the block library in [blocks.md](blocks.md); it is the source of truth for allowed sections (Overview, Motivation, Usage, Resolves link, Key Changes, Design Decisions, Root Cause, Overall Flow, References / Links).
+- Assemble the PR description from the block library in [blocks.md](blocks.md); it is the source of truth for allowed sections (Overview, Motivation, Usage, Resolves link, Changes, Design Decisions, Root Cause, Overall Flow, References / Links).
 - DO NOT add sections that are not in the block library.
 - DO NOT include anything related to test plan or test coverage.
 - DO NOT reference specific line numbers.
@@ -29,10 +29,10 @@ Wording rules govern words; these govern sentence shape. Density (not word choic
 
 **Cut extraneous load, keep intrinsic load** (Cognitive Load Theory). Keep the content: technical terms, caveats, fidelity. Strip the packaging: clause chains and mechanism-first ordering. Two techniques:
 
-- **Chunking (one idea per sentence).** Do not chain *what changed* + *mechanism* + *consequence* with `which` / `so` / `and`. State each as its own sentence. Prefer several short sentences over one packed one, even at more lines: reads-faster beats fits-in-fewer-lines.
+- **Chunking (one idea per sentence).** Do not chain _what changed_ + _mechanism_ + _consequence_ with `which` / `so` / `and`. State each as its own sentence. Prefer several short sentences over one packed one, even at more lines: reads-faster beats fits-in-fewer-lines.
 - **BLUF (bottom line up front).** Lead with the change. Mechanism and consequence follow as their own sentences, never as trailing clauses.
 
-Per-block length caps (e.g. Key Changes sub-bullets) live with those blocks in [blocks.md](blocks.md).
+Per-block length caps (e.g. Changes sub-bullets) live with those blocks in [blocks.md](blocks.md).
 
 Example:
 
