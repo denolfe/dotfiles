@@ -125,6 +125,15 @@ External resources only (library docs, blog posts). Never the plan files.
 - [label](url): description
 ```
 
+### AI Footer (mandatory, always last)
+
+Fixed attribution line. No heading. Emit verbatim as the final line of the body,
+separated from the previous block by a blank line. Exactly one per body.
+
+```markdown
+🤖 Written with AI
+```
+
 ## Profiles
 
 A profile is one column below: the baseline block set for that quadrant. `✓`
@@ -141,6 +150,7 @@ Overall Flow         |     –      |      ○      |      –      |      ○
 Usage / Before-after |     ○      |      ○      |      ○      |      ○
 Resolves link        |     ○      |      ○      |      ○      |      ○
 References / Links   |     –      |      ○      |      ○      |      ✓
+AI Footer            |     ✓      |      ✓      |      ✓      |      ✓
 ```
 
 ## Include-When Rules
