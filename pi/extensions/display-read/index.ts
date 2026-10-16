@@ -32,6 +32,7 @@ export default function readDisplayExtension(pi: ExtensionAPI): void {
       if (context.isError) {
         return new Text(theme.fg('error', fallback || 'Read failed.'), 0, 0)
       }
+      if (isFullFileRead(context.args)) return new Text('', 0, 0)
 
       const preview = createContentPreview(fallback, context.args, theme)
       return preview ?? new Text(theme.fg('muted', '└ read completed (no text output)'), 0, 0)
@@ -124,10 +125,15 @@ function textContent(result: { content?: Array<{ type: string; text?: string }> 
 }
 
 function rangeSuffix(args: unknown): string {
+  if (isFullFileRead(args)) return ''
   const offset = lineNumberArgument(args, 'offset') ?? 1
   const limit = lineNumberArgument(args, 'limit')
   if (limit === undefined) return `:${offset}`
   return `:${offset}-${Math.max(offset, offset + limit - 1)}`
+}
+
+function isFullFileRead(args: unknown): boolean {
+  return lineNumberArgument(args, 'limit') === undefined && (lineNumberArgument(args, 'offset') ?? 1) === 1
 }
 
 function lineNumberArgument(args: unknown, key: 'offset' | 'limit'): number | undefined {
