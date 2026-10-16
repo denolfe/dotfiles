@@ -4,7 +4,8 @@
 # rg --files honors .gitignore so node_modules etc. are skipped.
 # Usage: viewmdl [dir]  (defaults to cwd)
 viewmdl() {
-  local dir="${1:-$PWD}"
+  # Absolute: fzf runs from inside $dir, so a relative path would resolve twice.
+  local dir="${${1:-$PWD}:a}"
   local file
   # Narrow terminals can't fit a side-by-side preview legibly; go bottom instead.
   # ctrl-x toggles to the other orientation.
