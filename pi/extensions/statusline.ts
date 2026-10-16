@@ -140,6 +140,7 @@ function contextSegment(
   if (usage?.percent == null) {
     return usage ? color(GREY, '?') : undefined
   }
+  if (usage.percent === 0 && usage.tokens === 0) return undefined
 
   const percent = Math.max(0, usage.percent)
   const tokens = Math.max(0, usage.tokens ?? 0)

@@ -9,8 +9,12 @@ test('renders context as percentage and tokens without a bar or label', async ()
   expect(output).not.toContain('ctx')
 })
 
+test('omits zero context usage without hiding nonzero usage', async () => {
+  expect(await renderContext({ tokens: 0, percent: 0 })).not.toContain('0% 0')
+  expect(await renderContext({ tokens: 1, percent: 0 })).toContain('0% 1')
+})
+
 test.each([
-  { tokens: 0, percent: 0, rgb: '0;180;0' },
   { tokens: 75000, percent: 7.5, rgb: '110;180;0' },
   { tokens: 150000, percent: 15, rgb: '220;180;0' },
   { tokens: 475000, percent: 47.5, rgb: '220;150;0' },
