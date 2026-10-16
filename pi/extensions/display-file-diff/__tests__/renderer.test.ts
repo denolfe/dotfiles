@@ -37,13 +37,37 @@ describe('completed edit diff renderer', () => {
     ].join('\n'))
     const output = lines.join('\n')
 
-    expect(output).toContain('diff')
+    expect(lines[0]?.trimStart()).toMatch(/^└ \+1 -1 \[━+\] • 1 hunk/)
+    expect(lines[0]).not.toContain('1 file')
+    expect(lines[0]).not.toContain('diff')
     expect(output).toContain('+1')
     expect(output).toContain('-1')
     expect(output).toContain('before')
     expect(output).toContain('after')
     expect(output).toMatch(/1\s+│/)
     expect(lines.filter((line) => /^\s*─+$/.test(line))).toHaveLength(2)
+  })
+
+  test('shows the file count when rendering a combined diff', () => {
+    const lines = render([
+      'diff --git a/first.ts b/first.ts',
+      '@@ -1 +1 @@',
+      '-old',
+      '+new',
+      'diff --git a/second.ts b/second.ts',
+      '@@ -1 +1 @@',
+      '-before',
+      '+after',
+    ].join('\n'))
+
+    expect(lines[0]?.trimStart()).toMatch(/^└ \+2 -2 \[━+\] • 2 hunks • 2 files/)
+  })
+
+  test('omits the bar when it cannot fit alongside the hunk count', () => {
+    const lines = render('@@ -1 +1 @@\n-old\n+new', { width: 26 })
+
+    expect(lines[0]?.trim()).toBe('└ +1 -1 • 1 hunk')
+    expect(lines[0]).not.toContain('[')
   })
 
   test('shows hashline anchors only when expanded', () => {
@@ -69,8 +93,8 @@ describe('completed edit diff renderer', () => {
     const compact = render(diff, { width: 12 })
     const summary = render(diff, { width: 7 })
 
-    expect(compact.join('\n')).toContain('diff')
-    expect(summary.join('\n')).toContain('+1 -1')
+    expect(compact[0]?.trim()).toBe('└ +1 -1')
+    expect(summary[0]?.trim()).toBe('+1 -1')
     for (const [width, lines] of [[12, compact], [7, summary]] as const) {
       for (const line of lines) expect(visibleWidth(line)).toBeLessThanOrEqual(width)
     }

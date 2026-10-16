@@ -29,12 +29,15 @@ export function buildDiffSummaryText(stats: DiffSummaryStats, width: number, lab
   const safeWidth = normalizeDiffRenderWidth(width)
   if (safeWidth === 0) return ''
 
+  const prefix = label ? `└ ${label} ` : '└ '
+  const fileCount = stats.files === 1 ? '' : ` • ${stats.files} ${pluralize(stats.files, 'file')}`
+  const compactFileCount = stats.files === 1 ? '' : ` • ${stats.files}f`
   const summaryCandidates = [
-    `└ ${label} +${stats.added} -${stats.removed} • ${stats.files} ${pluralize(stats.files, 'file')} • ${stats.hunks} ${pluralize(stats.hunks, 'hunk')}`,
-    `└ ${label} +${stats.added} -${stats.removed} • ${stats.files}f • ${stats.hunks}h`,
-    `└ ${label} +${stats.added} -${stats.removed}`,
+    `${prefix}+${stats.added} -${stats.removed}${fileCount} • ${stats.hunks} ${pluralize(stats.hunks, 'hunk')}`,
+    `${prefix}+${stats.added} -${stats.removed}${compactFileCount} • ${stats.hunks}h`,
+    `${prefix}+${stats.added} -${stats.removed}`,
     `+${stats.added} -${stats.removed}`,
-    label,
+    label || '…',
     '…',
   ]
 

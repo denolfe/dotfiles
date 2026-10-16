@@ -1671,6 +1671,7 @@ function renderDiffStatBar(stats: DiffStats, width: number, theme: DiffTheme): s
 
 function buildDiffSummaryBasePieces(stats: DiffStats, theme: DiffTheme, label: string): string[] {
 	const counts = `${theme.fg("toolDiffAdded", `+${stats.added}`)} ${theme.fg("toolDiffRemoved", `-${stats.removed}`)}`;
+	if (!label) return [theme.fg("toolOutput", "└"), counts];
 	return [theme.fg("toolOutput", `└ ${emphasis(theme, label)}`), counts];
 }
 
@@ -1680,27 +1681,18 @@ function renderHeaderRows(stats: DiffStats, mode: Exclude<DiffPresentationMode, 
 		return [{ text: stabilizeBackgroundResets(truncateToWidth(summary, width)), hunkIndex: null }];
 	}
 
-	const summaryPieces = [
-		...buildDiffSummaryBasePieces(stats, theme, label),
-		theme.fg("muted", `${stats.files} ${pluralize(stats.files, "file")}`),
+	const separator = theme.fg("muted", " • ");
+	const basePieces = buildDiffSummaryBasePieces(stats, theme, label);
+	const base = basePieces.join(label ? separator : " ");
+	const trailing = [
 		theme.fg("muted", `${stats.hunks} ${pluralize(stats.hunks, "hunk")}`),
-	];
-
-	const summary = summaryPieces.join(theme.fg("muted", " • "));
+		...(stats.files === 1 ? [] : [theme.fg("muted", `${stats.files} ${pluralize(stats.files, "file")}`)]),
+	].join(separator);
+	const summary = `${base}${separator}${trailing}`;
 	const meter = renderDiffStatBar(stats, width, theme);
-	if (!meter) {
-		return [{ text: stabilizeBackgroundResets(truncateToWidth(summary, width)), hunkIndex: null }];
-	}
-
-	const meterSeparator = theme.fg("muted", " • ");
-	const meterWidth = visibleWidth(meterSeparator) + visibleWidth(meter);
-	if (meterWidth >= width) {
-		return [{ text: stabilizeBackgroundResets(truncateToWidth(summary, width)), hunkIndex: null }];
-	}
-
-	const summaryWidth = Math.max(0, width - meterWidth);
-	const fittedSummary = truncateToWidth(summary, summaryWidth);
-	return [{ text: stabilizeBackgroundResets(`${fittedSummary}${meterSeparator}${meter}`), hunkIndex: null }];
+	const withMeter = meter ? `${base} ${meter}${separator}${trailing}` : undefined;
+	const header = withMeter && visibleWidth(withMeter) <= width ? withMeter : summary;
+	return [{ text: stabilizeBackgroundResets(truncateToWidth(header, width)), hunkIndex: null }];
 }
 
 function renderDiffFrameLine(width: number, theme: DiffTheme): string {
@@ -1976,7 +1968,7 @@ export function renderCompletedDiff(
 	theme: DiffTheme,
 ): Component {
 	const config = FILE_DIFF_CONFIG;
-	const label = options.headerLabel?.trim() || "diff";
+	const label = options.headerLabel?.trim() ?? "";
 	const diffText = safeGetDiff(details);
 	if (!diffText.trim()) {
 		return new Text(theme.fg("muted", "└ no diff payload"), 0, 0);

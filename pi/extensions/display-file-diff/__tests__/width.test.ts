@@ -28,6 +28,13 @@ describe('edit diff width handling', () => {
     }
   })
 
+  test('hides a single file count but retains a multi-file count in summary text', () => {
+    const stats = { added: 1, removed: 1, hunks: 2 }
+
+    expect(buildDiffSummaryText({ ...stats, files: 1 }, 80, '')).toBe('└ +1 -1 • 2 hunks')
+    expect(buildDiffSummaryText({ ...stats, files: 2 }, 80, '')).toBe('└ +1 -1 • 2 files • 2 hunks')
+  })
+
   test('shortens collapsed hints for narrow panes', () => {
     for (const width of [1, 8, 16, 40]) {
       const hint = buildCollapsedDiffHintText(
