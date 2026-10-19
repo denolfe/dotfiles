@@ -93,10 +93,6 @@
       path: agents/AGENTS.md
       force: true
 
-    ~/.pi/agent/SYSTEM.md:
-      path: pi/SYSTEM.md
-      force: true
-
     ~/.pi/agent/npm/package.json:
       path: pi/npm/package.json
       force: true
