@@ -1,0 +1,4 @@
+# actionlint 1.7.12 lacks GitHub-hosted ubuntu-26.04; remove once supported upstream
+self-hosted-runner:
+  labels:
+    - ubuntu-26.04
