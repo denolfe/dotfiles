@@ -100,8 +100,8 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - id: discover
         run: |
-          plugins=$(ls -d claude/local-plugins/*/package.json 2>/dev/null | xargs -I{} dirname {} | xargs -I{} basename {} | jq -R -s -c 'split("\n") | map(select(length > 0))')
-          echo "plugins=$plugins" >> $GITHUB_OUTPUT
+          plugins=$(for f in claude/local-plugins/*/package.json; do [ -e "$f" ] || continue; basename "$(dirname "$f")"; done | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "plugins=$plugins" >> "$GITHUB_OUTPUT"
 
   claude-plugins:
     needs: discover-plugins
