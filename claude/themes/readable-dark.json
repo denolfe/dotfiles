@@ -1,0 +1,12 @@
+{
+  "name": "Readable Dark",
+  "base": "dark",
+  "overrides": {
+    "diffAdded": "#012800",
+    "diffAddedWord": "#1b421a",
+    "diffAddedDimmed": "#011a00",
+    "diffRemoved": "#340001",
+    "diffRemovedWord": "#4e1a1b",
+    "diffRemovedDimmed": "#220001"
+  }
+}
