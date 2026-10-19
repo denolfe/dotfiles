@@ -36,6 +36,7 @@ The body is assembled from the block library, not a single fixed template.
 1. Take the classification's quadrant and pick the matching **profile** in [references/blocks.md](references/blocks.md).
 2. Add or drop the profile's `○` blocks using the **include-when rules** there.
 3. Emit blocks in the order listed in the block library.
+4. If the body includes Overview Visual or Overall Flow, invoke the `show-me` skill before drafting them. Use only its markdown forms (fenced `text`, `diff`, `tsx`, `mermaid`). GitHub does not render its HTML artifacts. Overview Visual shows the static shape (files, components). Overall Flow shows runtime flow. Never draw the same view twice.
 
 Do not add sections outside the block library. Keep all language succinct and concise.
 
@@ -45,6 +46,7 @@ Before `gh pr create`, `gh pr edit`, or printing a Preview body, verify the draf
 
 - Every `##` heading appears in the block library in [references/blocks.md](references/blocks.md) (no `## Test plan`, `## Testing`, `## Test coverage`, `## Summary`, or other ad-hoc headings).
 - No line numbers referenced.
+- Visuals are fenced markdown blocks only. No HTML files, local paths to artifacts, or images.
 - No banned wording from [references/content-guidelines.md](references/content-guidelines.md) (AI vocab, hedging, filler, chatbot artifacts).
 - Sentence structure (per [references/content-guidelines.md](references/content-guidelines.md)): scan all prose. Flag any sentence that chains *what changed* + *mechanism* + *consequence* with `which`/`so`/`and`, or leads with mechanism instead of the change. Split flagged sentences into what-then-why. Additionally, Changes sub-bullets over ~2 sentences / ~25 words (the cap in [references/blocks.md](references/blocks.md)) split into two bullets.
 - Jargon (per [references/content-guidelines.md](references/content-guidelines.md) "Glossing Jargon"): every term of art carries a one-clause appositive gloss at first use. Flag any glossed term expanded into a worked example (cut to the gloss) or re-taught on a later mention.

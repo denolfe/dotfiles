@@ -31,6 +31,21 @@ is the ONLY place breaking-change info goes; there is no standing section for it
 **Breaking change:** [what breaks and the upgrade step, one or two sentences.]
 ```
 
+### Overview Visual (complex only)
+
+One small visual of the change's shape, directly after the Overview summary. Build
+it with the show-me skill. Prefer a `diff` of a file tree, component tree, or call
+tree. Keep it under ~15 lines.
+
+````markdown
+```diff
+ src/
+ ├── commands/
++│   └── publish.ts       # retries on transient errors
+ └── registry.ts
+```
+````
+
 ### Motivation / Context
 
 Why the change is happening now; background a reviewer needs.
@@ -106,13 +121,14 @@ Major architectural decisions and rationale.
 
 ### Overall Flow
 
-Mermaid diagram of the changed flow. Sequence diagram unless another fits better.
+Visual of the changed runtime flow, built with the show-me skill. Pick the smallest
+form that shows the flow: call-tree `diff`, pseudocode, or Mermaid sequence diagram.
 Note the change from the previous flow.
 
 ```markdown
 ## Overall Flow
 
-[Mermaid diagram.]
+[show-me visual of the runtime flow.]
 ```
 
 ### References / Links
@@ -142,6 +158,7 @@ always include, `–` omit, `○` decide with the include-when rules.
 ```
 Block                | Simple Fix | Complex Fix | Simple Feat | Complex Feat
 Overview             |     ✓      |      ✓      |      ✓      |      ✓
+Overview Visual      |     –      |      ○      |      –      |      ○
 Root Cause           |     ✓      |      ✓      |      –      |      –
 Changes              |     ○      |      ✓      |      ✓      |      ✓
 Motivation           |     –      |      ○      |      –      |      ○
@@ -157,6 +174,8 @@ AI Footer            |     ✓      |      ✓      |      ✓      |      ✓
 
 Resolve every `○` with these:
 
+- **Overview Visual**: include when the change touches several files or modules and
+  its shape is faster to read as a tree than as Changes bullets.
 - **Changes**: include unless the diff is a one-liner obvious from Overview.
 - **Motivation**: include when the "why" is not self-evident from Overview.
 - **Design Decisions**: include when a non-obvious architectural choice was made or an alternative was strongly considered or rejected.
