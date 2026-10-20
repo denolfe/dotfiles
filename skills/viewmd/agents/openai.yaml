@@ -1,2 +1,5 @@
+interface:
+  default_prompt: "Use $viewmd to preview <Markdown file> in an adjacent tmux pane."
+
 policy:
   allow_implicit_invocation: false

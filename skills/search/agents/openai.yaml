@@ -1,2 +1,5 @@
+interface:
+  default_prompt: "Use $search to research <topic or question>."
+
 policy:
   allow_implicit_invocation: false

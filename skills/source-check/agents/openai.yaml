@@ -1,2 +1,5 @@
+interface:
+  default_prompt: "Use $source-check to verify current documentation for <technical topic>."
+
 policy:
   allow_implicit_invocation: false

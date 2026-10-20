@@ -1,2 +1,5 @@
+interface:
+  default_prompt: "Use $standards to check [files or scope] against the shared coding standards."
+
 policy:
   allow_implicit_invocation: false

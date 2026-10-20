@@ -1,7 +1,6 @@
 ---
 name: viewmd
 description: Use when the user wants to preview or read a rendered markdown file in an adjacent tmux pane (via the viewmd CLI) - e.g. to view a plan, doc, README, or markdown you just generated side-by-side while continuing to work in the current pane.
-disable-model-invocation: true
 ---
 
 # View Markdown in a tmux Pane

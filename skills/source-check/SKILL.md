@@ -1,7 +1,6 @@
 ---
 name: source-check
 description: Use to fetch current documentation for technical topics like APIs, libraries, or tools mentioned in conversation.
-disable-model-invocation: true
 ---
 
 # Source Check

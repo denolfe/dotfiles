@@ -1,8 +1,6 @@
 ---
 name: search
 description: Search the web with parallel queries for comprehensive results
-argument-hint: <topic or question>
-disable-model-invocation: true
 ---
 
 # Search

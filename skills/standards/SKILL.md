@@ -1,8 +1,6 @@
 ---
 name: standards
 description: Check current work against the shared user-level coding standards
-argument-hint: "[optional: files/scope to check]"
-disable-model-invocation: true
 ---
 
 # Standards Check
