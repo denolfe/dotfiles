@@ -59,3 +59,6 @@ alias gstl="git stash list --pretty=format:'%C(blue)%gd%C(reset): %<(100,trunc)%
 
 # git-worktree-runner
 alias gw='git-gtr'
+
+# workmux (worktree + tmux window per agent)
+alias wm='workmux'

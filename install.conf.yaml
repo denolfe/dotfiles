@@ -126,6 +126,10 @@
       path: hunk/config.toml
       force: true
 
+    ~/.config/workmux/config.yaml:
+      path: workmux/config.yaml
+      force: true
+
     # VS Code Linux
     ~/.config/Code/User:
       if: '[[ `uname` = Linux ]]'

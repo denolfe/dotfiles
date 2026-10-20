@@ -1,0 +1,13 @@
+# workmux global config (symlinked to ~/.config/workmux/config.yaml)
+# Reference: `workmux config reference`
+
+nerdfont: true
+agent: claude
+
+# tmux.conf owns the pill tab format and embeds #{@workmux_status} itself
+status_format: false
+
+files:
+  symlink:
+    # Share granted Claude permissions across worktrees
+    - .claude/settings.local.json
