@@ -33,9 +33,9 @@ is the ONLY place breaking-change info goes; there is no standing section for it
 
 ### Overview Visual (complex only)
 
-One small visual of the change's shape, directly after the Overview summary. Build
-it with the show-me skill. Prefer a `diff` of a file tree, component tree, or call
-tree. Keep it under ~15 lines.
+One small visual of the change's static shape, directly after the Overview summary.
+Use a form from [visuals.md](visuals.md). Prefer a `diff` of a file tree or
+component tree. Keep it under ~15 lines.
 
 ````markdown
 ```diff
@@ -121,14 +121,14 @@ Major architectural decisions and rationale.
 
 ### Overall Flow
 
-Visual of the changed runtime flow, built with the show-me skill. Pick the smallest
-form that shows the flow: call-tree `diff`, pseudocode, or Mermaid sequence diagram.
-Note the change from the previous flow.
+Visual of the changed runtime flow, using a form from [visuals.md](visuals.md). Pick
+the smallest form that shows the flow: call-tree `diff`, pseudocode, or Mermaid
+sequence diagram. Note the change from the previous flow.
 
 ```markdown
 ## Overall Flow
 
-[show-me visual of the runtime flow.]
+[Runtime-flow visual from visuals.md.]
 ```
 
 ### References / Links

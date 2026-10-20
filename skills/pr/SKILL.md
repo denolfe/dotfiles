@@ -15,7 +15,7 @@ Dispatch on the first argument:
 
 An optional `base=<branch>` argument (any position) sets the target branch. If omitted, default to the repo's default branch. Pass via `--base <branch>` to `gh pr create`. Ignored for `update` and `preview`.
 
-**Before drafting any PR body (create/draft/update/preview): Read [references/content-guidelines.md](references/content-guidelines.md) AND [references/blocks.md](references/blocks.md) in full.** Do not draft from memory.
+**Before drafting any PR body (create/draft/update/preview): Read [references/content-guidelines.md](references/content-guidelines.md), [references/blocks.md](references/blocks.md), AND [references/visuals.md](references/visuals.md) in full.** Do not draft from memory.
 
 ## Classify
 
@@ -36,7 +36,7 @@ The body is assembled from the block library, not a single fixed template.
 1. Take the classification's quadrant and pick the matching **profile** in [references/blocks.md](references/blocks.md).
 2. Add or drop the profile's `○` blocks using the **include-when rules** there.
 3. Emit blocks in the order listed in the block library.
-4. If the body includes Overview Visual or Overall Flow, invoke the `show-me` skill before drafting them. Use only its markdown forms (fenced `text`, `diff`, `tsx`, `mermaid`). GitHub does not render its HTML artifacts. Overview Visual shows the static shape (files, components). Overall Flow shows runtime flow. Never draw the same view twice.
+4. Build Overview Visual and Overall Flow from the forms in [references/visuals.md](references/visuals.md). On Update, check kept visuals against those forms too.
 
 Do not add sections outside the block library. Keep all language succinct and concise.
 
