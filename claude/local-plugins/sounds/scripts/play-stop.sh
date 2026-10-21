@@ -9,4 +9,4 @@ event="$(printf '%s' "$payload" | /usr/bin/python3 -c 'import json,sys; print(js
 
 [ "$event" = "SubagentStop" ] && exit 0
 
-afplay /System/Library/Sounds/Funk.aiff
+afplay -v 0.3 /System/Library/Sounds/Funk.aiff
