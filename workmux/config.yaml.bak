@@ -1,0 +1,15 @@
+# Global workmux config: https://workmux.raine.dev/guide/configuration/
+nerdfont: true
+agent: claude
+merge_strategy: squash
+
+# Sibling of the repo, shared with git-gtr worktrees
+worktree_dir: ../{project}-worktrees
+
+sidebar:
+  position: left
+
+panes:
+  - command: <agent>
+    focus: true
+  - split: horizontal

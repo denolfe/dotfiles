@@ -3,9 +3,18 @@
 
 nerdfont: true
 agent: claude
+merge_strategy: squash
+
+# Sibling of the repo, shared with git-gtr worktrees
+worktree_dir: ../{project}-worktrees
 
 # tmux.conf owns the pill tab format and embeds #{@workmux_status} itself
 status_format: false
+
+panes:
+  - command: <agent>
+    focus: true
+  - split: horizontal
 
 files:
   symlink:
