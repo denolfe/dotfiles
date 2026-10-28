@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Selection Highlighter
 // @namespace    neaumusic
-// @version      0.2
+// @version      0.3
 // @description  Highlight all instances of a selected word on the page. Port of https://github.com/neaumusic/selection-highlighter
 // @author       Elliot DeNolf
 // @match        *://*/*
@@ -159,7 +159,19 @@
                     color: ${options.highlightStylesDarkModeObject.color};
                 }
             }
-            .scroll-markers-canvas {
+        `
+    document.head.appendChild(styleElement)
+  }
+
+  // Shadow root hides the canvas from page queries like getElementsByTagName('canvas')[0],
+  // which apps use to find their own canvas.
+  function addScrollMarkersCanvas() {
+    const host = document.createElement('div')
+    const shadowRoot = host.attachShadow({ mode: 'closed' })
+
+    const shadowStyle = document.createElement('style')
+    shadowStyle.textContent = `
+            canvas {
                 pointer-events: none;
                 position: fixed;
                 z-index: 2147483647;
@@ -169,15 +181,13 @@
                 height: 100vh;
             }
         `
-    document.head.appendChild(styleElement)
-  }
 
-  function addScrollMarkersCanvas() {
     const scrollMarkersCanvas = document.createElement('canvas')
-    scrollMarkersCanvas.className = 'scroll-markers-canvas'
     scrollMarkersCanvas.width = 16 * (devicePixelRatio || 1)
     scrollMarkersCanvas.height = window.innerHeight * (devicePixelRatio || 1)
-    document.body.appendChild(scrollMarkersCanvas)
+
+    shadowRoot.append(shadowStyle, scrollMarkersCanvas)
+    document.body.appendChild(host)
     return scrollMarkersCanvas.getContext('2d')
   }
 
