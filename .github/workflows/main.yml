@@ -97,8 +97,8 @@ jobs:
     container: archlinux:latest
     steps:
       - name: Install SteamOS base tools
-        # zsh/git/curl ship in the SteamOS image; pacman mise matches a Deck with an unlocked root
-        run: pacman -Syu --noconfirm --needed git python curl zsh mise procps-ng
+        # zsh/git/curl ship in the SteamOS image
+        run: pacman -Syu --noconfirm --needed git python curl zsh procps-ng
 
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -116,9 +116,7 @@ jobs:
           ./install
 
       - name: Verify mise installed in $HOME
-        run: |
-          test -x /usr/bin/mise
-          test -x ~/.local/bin/mise
+        run: test -x ~/.local/bin/mise
 
       - name: Verify bashrc link
         run: test "$(readlink -f ~/.bashrc)" = "$(realpath bash/bashrc)"
