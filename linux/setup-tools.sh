@@ -2,9 +2,11 @@
 #
 # Install essential CLI tools via mise
 
+# Install into $HOME so mise survives immutable-OS updates (SteamOS replaces /usr)
 if ! command -v mise > /dev/null 2>&1; then
-  echo "mise not found, skipping CLI tool install."
-  exit 0
+  echo "Installing mise to ~/.local/bin..."
+  curl -fsSL https://mise.run | sh
+  export PATH="$HOME/.local/bin:$PATH"
 fi
 
 TOOLS=(

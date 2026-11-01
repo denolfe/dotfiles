@@ -92,6 +92,41 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
+  steamos:
+    runs-on: ubuntu-26.04
+    container: archlinux:latest
+    steps:
+      - name: Install SteamOS base tools
+        # zsh/git/curl ship in the SteamOS image
+        run: pacman -Syu --noconfirm --needed git python curl zsh
+
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          submodules: recursive
+
+      - name: Fake SteamOS os-release
+        run: |
+          rm -f /etc/os-release
+          printf '%s\n' 'NAME="SteamOS"' 'ID=steamos' 'ID_LIKE=arch' 'VARIANT_ID=steamdeck' 'VERSION_ID=3.9.5' > /etc/os-release
+
+      - name: Install dotfiles
+        run: |
+          # Workspace is owned by the runner user, not the container's root
+          git config --global --add safe.directory "$PWD"
+          ./install
+
+      - name: Verify mise installed in $HOME
+        run: test -x ~/.local/bin/mise
+
+      - name: Verify bashrc link
+        run: test "$(readlink -f ~/.bashrc)" = "$(realpath bash/bashrc)"
+
+      - name: Verify interactive bash hands off to zsh
+        shell: bash
+        run: |
+          out=$(bash -i <<< 'echo "SHELL_IS=$0"' 2>/dev/null)
+          echo "$out"
+          grep -qx 'SHELL_IS=zsh' <<< "$out"
   discover-plugins:
     runs-on: ubuntu-26.04
     outputs:
