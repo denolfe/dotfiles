@@ -13,7 +13,7 @@
     stdout: true
   -
     command: 'if [ "$(uname)" = "Linux" ]; then ./linux/setup-tools.sh; fi'
-    description: Installing CLI tools via mise (Linux devbox only)
+    description: Installing CLI tools via mise (Linux only)
     stdout: true
   -
     description: Downloading vim-plug to ~/.vim/autoload/plug.vim
