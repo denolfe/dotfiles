@@ -98,7 +98,7 @@ jobs:
     steps:
       - name: Install SteamOS base tools
         # zsh/git/curl ship in the SteamOS image
-        run: pacman -Syu --noconfirm --needed git python curl zsh procps-ng
+        run: pacman -Syu --noconfirm --needed git python curl zsh
 
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -127,15 +127,6 @@ jobs:
           out=$(bash -i <<< 'echo "SHELL_IS=$0"' 2>/dev/null)
           echo "$out"
           grep -qx 'SHELL_IS=zsh' <<< "$out"
-
-      - name: Verify bash from zsh stays bash
-        shell: bash
-        run: |
-          # Trailing `true` stops zsh from exec-ing bash directly, so bash's parent stays zsh
-          out=$(zsh -c 'bash -i <<< "echo SHELL_IS=\$0"; true' 2>/dev/null)
-          echo "$out"
-          grep -qx 'SHELL_IS=bash' <<< "$out"
-
   discover-plugins:
     runs-on: ubuntu-26.04
     outputs:

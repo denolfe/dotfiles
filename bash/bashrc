@@ -1,12 +1,11 @@
-# Login shell stays bash so system scripts keep working; interactive shells hand off to zsh.
+# Interactive shells hand off to zsh. Lives in $HOME so it survives SteamOS updates.
 
 [[ $- != *i* ]] && return
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# Running `bash` from zsh or `bash -c` stays in bash
-if command -v zsh > /dev/null 2>&1 \
-  && [[ $(ps --no-header --pid=$PPID --format=comm) != "zsh" && -z ${BASH_EXECUTION_STRING} ]]; then
+# `bash -ic 'cmd'` (e.g. editor env probes) must run cmd, not start zsh
+if command -v zsh > /dev/null 2>&1 && [[ -z ${BASH_EXECUTION_STRING} ]]; then
   shopt -q login_shell && exec zsh --login
   exec zsh
 fi
