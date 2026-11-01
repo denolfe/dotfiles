@@ -2,10 +2,18 @@
 #
 # Install essential CLI tools via mise
 
-if ! command -v mise > /dev/null 2>&1; then
-  echo "mise not found, skipping CLI tool install."
-  exit 0
+should_install_mise() {
+  [ -x "$HOME/.local/bin/mise" ] && return 1
+  # SteamOS replaces /usr on update, so a pacman-installed mise does not count
+  grep -q "^ID=steamos" /etc/os-release 2>/dev/null && return 0
+  ! command -v mise > /dev/null 2>&1
+}
+
+if should_install_mise; then
+  echo "Installing mise to ~/.local/bin..."
+  curl -fsSL https://mise.run | sh
 fi
+export PATH="$HOME/.local/bin:$PATH"
 
 TOOLS=(
   "bat"

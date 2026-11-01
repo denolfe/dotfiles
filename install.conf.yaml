@@ -32,6 +32,10 @@
       path: zsh/zshrc.zsh
       force: true
     ~/.zgenom: zsh/zgenom
+    # SteamOS: login shell must stay bash; bashrc execs zsh
+    ~/.bashrc:
+      path: bash/bashrc
+      if: 'grep -q "^ID=steamos" /etc/os-release 2>/dev/null'
     ~/.config/mise/config.toml:
       path: zsh/mise.toml
       if: '[ ! -e ~/.config/mise/config.toml ]'
