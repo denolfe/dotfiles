@@ -176,10 +176,11 @@ fi
 
 # pnpm
 export PNPM_HOME="$HOME/.pnpm-global"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+# pnpm <=10 links global bins into PNPM_HOME, pnpm >=11 into PNPM_HOME/bin
+for dir in "$PNPM_HOME" "$PNPM_HOME/bin"; do
+  [[ ":$PATH:" == *":$dir:"* ]] || export PATH="$dir:$PATH"
+done
+unset dir
 # pnpm end
 
 # tabtab source for packages
