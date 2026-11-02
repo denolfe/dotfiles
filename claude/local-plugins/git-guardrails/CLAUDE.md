@@ -4,21 +4,14 @@ PreToolUse hook that enforces git workflow preferences by intercepting Bash comm
 
 ## Runtime
 
-Uses **Bun** — no compilation needed, TypeScript executed directly.
+Bash + jq. All rule logic is one jq program inside `scripts/git-guardrails.sh`.
 
 ```bash
-bun run typecheck # typecheck
-bun test # run tests
+scripts/git-guardrails.test.sh # run tests
+shellcheck scripts/*.sh        # lint
 ```
 
-Default to using Bun instead of Node.js.
-
-- Use `bun <file>` instead of `node <file>` or `ts-node <file>`
-- Use `bun test` instead of `jest` or `vitest`
-- Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
-- Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
-- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
-- Bun automatically loads .env, so don't use dotenv.
+jq regexes use Oniguruma (Perl syntax): `$` also matches before a trailing newline, so use `\z` for a strict end anchor.
 
 ## What It Does
 
@@ -26,7 +19,7 @@ Default to using Bun instead of Node.js.
 | ------- | ------------------------------------------------------------------ | ---------------- |
 | Block   | `git add -A`, `git add .`, `git add --all`                         | `deny`           |
 | Block   | `git -C`, `--git-dir`, `--work-tree` (avoids permission prompts)   | `deny`           |
-| Prompt  | `git commit --amend`, `--no-verify`, `git push`                    | `ask`            |
+| Prompt  | `git commit --no-verify`, `git push`                               | `ask`            |
 | Rewrite | `git commit -m "$(cat <<'EOF'...)"` → `git commit -F - <<'EOF'...` | `allow` + modify |
 | Clean   | Lines with "generated" or "co-authored-by"                         | `allow` + modify |
 
@@ -34,12 +27,8 @@ Default to using Bun instead of Node.js.
 
 ```
 scripts/
-├── git-guardrails.ts       # main handler
-├── git-guardrails.test.ts  # test suite
-├── types.ts                # shared hook type definitions
-└── utils.ts                # stdin/stdout helpers
+├── git-guardrails.sh       # hook: reads JSON on stdin, writes JSON decision on stdout (or nothing)
+└── git-guardrails.test.sh  # pipes fixture commands through the hook
 ```
 
-- `types.ts` is the canonical hook types file, also used by other plugins
-- Handler reads JSON from stdin, outputs JSON to stdout
 - Entry point configured in `hooks/hooks.json` via `${CLAUDE_PLUGIN_ROOT}`

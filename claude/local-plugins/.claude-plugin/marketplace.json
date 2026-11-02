@@ -21,7 +21,7 @@
     {
       "name": "git-guardrails",
       "description": "Enforces git workflow preferences by intercepting git commands",
-      "version": "0.0.2",
+      "version": "0.0.3",
       "source": "./git-guardrails"
     },
     {

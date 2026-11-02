@@ -146,12 +146,11 @@ Bash script setting macOS preferences via `defaults write`. Categories:
 Run after OS install or updates.
 
 ### Testing
-TypeScript Claude local plugins use Bun's built-in test runner:
+Claude local plugins are bash scripts. Tests are plain bash scripts named `*.test.sh` (CI runs them all, plus `shellcheck`):
 ```bash
-bun test claude/local-plugins/auto-approve claude/local-plugins/git-guardrails
+claude/local-plugins/git-guardrails/scripts/git-guardrails.test.sh
 ```
 
 ## TypeScript Build Patterns
 
 **Karabiner:** Bun with no deps → single `karabiner.json` output
-**Claude local plugins:** Bun with TypeScript → no compilation needed for execution
