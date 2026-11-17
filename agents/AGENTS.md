@@ -25,7 +25,18 @@
   - Executing pnpm with arguments should NEVER use `--`. pnpm handles argument parsing itself.
 - Always use vitest for testing.
 
-# Commit Guidelines
+# Git Guidance
+
+- Do not push commits until work is complete and needs CI validation.
+- Commits and pushes should be done as separate, logical units. Never commit and push in a single turn.
+- Never merge a PR that is part of a stack without approval - even if it passes CI and is approved.
+
+## Worktrees
+
+- Use `git-gtr` for managing worktrees. `git-gtr new <branch>` will create a new worktree and branch.
+- The `git config` contains specific hooks this tool uses (`gtr` prefix) when creating a new worktree.
+
+## Commit Guidelines
 
 - Always use Conventional Commits. Match repo's existing style by checking commits in the file path. Do not make up new scopes or types without justification. If in doubt, do not add a scope.
 - First commit on branch: include scope (often becomes PR title). Subsequent commits: bias toward `chore` (no scope) since they'll be squashed.
