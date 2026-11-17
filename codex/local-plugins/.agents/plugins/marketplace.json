@@ -1,0 +1,20 @@
+{
+  "name": "dotfiles-local",
+  "interface": {
+    "displayName": "Dotfiles local plugins"
+  },
+  "plugins": [
+    {
+      "name": "git-guardrails",
+      "source": {
+        "source": "local",
+        "path": "./git-guardrails"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

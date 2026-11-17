@@ -1,4 +1,4 @@
-.PHONY: install link karabiner karabiner-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-plugin-refresh claude-verbs ai-install tmux skills-restore skills-update
+.PHONY: install link karabiner karabiner-dev vscode-install vscode-save brew brew-restore macos claude claude-plugins claude-plugin-refresh claude-verbs codex-plugins ai-install tmux skills-restore skills-update
 
 # Run dotbot install script
 install:
@@ -40,9 +40,9 @@ brew-restore:
 macos:
 	./macos/set-defaults.sh
 
-# Installs and enables Claude Code settings and plugins
+# Installs and enables AI agent settings and plugins
 # Full AI dev setup for a fresh machine
-ai-install: claude claude-plugins claude-verbs skills-restore
+ai-install: claude claude-plugins claude-verbs codex-plugins skills-restore
 
 claude:
 	./claude/set-defaults.sh
@@ -50,6 +50,10 @@ claude:
 # Sync Claude Code local plugins
 claude-plugins:
 	./claude/update-local-plugins.sh
+
+# Register the Codex marketplace and install/refresh all declared plugins
+codex-plugins:
+	bash ./codex/update-local-plugins.sh
 
 # Wipe and re-sync one local plugin's install cache (usage: make claude-plugin-refresh PLUGIN=tmux-agent-status)
 claude-plugin-refresh:

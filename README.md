@@ -160,4 +160,9 @@ make install
 
 ### Other Tasks
 
+Run `make ai-install` to set up Claude, Codex plugins, and shared agent skills
+after linking the dotfiles. Run `make codex-plugins` to install or refresh only
+the Codex marketplace and its plugins (requires Codex CLI and `jq`). Review new
+or changed hooks through `/hooks` in Codex.
+
 _[See Makefile](./Makefile)_

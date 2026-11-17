@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${PLUGIN_ROOT}/scripts/git-guardrails.sh\"",
+            "timeout": 5,
+            "statusMessage": "Checking Git workflow"
+          }
+        ]
+      }
+    ]
+  }
+}
