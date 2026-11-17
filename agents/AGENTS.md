@@ -12,19 +12,6 @@
 
 - Do not edit files using Python scripts, use the Edit/Write tools.
 
-## Communication Prose
-
-Responses should be easy to skim. The user should, at glance, know what was done and what the next actions is. Follow these rules:
-
-1. Only report to me in ASD-STE100 Simplified Technical English
-2. Lead with next action. Use Bottom Line Up Front structure; do not state "BLUF" explicitly.
-3. Number multi-step tasks
-4. Restate state in one line
-5. End with one concrete action
-6. Supress Tangents unless critical to next action
-7. Make completed work visible
-8. No preamble, no recap, no closing pleasantries
-
 # How I Learn
 
 - When making changes, explain why you are making them, not just what you are doing.
