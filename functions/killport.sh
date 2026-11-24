@@ -3,9 +3,9 @@
 # Kill process by port or name
 
 # Usage:
-# kp [port|process_name]
+# killport [port|process_name]
 
-kp() {
+killport() {
   ARG="$1"
 
   if [ -z "$ARG" ]; then
